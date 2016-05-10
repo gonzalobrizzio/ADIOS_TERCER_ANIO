@@ -1,8 +1,3 @@
---SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
---SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
---SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
---
---CREATE SCHEMA IF NOT EXISTS mydb DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE [GD1C2016] ;
 GO
 
@@ -318,7 +313,29 @@ CREATE  TABLE Respuesta (
   respuesta NVARCHAR(255) NULL ,
   )
 
+-- -----------------------------------------------------
+-- PROCEDURES
+-- -----------------------------------------------------
 
---SET SQL_MODE=@OLD_SQL_MODE;
---SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
---SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- -----------------------------------------------------
+-- VISTAS
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- TRIGGERS
+-- -----------------------------------------------------
+
+
+-- -----------------------------------------------------
+-- MIGRACION
+-- -----------------------------------------------------
+
+
+
+
+-- -----------------------------------------------------
+-- SCRIPT DE BORRADO
+-- -----------------------------------------------------
+--USE GD1C2016
+--DROP TABLE [ADIOS_TERCER_ANIO].[RolUsuario];--DROP TABLE [ADIOS_TERCER_ANIO].[FuncionalidadRol];--DROP TABLE [ADIOS_TERCER_ANIO].[Funcionalidad];--DROP TABLE [ADIOS_TERCER_ANIO].[Rol];--DROP TABLE [ADIOS_TERCER_ANIO].[Persona];--DROP TABLE [ADIOS_TERCER_ANIO].[Empresa];--DROP TABLE [ADIOS_TERCER_ANIO].[TipoDNI];--DROP TABLE [ADIOS_TERCER_ANIO].[Localidad];--DROP TABLE [ADIOS_TERCER_ANIO].[Factura];--DROP TABLE [ADIOS_TERCER_ANIO].[FormaDePago];--DROP TABLE [ADIOS_TERCER_ANIO].[Respuesta];--DROP TABLE [ADIOS_TERCER_ANIO].[Pregunta];--DROP TABLE [ADIOS_TERCER_ANIO].[Compra];--DROP TABLE [ADIOS_TERCER_ANIO].[Calificacion];--DROP TABLE [ADIOS_TERCER_ANIO].[Oferta];--DROP TABLE [ADIOS_TERCER_ANIO].[Publicacion];--DROP TABLE [ADIOS_TERCER_ANIO].[Rubro];--DROP TABLE [ADIOS_TERCER_ANIO].[Envio];--DROP TABLE [ADIOS_TERCER_ANIO].[Estado];--DROP TABLE [ADIOS_TERCER_ANIO].[Item];--DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];--DROP TABLE [ADIOS_TERCER_ANIO].[Usuario];--DROP SCHEMA ADIOS_TERCER_ANIO--
+
