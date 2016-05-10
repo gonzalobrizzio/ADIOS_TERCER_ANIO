@@ -22,7 +22,7 @@ CREATE  TABLE Usuario (
   pass NVARCHAR(255) NOT NULL ,
   mail NVARCHAR(255) NOT NULL UNIQUE,
   deleted INT DEFAULT 0 ,
-  intentos INT DEFAULT 0
+  intentos INT DEFAULT 0 ,
   )
 
 
@@ -91,7 +91,7 @@ CREATE  TABLE Empresa (
   direccion_numero INT NULL ,
   dpto NVARCHAR(50) NULL ,
   codigoPostal NVARCHAR(50) NULL ,
-  cuit NVARCHAR(50) NOT NULL ,
+  cuit NVARCHAR(50) NOT NULL UNIQUE,
   contacto NVARCHAR(45) NULL ,
   rubro NVARCHAR(255) NULL ,
   idUsuario INT REFERENCES Usuario(id) ,
@@ -332,8 +332,14 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Empresa')
 
-	--LOCAIDADES
+	--LOCALIDADES
 	INSERT INTO ADIOS_TERCER_ANIO.Localidad(descripcion) VALUES ('Capital Federal')
+
+	--ESTADOS
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Borrador')
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Activa')
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
 
 END
 GO
@@ -407,7 +413,7 @@ FROM
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',@mail,@ultimoID = @idUsuario OUTPUT;
 
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(3,@idUsuario)
+			VALUES(2,@idUsuario)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Persona(
 				nombre,
@@ -460,6 +466,107 @@ DEALLOCATE cur
 END
 GO
 
+--SP PARA MIGRAR TODOS LAS EMPRESAS DE LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarEmpresas]
+AS BEGIN
+
+	DECLARE @idUsuario INT,
+			@razonSocial NVARCHAR(255) ,
+			@telefono INT,
+			@direccion NVARCHAR(50),
+			@direccion_numero  INT,
+			@piso NUMERIC(18,0),
+			@dpto NVARCHAR(50) ,
+			@codigoPostal NVARCHAR(50) ,
+			@cuit NVARCHAR(50) ,
+			@contacto NVARCHAR(45) ,
+			@rubro NVARCHAR(255),
+			@fechaCreacion DATETIME,
+			@mail NVARCHAR(255)
+	DECLARE cur CURSOR FOR
+	SELECT DISTINCT 
+		Publ_Empresa_Razon_Social,
+		Publ_Empresa_Cuit,
+		Publ_Empresa_Fecha_Creacion,
+		Publ_Empresa_Mail,
+		Publ_Empresa_Dom_Calle,
+		Publ_Empresa_Nro_Calle,
+		Publ_Empresa_Piso,
+		Publ_Empresa_Depto,
+		Publ_Empresa_Cod_Postal
+FROM 
+		gd_esquema.Maestra
+	WHERE
+		Publ_Empresa_Cuit IS NOT NULL
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@razonSocial,
+		@cuit,
+		@fechaCreacion,
+		@mail,
+		@direccion,
+		@direccion_numero,
+		@piso,
+		@dpto,
+		@codigoPostal
+	WHILE(@@FETCH_STATUS = 0)
+		BEGIN
+			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit,'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',@mail,@ultimoID = @idUsuario OUTPUT;
+
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+			VALUES(3,@idUsuario)
+			
+			INSERT INTO ADIOS_TERCER_ANIO.Empresa(
+				razonSocial,
+				telefono ,
+				direccion,
+				direccion_numero,
+				dpto,
+				codigoPostal,
+				cuit,
+				contacto,
+				rubro,
+				idUsuario,
+				idLocalidad,
+				calificacionPromedio,
+				fechaCreacion)
+			VALUES (
+				@razonSocial,
+				@telefono,
+				@direccion,
+				@direccion_numero,
+				@dpto,
+				@codigoPostal,
+				@cuit,
+				@contacto,
+				'Electronica',
+				@idUsuario,
+				1,
+				0,
+				@fechaCreacion)
+			
+				
+		FETCH NEXT FROM cur
+		INTO 
+			@razonSocial,
+			@cuit,
+			@fechaCreacion,
+			@mail,
+			@direccion,
+			@direccion_numero,
+			@piso,
+			@dpto,
+			@codigoPostal
+		END
+	CLOSE cur 
+DEALLOCATE cur
+		
+END
+GO
+
+
 -- -----------------------------------------------------
 -- VISTAS
 -- -----------------------------------------------------
@@ -478,6 +585,9 @@ EXEC [ADIOS_TERCER_ANIO].[generarDatosAdministrativos];
 
 --MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
+
+--MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
 
 -- -----------------------------------------------------
@@ -509,6 +619,7 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.generarDatosAdministrativos;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.generarUsuario;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPersonas;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarEmpresas;
 --DROP SCHEMA ADIOS_TERCER_ANIO
 --
 
