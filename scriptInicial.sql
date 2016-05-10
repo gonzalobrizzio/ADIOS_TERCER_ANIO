@@ -19,7 +19,7 @@ CREATE  TABLE Funcionalidad (
 CREATE  TABLE Usuario (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   usuario NVARCHAR(255) NOT NULL UNIQUE,
-  contraseña NVARCHAR(255) NOT NULL ,
+  pass NVARCHAR(255) NOT NULL ,
   mail NVARCHAR(255) NOT NULL UNIQUE,
   deleted INT DEFAULT 0 ,
   intentos INT DEFAULT 0
@@ -39,9 +39,9 @@ CREATE  TABLE Rol (
 
 
 -- -----------------------------------------------------
--- TABLA TipoDNI
+-- TABLA TipoDocumento
 -- -----------------------------------------------------
-CREATE  TABLE TipoDNI (
+CREATE  TABLE TipoDocumento (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   descripcion NVARCHAR(255) NOT NULL ,
    )
@@ -65,18 +65,18 @@ CREATE  TABLE Persona (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NOT NULL ,
   apellido NVARCHAR(255) NOT NULL ,
-  DNI DECIMAL(18,0) NOT NULL ,
+  documento DECIMAL(18,0) NOT NULL ,
+  idTipoDocumento INT REFERENCES TipoDocumento(id) ,
   telefono INT NOT NULL ,
   direccion NVARCHAR(255) NOT NULL ,
+  direccion_numero DECIMAL(18,0) NULL ,
   piso DECIMAL(18,0) NULL ,
   dpto NVARCHAR(50) NULL ,
   codigoPostal NVARCHAR(50) NOT NULL ,
   fechaNacimiento DATETIME NOT NULL ,
   fechaCreacion DATETIME NOT NULL ,
-  Usuario_id INT REFERENCES usuario(id) ,
-  TipoDNI_id INT REFERENCES TipoDNI(id) ,
-  Localidad_id INT REFERENCES Localidad(id) ,
-  direccion_numero DECIMAL(18,0) NULL ,
+  idUsuario INT REFERENCES usuario(id) ,
+  idLocalidad INT REFERENCES Localidad(id) ,
   )
 
 
@@ -88,16 +88,16 @@ CREATE  TABLE Empresa (
   razonSocial NVARCHAR(255) NOT NULL ,
   telefono INT NULL ,
   direccion NVARCHAR(50) NULL ,
+  direccion_numero INT NULL ,
   dpto NVARCHAR(50) NULL ,
   codigoPostal NVARCHAR(50) NULL ,
   cuit NVARCHAR(50) NOT NULL ,
   contacto NVARCHAR(45) NULL ,
   rubro NVARCHAR(255) NULL ,
-  Usuario_id INT REFERENCES usuario(id) ,
-  Localidad_id INT REFERENCES Localidad(id) ,
+  idUsuario INT REFERENCES Usuario(id) ,
+  idLocalidad INT REFERENCES Localidad(id) ,
   calificacionPromedio INT NULL ,
   fechaCreacion DATETIME NULL ,
-  direccion_numero INT NULL ,
   )
 
 
@@ -312,10 +312,153 @@ CREATE  TABLE Respuesta (
   fecha DATETIME NULL ,
   respuesta NVARCHAR(255) NULL ,
   )
+GO
 
 -- -----------------------------------------------------
 -- PROCEDURES
 -- -----------------------------------------------------
+
+--SP PARA CREAR LOS DATOS ADMINISTRATIVOS
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarDatosAdministrativos]
+AS BEGIN
+	--TIPOS DE DOCUMENTO
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('DNI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('CI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
+
+	--ROLES
+	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
+	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Empresa')
+
+	--LOCAIDADES
+	INSERT INTO ADIOS_TERCER_ANIO.Localidad(descripcion) VALUES ('Capital Federal')
+
+END
+GO
+
+
+-- SP PARA GENERAR E INSERTAR EL USUARIO EN LA TABLA DE USUARIOS
+-- RECIBE EL USUARIO, UN PASSWORD Y EL MAIL PARA INSERTARLO
+-- DEVUELVE EL ID USADO PARA PODER USARLO COMO FK
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuario](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
+AS BEGIN
+	
+	-- INSERTO EL NUEVO USUARIO
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail) 
+	VALUES (@usuario,@password,@mail)
+	
+	-- OBTENGO EL ULTIMO ID 
+	SELECT @ultimoID = MAX(id) FROM ADIOS_TERCER_ANIO.Usuario
+	
+	RETURN
+	
+END
+GO
+
+--SP PARA MIGRAR TODOS LAS PERSONAS DE LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPersonas]
+AS BEGIN
+
+	DECLARE @idUsuario INT,
+			@nombre NVARCHAR(255),
+			@apellido NVARCHAR(255),
+			@documento NUMERIC(18,0),
+			@fechaNac DATETIME,
+			@mail NVARCHAR(255),
+			@direccion NVARCHAR(255),
+			@direccion_numero NUMERIC(18,0),
+			@piso NUMERIC(18,0),
+			@dpto NVARCHAR(255),
+			@codigoPostal NVARCHAR(255)
+	DECLARE cur CURSOR FOR
+	SELECT DISTINCT 
+		Cli_Nombre,
+		Cli_Apeliido,
+		Cli_Dni,
+		Cli_Fecha_Nac,
+		Cli_Mail,
+		Cli_Dom_Calle,
+		Cli_Nro_Calle,
+		Cli_Piso,
+		Cli_Depto,
+		Cli_Cod_Postal
+FROM 
+		gd_esquema.Maestra
+	WHERE
+		Cli_Dni IS NOT NULL
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@nombre,
+		@apellido,
+		@documento,
+		@fechaNac,
+		@mail,
+		@direccion,
+		@direccion_numero,
+		@piso,
+		@dpto,
+		@codigoPostal
+	WHILE(@@FETCH_STATUS = 0)
+		BEGIN
+			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',@mail,@ultimoID = @idUsuario OUTPUT;
+
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+			VALUES(3,@idUsuario)
+			
+			INSERT INTO ADIOS_TERCER_ANIO.Persona(
+				nombre,
+				apellido,
+				documento,
+				idTipoDocumento,
+				telefono,
+				direccion,
+				direccion_numero,
+				piso,
+				dpto,
+				codigoPostal,
+				fechaNacimiento,
+				fechaCreacion,
+				idUsuario,
+				idLocalidad)
+			VALUES (
+				@nombre,
+				@apellido,
+				@documento,
+				1,
+				0,
+				@direccion,
+				@direccion_numero,
+				@piso,
+				@dpto,
+				@codigoPostal,
+				@fechaNac,
+				GETDATE(),
+				@idUsuario,
+				1)
+			
+				
+		FETCH NEXT FROM cur
+		INTO 
+			@nombre,
+			@apellido,
+			@documento,
+			@fechaNac,
+			@mail,
+			@direccion,
+			@direccion_numero,
+			@piso,
+			@dpto,
+			@codigoPostal
+		END
+	CLOSE cur 
+DEALLOCATE cur
+		
+END
+GO
 
 -- -----------------------------------------------------
 -- VISTAS
@@ -330,11 +473,15 @@ CREATE  TABLE Respuesta (
 -- MIGRACION
 -- -----------------------------------------------------
 
+--CARGO LOS DATOS ADMINISTRATIVOS
+EXEC [ADIOS_TERCER_ANIO].[generarDatosAdministrativos];
 
+--MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 
 
 -- -----------------------------------------------------
--- SCRIPT DE BORRADO
+-- SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE
 -- -----------------------------------------------------
 --USE GD1C2016
 --DROP TABLE [ADIOS_TERCER_ANIO].[RolUsuario];
@@ -343,7 +490,7 @@ CREATE  TABLE Respuesta (
 --DROP TABLE [ADIOS_TERCER_ANIO].[Rol];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Persona];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Empresa];
---DROP TABLE [ADIOS_TERCER_ANIO].[TipoDNI];
+--DROP TABLE [ADIOS_TERCER_ANIO].[TipoDocumento];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Localidad];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Factura];
 --DROP TABLE [ADIOS_TERCER_ANIO].[FormaDePago];
@@ -359,6 +506,9 @@ CREATE  TABLE Respuesta (
 --DROP TABLE [ADIOS_TERCER_ANIO].[Item];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Usuario];
+--DROP PROCEDURE ADIOS_TERCER_ANIO.generarDatosAdministrativos;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.generarUsuario;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPersonas;
 --DROP SCHEMA ADIOS_TERCER_ANIO
 --
 
