@@ -93,7 +93,7 @@ CREATE  TABLE Empresa (
   codigoPostal NVARCHAR(50) NULL ,
   cuit NVARCHAR(50) NOT NULL UNIQUE,
   contacto NVARCHAR(45) NULL ,
-  rubro NVARCHAR(255) NULL ,
+  idRubro INT REFERENCES Rubro(id) NULL,
   idUsuario INT REFERENCES Usuario(id) ,
   idLocalidad INT REFERENCES Localidad(id) NULL,
   calificacionPromedio INT NULL ,
@@ -610,6 +610,39 @@ END
 GO
 
 
+--SP PARA MIGRAR LOS RUBROS QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarRubros]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE 
+			@descCorta NVARCHAR(50),
+			@descLarga NVARCHAR(255),
+	DECLARE cur CURSOR FOR
+	
+	SELECT DISTINCT
+		Publicacion_Rubro_Descripcion
+	FROM gd_esquema.Maestra	
+	
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@descCorta
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		INSERT INTO ADIOS_TERCER_ANIO.Rubro(descripcionCorta, descripcionLarga)
+		VALUES (@descCorta, NULL)
+
+		FETCH NEXT FROM cur
+		INTO 
+			@descCorta
+	END
+	CLOSE cur 
+	DEALLOCATE cur
+END
+GO
+
+
 -- -----------------------------------------------------
 -- VISTAS
 -- -----------------------------------------------------
@@ -628,6 +661,9 @@ EXEC [ADIOS_TERCER_ANIO].[generarDatosAdministrativos];
 
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
+
+--MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
 
 --MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
@@ -667,5 +703,6 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPersonas;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarEmpresas;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarVisibilidades;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarRubros;
 --DROP SCHEMA ADIOS_TERCER_ANIO
 --
