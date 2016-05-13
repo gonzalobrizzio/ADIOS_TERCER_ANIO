@@ -617,7 +617,7 @@ AS BEGIN
 	set xact_abort on;
 	DECLARE 
 			@descCorta NVARCHAR(50),
-			@descLarga NVARCHAR(255),
+			@descLarga NVARCHAR(255)
 	DECLARE cur CURSOR FOR
 	
 	SELECT DISTINCT
