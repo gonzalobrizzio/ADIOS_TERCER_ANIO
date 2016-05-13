@@ -119,8 +119,8 @@ CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   codigo INT NULL ,
   descripcion NVARCHAR(255) NOT NULL ,
-  precio INT NULL ,
-  porcentaje INT NULL ,
+  precio numeric(18,2) NULL ,
+  porcentaje numeric(18,2) NULL ,
   )
 
 
@@ -572,6 +572,49 @@ DEALLOCATE cur
 END
 GO
 
+--SP PARA MIGRAR TODOS LAS VISIBILIDADES DE LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarVisibilidades]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE 
+			@codigo INT,
+			@descripcion NVARCHAR(255),
+			@precio numeric(18,2),
+			@porcentaje numeric(18,2)
+	DECLARE cur CURSOR FOR
+	
+	SELECT DISTINCT
+		Publicacion_Visibilidad_Cod, 
+		Publicacion_Visibilidad_Desc, 
+		Publicacion_Visibilidad_Precio,
+		Publicacion_Visibilidad_Porcentaje
+	FROM gd_esquema.Maestra	
+	
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@codigo,
+		@descripcion,
+		@precio,
+		@porcentaje
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(codigo, descripcion, precio, porcentaje)
+		VALUES (@codigo, @descripcion, @precio, @porcentaje)
+
+		FETCH NEXT FROM cur
+		INTO 
+			@codigo,
+			@descripcion,
+			@precio,
+			@porcentaje
+	END
+	CLOSE cur 
+	DEALLOCATE cur
+END
+GO
+
 
 -- -----------------------------------------------------
 -- VISTAS
@@ -588,6 +631,9 @@ GO
 
 --CARGO LOS DATOS ADMINISTRATIVOS
 EXEC [ADIOS_TERCER_ANIO].[generarDatosAdministrativos];
+
+--MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
 
 --MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
@@ -626,5 +672,6 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.generarUsuario;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPersonas;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarEmpresas;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarVisibilidades;
 --DROP SCHEMA ADIOS_TERCER_ANIO
 --
