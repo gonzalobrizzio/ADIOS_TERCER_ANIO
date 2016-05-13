@@ -67,7 +67,7 @@ CREATE  TABLE Persona (
   apellido NVARCHAR(255) NOT NULL ,
   documento DECIMAL(18,0) NOT NULL ,
   idTipoDocumento INT REFERENCES TipoDocumento(id) ,
-  telefono INT NULL ,
+  telefono NVARCHAR(20) NULL ,
   direccion NVARCHAR(255) NOT NULL ,
   direccion_numero DECIMAL(18,0) NULL ,
   piso DECIMAL(18,0) NULL ,
@@ -86,7 +86,7 @@ CREATE  TABLE Persona (
 CREATE  TABLE Empresa (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   razonSocial NVARCHAR(255) NOT NULL ,
-  telefono INT NULL ,
+  telefono NVARCHAR(20) NULL ,
   direccion NVARCHAR(50) NULL ,
   direccion_numero INT NULL ,
   dpto NVARCHAR(50) NULL ,
