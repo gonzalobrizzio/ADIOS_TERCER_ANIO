@@ -9,7 +9,7 @@ CREATE SCHEMA [ADIOS_TERCER_ANIO] AUTHORIZATION [gd]
 CREATE  TABLE Funcionalidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   descripcion NVARCHAR(255) NULL ,
-   )
+  )
 
 
 
@@ -19,7 +19,7 @@ CREATE  TABLE Funcionalidad (
 CREATE  TABLE Usuario (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   usuario NVARCHAR(255) NOT NULL UNIQUE,
-  pass NVARCHAR(255) NOT NULL ,
+  pass NVARCHAR(255) NULL ,
   mail NVARCHAR(255) NOT NULL UNIQUE,
   deleted INT DEFAULT 0 ,
   intentos INT DEFAULT 0 ,
@@ -76,7 +76,7 @@ CREATE  TABLE Persona (
   fechaNacimiento DATETIME NOT NULL ,
   fechaCreacion DATETIME NOT NULL ,
   idUsuario INT REFERENCES usuario(id) ,
-  idLocalidad INT REFERENCES Localidad(id) ,
+  idLocalidad INT REFERENCES Localidad(id) NULL,
   )
 
 
@@ -95,7 +95,7 @@ CREATE  TABLE Empresa (
   contacto NVARCHAR(45) NULL ,
   rubro NVARCHAR(255) NULL ,
   idUsuario INT REFERENCES Usuario(id) ,
-  idLocalidad INT REFERENCES Localidad(id) ,
+  idLocalidad INT REFERENCES Localidad(id) NULL,
   calificacionPromedio INT NULL ,
   fechaCreacion DATETIME NULL ,
   )
@@ -322,6 +322,9 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarDatosAdministrativos]
 AS BEGIN
 	--TIPOS DE DOCUMENTO
+	set nocount on;
+	set xact_abort on;
+
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('DNI')
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('CI')
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
@@ -331,9 +334,6 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Empresa')
-
-	--LOCALIDADES
-	INSERT INTO ADIOS_TERCER_ANIO.Localidad(descripcion) VALUES ('Capital Federal')
 
 	--ESTADOS
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Borrador')
@@ -350,13 +350,14 @@ GO
 -- DEVUELVE EL ID USADO PARA PODER USARLO COMO FK
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuario](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
-	
+	set nocount on;
+	set xact_abort on;
 	-- INSERTO EL NUEVO USUARIO
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail) 
 	VALUES (@usuario,@password,@mail)
 	
 	-- OBTENGO EL ULTIMO ID 
-	SELECT @ultimoID = MAX(id) FROM ADIOS_TERCER_ANIO.Usuario
+	SELECT @ultimoID = SCOPE_IDENTITY();
 	
 	RETURN
 	
@@ -366,7 +367,8 @@ GO
 --SP PARA MIGRAR TODOS LAS PERSONAS DE LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPersonas]
 AS BEGIN
-
+	set nocount on;
+	set xact_abort on;
 	DECLARE @idUsuario INT,
 			@nombre NVARCHAR(255),
 			@apellido NVARCHAR(255),
@@ -379,6 +381,7 @@ AS BEGIN
 			@dpto NVARCHAR(255),
 			@codigoPostal NVARCHAR(255)
 	DECLARE cur CURSOR FOR
+
 	SELECT DISTINCT 
 		Cli_Nombre,
 		Cli_Apeliido,
@@ -390,13 +393,14 @@ AS BEGIN
 		Cli_Piso,
 		Cli_Depto,
 		Cli_Cod_Postal
-FROM 
+	FROM 
 		gd_esquema.Maestra
 	WHERE
 		Cli_Dni IS NOT NULL
+
 	OPEN cur
 	FETCH NEXT FROM cur
-	INTO 
+		INTO 
 		@nombre,
 		@apellido,
 		@documento,
@@ -407,10 +411,11 @@ FROM
 		@piso,
 		@dpto,
 		@codigoPostal
+
 	WHILE(@@FETCH_STATUS = 0)
 		BEGIN
 			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
-			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',@mail,@ultimoID = @idUsuario OUTPUT;
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,NULL,@mail,@ultimoID = @idUsuario OUTPUT;
 
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 			VALUES(2,@idUsuario)
@@ -444,7 +449,7 @@ FROM
 				@fechaNac,
 				GETDATE(),
 				@idUsuario,
-				1)
+				NULL)
 			
 				
 		FETCH NEXT FROM cur
@@ -461,7 +466,7 @@ FROM
 			@codigoPostal
 		END
 	CLOSE cur 
-DEALLOCATE cur
+	DEALLOCATE cur
 		
 END
 GO
@@ -469,7 +474,8 @@ GO
 --SP PARA MIGRAR TODOS LAS EMPRESAS DE LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarEmpresas]
 AS BEGIN
-
+	set nocount on;
+	set xact_abort on;
 	DECLARE @idUsuario INT,
 			@razonSocial NVARCHAR(255) ,
 			@telefono INT,
@@ -494,7 +500,7 @@ AS BEGIN
 		Publ_Empresa_Piso,
 		Publ_Empresa_Depto,
 		Publ_Empresa_Cod_Postal
-FROM 
+	FROM 
 		gd_esquema.Maestra
 	WHERE
 		Publ_Empresa_Cuit IS NOT NULL
@@ -513,7 +519,7 @@ FROM
 	WHILE(@@FETCH_STATUS = 0)
 		BEGIN
 			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
-			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit,'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',@mail,@ultimoID = @idUsuario OUTPUT;
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, NULL, @mail, @ultimoID = @idUsuario OUTPUT;
 
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 			VALUES(3,@idUsuario)
@@ -541,9 +547,9 @@ FROM
 				@codigoPostal,
 				@cuit,
 				@contacto,
-				'Electronica',
+				NULL,
 				@idUsuario,
-				1,
+				NULL,
 				0,
 				@fechaCreacion)
 			
@@ -622,4 +628,3 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarEmpresas;
 --DROP SCHEMA ADIOS_TERCER_ANIO
 --
-
