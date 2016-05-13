@@ -533,10 +533,7 @@ AS BEGIN
 				codigoPostal,
 				cuit,
 				contacto,
-				rubro,
 				idUsuario,
-				idLocalidad,
-				calificacionPromedio,
 				fechaCreacion)
 			VALUES (
 				@razonSocial,
@@ -547,10 +544,7 @@ AS BEGIN
 				@codigoPostal,
 				@cuit,
 				@contacto,
-				NULL,
 				@idUsuario,
-				NULL,
-				0,
 				@fechaCreacion)
 			
 				
