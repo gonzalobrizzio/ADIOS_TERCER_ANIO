@@ -669,7 +669,11 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
-
+--DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
+--DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
+--DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
+--DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
+--DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
 -- -----------------------------------------------------
 -- SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE
 -- -----------------------------------------------------
