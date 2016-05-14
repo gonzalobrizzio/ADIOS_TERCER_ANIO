@@ -640,6 +640,81 @@ AS BEGIN
 END
 GO
 
+--SP PARA MIGRAR LAS PUBLICACIONES QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE 
+			@idEstado 		INT,
+			@idVisibilidad 	INT,
+			@idPublicador	INT,
+			@fechaInicio 	DATETIME,
+			@fechaFin		DATETIME,
+			@descripcion	NVARCHAR(255),	
+			@tienePreguntas	INT,
+			@idTipo			INT,
+			@idRubro 		INT,
+			@idItem			INT,
+			@idEnvio		INT
+	DECLARE cur CURSOR FOR
+	
+	SELECT DISTINCT
+		Publicacion_Estado,
+		Publicacion_Visibilidad_Cod,
+		Publicacion_Fecha,
+		Publicacion_Fecha_Venc,
+		Publicacion_Descripcion,
+		Publicacion_Tipo
+	FROM gd_esquema.Maestra	 
+
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@idEstado,
+		@idVisibilidad,
+		@fechaInicio,
+		@fechaFin,
+		@descripcion,
+		@idTipo
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		INSERT INTO ADIOS_TERCER_ANIO.Publicacion( 
+		idEstado,
+		idVisibilidad,
+		idPublicador,
+		fechaInicio,
+		fechaFin,
+		descripcion,
+		idtipo,
+		idRubro,
+		idItem,
+		idEnvio)
+		VALUES (@idEstado,
+		@idVisibilidad,
+		NULL,
+		@fechaInicio,
+		@fechaFin,
+		@descripcion,
+		@idTipo,
+		NULL,
+		NULL,
+		NULL)
+
+		FETCH NEXT FROM cur
+		INTO 
+			@id,
+			@idEstado,
+			@idVisibilidad,
+			@fechaInicio,
+			@fechaFin,
+			@descripcion,
+			@idTipo
+	END
+	CLOSE cur 
+	DEALLOCATE cur
+END
+GO
 
 -- -----------------------------------------------------
 -- VISTAS
