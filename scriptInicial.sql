@@ -43,7 +43,7 @@ CREATE  TABLE Rol (
 -- -----------------------------------------------------
 CREATE  TABLE TipoDocumento (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  descripcion NVARCHAR(255) NOT NULL ,
+  nombre NVARCHAR(255) NOT NULL ,
    )
 
 
@@ -53,7 +53,7 @@ CREATE  TABLE TipoDocumento (
 -- -----------------------------------------------------
 CREATE  TABLE Localidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  descripcion NVARCHAR(255) NULL ,
+  nombre NVARCHAR(255) NULL ,
    )
 
 
@@ -67,7 +67,7 @@ CREATE  TABLE Persona (
   apellido NVARCHAR(255) NOT NULL ,
   documento DECIMAL(18,0) NOT NULL ,
   idTipoDocumento INT REFERENCES TipoDocumento(id) ,
-  telefono INT NOT NULL ,
+  telefono NVARCHAR(20) NULL ,
   direccion NVARCHAR(255) NOT NULL ,
   direccion_numero DECIMAL(18,0) NULL ,
   piso DECIMAL(18,0) NULL ,
@@ -86,7 +86,7 @@ CREATE  TABLE Persona (
 CREATE  TABLE Empresa (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   razonSocial NVARCHAR(255) NOT NULL ,
-  telefono INT NULL ,
+  telefono NVARCHAR(20) NULL ,
   direccion NVARCHAR(50) NULL ,
   direccion_numero INT NULL ,
   dpto NVARCHAR(50) NULL ,
@@ -96,7 +96,7 @@ CREATE  TABLE Empresa (
   idRubro INT REFERENCES Rubro(id) NULL,
   idUsuario INT REFERENCES Usuario(id) ,
   idLocalidad INT REFERENCES Localidad(id) NULL,
-  calificacionPromedio INT NULL ,
+  calificacionPromedio INT NULL DEFAULT 0,
   fechaCreacion DATETIME NULL ,
   )
 
@@ -325,10 +325,10 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('DNI')
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('CI')
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('DNI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('CI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('LE')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('LC')
 
 	--ROLES
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
@@ -416,16 +416,16 @@ AS BEGIN
 		BEGIN
 			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,NULL,@mail,@ultimoID = @idUsuario OUTPUT;
-
+			DECLARE @idRol int;
+			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(2,@idUsuario)
+			VALUES(@idRol, @idUsuario)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Persona(
 				nombre,
 				apellido,
 				documento,
 				idTipoDocumento,
-				telefono,
 				direccion,
 				direccion_numero,
 				piso,
@@ -433,14 +433,12 @@ AS BEGIN
 				codigoPostal,
 				fechaNacimiento,
 				fechaCreacion,
-				idUsuario,
-				idLocalidad)
+				idUsuario)
 			VALUES (
 				@nombre,
 				@apellido,
 				@documento,
-				1,
-				0,
+				(select id from ADIOS_TERCER_ANIO.TipoDocumento where nombre = 'DNI'),
 				@direccion,
 				@direccion_numero,
 				@piso,
@@ -448,8 +446,7 @@ AS BEGIN
 				@codigoPostal,
 				@fechaNac,
 				GETDATE(),
-				@idUsuario,
-				NULL)
+				@idUsuario)
 			
 				
 		FETCH NEXT FROM cur
@@ -520,9 +517,10 @@ AS BEGIN
 		BEGIN
 			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, NULL, @mail, @ultimoID = @idUsuario OUTPUT;
-
+			DECLARE @idRol int;
+			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(3,@idUsuario)
+			VALUES(@idRol,@idUsuario)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Empresa(
 				razonSocial,
@@ -533,10 +531,7 @@ AS BEGIN
 				codigoPostal,
 				cuit,
 				contacto,
-				idRubro,
 				idUsuario,
-				idLocalidad,
-				calificacionPromedio,
 				fechaCreacion)
 			VALUES (
 				@razonSocial,
@@ -547,10 +542,7 @@ AS BEGIN
 				@codigoPostal,
 				@cuit,
 				@contacto,
-				NULL,
 				@idUsuario,
-				NULL,
-				0,
 				@fechaCreacion)
 			
 				
@@ -688,6 +680,9 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 --asdda
 --sd
 --asddas
+--USE GD1C2016USE GD1C2016
+--USE GD1C2016USE GD1C2016USE GD1C2016USE GD1C2016
+--USE GD1C2016USE GD1C2016USE GD1C2016USE GD1C2016USE GD1C2016USE GD1C2016USE GD1C2016USE GD1C2016
 --DROP TABLE [ADIOS_TERCER_ANIO].[RolUsuario];
 --DROP TABLE [ADIOS_TERCER_ANIO].[FuncionalidadRol];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Funcionalidad];
@@ -717,4 +712,3 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarVisibilidades;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarRubros;
 --DROP SCHEMA ADIOS_TERCER_ANIO
---
