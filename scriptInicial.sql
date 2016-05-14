@@ -682,6 +682,12 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 -- SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE
 -- -----------------------------------------------------
 --USE GD1C2016
+--dasd
+--sad
+--asd
+--asdda
+--sd
+--asddas
 --DROP TABLE [ADIOS_TERCER_ANIO].[RolUsuario];
 --DROP TABLE [ADIOS_TERCER_ANIO].[FuncionalidadRol];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Funcionalidad];
