@@ -666,7 +666,8 @@ AS BEGIN
 		Publicacion_Visibilidad_Cod,
 		Publicacion_Fecha,
 		Publicacion_Fecha_Venc,
-		Publicacion_Descripcion
+		Publicacion_Descripcion,
+		Publicacion_Tipo
 	FROM gd_esquema.Maestra
 	WHERE (Publicacion_Fecha_Venc is NOT NULL) AND (Publicacion_Fecha is NOT NULL) 	
 
@@ -679,7 +680,8 @@ AS BEGIN
 		@idVisibilidad,
 		@fechaInicio,
 		@fechaFin,
-		@descripcion
+		@descripcion,
+		@idTipo
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
 		SET @idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE (descripcionCorta = (SELECT Publicacion_Rubro_Descripcion FROM gd_esquema.Maestra)))
@@ -692,13 +694,15 @@ AS BEGIN
 		idVisibilidad,
 		fechaInicio,
 		fechaFin,
-		descripcion)
+		descripcion,
+		idtipo)
 		VALUES (@id,
 		@idEstado,
 		@idVisibilidad,
 		@fechaInicio,
 		@fechaFin,
-		@descripcion)
+		@descripcion,
+		@idtipo)
 
 		FETCH NEXT FROM cur
 		INTO 
@@ -707,7 +711,8 @@ AS BEGIN
 			@idVisibilidad,
 			@fechaInicio,
 			@fechaFin,
-			@descripcion
+			@descripcion,
+			@idTipo
 	END
 	CLOSE cur 
 	DEALLOCATE cur
@@ -743,6 +748,9 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
 --MIGRO TODAS LAS PUBLICACIONES DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
+
+--Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
+--Calificacion, Compra, Envio, Estado, Factura, FormaDePago, Funcionalidad, FuncionalidadRol, Item, Localidad, Oferta, Pregunta, Respuesta, Rol, RolUsuario, TipoDocumento
 
 --DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
