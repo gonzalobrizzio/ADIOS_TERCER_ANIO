@@ -325,10 +325,10 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('DNI')
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('CI')
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('LE')
-	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(nombre) VALUES ('LC')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('DNI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('CI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
 
 	--ROLES
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
@@ -438,7 +438,7 @@ AS BEGIN
 				@nombre,
 				@apellido,
 				@documento,
-				(select id from ADIOS_TERCER_ANIO.TipoDocumento where nombre = 'DNI'),
+				(select id from ADIOS_TERCER_ANIO.TipoDocumento where descripcion = 'DNI'),
 				@direccion,
 				@direccion_numero,
 				@piso,
@@ -646,6 +646,7 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	DECLARE 
+			@id 			INT,
 			@idEstado 		INT,
 			@idVisibilidad 	INT,
 			@idPublicador	INT,
@@ -653,53 +654,51 @@ AS BEGIN
 			@fechaFin		DATETIME,
 			@descripcion	NVARCHAR(255),	
 			@tienePreguntas	INT,
-			@idTipo			INT,
+			@idtipo			INT,
 			@idRubro 		INT,
 			@idItem			INT,
-			@idEnvio		INT
+			@idEnvio		INT	
 	DECLARE cur CURSOR FOR
 	
 	SELECT DISTINCT
+		Publicacion_Cod,
 		Publicacion_Estado,
 		Publicacion_Visibilidad_Cod,
 		Publicacion_Fecha,
 		Publicacion_Fecha_Venc,
-		Publicacion_Descripcion,
-		Publicacion_Tipo
-	FROM gd_esquema.Maestra	 
+		Publicacion_Descripcion
+	FROM gd_esquema.Maestra
+	WHERE (Publicacion_Fecha_Venc is NOT NULL) AND (Publicacion_Fecha is NOT NULL) 	
+
 
 	OPEN cur
 	FETCH NEXT FROM cur
 	INTO 
+		@id,
 		@idEstado,
 		@idVisibilidad,
 		@fechaInicio,
 		@fechaFin,
-		@descripcion,
-		@idTipo
+		@descripcion
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
-		INSERT INTO ADIOS_TERCER_ANIO.Publicacion( 
+		SET @idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE (descripcionCorta = (SELECT Publicacion_Rubro_Descripcion FROM gd_esquema.Maestra)))
+		SET @idPublicador = (SELECT id FROM ADIOS_TERCER_ANIO.Usuario WHERE (SELECT Publ_Cli_Dni from gd_esquema.Maestra) = usuario or (SELECT Publ_Empresa_Cuit from gd_esquema.Maestra) = usuario )
+		SET @idItem = (SELECT id FROM ADIOS_TERCER_ANIO.Item WHERE (nombre = (SELECT Publicacion_Descripcion FROM gd_esquema.Maestra)))
+		--SET @idEnvio = (SELECT id FROM ADIOS_TERCER_ANIO.Envio WHERE (precio = ( FALTA ESTE QUE DEMIAN LO VA A VER, TENGO DUDAS SOBRE EL ITEM IGUAL
+		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
+		id, 
 		idEstado,
 		idVisibilidad,
-		idPublicador,
 		fechaInicio,
 		fechaFin,
-		descripcion,
-		idtipo,
-		idRubro,
-		idItem,
-		idEnvio)
-		VALUES (@idEstado,
+		descripcion)
+		VALUES (@id,
+		@idEstado,
 		@idVisibilidad,
-		NULL,
 		@fechaInicio,
 		@fechaFin,
-		@descripcion,
-		@idTipo,
-		NULL,
-		NULL,
-		NULL)
+		@descripcion)
 
 		FETCH NEXT FROM cur
 		INTO 
@@ -708,14 +707,12 @@ AS BEGIN
 			@idVisibilidad,
 			@fechaInicio,
 			@fechaFin,
-			@descripcion,
-			@idTipo
+			@descripcion
 	END
 	CLOSE cur 
 	DEALLOCATE cur
 END
 GO
-
 -- -----------------------------------------------------
 -- VISTAS
 -- -----------------------------------------------------
@@ -743,6 +740,9 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
+
+--MIGRO TODAS LAS PUBLICACIONES DE LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
 
 --DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
