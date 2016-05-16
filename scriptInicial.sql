@@ -669,13 +669,15 @@ AS BEGIN
 	OPEN cur
 	FETCH NEXT FROM cur
 	INTO 
-		@descCorta
+		@fecha,
+		@importeTotal,
+		@numero
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
 		SET @idFormaDePago = (SELECT nombre FROM ADIOS_TERCER_ANIO.FormaDePago WHERE (SELECT Forma_Pago_Desc FROM gd_esquema.Maestra) = 'Tarjeta de credito' 
 		or (SELECT Forma_Pago_Desc FROM gd_esquema.Maestra) = 'Efectivo')
-		--SET @idComprador =
-		--SET @idPublicacion = SELECT nombre
+		--SET @idComprador = SELECT id FROM ADIOS_TERCER_ANIO.Compra WHERE
+		--SET @idPublicacion = SELECT id FROM ADIOS_TERCER_ANIO.Publicacion WHERE 
 		INSERT INTO 
 		ADIOS_TERCER_ANIO.Factura(fecha,
 		 importeTotal,
@@ -708,23 +710,26 @@ AS BEGIN
 	DECLARE cur CURSOR FOR
 	
 	SELECT DISTINCT
-		Publicacion_Descripcion,
-		Item_Factura_Monto,
+		Publicacion_Descripcion,	
 		Publicacion_Stock,
-		Item_Factura_Monto
+		Item_Factura_Monto,
+		Item_Factura_Cantidad
 	FROM gd_esquema.Maestra	
 	
 	OPEN cur
 	FETCH NEXT FROM cur
 	INTO 
-		@descCorta
+		@nombre,
+		@stock,
+		@precio,
+		@cantidad
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
 		INSERT INTO 
 		ADIOS_TERCER_ANIO.Item(nombre,
-		 stock,
-		 precio,
-		 cantidad)
+		stock,
+		precio,
+		cantidad)
 		VALUES (@nombre,
 		 @stock, 
 		 @precio,
@@ -741,6 +746,63 @@ AS BEGIN
 	DEALLOCATE cur
 END
 GO
+
+--SP PARA MIGRAR LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCalificaciones]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE 
+			@id						INT,
+			@idUsuarioCalificador	INT,
+			@idPublicacion			INT,
+			@fecha					DATETIME,
+			@valor					INT,
+			@detalle				NVARCHAR(45),
+			@pendiente				INT
+	DECLARE cur CURSOR FOR
+	
+	SELECT DISTINCT
+		Calificacion_Codigo,	
+		Publicacion_Fecha_Venc,
+		Calificacion_Cant_Estrellas,
+		Calificacion_Descripcion
+	FROM gd_esquema.Maestra	
+	
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+			@id,
+			@fecha,
+			@valor,
+			@detalle
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		-- SET @id 
+		SET @idUsuarioCalificador = (SELECT id FROM ADIOS_TERCER_ANIO.Usuario WHERE (SELECT Publ_Cli_Dni from gd_esquema.Maestra) = usuario or (SELECT Publ_Empresa_Cuit from gd_esquema.Maestra) = usuario )
+		SET @pendiente = 1
+		
+		INSERT INTO 
+		ADIOS_TERCER_ANIO.Calificaciones(idPublicacion,	
+		fecha,
+		valor,
+		detalle)
+		VALUES (@idPublicacion,
+		 @fecha, 
+		 @valor,
+		 @detalle)
+
+		FETCH NEXT FROM cur
+		INTO @idPublicacion,
+		 @fecha, 
+		 @valor,
+		 @detalle
+	END
+	CLOSE cur 
+	DEALLOCATE cur
+END
+GO
+
 
 --SP PARA MIGRAR LAS PUBLICACIONES QUE HAY EN LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
@@ -778,8 +840,6 @@ AS BEGIN
 	FETCH NEXT FROM cur
 	INTO 
 		@id,
-		@idEstado,
-		@idVisibilidad,
 		@fechaInicio,
 		@fechaFin,
 		@descripcion,
@@ -790,17 +850,15 @@ AS BEGIN
 		SET @idPublicador = (SELECT id FROM ADIOS_TERCER_ANIO.Usuario WHERE (SELECT Publ_Cli_Dni from gd_esquema.Maestra) = usuario or (SELECT Publ_Empresa_Cuit from gd_esquema.Maestra) = usuario )
 		SET @idItem = (SELECT id FROM ADIOS_TERCER_ANIO.Item WHERE (nombre = (SELECT Publicacion_Descripcion FROM gd_esquema.Maestra)))
 		--SET @idEnvio = (SELECT id FROM ADIOS_TERCER_ANIO.Envio WHERE (precio = ( FALTA ESTE QUE DEMIAN LO VA A VER, TENGO DUDAS SOBRE EL ITEM IGUAL
+		SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE (nombre = 'Activa'))
+		SET @idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE ( codigo = (SELECT Publicacion_Visibilidad_Cod FROM gd_esquema.Maestra)))
 		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
-		id, 
-		idEstado,
-		idVisibilidad,
+		id,
 		fechaInicio,
 		fechaFin,
 		descripcion,
 		idtipo)
 		VALUES (@id,
-		@idEstado,
-		@idVisibilidad,
 		@fechaInicio,
 		@fechaFin,
 		@descripcion,
@@ -809,8 +867,6 @@ AS BEGIN
 		FETCH NEXT FROM cur
 		INTO 
 			@id,
-			@idEstado,
-			@idVisibilidad,
 			@fechaInicio,
 			@fechaFin,
 			@descripcion,
@@ -839,7 +895,10 @@ EXEC [ADIOS_TERCER_ANIO].[generarDatosAdministrativos];
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
 
---MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
+--MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
+
+--MIGRO LOS RUBROS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
 
 --MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
@@ -858,13 +917,8 @@ EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
 --Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
---Calificacion, Compra, Envio, Estado, Factura, FormaDePago, Funcionalidad, FuncionalidadRol, Item, Localidad, Oferta, Pregunta, Respuesta, Rol, RolUsuario, TipoDocumento
+--Calificacion--, Compra, Envio, Oferta, Pregunta, Respuesta, --Factura--
 
---DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
---DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
---DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
---DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
---DROP TABLE [ADIOS_TERCER_ANIO].[Visibilidad];
 -- -----------------------------------------------------
 -- SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE
 -- -----------------------------------------------------
