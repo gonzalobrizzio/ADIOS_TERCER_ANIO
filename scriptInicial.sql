@@ -341,6 +341,11 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
 
+	--FORMAS DE PAGO
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('Efectivo')
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('Tarjeta de Credito')
+
+
 END
 GO
 
@@ -640,6 +645,103 @@ AS BEGIN
 END
 GO
 
+--Lo empiezo pero no está terminado--
+--SP PARA MIGRAR LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarFacturas]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE 
+			@fecha			DATETIME,
+			@importeTotal	decimal(18,2),
+			@idComprador	INT,
+			@numero			INT,
+			@idFormaDePago	INT,
+			@idPublicacion	INT
+	DECLARE cur CURSOR FOR
+	
+	SELECT DISTINCT
+		Factura_Fecha,
+		Factura_Total,
+		Factura_Nro
+	FROM gd_esquema.Maestra	
+	
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@descCorta
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		SET @idFormaDePago = (SELECT nombre FROM ADIOS_TERCER_ANIO.FormaDePago WHERE (SELECT Forma_Pago_Desc FROM gd_esquema.Maestra) = 'Tarjeta de credito' 
+		or (SELECT Forma_Pago_Desc FROM gd_esquema.Maestra) = 'Efectivo')
+		--SET @idComprador =
+		--SET @idPublicacion = SELECT nombre
+		INSERT INTO 
+		ADIOS_TERCER_ANIO.Factura(fecha,
+		 importeTotal,
+		 numero)
+		VALUES (@fecha,
+		 @importeTotal, 
+		 @numero)
+
+		FETCH NEXT FROM cur
+		INTO 
+			@fecha,
+			@importeTotal,
+			@numero
+	END
+	CLOSE cur 
+	DEALLOCATE cur
+END
+GO
+
+--SP PARA MIGRAR LOS ITEMS QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE 
+			@nombre				NVARCHAR(255),
+			@stock				INT,
+			@precio				DECIMAL(18,2),
+			@cantidad			INT
+	DECLARE cur CURSOR FOR
+	
+	SELECT DISTINCT
+		Publicacion_Descripcion,
+		Item_Factura_Monto,
+		Publicacion_Stock,
+		Item_Factura_Monto
+	FROM gd_esquema.Maestra	
+	
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@descCorta
+	WHILE(@@FETCH_STATUS = 0)
+	BEGIN
+		INSERT INTO 
+		ADIOS_TERCER_ANIO.Item(nombre,
+		 stock,
+		 precio,
+		 cantidad)
+		VALUES (@nombre,
+		 @stock, 
+		 @precio,
+		 @cantidad)
+
+		FETCH NEXT FROM cur
+		INTO 
+			@nombre,
+			@stock, 
+			@precio,
+			@cantidad
+	END
+	CLOSE cur 
+	DEALLOCATE cur
+END
+GO
+
 --SP PARA MIGRAR LAS PUBLICACIONES QUE HAY EN LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
 AS BEGIN
@@ -748,6 +850,12 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
 --MIGRO TODAS LAS PUBLICACIONES DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
+
+--MIGRO LOS ITEMS QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarItems];
+
+--MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
 --Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
 --Calificacion, Compra, Envio, Estado, Factura, FormaDePago, Funcionalidad, FuncionalidadRol, Item, Localidad, Oferta, Pregunta, Respuesta, Rol, RolUsuario, TipoDocumento
