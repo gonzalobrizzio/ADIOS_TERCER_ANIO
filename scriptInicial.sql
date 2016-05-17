@@ -783,7 +783,7 @@ AS BEGIN
 		SET @pendiente = 1
 		
 		INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificaciones(idPublicacion,	
+		ADIOS_TERCER_ANIO.Calificacion(idPublicacion,	
 		fecha,
 		valor,
 		detalle)
@@ -850,7 +850,7 @@ AS BEGIN
 		SET @idPublicador = (SELECT id FROM ADIOS_TERCER_ANIO.Usuario WHERE (SELECT Publ_Cli_Dni from gd_esquema.Maestra) = usuario or (SELECT Publ_Empresa_Cuit from gd_esquema.Maestra) = usuario )
 		SET @idItem = (SELECT id FROM ADIOS_TERCER_ANIO.Item WHERE (nombre = (SELECT Publicacion_Descripcion FROM gd_esquema.Maestra)))
 		--SET @idEnvio = (SELECT id FROM ADIOS_TERCER_ANIO.Envio WHERE (precio = ( FALTA ESTE QUE DEMIAN LO VA A VER, TENGO DUDAS SOBRE EL ITEM IGUAL
-		SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE (nombre = 'Activa'))
+		SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE (nombre = 'Activa') or (nombre = 'Borrador') or (nombre = 'Finalizada') or (nombre = 'Pausada') )
 		SET @idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE ( codigo = (SELECT Publicacion_Visibilidad_Cod FROM gd_esquema.Maestra)))
 		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
 		id,
