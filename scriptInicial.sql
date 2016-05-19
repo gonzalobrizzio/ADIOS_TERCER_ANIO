@@ -43,7 +43,7 @@ CREATE  TABLE Rol (
 -- -----------------------------------------------------
 CREATE  TABLE TipoDocumento (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  nombre NVARCHAR(255) NOT NULL ,
+  descripcion NVARCHAR(255) NOT NULL ,
    )
 
 
@@ -153,14 +153,14 @@ CREATE  TABLE Envio (
 -- -----------------------------------------------------
 CREATE  TABLE Publicacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
+  descripcion NVARCHAR(255) NULL ,
+  fechaInicio DATETIME NOT NULL ,
+  fechaFin DATETIME NOT NULL ,
+  tienePreguntas INT NULL ,
+  tipo NVARCHAR(255) ,
   idEstado INT REFERENCES Estado(id) ,
   idVisibilidad INT REFERENCES Visibilidad(id) ,
   idPublicador INT REFERENCES Usuario(id) ,
-  fechaInicio DATETIME NOT NULL ,
-  fechaFin DATETIME NOT NULL ,
-  descripcion NVARCHAR(255) NULL ,
-  tienePreguntas INT NULL ,
-  idtipo INT NOT NULL ,
   idRubro INT REFERENCES Rubro(id) ,
   idItem INT REFERENCES Item(id) ,
   idEnvio INT REFERENCES Envio(id) ,
@@ -768,6 +768,7 @@ AS BEGIN
 		Calificacion_Cant_Estrellas,
 		Calificacion_Descripcion
 	FROM gd_esquema.Maestra	
+	WHERE Calificacion_Codigo IS NOT NULL
 	
 	OPEN cur
 	FETCH NEXT FROM cur
@@ -810,67 +811,103 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	DECLARE 
-			@id 			INT,
-			@idEstado 		INT,
-			@idVisibilidad 	INT,
-			@idPublicador	INT,
-			@fechaInicio 	DATETIME,
-			@fechaFin		DATETIME,
-			@descripcion	NVARCHAR(255),	
-			@tienePreguntas	INT,
-			@idtipo			INT,
-			@idRubro 		INT,
-			@idItem			INT,
-			@idEnvio		INT	
+			@cuit				NVARCHAR(50),
+			---------------------------------
+			@pubCod 			INT,
+			@pubDescrip 		NVARCHAR(255),
+			@pubFechaInicio 	DATETIME,
+			@pubFechaFin		DATETIME,
+			@pubTipo			NVARCHAR(255),	
+			@pubVisibilidadCod	INT,
+			@pubEstado			NVARCHAR(255),
+			@pubRubro			NVARCHAR(255),
+			----------------------------------
+			@idEstado			INT,
+			@idVisibilidad		INT,
+			@idPublicador		INT,
+			@idRubro			INT,
+			@idItem				INT,
+			@idEnvio			INT	
 	DECLARE cur CURSOR FOR
 	
 	SELECT DISTINCT
+		Publ_Empresa_Cuit,
 		Publicacion_Cod,
-		Publicacion_Estado,
-		Publicacion_Visibilidad_Cod,
+		Publicacion_Descripcion,
 		Publicacion_Fecha,
 		Publicacion_Fecha_Venc,
-		Publicacion_Descripcion,
-		Publicacion_Tipo
+		Publicacion_Tipo,
+		Publicacion_Visibilidad_Cod,
+		Publicacion_Estado,
+		Publicacion_Rubro_Descripcion
 	FROM gd_esquema.Maestra
-	WHERE (Publicacion_Fecha_Venc is NOT NULL) AND (Publicacion_Fecha is NOT NULL) 	
-
+	WHERE (Publ_Empresa_Cuit IS NOT NULL)
 
 	OPEN cur
 	FETCH NEXT FROM cur
 	INTO 
-		@id,
-		@fechaInicio,
-		@fechaFin,
-		@descripcion,
-		@idTipo
+		@cuit,
+		@pubCod,
+		@pubDescrip,	
+		@pubFechaInicio,
+		@pubFechaFin,
+		@pubTipo,
+		@pubVisibilidadCod,
+		@pubEstado,
+		@pubRubro
 	WHILE(@@FETCH_STATUS = 0)
 	BEGIN
-		SET @idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE (descripcionCorta = (SELECT Publicacion_Rubro_Descripcion FROM gd_esquema.Maestra)))
-		SET @idPublicador = (SELECT id FROM ADIOS_TERCER_ANIO.Usuario WHERE (SELECT Publ_Cli_Dni from gd_esquema.Maestra) = usuario or (SELECT Publ_Empresa_Cuit from gd_esquema.Maestra) = usuario )
-		SET @idItem = (SELECT id FROM ADIOS_TERCER_ANIO.Item WHERE (nombre = (SELECT Publicacion_Descripcion FROM gd_esquema.Maestra)))
-		--SET @idEnvio = (SELECT id FROM ADIOS_TERCER_ANIO.Envio WHERE (precio = ( FALTA ESTE QUE DEMIAN LO VA A VER, TENGO DUDAS SOBRE EL ITEM IGUAL
-		SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE (nombre = 'Activa') or (nombre = 'Borrador') or (nombre = 'Finalizada') or (nombre = 'Pausada') )
-		SET @idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE ( codigo = (SELECT Publicacion_Visibilidad_Cod FROM gd_esquema.Maestra)))
+		--TODAS DICEN 'PUBLICADA', estado que no existe
+		--y las fechas de vencimiento ya pasaron, HARDCODE
+		--SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE ( nombre = @pubEstado ))
+		SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE ( nombre = 'Finalizada' ))
+
+
+		SET @idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE ( codigo = @pubVisibilidadCod ))
+		SET @idPublicador = (SELECT idUsuario FROM ADIOS_TERCER_ANIO.Empresa WHERE ( cuit = @cuit ))
+		SET @idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE ( descripcionCorta  = @pubRubro ))
+		--TODO SET @idItem = (SELECT id FROM ADIOS_TERCER_ANIO.Item WHERE (nombre = (SELECT Publicacion_Descripcion FROM gd_esquema.Maestra)))
+		--TODO SET @idEnvio = (SELECT id FROM ADIOS_TERCER_ANIO.Envio WHERE (precio = ( FALTA ESTE QUE DEMIAN LO VA A VER, TENGO DUDAS SOBRE EL ITEM IGUAL
+		
+		
 		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
-		id,
-		fechaInicio,
-		fechaFin,
-		descripcion,
-		idtipo)
-		VALUES (@id,
-		@fechaInicio,
-		@fechaFin,
-		@descripcion,
-		@idtipo)
+		  descripcion,
+		  fechaInicio,
+		  fechaFin,
+		  tienePreguntas,
+		  tipo,
+		  idEstado,
+		  idVisibilidad,
+		  idPublicador,
+		  idRubro,
+		  idItem,
+		  idEnvio
+		  )
+		VALUES (
+			@pubDescrip,
+			@pubFechaInicio,
+			@pubFechaFin,
+			0,--DEFAULT TIENE NO TIENE PREGUNTAS
+			@pubTipo, --TODO DEFINIR SI USAMOS NVARCHAR O INTS
+			@idEstado,
+			@idVisibilidad,
+			@idPublicador,
+			@idRubro,
+			NULL, --TODO SACAR CUANDO FUNCIONE BIEN migrarItems @idItem,
+			NULL --TODO SACAR CUANDO FUNCIONE BIEN migrarEnvios @idItem,
+			)
 
 		FETCH NEXT FROM cur
 		INTO 
-			@id,
-			@fechaInicio,
-			@fechaFin,
-			@descripcion,
-			@idTipo
+			@cuit,
+			@pubCod,
+			@pubDescrip,	
+			@pubFechaInicio,
+			@pubFechaFin,
+			@pubTipo,
+			@pubVisibilidadCod,
+			@pubEstado,
+			@pubRubro
 	END
 	CLOSE cur 
 	DEALLOCATE cur
@@ -895,9 +932,6 @@ EXEC [ADIOS_TERCER_ANIO].[generarDatosAdministrativos];
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
 
---MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
-
 --MIGRO LOS RUBROS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
 
@@ -910,11 +944,14 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 --MIGRO TODAS LAS PUBLICACIONES DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
 
+--MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+--EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
+
 --MIGRO LOS ITEMS QUE HAY EN LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarItems];
+--EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
+--EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
 --Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
 --Calificacion--, Compra, Envio, Oferta, Pregunta, Respuesta, --Factura--
@@ -951,4 +988,8 @@ EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarEmpresas;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarVisibilidades;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarRubros;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarCalificaciones;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPublicaciones;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarItems;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarFacturas;
 --DROP SCHEMA ADIOS_TERCER_ANIO
