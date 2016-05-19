@@ -152,7 +152,7 @@ CREATE  TABLE Envio (
 -- TABLA Publicacion
 -- -----------------------------------------------------
 CREATE  TABLE Publicacion (
-  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
+  id INTEGER PRIMARY KEY NOT NULL ,
   descripcion NVARCHAR(255) NULL ,
   fechaInicio DATETIME NOT NULL ,
   fechaFin DATETIME NOT NULL ,
@@ -810,109 +810,78 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	DECLARE 
-			@cuit				NVARCHAR(50),
-			---------------------------------
-			@pubCod 			INT,
-			@pubDescrip 		NVARCHAR(255),
-			@pubFechaInicio 	DATETIME,
-			@pubFechaFin		DATETIME,
-			@pubTipo			NVARCHAR(255),	
-			@pubVisibilidadCod	INT,
-			@pubEstado			NVARCHAR(255),
-			@pubRubro			NVARCHAR(255),
-			----------------------------------
-			@idEstado			INT,
-			@idVisibilidad		INT,
-			@idPublicador		INT,
-			@idRubro			INT,
-			@idItem				INT,
-			@idEnvio			INT	
-	DECLARE cur CURSOR FOR
-	
+
+	INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
+										id,
+										descripcion,
+										fechaInicio,
+										fechaFin,
+										tienePreguntas,
+										tipo,
+										idEstado,
+										idVisibilidad,
+										idPublicador,
+										idRubro,
+										idItem,
+										idEnvio
+									)
 	SELECT DISTINCT
-		Publ_Empresa_Cuit,
-		Publicacion_Cod,
-		Publicacion_Descripcion,
-		Publicacion_Fecha,
-		Publicacion_Fecha_Venc,
-		Publicacion_Tipo,
-		Publicacion_Visibilidad_Cod,
-		Publicacion_Estado,
-		Publicacion_Rubro_Descripcion
-	FROM gd_esquema.Maestra
-	WHERE (Publ_Empresa_Cuit IS NOT NULL)
-
-	OPEN cur
-	FETCH NEXT FROM cur
-	INTO 
-		@cuit,
-		@pubCod,
-		@pubDescrip,	
-		@pubFechaInicio,
-		@pubFechaFin,
-		@pubTipo,
-		@pubVisibilidadCod,
-		@pubEstado,
-		@pubRubro
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		--TODAS DICEN 'PUBLICADA', estado que no existe
-		--y las fechas de vencimiento ya pasaron, HARDCODE
-		--SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE ( nombre = @pubEstado ))
-		SET @idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE ( nombre = 'Finalizada' ))
-
-
-		SET @idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE ( codigo = @pubVisibilidadCod ))
-		SET @idPublicador = (SELECT idUsuario FROM ADIOS_TERCER_ANIO.Empresa WHERE ( cuit = @cuit ))
-		SET @idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE ( descripcionCorta  = @pubRubro ))
-		--TODO SET @idItem = (SELECT id FROM ADIOS_TERCER_ANIO.Item WHERE (nombre = (SELECT Publicacion_Descripcion FROM gd_esquema.Maestra)))
-		--TODO SET @idEnvio = (SELECT id FROM ADIOS_TERCER_ANIO.Envio WHERE (precio = ( FALTA ESTE QUE DEMIAN LO VA A VER, TENGO DUDAS SOBRE EL ITEM IGUAL
-		
-		
-		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
-		  descripcion,
-		  fechaInicio,
-		  fechaFin,
-		  tienePreguntas,
-		  tipo,
-		  idEstado,
-		  idVisibilidad,
-		  idPublicador,
-		  idRubro,
-		  idItem,
-		  idEnvio
-		  )
-		VALUES (
-			@pubDescrip,
-			@pubFechaInicio,
-			@pubFechaFin,
-			0,--DEFAULT TIENE NO TIENE PREGUNTAS
-			@pubTipo, --TODO DEFINIR SI USAMOS NVARCHAR O INTS
-			@idEstado,
-			@idVisibilidad,
-			@idPublicador,
-			@idRubro,
-			NULL, --TODO SACAR CUANDO FUNCIONE BIEN migrarItems @idItem,
-			NULL --TODO SACAR CUANDO FUNCIONE BIEN migrarEnvios @idItem,
-			)
-
-		FETCH NEXT FROM cur
-		INTO 
-			@cuit,
-			@pubCod,
-			@pubDescrip,	
-			@pubFechaInicio,
-			@pubFechaFin,
-			@pubTipo,
-			@pubVisibilidadCod,
-			@pubEstado,
-			@pubRubro
-	END
-	CLOSE cur 
-	DEALLOCATE cur
+		id,
+		descripcion,
+		fechaIni,
+		fechaFin,
+		tienePreguntas,
+		tipo,
+		idEstado,
+		idVisibilidad,
+		idPublicador,
+		idRubro,
+		idItem,
+		idEnvio
+	FROM
+		(SELECT DISTINCT
+			Publicacion_Cod					AS id,
+			Publicacion_Descripcion			AS descripcion,
+			Publicacion_Fecha				AS fechaIni,
+			Publicacion_Fecha_Venc			AS fechaFin,
+			NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
+			Publicacion_Tipo				AS tipo,
+			(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
+			(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
+			ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit) AS idPublicador,
+			(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
+			NULL 							AS idItem, --TODO traer 
+			NULL							AS idEnvio --TODO traer 
+		FROM 
+			gd_esquema.Maestra
+		WHERE 
+			Publicacion_Cod IS NOT NULL
+			AND
+			Publ_Empresa_Cuit IS NOT NULL) t
 END
 GO
+-- -----------------------------------------------------
+-- FUNCIONES
+-- -----------------------------------------------------
+
+-- FUNCION PARA SACAR EL idUsuario del CUIT
+CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerIdDeCuit](@cuit NVARCHAR(255))
+RETURNS INTEGER
+AS
+BEGIN
+	DECLARE @retorno INTEGER
+	SELECT
+		@retorno = id
+	FROM 
+		ADIOS_TERCER_ANIO.Empresa
+	WHERE
+		cuit = @cuit
+		
+	RETURN @retorno;
+END
+GO
+
+
 -- -----------------------------------------------------
 -- VISTAS
 -- -----------------------------------------------------
@@ -992,4 +961,5 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPublicaciones;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarItems;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarFacturas;
+--DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
 --DROP SCHEMA ADIOS_TERCER_ANIO
