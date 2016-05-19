@@ -677,6 +677,8 @@ AS BEGIN
 		Compra_Fecha IS NOT NULL
 	AND 
 		Compra_Cantidad IS NOT NULL	
+	AND	
+		Calificacion_Codigo IS NULL
 
 END
 GO
@@ -790,7 +792,7 @@ AS BEGIN
 		INSERT INTO 
 		ADIOS_TERCER_ANIO.Calificacion(idPublicacion,	
 		fecha,
-		valor,
+		puntaje,
 		detalle)
 		VALUES (@idPublicacion,
 		 @fecha, 
