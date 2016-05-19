@@ -769,8 +769,8 @@ END
 GO
 
 
---SP PARA MIGRAR LAS PUBLICACIONES QUE HAY EN LA TABLA MAESTRA
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
+--SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicacionesEmpresas]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -824,6 +824,63 @@ AS BEGIN
 			Publ_Empresa_Cuit IS NOT NULL) tableFrom
 END
 GO
+
+
+--SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicacionesPersonas]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+
+	INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
+										id,
+										descripcion,
+										fechaInicio,
+										fechaFin,
+										tienePreguntas,
+										tipo,
+										idEstado,
+										idVisibilidad,
+										idPublicador,
+										idRubro,
+										idItem,
+										idEnvio
+									)
+	SELECT DISTINCT
+		id,
+		descripcion,
+		fechaIni,
+		fechaFin,
+		tienePreguntas,
+		tipo,
+		idEstado,
+		idVisibilidad,
+		idPublicador,
+		idRubro,
+		idItem,
+		idEnvio
+	FROM
+		(SELECT DISTINCT
+			Publicacion_Cod					AS id,
+			Publicacion_Descripcion			AS descripcion,
+			Publicacion_Fecha				AS fechaIni,
+			Publicacion_Fecha_Venc			AS fechaFin,
+			NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
+			Publicacion_Tipo				AS tipo,
+			(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
+			(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
+			ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idPublicador,
+			(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
+			NULL 							AS idItem, --TODO traer 
+			NULL							AS idEnvio --TODO traer 
+		FROM 
+			gd_esquema.Maestra
+		WHERE 
+			Publicacion_Cod IS NOT NULL
+			AND
+			Publ_Cli_Dni IS NOT NULL) tableFrom
+END
+GO
 -- -----------------------------------------------------
 -- FUNCIONES
 -- -----------------------------------------------------
@@ -835,7 +892,7 @@ AS
 BEGIN
 	DECLARE @retorno INTEGER
 	SELECT
-		@retorno = id
+		@retorno = idUsuario
 	FROM 
 		ADIOS_TERCER_ANIO.Empresa
 	WHERE
@@ -845,6 +902,22 @@ BEGIN
 END
 GO
 
+-- FUNCION PARA SACAR EL idUsuario del DNI
+CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerIdDeDNI](@dni DECIMAL(18,0))
+RETURNS INTEGER
+AS
+BEGIN
+	DECLARE @retorno INTEGER
+	SELECT
+		@retorno = idUsuario
+	FROM 
+		ADIOS_TERCER_ANIO.Persona
+	WHERE
+		documento = @dni
+		
+	RETURN @retorno;
+END
+GO
 
 -- -----------------------------------------------------
 -- VISTAS
@@ -874,8 +947,11 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
---MIGRO TODAS LAS PUBLICACIONES DE LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
+--MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesEmpresas];
+
+--MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesPersonas];
 
 --MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
 --EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
@@ -922,8 +998,10 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarVisibilidades;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarRubros;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarCalificaciones;
---DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPublicaciones;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPublicacionesEmpresas;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPublicacionesPersonas;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarItems;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarFacturas;
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
+--DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeDNI;
 --DROP SCHEMA ADIOS_TERCER_ANIO
