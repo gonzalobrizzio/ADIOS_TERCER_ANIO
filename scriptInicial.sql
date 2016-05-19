@@ -809,38 +809,24 @@ AS BEGIN
 										idEnvio
 									)
 	SELECT DISTINCT
-		id,
-		descripcion,
-		fechaIni,
-		fechaFin,
-		tienePreguntas,
-		tipo,
-		idEstado,
-		idVisibilidad,
-		idPublicador,
-		idRubro,
-		idItem,
-		idEnvio
-	FROM
-		(SELECT DISTINCT
-			Publicacion_Cod					AS id,
-			Publicacion_Descripcion			AS descripcion,
-			Publicacion_Fecha				AS fechaIni,
-			Publicacion_Fecha_Venc			AS fechaFin,
-			NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
-			Publicacion_Tipo				AS tipo,
-			(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
-			(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-			ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit) AS idPublicador,
-			(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
-			NULL 							AS idItem, --TODO traer 
-			NULL							AS idEnvio --TODO traer 
-		FROM 
-			gd_esquema.Maestra
-		WHERE 
-			Publicacion_Cod IS NOT NULL
-			AND
-			Publ_Empresa_Cuit IS NOT NULL) tableFrom
+		Publicacion_Cod					AS id,
+		Publicacion_Descripcion			AS descripcion,
+		Publicacion_Fecha				AS fechaIni,
+		Publicacion_Fecha_Venc			AS fechaFin,
+		NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
+		Publicacion_Tipo				AS tipo,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit) AS idPublicador,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
+		NULL 							AS idItem, --TODO traer 
+		NULL							AS idEnvio --TODO traer 
+	FROM 
+		gd_esquema.Maestra
+	WHERE 
+		Publicacion_Cod IS NOT NULL
+		AND
+		Publ_Empresa_Cuit IS NOT NULL
 END
 GO
 
@@ -866,38 +852,24 @@ AS BEGIN
 										idEnvio
 									)
 	SELECT DISTINCT
-		id,
-		descripcion,
-		fechaIni,
-		fechaFin,
-		tienePreguntas,
-		tipo,
-		idEstado,
-		idVisibilidad,
-		idPublicador,
-		idRubro,
-		idItem,
-		idEnvio
-	FROM
-		(SELECT DISTINCT
-			Publicacion_Cod					AS id,
-			Publicacion_Descripcion			AS descripcion,
-			Publicacion_Fecha				AS fechaIni,
-			Publicacion_Fecha_Venc			AS fechaFin,
-			NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
-			Publicacion_Tipo				AS tipo,
-			(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
-			(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-			ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idPublicador,
-			(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
-			NULL 							AS idItem, --TODO traer 
-			NULL							AS idEnvio --TODO traer 
-		FROM 
-			gd_esquema.Maestra
-		WHERE 
-			Publicacion_Cod IS NOT NULL
-			AND
-			Publ_Cli_Dni IS NOT NULL) tableFrom
+		Publicacion_Cod					AS id,
+		Publicacion_Descripcion			AS descripcion,
+		Publicacion_Fecha				AS fechaIni,
+		Publicacion_Fecha_Venc			AS fechaFin,
+		NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
+		Publicacion_Tipo				AS tipo,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idPublicador,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
+		NULL 							AS idItem, --TODO traer 
+		NULL							AS idEnvio --TODO traer 
+	FROM 
+		gd_esquema.Maestra
+	WHERE 
+		Publicacion_Cod IS NOT NULL
+		AND
+		Publ_Cli_Dni IS NOT NULL
 END
 GO
 -- -----------------------------------------------------
