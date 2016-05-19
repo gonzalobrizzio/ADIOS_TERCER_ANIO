@@ -597,30 +597,15 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarRubros]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	DECLARE 
-			@descCorta NVARCHAR(50),
-			@descLarga NVARCHAR(255)
-	DECLARE cur CURSOR FOR
-	
-	SELECT DISTINCT
-		Publicacion_Rubro_Descripcion
-	FROM gd_esquema.Maestra	
-	
-	OPEN cur
-	FETCH NEXT FROM cur
-	INTO 
-		@descCorta
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		INSERT INTO ADIOS_TERCER_ANIO.Rubro(descripcionCorta, descripcionLarga)
-		VALUES (@descCorta, NULL)
 
-		FETCH NEXT FROM cur
-		INTO 
-			@descCorta
-	END
-	CLOSE cur 
-	DEALLOCATE cur
+	INSERT INTO ADIOS_TERCER_ANIO.Rubro(
+								descripcionCorta, 
+								descripcionLarga
+								)
+	SELECT DISTINCT
+		Publicacion_Rubro_Descripcion,
+		NULL
+	FROM gd_esquema.Maestra	
 END
 GO
 
