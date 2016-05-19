@@ -254,11 +254,12 @@ CREATE  TABLE Oferta (
 -- TABLA Calificacion
 -- -----------------------------------------------------
 CREATE  TABLE Calificacion (
-  id INT NOT NULL ,
-  idUsuarioCalificador INT NOT NULL ,
+  id INT NOT NULL IDENTITY,
+  idUsuario INT REFERENCES Usuario(id) ,
+  idUsuarioCalificador INT REFERENCES Usuario(id) ,
   idPublicacion INT REFERENCES Publicacion(id) ,
   fecha DATETIME NULL ,
-  valor INT NULL ,
+  puntaje INT NULL ,
   detalle NVARCHAR(45) NULL ,
   pendiente INT NULL ,
   )
@@ -661,6 +662,24 @@ AS BEGIN
 END
 GO
 
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
+AS BEGIN
+
+	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha)
+	SELECT 
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador,
+		Publicacion_Cod				AS idPublicacion,
+		Compra_Fecha				AS fecha
+	FROM gd_esquema.MAESTRA
+	WHERE 
+		Compra_Fecha IS NOT NULL
+	AND 
+		Compra_Cantidad IS NOT NULL	
+
+END
+GO
+
+
 --SP PARA MIGRAR LOS ITEMS QUE HAY EN LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems]
 AS BEGIN
@@ -953,6 +972,9 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesEmpresas];
 --MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesPersonas];
 
+--MIGRO LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarCompras];
+
 --MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
 --EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
 
@@ -1002,6 +1024,7 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesPersonas];
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarPublicacionesPersonas;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarItems;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.migrarFacturas;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.migrarCompras;
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeDNI;
 --DROP SCHEMA ADIOS_TERCER_ANIO
