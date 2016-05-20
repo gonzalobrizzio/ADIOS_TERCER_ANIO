@@ -616,49 +616,22 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarFacturas]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	DECLARE 
-			@fecha			DATETIME,
-			@importeTotal	decimal(18,2),
-			@idComprador	INT,
-			@numero			INT,
-			@idFormaDePago	INT,
-			@idPublicacion	INT
-	DECLARE cur CURSOR FOR
-	
-	SELECT DISTINCT
-		Factura_Fecha,
-		Factura_Total,
-		Factura_Nro
-	FROM gd_esquema.Maestra	
-	
-	OPEN cur
-	FETCH NEXT FROM cur
-	INTO 
-		@fecha,
-		@importeTotal,
-		@numero
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		SET @idFormaDePago = (SELECT nombre FROM ADIOS_TERCER_ANIO.FormaDePago WHERE (SELECT Forma_Pago_Desc FROM gd_esquema.Maestra) = 'Tarjeta de credito' 
-		or (SELECT Forma_Pago_Desc FROM gd_esquema.Maestra) = 'Efectivo')
-		--SET @idComprador = SELECT id FROM ADIOS_TERCER_ANIO.Compra WHERE
-		--SET @idPublicacion = SELECT id FROM ADIOS_TERCER_ANIO.Publicacion WHERE 
-		INSERT INTO 
-		ADIOS_TERCER_ANIO.Factura(fecha,
-		 importeTotal,
-		 numero)
-		VALUES (@fecha,
-		 @importeTotal, 
-		 @numero)
+	INSERT INTO ADIOS_TERCER_ANIO.Factura(fecha, importeTotal, idComprador, numero, idFormaDePago, idPublicacion)
+	SELECT 
+		Factura_Fecha AS fecha,
+		Factura_Total AS importeTotal,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idComprador,
+		Factura_Nro AS numero,
+		Forma_Pago_Desc AS idFormaDePago,
+		Publicacion_Cod AS idPublicacion
 
-		FETCH NEXT FROM cur
-		INTO 
-			@fecha,
-			@importeTotal,
-			@numero
-	END
-	CLOSE cur 
-	DEALLOCATE cur
+	FROM gd_esquema.Maestra	
+	WHERE	Factura_Total IS NOT NULL
+			AND
+			Factura_Fecha IS NOT NULL
+	
+
+		
 END
 GO
 
@@ -708,48 +681,19 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	DECLARE 
-			@nombre				NVARCHAR(255),
-			@stock				INT,
-			@precio				DECIMAL(18,2),
-			@cantidad			INT
-	DECLARE cur CURSOR FOR
-	
-	SELECT DISTINCT
-		Publicacion_Descripcion,	
-		Publicacion_Stock,
-		Item_Factura_Monto,
-		Item_Factura_Cantidad
-	FROM gd_esquema.Maestra	
-	
-	OPEN cur
-	FETCH NEXT FROM cur
-	INTO 
-		@nombre,
-		@stock,
-		@precio,
-		@cantidad
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		INSERT INTO 
-		ADIOS_TERCER_ANIO.Item(nombre,
-		stock,
-		precio,
-		cantidad)
-		VALUES (@nombre,
-		 @stock, 
-		 @precio,
-		 @cantidad)
 
-		FETCH NEXT FROM cur
-		INTO 
-			@nombre,
-			@stock, 
-			@precio,
-			@cantidad
-	END
-	CLOSE cur 
-	DEALLOCATE cur
+		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, stock, precio, cantidad)
+		SELECT 
+			Publicacion_Descripcion			AS nombre,
+			Publicacion_Stock				AS stock,
+			Item_Factura_Monto				AS precio,
+			Item_Factura_Cantidad			AS cantidad
+		FROM gd_esquema.Maestra	
+		WHERE
+			Item_Factura_Monto IS NOT NULL
+		AND
+			Item_Factura_Cantidad IS NOT NULL
+
 END
 GO
 
@@ -758,55 +702,18 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCalificaciones]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	DECLARE 
-			@id						INT,
-			@idUsuarioCalificador	INT,
-			@idPublicacion			INT,
-			@fecha					DATETIME,
-			@valor					INT,
-			@detalle				NVARCHAR(45),
-			@pendiente				INT
-	DECLARE cur CURSOR FOR
-	
-	SELECT DISTINCT
-		Calificacion_Codigo,	
-		Publicacion_Fecha_Venc,
-		Calificacion_Cant_Estrellas,
-		Calificacion_Descripcion
-	FROM gd_esquema.Maestra	
-	WHERE Calificacion_Codigo IS NOT NULL
-	
-	OPEN cur
-	FETCH NEXT FROM cur
-	INTO 
-			@id,
-			@fecha,
-			@valor,
-			@detalle
-	WHILE(@@FETCH_STATUS = 0)
-	BEGIN
-		-- SET @id 
-		SET @idUsuarioCalificador = (SELECT id FROM ADIOS_TERCER_ANIO.Usuario WHERE (SELECT Publ_Cli_Dni from gd_esquema.Maestra) = usuario or (SELECT Publ_Empresa_Cuit from gd_esquema.Maestra) = usuario )
-		SET @pendiente = 1
-		
-		INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificacion(idPublicacion,	
-		fecha,
-		puntaje,
-		detalle)
-		VALUES (@idPublicacion,
-		 @fecha, 
-		 @valor,
-		 @detalle)
+	INSERT INTO 
+		ADIOS_TERCER_ANIO.Calificacion(idPublicacion, fecha, valor, detalle, idUsuarioCalificador, pendiente)
+	SELECT	
+		Publicacion_Fecha_Venc AS fecha,
+		Calificacion_Cant_Estrellas AS puntaje,
+		Calificacion_Descripcion AS detalle,
+		Publicacion_Cod AS idPublicacion,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
+		1 AS pendiente --TODO
 
-		FETCH NEXT FROM cur
-		INTO @idPublicacion,
-		 @fecha, 
-		 @valor,
-		 @detalle
-	END
-	CLOSE cur 
-	DEALLOCATE cur
+	FROM gd_esquema.Maestra	
+		
 END
 GO
 
@@ -974,13 +881,13 @@ EXEC [ADIOS_TERCER_ANIO].[migrarCompras];
 EXEC [ADIOS_TERCER_ANIO].[migrarOfertas];
 
 --MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
---EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
+EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
 
 --MIGRO LOS ITEMS QUE HAY EN LA TABLA MAESTRA
---EXEC [ADIOS_TERCER_ANIO].[migrarItems];
+EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
---EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
+EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
 --Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
 --Calificacion--, Compra, Envio, Oferta, Pregunta, Respuesta, --Factura--
