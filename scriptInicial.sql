@@ -622,7 +622,7 @@ AS BEGIN
 		Factura_Total AS importeTotal,
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idComprador,
 		Factura_Nro AS numero,
-		Forma_Pago_Desc AS idFormaDePago,
+		(select id from ADIOS_TERCER_ANIO.FormaDePago where nombre like Forma_Pago_Desc) AS idFormaDePago,
 		Publicacion_Cod AS idPublicacion
 
 	FROM gd_esquema.Maestra	
@@ -703,12 +703,12 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificacion(idPublicacion, fecha, valor, detalle, idUsuarioCalificador, pendiente)
+		ADIOS_TERCER_ANIO.Calificacion(idPublicacion, fecha, puntaje, detalle, idUsuarioCalificador, pendiente)
 	SELECT	
+		Publicacion_Cod AS idPublicacion,
 		Publicacion_Fecha_Venc AS fecha,
 		Calificacion_Cant_Estrellas AS puntaje,
 		Calificacion_Descripcion AS detalle,
-		Publicacion_Cod AS idPublicacion,
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
 		1 AS pendiente --TODO
 
@@ -745,7 +745,7 @@ AS BEGIN
 		Publicacion_Fecha_Venc			AS fechaFin,
 		NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
 		Publicacion_Tipo				AS tipo,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = Publicacion_Estado)	AS idEstado,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
 		ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit) AS idPublicador,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
