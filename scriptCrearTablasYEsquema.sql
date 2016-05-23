@@ -185,3 +185,24 @@ CREATE  TABLE Respuesta (
   respuesta NVARCHAR(255) NULL ,
   )
 GO
+
+BEGIN
+	set nocount on;
+	set xact_abort on;
+
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('DNI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('CI')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
+	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
+
+	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
+	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Empresa')
+
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Borrador')
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Activa')
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
+	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
+
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No especificado')
+END
