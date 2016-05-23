@@ -3,19 +3,11 @@ GO
 
 CREATE SCHEMA [ADIOS_TERCER_ANIO] AUTHORIZATION [gd]
 
--- -----------------------------------------------------
--- TABLA Funcionalidad
--- -----------------------------------------------------
 CREATE  TABLE Funcionalidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   descripcion NVARCHAR(255) NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Usuario
--- -----------------------------------------------------
 CREATE  TABLE Usuario (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   usuario NVARCHAR(255) NOT NULL UNIQUE,
@@ -25,42 +17,22 @@ CREATE  TABLE Usuario (
   intentos INT DEFAULT 0 ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Rol
--- -----------------------------------------------------
 CREATE  TABLE Rol (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
   deleted INT DEFAULT 0 ,
    )
 
-
-
--- -----------------------------------------------------
--- TABLA TipoDocumento
--- -----------------------------------------------------
 CREATE  TABLE TipoDocumento (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   descripcion NVARCHAR(255) NOT NULL ,
    )
 
-
-
--- -----------------------------------------------------
--- TABLA Localidad
--- -----------------------------------------------------
 CREATE  TABLE Localidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
    )
 
-
-
--- -----------------------------------------------------
--- TABLA Persona
--- -----------------------------------------------------
 CREATE  TABLE Persona (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NOT NULL ,
@@ -79,10 +51,6 @@ CREATE  TABLE Persona (
   idLocalidad INT REFERENCES Localidad(id) NULL,
   )
 
-
--- -----------------------------------------------------
--- TABLA Empresa
--- -----------------------------------------------------
 CREATE  TABLE Empresa (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   razonSocial NVARCHAR(255) NOT NULL ,
@@ -100,21 +68,11 @@ CREATE  TABLE Empresa (
   fechaCreacion DATETIME NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Estado
--- -----------------------------------------------------
 CREATE  TABLE Estado (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(50) NOT NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Visibilidad
--- -----------------------------------------------------
 CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   codigo INT NULL ,
@@ -123,11 +81,6 @@ CREATE  TABLE Visibilidad (
   porcentaje numeric(18,2) NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Item
--- -----------------------------------------------------
 CREATE  TABLE Item (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
@@ -136,21 +89,11 @@ CREATE  TABLE Item (
   cantidad INT NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Envio
--- -----------------------------------------------------
 CREATE  TABLE Envio (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   precio DECIMAL(18,2) NULL ,
    )
 
-
-
--- -----------------------------------------------------
--- TABLA Publicacion
--- -----------------------------------------------------
 CREATE  TABLE Publicacion (
   id INTEGER PRIMARY KEY NOT NULL ,
   descripcion NVARCHAR(255) NULL ,
@@ -166,45 +109,12 @@ CREATE  TABLE Publicacion (
   idEnvio INT REFERENCES Envio(id) ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Rubro
--- -----------------------------------------------------
 CREATE  TABLE Rubro (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   descripcionCorta NVARCHAR(50) NOT NULL ,
   descripcionLarga NVARCHAR(255) NULL ,
    )
 
-
-
--- -----------------------------------------------------
--- TABLA Rubro_has_Publicacion
--- -----------------------------------------------------
---CREATE  TABLE Rubro_has_Publicacion (
---  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
---  idPublicacion INT NOT NULL ,
---  idRubro INT NOT NULL ,
---  INDEX fk_Rubro_has_Publicacion_Publicacion1_idx (idPublicacion ASC) ,
---  INDEX fk_Rubro_has_Publicacion_Rubro1_idx (idRubro ASC) ,
---   ,
---  CONSTRAINT fk_Rubro_has_Publicacion_Publicacion1
---    FOREIGN KEY (idPublicacion )
---    REFERENCES mydb.Publicacion (id )
---    ON DELETE NO ACTION
---    ON UPDATE NO ACTION,
---  CONSTRAINT fk_Rubro_has_Publicacion_Rubro1
---    FOREIGN KEY (idRubro )
---    REFERENCES mydb.Rubro (id )
---    ON DELETE NO ACTION
---    ON UPDATE NO ACTION)
-
-
-
--- -----------------------------------------------------
--- TABLA RolUsuario
--- -----------------------------------------------------
 CREATE  TABLE RolUsuario (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   idUsuario INT REFERENCES Usuario(id) ,
@@ -212,22 +122,12 @@ CREATE  TABLE RolUsuario (
   deleted INT NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA FuncionalidadRol
--- -----------------------------------------------------
 CREATE  TABLE FuncionalidadRol (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   idRol INT REFERENCES Rol(id) ,
   idFuncionalidad INT REFERENCES Funcionalidad(id) ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Compra
--- -----------------------------------------------------
 CREATE  TABLE Compra (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   idComprador INT REFERENCES Usuario(id) ,
@@ -235,11 +135,6 @@ CREATE  TABLE Compra (
   fecha DATETIME NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Oferta
--- -----------------------------------------------------
 CREATE  TABLE Oferta (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   monto DECIMAL(18,2) NOT NULL ,
@@ -248,11 +143,6 @@ CREATE  TABLE Oferta (
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Calificacion
--- -----------------------------------------------------
 CREATE  TABLE Calificacion (
   id INT NOT NULL IDENTITY,
   idUsuario INT REFERENCES Usuario(id) ,
@@ -264,21 +154,11 @@ CREATE  TABLE Calificacion (
   pendiente INT NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA FormaDePago
--- -----------------------------------------------------
 CREATE  TABLE FormaDePago (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(50) NULL ,
    )
 
-
-
--- -----------------------------------------------------
--- TABLA Factura
--- -----------------------------------------------------
 CREATE  TABLE Factura (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   fecha DATETIME NULL ,
@@ -289,11 +169,6 @@ CREATE  TABLE Factura (
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Pregunta
--- -----------------------------------------------------
 CREATE  TABLE Pregunta (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   pregunta NVARCHAR(255) NULL ,
@@ -302,11 +177,6 @@ CREATE  TABLE Pregunta (
   fecha DATETIME NULL ,
   )
 
-
-
--- -----------------------------------------------------
--- TABLA Respuesta
--- -----------------------------------------------------
 CREATE  TABLE Respuesta (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   idPregunta INT REFERENCES Pregunta(id) ,
@@ -322,7 +192,6 @@ GO
 --SP PARA CREAR LOS DATOS ADMINISTRATIVOS
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarDatosAdministrativos]
 AS BEGIN
-	--TIPOS DE DOCUMENTO
 	set nocount on;
 	set xact_abort on;
 
@@ -331,42 +200,26 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
 
-	--ROLES
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Empresa')
 
-	--ESTADOS
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Borrador')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Activa')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
 
-	--FORMAS DE PAGO
-	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('Efectivo')
-	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('Tarjeta de Credito')
-
-
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No especificado')
 END
 GO
 
-
--- SP PARA GENERAR E INSERTAR EL USUARIO EN LA TABLA DE USUARIOS
--- RECIBE EL USUARIO, UN PASSWORD Y EL MAIL PARA INSERTARLO
--- DEVUELVE EL ID USADO PARA PODER USARLO COMO FK
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuario](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	-- INSERTO EL NUEVO USUARIO
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail) 
-	VALUES (@usuario,@password,@mail)
-	
-	-- OBTENGO EL ULTIMO ID 
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail) VALUES (@usuario,@password,@mail)
 	SELECT @ultimoID = SCOPE_IDENTITY();
-	
 	RETURN
-	
 END
 GO
 
@@ -605,7 +458,7 @@ AS BEGIN
 								)
 	SELECT DISTINCT
 		Publicacion_Rubro_Descripcion,
-		NULL
+		Publicacion_Rubro_Descripcion
 	FROM gd_esquema.Maestra	
 END
 GO
@@ -620,7 +473,7 @@ AS BEGIN
 	SELECT 
 		Factura_Fecha AS fecha,
 		Factura_Total AS importeTotal,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idComprador,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)  AS idComprador,
 		Factura_Nro AS numero,
 		(select id from ADIOS_TERCER_ANIO.FormaDePago where nombre like Forma_Pago_Desc) AS idFormaDePago,
 		Publicacion_Cod AS idPublicacion
@@ -665,7 +518,7 @@ AS BEGIN
 	SELECT 
 		Oferta_Monto				AS monto,
 		Oferta_Fecha				AS fecha,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador, 
 		Publicacion_Cod				AS idPublicacion		
 	FROM gd_esquema.MAESTRA
 	WHERE 
@@ -703,13 +556,14 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificacion(idPublicacion, fecha, puntaje, detalle, idUsuarioCalificador, pendiente)
+		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idPublicacion, fecha, puntaje, detalle, pendiente)
 	SELECT	
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idComprador, --TODO
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idUsuarioCalificador, --TODO
 		Publicacion_Cod AS idPublicacion,
 		Publicacion_Fecha_Venc AS fecha,
 		Calificacion_Cant_Estrellas AS puntaje,
 		Calificacion_Descripcion AS detalle,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
 		1 AS pendiente --TODO
 
 	FROM gd_esquema.Maestra	
