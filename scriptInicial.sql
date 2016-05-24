@@ -233,7 +233,7 @@ AS BEGIN
 
 		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, stock, precio, cantidad)
 		SELECT 
-			Publicacion_Descripcion			AS nombre,
+			(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS nombre,
 			Publicacion_Stock				AS stock,
 			Item_Factura_Monto				AS precio,
 			Item_Factura_Cantidad			AS cantidad
@@ -516,6 +516,9 @@ EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
+--MIGRO LOS ITEMS QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarItems];
+
 --MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesEmpresas];
 
@@ -530,9 +533,6 @@ EXEC [ADIOS_TERCER_ANIO].[migrarOfertas];
 
 --MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
-
---MIGRO LOS ITEMS QUE HAY EN LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
