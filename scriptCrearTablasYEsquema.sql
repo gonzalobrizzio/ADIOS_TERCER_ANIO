@@ -58,6 +58,7 @@ CREATE  TABLE Empresa (
   telefono NVARCHAR(20) NULL ,
   direccion NVARCHAR(50) NULL ,
   direccion_numero INT NULL ,
+  piso numeric(18,0) NULL,
   dpto NVARCHAR(50) NULL ,
   codigoPostal NVARCHAR(50) NULL ,
   cuit NVARCHAR(50) NOT NULL UNIQUE,
@@ -96,7 +97,7 @@ CREATE  TABLE Envio (
    )
 
 CREATE  TABLE Publicacion (
-  id INTEGER PRIMARY KEY NOT NULL ,
+  id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   descripcion NVARCHAR(255) NULL ,
   fechaInicio DATETIME NOT NULL ,
   fechaFin DATETIME NOT NULL ,

@@ -16,7 +16,101 @@ GO
 
 --SP PARA MIGRAR TODOS LAS EMPRESAS DE LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarEmpresas]
-AS 
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE @idUsuario INT,
+			@razonSocial NVARCHAR(255) ,
+			@telefono INT,
+			@direccion NVARCHAR(50),
+			@direccion_numero  INT,
+			@piso NUMERIC(18,0),
+			@dpto NVARCHAR(50) ,
+			@codigoPostal NVARCHAR(50) ,
+			@cuit NVARCHAR(50) ,
+			@contacto NVARCHAR(45) ,
+			@rubro NVARCHAR(255),
+			@fechaCreacion DATETIME,
+			@mail NVARCHAR(255)
+	DECLARE cur CURSOR FOR
+	SELECT DISTINCT 
+		Publ_Empresa_Razon_Social,
+		Publ_Empresa_Cuit,
+		Publ_Empresa_Fecha_Creacion,
+		Publ_Empresa_Mail,
+		Publ_Empresa_Dom_Calle,
+		Publ_Empresa_Nro_Calle,
+		Publ_Empresa_Piso,
+		Publ_Empresa_Depto,
+		Publ_Empresa_Cod_Postal
+	FROM 
+		gd_esquema.Maestra
+	WHERE
+		Publ_Empresa_Cuit IS NOT NULL
+	OPEN cur
+	FETCH NEXT FROM cur
+	INTO 
+		@razonSocial,
+		@cuit,
+		@fechaCreacion,
+		@mail,
+		@direccion,
+		@direccion_numero,
+		@piso,
+		@dpto,
+		@codigoPostal
+	WHILE(@@FETCH_STATUS = 0)
+		BEGIN
+			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, NULL, @mail, @ultimoID = @idUsuario OUTPUT;
+			DECLARE @idRol int;
+			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+			VALUES(@idRol,@idUsuario)
+			
+			INSERT INTO ADIOS_TERCER_ANIO.Empresa(
+				razonSocial,
+				telefono ,
+				direccion,
+				direccion_numero,
+				piso,
+				dpto,
+				codigoPostal,
+				cuit,
+				contacto,
+				idUsuario,
+				fechaCreacion)
+			VALUES (
+				@razonSocial,
+				@telefono,
+				@direccion,
+				@direccion_numero,
+				@piso,
+				@dpto,
+				@codigoPostal,
+				@cuit,
+				@contacto,
+				@idUsuario,
+				@fechaCreacion)
+			
+				
+		FETCH NEXT FROM cur
+		INTO 
+			@razonSocial,
+			@cuit,
+			@fechaCreacion,
+			@mail,
+			@direccion,
+			@direccion_numero,
+			@piso,
+			@dpto,
+			@codigoPostal
+		END
+	CLOSE cur 
+DEALLOCATE cur
+		
+END
+GO
 
 --SP PARA MIGRAR TODOS LAS VISIBILIDADES DE LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarVisibilidades]
@@ -409,8 +503,6 @@ BEGIN
 	DEALLOCATE cur
 		
 END
-
-
 
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
