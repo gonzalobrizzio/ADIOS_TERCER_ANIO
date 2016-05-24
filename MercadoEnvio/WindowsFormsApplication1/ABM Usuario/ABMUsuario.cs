@@ -8,13 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class Form1 : Form
+    public partial class ABMUsuario : Form
     {
-        public Form1()
+        public ABMUsuario(object rol)
         {
+           // this.Text = rol;
             InitializeComponent();
+        }
+
+        private void ABMUsuario_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -147,7 +147,7 @@ CREATE  TABLE Oferta (
   )
 
 CREATE  TABLE Calificacion (
-  id INT NOT NULL IDENTITY,
+  id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   idUsuario INT REFERENCES Usuario(id) ,
   idUsuarioCalificador INT REFERENCES Usuario(id) ,
   idPublicacion INT REFERENCES Publicacion(id) ,

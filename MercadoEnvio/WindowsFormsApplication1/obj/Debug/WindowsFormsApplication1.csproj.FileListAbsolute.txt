@@ -15,3 +15,16 @@ E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\W
 E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Ingresar.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ElegirRol.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.ABMUsuario.resources

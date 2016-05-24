@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GD1C2016ModelStoreContainer" CdmEntityContainer="GD1C2016Entities">
+    <EntitySetMapping Name="Calificacions">
+      <EntityTypeMapping TypeName="GD1C2016Model.Calificacion">
+        <MappingFragment StoreEntitySet="Calificacion">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idUsuarioCalificador" ColumnName="idUsuarioCalificador" />
+          <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="detalle" ColumnName="detalle" />
+          <ScalarProperty Name="pendiente" ColumnName="pendiente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Compras">
+      <EntityTypeMapping TypeName="GD1C2016Model.Compra">
+        <MappingFragment StoreEntitySet="Compra">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idComprador" ColumnName="idComprador" />
+          <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresas">
+      <EntityTypeMapping TypeName="GD1C2016Model.Empresa">
+        <MappingFragment StoreEntitySet="Empresa">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="razonSocial" ColumnName="razonSocial" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="direccion_numero" ColumnName="direccion_numero" />
+          <ScalarProperty Name="dpto" ColumnName="dpto" />
+          <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+          <ScalarProperty Name="cuit" ColumnName="cuit" />
+          <ScalarProperty Name="contacto" ColumnName="contacto" />
+          <ScalarProperty Name="idRubro" ColumnName="idRubro" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="idLocalidad" ColumnName="idLocalidad" />
+          <ScalarProperty Name="calificacionPromedio" ColumnName="calificacionPromedio" />
+          <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Envios">
+      <EntityTypeMapping TypeName="GD1C2016Model.Envio">
+        <MappingFragment StoreEntitySet="Envio">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estadoes">
+      <EntityTypeMapping TypeName="GD1C2016Model.Estado">
+        <MappingFragment StoreEntitySet="Estado">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facturas">
+      <EntityTypeMapping TypeName="GD1C2016Model.Factura">
+        <MappingFragment StoreEntitySet="Factura">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="importeTotal" ColumnName="importeTotal" />
+          <ScalarProperty Name="idComprador" ColumnName="idComprador" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="idFormaDePago" ColumnName="idFormaDePago" />
+          <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FormaDePagoes">
+      <EntityTypeMapping TypeName="GD1C2016Model.FormaDePago">
+        <MappingFragment StoreEntitySet="FormaDePago">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Funcionalidads">
+      <EntityTypeMapping TypeName="GD1C2016Model.Funcionalidad">
+        <MappingFragment StoreEntitySet="Funcionalidad">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FuncionalidadRols">
+      <EntityTypeMapping TypeName="GD1C2016Model.FuncionalidadRol">
+        <MappingFragment StoreEntitySet="FuncionalidadRol">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idRol" ColumnName="idRol" />
+          <ScalarProperty Name="idFuncionalidad" ColumnName="idFuncionalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="GD1C2016Model.Item">
+        <MappingFragment StoreEntitySet="Item">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Localidads">
+      <EntityTypeMapping TypeName="GD1C2016Model.Localidad">
+        <MappingFragment StoreEntitySet="Localidad">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ofertas">
+      <EntityTypeMapping TypeName="GD1C2016Model.Oferta">
+        <MappingFragment StoreEntitySet="Oferta">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="monto" ColumnName="monto" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Personas">
+      <EntityTypeMapping TypeName="GD1C2016Model.Persona">
+        <MappingFragment StoreEntitySet="Persona">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="documento" ColumnName="documento" />
+          <ScalarProperty Name="idTipoDocumento" ColumnName="idTipoDocumento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="direccion_numero" ColumnName="direccion_numero" />
+          <ScalarProperty Name="piso" ColumnName="piso" />
+          <ScalarProperty Name="dpto" ColumnName="dpto" />
+          <ScalarProperty Name="codigoPostal" ColumnName="codigoPostal" />
+          <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+          <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="idLocalidad" ColumnName="idLocalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preguntas">
+      <EntityTypeMapping TypeName="GD1C2016Model.Pregunta">
+        <MappingFragment StoreEntitySet="Pregunta">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pregunta1" ColumnName="pregunta" />
+          <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
+          <ScalarProperty Name="idUsuarioPregunta" ColumnName="idUsuarioPregunta" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Publicacions">
+      <EntityTypeMapping TypeName="GD1C2016Model.Publicacion">
+        <MappingFragment StoreEntitySet="Publicacion">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="idVisibilidad" ColumnName="idVisibilidad" />
+          <ScalarProperty Name="idPublicador" ColumnName="idPublicador" />
+          <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+          <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="tienePreguntas" ColumnName="tienePreguntas" />
+          <ScalarProperty Name="idtipo" ColumnName="idtipo" />
+          <ScalarProperty Name="idRubro" ColumnName="idRubro" />
+          <ScalarProperty Name="idItem" ColumnName="idItem" />
+          <ScalarProperty Name="idEnvio" ColumnName="idEnvio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Respuestas">
+      <EntityTypeMapping TypeName="GD1C2016Model.Respuesta">
+        <MappingFragment StoreEntitySet="Respuesta">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idPregunta" ColumnName="idPregunta" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="respuesta1" ColumnName="respuesta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rols">
+      <EntityTypeMapping TypeName="GD1C2016Model.Rol">
+        <MappingFragment StoreEntitySet="Rol">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RolUsuarios">
+      <EntityTypeMapping TypeName="GD1C2016Model.RolUsuario">
+        <MappingFragment StoreEntitySet="RolUsuario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="idRol" ColumnName="idRol" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rubroes">
+      <EntityTypeMapping TypeName="GD1C2016Model.Rubro">
+        <MappingFragment StoreEntitySet="Rubro">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descripcionCorta" ColumnName="descripcionCorta" />
+          <ScalarProperty Name="descripcionLarga" ColumnName="descripcionLarga" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoDocumentoes">
+      <EntityTypeMapping TypeName="GD1C2016Model.TipoDocumento">
+        <MappingFragment StoreEntitySet="TipoDocumento">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="GD1C2016Model.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario1" ColumnName="usuario" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+          <ScalarProperty Name="intentos" ColumnName="intentos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visibilidads">
+      <EntityTypeMapping TypeName="GD1C2016Model.Visibilidad">
+        <MappingFragment StoreEntitySet="Visibilidad">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="GD1C2016Model.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="generarUsuario" FunctionName="GD1C2016Model.Store.generarUsuario" />
+    <FunctionImportMapping FunctionImportName="migrarEmpresas" FunctionName="GD1C2016Model.Store.migrarEmpresas" />
+    <FunctionImportMapping FunctionImportName="migrarPublicaciones" FunctionName="GD1C2016Model.Store.migrarPublicaciones" />
+    <FunctionImportMapping FunctionImportName="migrarRubros" FunctionName="GD1C2016Model.Store.migrarRubros" />
+    <FunctionImportMapping FunctionImportName="migrarVisibilidades" FunctionName="GD1C2016Model.Store.migrarVisibilidades" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="GD1C2016Model.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="GD1C2016Model.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="GD1C2016Model.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="GD1C2016Model.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GD1C2016Model.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="GD1C2016Model.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GD1C2016Model.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GD1C2016Model.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GD1C2016Model.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>
