@@ -108,6 +108,7 @@ CREATE  TABLE Publicacion (
   idRubro INT REFERENCES Rubro(id) ,
   idItem INT REFERENCES Item(id) ,
   idEnvio INT REFERENCES Envio(id) ,
+  codAnterior INT NULL,
   )
 
 CREATE  TABLE Rubro (
@@ -203,6 +204,12 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Activa')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
+
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago (
+					nombre)
+	SELECT DISTINCT Forma_Pago_Desc	
+	FROM gd_esquema.Maestra
+	WHERE Forma_Pago_Desc is not null
 
 	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No especificado')
 END
