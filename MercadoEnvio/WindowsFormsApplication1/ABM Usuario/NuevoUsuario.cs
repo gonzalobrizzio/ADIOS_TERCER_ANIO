@@ -26,9 +26,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
 
 
-            if (textBox7.Text.Length == 0)
+            if (textBox1.Text.Length == 0)
             {
                 MessageBox.Show("El usuario no puede estar vacío");
+
+                if (textBox1.Text.Length < 4) {
+                    MessageBox.Show("El usuario debe poseer más de 4 carácteres");
+                }
             }
 
             else if (textBox7.Text.Length < 6) {

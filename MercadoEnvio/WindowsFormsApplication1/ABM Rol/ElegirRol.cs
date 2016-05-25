@@ -24,12 +24,17 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (var usrUsuario = new ABM_Usuario.ABMUsuario(listBox1.SelectedValue))
-            {
                 this.Hide();
-                usrUsuario.ShowDialog();
-
-            } 
+                if (listBox1.Text == "Administrador")
+                {
+                    new Pantalla_Administrador().Show();
+                    this.Close();
+                }
+                else
+                {
+                    new ABM_Usuario.Pantalla_de_Usuario().Show();
+                    this.Close();
+                }
+            }
         }
     }
-}

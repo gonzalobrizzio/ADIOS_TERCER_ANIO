@@ -110,5 +110,16 @@ namespace WindowsFormsApplication1.ABM_Rol
             }
         }
 
+        private void ABMRol_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            new Pantalla_Administrador().Show();
+            this.Close();
+        }
+
     }
 }

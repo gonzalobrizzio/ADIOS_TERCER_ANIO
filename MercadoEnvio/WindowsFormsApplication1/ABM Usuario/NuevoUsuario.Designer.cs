@@ -288,7 +288,7 @@
             this.label21.Text = "Rubro:";
             // 
             // textBox1
-            // 
+            this.textBox1.MaxLength = 11;
             this.textBox1.Location = new System.Drawing.Point(143, 39);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
@@ -325,6 +325,7 @@
             // 
             // textBox2
             // 
+            this.textBox10.MaxLength = 4;
             this.textBox2.Location = new System.Drawing.Point(143, 306);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(57, 20);
@@ -332,6 +333,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.MaxLength = 8;
             this.textBox3.Location = new System.Drawing.Point(143, 198);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
@@ -339,6 +341,7 @@
             // 
             // textBox4
             // 
+            this.textBox4.MaxLength = 10;
             this.textBox4.Location = new System.Drawing.Point(143, 145);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 20);
@@ -346,6 +349,7 @@
             // 
             // textBox5
             // 
+            this.textBox5.MaxLength = 10;
             this.textBox5.Location = new System.Drawing.Point(143, 117);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 20);
@@ -353,6 +357,8 @@
             // 
             // textBox6
             // 
+
+            this.textBox6.MaxLength = 30;
             this.textBox6.Location = new System.Drawing.Point(143, 91);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(180, 20);
@@ -360,6 +366,9 @@
             // 
             // textBox7
             // 
+
+            this.textBox7.MaxLength = 8;
+            this.textBox7.PasswordChar = '*';
             this.textBox7.Location = new System.Drawing.Point(143, 65);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(100, 20);
@@ -367,6 +376,7 @@
             // 
             // textBox8
             // 
+            this.textBox8.MaxLength = 13;
             this.textBox8.Location = new System.Drawing.Point(339, 198);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(152, 20);
@@ -374,6 +384,7 @@
             // 
             // textBox9
             // 
+            this.textBox9.MaxLength = 4;
             this.textBox9.Location = new System.Drawing.Point(303, 254);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(43, 20);
@@ -381,6 +392,7 @@
             // 
             // textBox10
             // 
+            this.textBox10.MaxLength = 10;
             this.textBox10.Location = new System.Drawing.Point(143, 254);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(100, 20);
@@ -395,6 +407,8 @@
             // 
             // comboBox1
             // 
+
+            this.comboBox1.Text = "N/U";
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "DNI",
@@ -408,6 +422,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.Text = "N/U";
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "S.A. (Sociedad Anonima)",
@@ -424,6 +439,8 @@
             // 
             // comboBox3
             // 
+
+            this.comboBox3.Text = "N/U";
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Location = new System.Drawing.Point(339, 226);
             this.comboBox3.Name = "comboBox3";
@@ -432,6 +449,8 @@
             // 
             // comboBox4
             // 
+
+            this.comboBox4.Text = "N/U";
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Location = new System.Drawing.Point(143, 279);
             this.comboBox4.Name = "comboBox4";
@@ -557,6 +576,8 @@
             // 
             // comboBox8
             // 
+
+            this.comboBox8.Text = "N/U";
             this.comboBox8.FormattingEnabled = true;
             this.comboBox8.Items.AddRange(new object[] {
             "1",
@@ -596,6 +617,8 @@
             // 
             // comboBox9
             // 
+
+            this.comboBox9.Text = "N/U";
             this.comboBox9.FormattingEnabled = true;
             this.comboBox9.Items.AddRange(new object[] {
             "A",

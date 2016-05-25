@@ -47,9 +47,9 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Items.AddRange(new object[] {
-            "Saraza",
-            "Joda",
-            "Partuza"});
+            "Empresa",
+            "Cliente",
+            "Administrador"});
             this.listBox1.Location = new System.Drawing.Point(25, 66);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 95);

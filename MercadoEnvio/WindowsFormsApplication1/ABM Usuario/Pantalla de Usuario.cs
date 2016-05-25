@@ -10,17 +10,17 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class ABMUsuario : Form
+    public partial class Pantalla_de_Usuario : Form
     {
-        public ABMUsuario(object rol)
+        public Pantalla_de_Usuario()
         {
-           // this.Text = rol;
             InitializeComponent();
         }
 
-        private void ABMUsuario_Load(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)
         {
-
+            new Ingresar().Show();
+            this.Close();
         }
     }
 }

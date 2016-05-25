@@ -33,7 +33,6 @@ C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplica
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ElegirRol.resources
-C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.ABMUsuario.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.NuevoUsuario.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Ingresar.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
@@ -45,3 +44,6 @@ C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplica
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ModificarRoles.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ABMRol.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.AgregarRol.resources
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.BajaDeUsuarios.resources
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Pantalla_Administrador.resources
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.Pantalla_de_Usuario.resources

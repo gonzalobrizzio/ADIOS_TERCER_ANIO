@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Usuario
 {
-    partial class ABMUsuario
+    partial class BajaDeUsuarios
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // ABMUsuario
+            // BajaDeUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "ABMUsuario";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.ABMUsuario_Load);
+            this.ClientSize = new System.Drawing.Size(712, 434);
+            this.Name = "BajaDeUsuarios";
+            this.Text = "BajaDeUsuarios";
             this.ResumeLayout(false);
 
         }
