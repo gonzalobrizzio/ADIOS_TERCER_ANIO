@@ -26,7 +26,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             using (var usrUsuario = new ABM_Usuario.ABMUsuario(listBox1.SelectedValue))
             {
+                this.Hide();
                 usrUsuario.ShowDialog();
+
             } 
         }
     }

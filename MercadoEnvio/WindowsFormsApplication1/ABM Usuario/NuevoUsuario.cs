@@ -24,20 +24,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (var usrLogin = new Ingresar())
-            {
-                this.Hide();
-                usrLogin.ShowDialog();
-            } 
+            new Ingresar().Show();
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (var usrLogin = new Ingresar())
-            {
-                this.Hide();
-                usrLogin.ShowDialog();
-            } 
+
+            new Ingresar().Show();
+            this.Close();
+
         }
 
     }

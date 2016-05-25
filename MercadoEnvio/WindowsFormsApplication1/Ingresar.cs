@@ -24,11 +24,8 @@ namespace WindowsFormsApplication1
             {
                 //EN BD: if(cantFallidos>0) cantFallidos = 0;
                 //EN BD: if(cantRoles > 1) {
-                using (var usrRol = new ABM_Rol.ElegirRol(this))
-                {
+                    new ABM_Rol.ElegirRol(this).Show();
                     this.Hide();
-                    usrRol.ShowDialog();
-                } 
 
                 // } else {
                 //using (var usrUsuario = new ABM_Usuario.ABMUsuario())
@@ -60,11 +57,8 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (var usrAgregar = new ABM_Usuario.NuevoUsuario())
-            {
+                new ABM_Usuario.NuevoUsuario().Show();
                 this.Hide();
-                usrAgregar.ShowDialog();
-            } 
         }
 
 
