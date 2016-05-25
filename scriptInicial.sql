@@ -269,51 +269,9 @@ END
 GO
 
 
---SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS QUE HAY EN LA TABLA MAESTRA
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicacionesEmpresas]
-AS BEGIN
-	set nocount on;
-	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
-										descripcion,
-										fechaInicio,
-										fechaFin,
-										tienePreguntas,
-										tipo,
-										idEstado,
-										idVisibilidad,
-										idPublicador,
-										idRubro,
-										idItem,
-										idEnvio,
-										codAnterior
-									)
-	SELECT DISTINCT
-		Publicacion_Descripcion			AS descripcion,
-		Publicacion_Fecha				AS fechaIni,
-		Publicacion_Fecha_Venc			AS fechaFin,
-		NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
-		Publicacion_Tipo				AS tipo,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = Publicacion_Estado)	AS idEstado,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit) AS idPublicador,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
-		NULL 							AS idItem, --TODO traer 
-		NULL							AS idEnvio, --TODO traer 
-		Publicacion_Cod
-	FROM 
-		gd_esquema.Maestra
-	WHERE 
-		Publ_Empresa_Cuit IS NOT NULL
-		and
-		Publicacion_Cod is not null
-END
-GO
-
-
---SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS QUE HAY EN LA TABLA MAESTRA
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicacionesPersonas]
+--SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS/CLIENTES QUE HAY EN LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -340,7 +298,9 @@ AS BEGIN
 		Publicacion_Tipo				AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idPublicador,
+		CASE WHEN Publ_Cli_Dni IS NOT NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+		ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		END  AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		NULL 							AS idItem, --TODO traer 
 		NULL							AS idEnvio, --TODO traer 
@@ -348,7 +308,7 @@ AS BEGIN
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
-		Publ_Cli_Dni IS NOT NULL
+		(Publ_Cli_Dni IS NOT NULL OR Publ_Empresa_Cuit IS NOT NULL)
 		and
 		Publicacion_Cod is not null
 END
@@ -522,10 +482,7 @@ EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 --MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesEmpresas];
-
---MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarPublicacionesPersonas];
+EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
 
 --MIGRO LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarCompras];
