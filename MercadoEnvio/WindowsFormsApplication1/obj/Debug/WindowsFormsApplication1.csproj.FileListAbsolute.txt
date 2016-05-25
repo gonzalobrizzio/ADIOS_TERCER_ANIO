@@ -42,3 +42,6 @@ C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplica
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ModificarRoles.resources
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ABMRol.resources
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.AgregarRol.resources
