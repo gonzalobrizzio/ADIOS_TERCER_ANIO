@@ -254,7 +254,7 @@ AS BEGIN
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idVendedor,
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
 		NULL, --TODO ID COMPRA --(select id from ADIOS_TERCER_ANIO.Compra where idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AND Compra_Fecha = fecha )
-		Compra_Fecha,
+		Compra_Fecha, -- NO SE SI ES CORRECTO PONER LA FECHA DE LA COMPRA
 		Calificacion_Cant_Estrellas,
 		Calificacion_Descripcion,
 		CASE
@@ -263,7 +263,7 @@ AS BEGIN
 		END
 	FROM gd_esquema.Maestra	
 	WHERE
-	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL
+	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL AND Compra_Fecha IS NOT NULL
 		
 END
 GO
