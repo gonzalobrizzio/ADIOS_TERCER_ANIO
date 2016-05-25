@@ -99,8 +99,12 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentCell.Selected)
+
+            if (String.IsNullOrEmpty(dataGridView1.CurrentCell.Value as String))
             {
+                MessageBox.Show("Intenta modificar un rol en una linea vacia");
+            }
+            else{
                 var rolModificar = new ABM_Rol.ModificarRoles();
                 rolModificar.Show();
             }
