@@ -162,12 +162,7 @@ AS BEGIN
 	SELECT 
 		Factura_Fecha AS fecha,
 		Factura_Total AS importeTotal,
-		case
-			when (Publ_Cli_Dni is not null) then ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
-			when (Cli_Dni is not null) then ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)
-			else NULL
-		END
-		AS idComprador,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idComprador,
 		Factura_Nro AS numero,
 		(select id from ADIOS_TERCER_ANIO.FormaDePago where nombre like Forma_Pago_Desc) AS idFormaDePago,
 		(select id from Publicacion p where p.codAnterior = Publicacion_Cod)
@@ -189,11 +184,12 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha)
+	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT 
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador,
 		(select id from Publicacion p where p.codAnterior = Publicacion_Cod),
-		Compra_Fecha				AS fecha
+		Compra_Fecha				AS fecha,
+		Compra_Cantidad
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Compra_Fecha IS NOT NULL
@@ -251,17 +247,23 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCalificaciones]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
+
 	INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idPublicacion, fecha, puntaje, detalle, pendiente)
+		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idCompra, fecha, puntaje, detalle, pendiente)
 	SELECT	
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni),
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni),
-		(select id from Publicacion p where p.codAnterior = Publicacion_Cod),
-		Publicacion_Fecha_Venc,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idVendedor,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
+		NULL, --TODO ID COMPRA --(select id from ADIOS_TERCER_ANIO.Compra where idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AND Compra_Fecha = fecha )
+		Compra_Fecha,
 		Calificacion_Cant_Estrellas,
 		Calificacion_Descripcion,
-		1
+		CASE
+			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0
+			ELSE 1
+		END
 	FROM gd_esquema.Maestra	
+	WHERE
+	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL
 		
 END
 GO

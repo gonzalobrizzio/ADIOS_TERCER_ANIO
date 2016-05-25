@@ -136,6 +136,7 @@ CREATE  TABLE Compra (
   idComprador INT REFERENCES Usuario(id) ,
   idPublicacion INT REFERENCES Publicacion(id) ,
   fecha DATETIME NULL ,
+  cantidad INT NULL,
   )
 
 CREATE  TABLE Oferta (
@@ -150,7 +151,7 @@ CREATE  TABLE Calificacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   idUsuario INT REFERENCES Usuario(id) ,
   idUsuarioCalificador INT REFERENCES Usuario(id) ,
-  idPublicacion INT REFERENCES Publicacion(id) ,
+  idCompra INT REFERENCES Compra(id) ,
   fecha DATETIME NULL ,
   puntaje INT NULL ,
   detalle NVARCHAR(45) NULL ,
