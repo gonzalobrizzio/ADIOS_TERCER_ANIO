@@ -294,9 +294,9 @@ AS BEGIN
 		Publicacion_Descripcion			AS descripcion,
 		Publicacion_Fecha				AS fechaIni,
 		Publicacion_Fecha_Venc			AS fechaFin,
-		NULL							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
+		1							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
 		Publicacion_Tipo				AS tipo,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )	AS idEstado,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )	AS idEstado, --El cambio de estado se tiene que hacer en C#
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
 		CASE WHEN Publ_Cli_Dni IS NOT NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
 		ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
