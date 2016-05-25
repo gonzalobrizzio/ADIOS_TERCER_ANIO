@@ -26,6 +26,7 @@ namespace WindowsFormsApplication1
                 //EN BD: if(cantRoles > 1) {
                 using (var usrRol = new ABM_Rol.ElegirRol(this))
                 {
+                    this.Hide();
                     usrRol.ShowDialog();
                 } 
 
@@ -50,6 +51,20 @@ namespace WindowsFormsApplication1
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) button1_Click(sender, e);
+        }
+
+        private void Ingresar_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var usrAgregar = new ABM_Usuario.NuevoUsuario())
+            {
+                this.Hide();
+                usrAgregar.ShowDialog();
+            } 
         }
 
 

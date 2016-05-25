@@ -90,6 +90,7 @@
             this.button2.TabIndex = 5;
             this.button2.Text = "Nuevo Usuario";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label3
             // 
@@ -104,7 +105,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(202, 159);
+            this.ClientSize = new System.Drawing.Size(206, 159);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -113,7 +114,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Name = "Ingresar";
-            this.Text = "Form1";
+            this.Text = "Login";
+            this.Load += new System.EventHandler(this.Ingresar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
