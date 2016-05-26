@@ -86,7 +86,6 @@ CREATE  TABLE Visibilidad (
 CREATE  TABLE Item (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
-  stock INT NULL ,
   precio DECIMAL(18,2) NULL ,
   cantidad INT NULL ,
   )
@@ -104,9 +103,11 @@ CREATE  TABLE Publicacion (
   tienePreguntas INT NULL ,
   tipo NVARCHAR(255) ,
   idEstado INT REFERENCES Estado(id) ,
+  precio NUMERIC(18,2),
   idVisibilidad INT REFERENCES Visibilidad(id) ,
   idPublicador INT REFERENCES Usuario(id) ,
   idRubro INT REFERENCES Rubro(id) ,
+  stock INT NULL ,
   idItem INT REFERENCES Item(id) ,
   idEnvio INT REFERENCES Envio(id) ,
   codAnterior INT NULL,

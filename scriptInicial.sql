@@ -227,10 +227,9 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, stock, precio, cantidad)
+		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad)
 		SELECT 
 			(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS nombre,
-			Publicacion_Stock				AS stock,
 			Item_Factura_Monto				AS precio,
 			Item_Factura_Cantidad			AS cantidad
 		FROM gd_esquema.Maestra	
@@ -283,9 +282,11 @@ AS BEGIN
 										tienePreguntas,
 										tipo,
 										idEstado,
+										precio,
 										idVisibilidad,
 										idPublicador,
 										idRubro,
+										stock,
 										idItem,
 										idEnvio,
 										codAnterior
@@ -297,11 +298,13 @@ AS BEGIN
 		1							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
 		Publicacion_Tipo				AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )	AS idEstado, --El cambio de estado se tiene que hacer en C#
+		Publicacion_Precio AS precio,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
 		CASE WHEN Publ_Cli_Dni IS NOT NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
 		ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
 		END  AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
+		Publicacion_Stock				AS stock,
 		NULL 							AS idItem, --TODO traer 
 		NULL							AS idEnvio, --TODO traer 
 		Publicacion_Cod
@@ -498,4 +501,3 @@ EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
 --Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
 --Calificacion--, Compra, Envio, Oferta, Pregunta, Respuesta, --Factura--
-

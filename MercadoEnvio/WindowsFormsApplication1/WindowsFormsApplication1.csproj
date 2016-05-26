@@ -142,10 +142,10 @@
     <Compile Include="Facturas\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Ingresar.cs">
+    <Compile Include="Login y Seguridad\Ingresar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ingresar.Designer.cs">
+    <Compile Include="Login y Seguridad\Ingresar.Designer.cs">
       <DependentUpon>Ingresar.cs</DependentUpon>
     </Compile>
     <Compile Include="FormaDePago.cs">
@@ -199,10 +199,10 @@
     <Compile Include="Oferta.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Pantalla Administrador.cs">
+    <Compile Include="ABM Usuario\Pantalla Administrador.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Pantalla Administrador.Designer.cs">
+    <Compile Include="ABM Usuario\Pantalla Administrador.Designer.cs">
       <DependentUpon>Pantalla Administrador.cs</DependentUpon>
     </Compile>
     <Compile Include="Persona.cs">
@@ -267,10 +267,10 @@
     <EmbeddedResource Include="ABM Usuario\Pantalla de Usuario.resx">
       <DependentUpon>Pantalla de Usuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ingresar.resx">
+    <EmbeddedResource Include="Login y Seguridad\Ingresar.resx">
       <DependentUpon>Ingresar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pantalla Administrador.resx">
+    <EmbeddedResource Include="ABM Usuario\Pantalla Administrador.resx">
       <DependentUpon>Pantalla Administrador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
