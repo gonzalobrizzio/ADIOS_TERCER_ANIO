@@ -7,66 +7,78 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Ingresar : Form
+    public partial class frmIngresar : Form
     {
-        public Ingresar()
+        SqlConnection con = new SqlConnection();
+
+        public frmIngresar()
         {
             InitializeComponent();
+
+            string datosConexion = "Data Source=DARWIN" + "\\" + "SQLSERVER2012;Initial Catalog=GD1C2016;User ID=gd;Password=gd2016;Trusted_Connection=False;";
+            con.ConnectionString = datosConexion;
+            try
+            {
+                con.Open();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se pudo establecer la conexión con la Base de datos." + datosConexion); 
+                Application.Exit();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Chequear en BD si coincide con un usuario y contraseña
-            if (textBox1.Text.Equals("gd") && textBox2.Text.Equals("gd2016"))
+            string textoCmd = "SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='"+ txtUsr.Text +"' and p.pass='" + txtContra.Text + "'";
+
+            SqlCommand cmd = new SqlCommand (textoCmd,con);
+            
+            SqlDataReader dr = cmd.ExecuteReader();
+            
+            if (dr.Read() != null)
             {
                 //EN BD: if(cantFallidos>0) cantFallidos = 0;
                 //EN BD: if(cantRoles > 1) {
-                    new ABM_Rol.ElegirRol(this).Show();
+                MessageBox.Show(Convert.ToString(dr[0]));
+                    new ABM_Rol.frmElegirRol(this).Show();
                     this.Hide();
-
                 // } else {
                 //using (var usrUsuario = new ABM_Usuario.ABMUsuario())
                 //{
                 //    usrUsuario.ShowDialog();
                 //    this.Close();
                 //} 
-
             }
             else
             {
-                MessageBox.Show("Los datos son inválidos");
-                textBox1.Text = "";
-                textBox2.Text = "";
+                MessageBox.Show(Convert.ToString(dr["id"]));
+                txtContra.Text = "";
                 //EN BD: cantFallidos++;
             }
 
         }
 
-        private void textBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) button1_Click(sender, e);
-        }
-
-        private void Ingresar_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-                new ABM_Usuario.NuevoUsuario().Show();
+                new ABM_Usuario.NuevoUsuario(this).Show();
                 this.Hide();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new ABM_Rol.ABMRol().Show();
+            new ABM_Rol.frmABMRol().Show();
             this.Hide();
         }
 
+        private void Ingresar_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
 
     }
 }

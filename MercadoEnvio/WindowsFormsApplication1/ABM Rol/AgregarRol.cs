@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class AgregarRol : Form
+    public partial class frmAgregarRol : Form
     {
-        public AgregarRol()
+        public frmAgregarRol()
         {
             InitializeComponent();
         }
@@ -24,22 +24,22 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (comboBox1.Text == "")
+            if (cboFuncionalidad.Text == "")
             {
 
                 MessageBox.Show("El valor que intenta agregar es vacio!");
             }
             else {
-                dataGridView1.Rows.Add(comboBox1.Text);
-                comboBox1.Items.Remove(comboBox1.SelectedItem);
-                comboBox1.Text = "";
+                dgvFuncionalidades.Rows.Add(cboFuncionalidad.Text);
+                cboFuncionalidad.Items.Remove(cboFuncionalidad.SelectedItem);
+                cboFuncionalidad.Text = "";
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             //Habría que agregar a la base de datos y modificar el listado del abm
-            if (textBox1.Text == "")
+            if (txtNombre.Text == "")
             {
                 MessageBox.Show("Está intentando agregar un rol sin nombre!");
             }

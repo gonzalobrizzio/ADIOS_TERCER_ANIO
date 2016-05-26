@@ -10,23 +10,23 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Pantalla_Administrador : Form
+    public partial class frmPantallaAdministrador : Form
     {
-        public Pantalla_Administrador()
+        public frmPantallaAdministrador()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new ABM_Rol.ABMRol().Show();
+            new ABM_Rol.frmABMRol().Show();
             this.Close();
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            new Ingresar().Show();
+            new frmIngresar().Show();
             this.Close();
         }
     }

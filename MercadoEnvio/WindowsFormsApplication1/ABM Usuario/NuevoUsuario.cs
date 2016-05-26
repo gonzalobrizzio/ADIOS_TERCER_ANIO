@@ -12,62 +12,74 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class NuevoUsuario : Form
     {
-        public NuevoUsuario()
+        Form parent;
+        public NuevoUsuario(Form sender)
         {
+            
             InitializeComponent();
+            sender = parent;
         }
 
         private void NuevoUsuario_Load(object sender, EventArgs e)
         {
+        }
 
+        private void NuevoUsuario_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
-            if (textBox1.Text.Length == 0)
+            if (txtUsr.Text.Length == 0)
             {
                 MessageBox.Show("El usuario no puede estar vacío");
 
-                if (textBox1.Text.Length < 4) {
+                if (txtUsr.Text.Length < 4) {
                     MessageBox.Show("El usuario debe poseer más de 4 carácteres");
                 }
             }
 
-            else if (textBox7.Text.Length < 6) {
+            else if (txtContrasenia.Text.Length < 6) {
 
                 MessageBox.Show("La contraseña posee menos de 6 carácteres");
             }
 
-            else if (textBox6.Text.Length == 0)
+            else if (txtCorreo.Text.Length == 0)
             {
                 MessageBox.Show("La dirección de correcto eléctronico no puede ser vacía");
 
             }
-            else if (!(textBox8.Text.Length > 0 || textBox3.Text.Length > 0)) {
+            else if (!(txtCUIT.Text.Length > 0 || txtNroDoc.Text.Length > 0)) {
                 MessageBox.Show("Debe indicar algún número de DNI o CUIT");
             }
-            else if (!(textBox10.Text.Length == 0 || textBox9.Text.Length == 0))
+            else if ((txtCalle.Text.Length == 0 || txtAltura.Text.Length == 0))
             {
                 MessageBox.Show("Debe indicar alguna dirección ");
             }
 
             else
             {
-                new Ingresar().Show();
+                //new Ingresar().Show();
+                parent.Show();
                 this.Close();
             }
 
-            textBox7.Text = "";
+            txtContrasenia.Text = "";
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
 
-            new Ingresar().Show();
+            new frmIngresar().Show();
             this.Close();
 
+        }
+
+        private void label22_Click(object sender, EventArgs e)
+        {
+            parent.Show();
+            this.Close();
         }
 
     }

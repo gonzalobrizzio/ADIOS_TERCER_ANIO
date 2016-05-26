@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class Pantalla_de_Usuario : Form
+    public partial class frmPantallaUsuario : Form
     {
-        public Pantalla_de_Usuario()
+        public frmPantallaUsuario()
         {
             InitializeComponent();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            new Ingresar().Show();
+            new frmIngresar().Show();
             this.Close();
         }
     }

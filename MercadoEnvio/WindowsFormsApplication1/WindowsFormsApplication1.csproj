@@ -267,6 +267,12 @@
     <EmbeddedResource Include="ABM Usuario\Pantalla de Usuario.resx">
       <DependentUpon>Pantalla de Usuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calificar\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login y Seguridad\Ingresar.resx">
       <DependentUpon>Ingresar.cs</DependentUpon>
     </EmbeddedResource>

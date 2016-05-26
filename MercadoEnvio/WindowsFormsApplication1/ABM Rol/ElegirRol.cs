@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class ElegirRol : Form
+    public partial class frmElegirRol : Form
     {
-        public ElegirRol(Form sender)
+        public frmElegirRol(Form sender)
         {
             InitializeComponent();
         }
@@ -25,14 +25,14 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void button1_Click(object sender, EventArgs e)
         {
                 this.Hide();
-                if (listBox1.Text == "Administrador")
+                if (dgvRol.SelectedCells.ToString() == "Administrador")
                 {
-                    new Pantalla_Administrador().Show();
+                    new frmPantallaAdministrador().Show();
                     this.Close();
                 }
                 else
                 {
-                    new ABM_Usuario.Pantalla_de_Usuario().Show();
+                    new ABM_Usuario.frmPantallaUsuario().Show();
                     this.Close();
                 }
             }

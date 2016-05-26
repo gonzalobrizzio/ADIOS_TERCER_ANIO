@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1
 {
-    partial class Pantalla_Administrador
+    partial class frmPantallaAdministrador
     {
         /// <summary>
         /// Required designer variable.
@@ -28,60 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnRol = new System.Windows.Forms.Button();
+            this.btnUsr = new System.Windows.Forms.Button();
+            this.btnVisibilidad = new System.Windows.Forms.Button();
+            this.btnCerrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // btnRol
             // 
-            this.button1.Location = new System.Drawing.Point(102, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(179, 49);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "ABM de Rol";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnRol.Location = new System.Drawing.Point(56, 12);
+            this.btnRol.Name = "btnRol";
+            this.btnRol.Size = new System.Drawing.Size(179, 49);
+            this.btnRol.TabIndex = 0;
+            this.btnRol.Text = "ABM de Rol";
+            this.btnRol.UseVisualStyleBackColor = true;
+            this.btnRol.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btnUsr
             // 
-            this.button2.Location = new System.Drawing.Point(102, 67);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(179, 49);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "ABM de Usuarios";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnUsr.Location = new System.Drawing.Point(56, 67);
+            this.btnUsr.Name = "btnUsr";
+            this.btnUsr.Size = new System.Drawing.Size(179, 49);
+            this.btnUsr.TabIndex = 1;
+            this.btnUsr.Text = "ABM de Usuarios";
+            this.btnUsr.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnVisibilidad
             // 
-            this.button3.Location = new System.Drawing.Point(102, 122);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(179, 49);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "ABM de Visibilidad";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnVisibilidad.Location = new System.Drawing.Point(56, 122);
+            this.btnVisibilidad.Name = "btnVisibilidad";
+            this.btnVisibilidad.Size = new System.Drawing.Size(179, 49);
+            this.btnVisibilidad.TabIndex = 2;
+            this.btnVisibilidad.Text = "ABM de Visibilidad";
+            this.btnVisibilidad.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnCerrar
             // 
-            this.button4.Location = new System.Drawing.Point(294, 175);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(135, 35);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Cerrar sesión";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnCerrar.Location = new System.Drawing.Point(82, 185);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(135, 35);
+            this.btnCerrar.TabIndex = 3;
+            this.btnCerrar.Text = "Cerrar sesión";
+            this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnCerrar.Click += new System.EventHandler(this.button4_Click);
             // 
-            // Pantalla_Administrador
+            // frmPantallaAdministrador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 222);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Name = "Pantalla_Administrador";
+            this.ClientSize = new System.Drawing.Size(294, 232);
+            this.Controls.Add(this.btnCerrar);
+            this.Controls.Add(this.btnVisibilidad);
+            this.Controls.Add(this.btnUsr);
+            this.Controls.Add(this.btnRol);
+            this.Name = "frmPantallaAdministrador";
             this.Text = "Pantalla_Administrador";
             this.ResumeLayout(false);
 
@@ -89,9 +89,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnRol;
+        private System.Windows.Forms.Button btnUsr;
+        private System.Windows.Forms.Button btnVisibilidad;
+        private System.Windows.Forms.Button btnCerrar;
     }
 }

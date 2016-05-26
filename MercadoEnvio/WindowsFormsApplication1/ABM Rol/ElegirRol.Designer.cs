@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Rol
 {
-    partial class ElegirRol
+    partial class frmElegirRol
     {
         /// <summary>
         /// Required designer variable.
@@ -28,54 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.lblElegir = new System.Windows.Forms.Label();
+            this.btnElegir = new System.Windows.Forms.Button();
+            this.dgvRol = new System.Windows.Forms.DataGridView();
+            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRol)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblElegir
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label1.Location = new System.Drawing.Point(22, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(144, 34);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Elija el rol que desee \r\npara esta sesión:";
+            this.lblElegir.AutoSize = true;
+            this.lblElegir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblElegir.Location = new System.Drawing.Point(22, 19);
+            this.lblElegir.Name = "lblElegir";
+            this.lblElegir.Size = new System.Drawing.Size(144, 34);
+            this.lblElegir.TabIndex = 0;
+            this.lblElegir.Text = "Elija el rol que desee \r\npara esta sesión:";
             // 
-            // listBox1
+            // btnElegir
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Empresa",
-            "Cliente",
-            "Administrador"});
-            this.listBox1.Location = new System.Drawing.Point(25, 66);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
-            this.listBox1.TabIndex = 1;
+            this.btnElegir.Location = new System.Drawing.Point(25, 167);
+            this.btnElegir.Name = "btnElegir";
+            this.btnElegir.Size = new System.Drawing.Size(75, 23);
+            this.btnElegir.TabIndex = 2;
+            this.btnElegir.Text = "Elegir";
+            this.btnElegir.UseVisualStyleBackColor = true;
+            this.btnElegir.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button1
+            // dgvRol
             // 
-            this.button1.Location = new System.Drawing.Point(25, 167);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Elegir";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.dgvRol.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRol.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Rol});
+            this.dgvRol.Location = new System.Drawing.Point(25, 56);
+            this.dgvRol.Name = "dgvRol";
+            this.dgvRol.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dgvRol.Size = new System.Drawing.Size(141, 105);
+            this.dgvRol.TabIndex = 3;
             // 
-            // ElegirRol
+            // Rol
+            // 
+            this.Rol.HeaderText = "Rol";
+            this.Rol.Name = "Rol";
+            // 
+            // frmElegirRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(188, 199);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.label1);
-            this.Name = "ElegirRol";
+            this.Controls.Add(this.dgvRol);
+            this.Controls.Add(this.btnElegir);
+            this.Controls.Add(this.lblElegir);
+            this.Name = "frmElegirRol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ElegirRol";
             this.Load += new System.EventHandler(this.ElegirRol_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRol)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,8 +91,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblElegir;
+        private System.Windows.Forms.Button btnElegir;
+        private System.Windows.Forms.DataGridView dgvRol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rol;
     }
 }

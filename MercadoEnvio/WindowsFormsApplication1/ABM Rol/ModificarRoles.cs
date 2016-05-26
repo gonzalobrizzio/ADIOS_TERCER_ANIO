@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class ModificarRoles : Form
+    public partial class frmModificarRoles : Form
     {
-        public ModificarRoles()
+        public frmModificarRoles()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell oneCell in dataGridView1.SelectedCells)
+            foreach (DataGridViewCell oneCell in dgvFuncionalidadesTotales.SelectedCells)
             {
                 if (String.IsNullOrEmpty(oneCell.Value as String))
                 {
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     if (oneCell.Selected)
                     {
-                        dataGridView2.Rows.Add(oneCell.Value);
+                        dgvFuncionalidadesActuales.Rows.Add(oneCell.Value);
                     }
                 }
             }
@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button2_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell oneCell in dataGridView2.SelectedCells)
+            foreach (DataGridViewCell oneCell in dgvFuncionalidadesActuales.SelectedCells)
             {
                 if (String.IsNullOrEmpty(oneCell.Value as String))
                 {
@@ -47,7 +47,7 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     if (oneCell.Selected)
                     {
-                        dataGridView2.Rows.RemoveAt(oneCell.RowIndex);
+                        dgvFuncionalidadesActuales.Rows.RemoveAt(oneCell.RowIndex);
                         MessageBox.Show("Funcionalidad borrada con exito!");
                     }
                 }

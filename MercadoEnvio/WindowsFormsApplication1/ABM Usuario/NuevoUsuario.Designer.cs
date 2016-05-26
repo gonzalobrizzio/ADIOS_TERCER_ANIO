@@ -49,29 +49,29 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtUsr = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
-            this.comboBox9 = new System.Windows.Forms.ComboBox();
+            this.txtCodPostal = new System.Windows.Forms.TextBox();
+            this.txtNroDoc = new System.Windows.Forms.TextBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.txtCorreo = new System.Windows.Forms.TextBox();
+            this.txtContrasenia = new System.Windows.Forms.TextBox();
+            this.txtCUIT = new System.Windows.Forms.TextBox();
+            this.txtAltura = new System.Windows.Forms.TextBox();
+            this.txtCalle = new System.Windows.Forms.TextBox();
+            this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.cboTipoDoc = new System.Windows.Forms.ComboBox();
+            this.cboRazonSocial = new System.Windows.Forms.ComboBox();
+            this.cboRubro = new System.Windows.Forms.ComboBox();
+            this.cboLocalidad = new System.Windows.Forms.ComboBox();
+            this.cboDia = new System.Windows.Forms.ComboBox();
+            this.cboMes = new System.Windows.Forms.ComboBox();
+            this.cboAnio = new System.Windows.Forms.ComboBox();
+            this.txtPiso = new System.Windows.Forms.TextBox();
+            this.txtDepto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -287,12 +287,14 @@
             this.label21.TabIndex = 20;
             this.label21.Text = "Rubro:";
             // 
-            // textBox1
-            this.textBox1.MaxLength = 11;
-            this.textBox1.Location = new System.Drawing.Point(143, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 22;
+            // txtUsr
+            // 
+            this.txtUsr.AcceptsReturn = true;
+            this.txtUsr.Location = new System.Drawing.Point(143, 39);
+            this.txtUsr.MaxLength = 11;
+            this.txtUsr.Name = "txtUsr";
+            this.txtUsr.Size = new System.Drawing.Size(100, 20);
+            this.txtUsr.TabIndex = 1;
             // 
             // label23
             // 
@@ -308,7 +310,7 @@
             this.button1.Location = new System.Drawing.Point(373, 368);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 24;
+            this.button1.TabIndex = 20;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -318,113 +320,108 @@
             this.button2.Location = new System.Drawing.Point(455, 368);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 25;
+            this.button2.TabIndex = 21;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // textBox2
+            // txtCodPostal
             // 
-            this.textBox10.MaxLength = 4;
-            this.textBox2.Location = new System.Drawing.Point(143, 306);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(57, 20);
-            this.textBox2.TabIndex = 26;
+            this.txtCodPostal.Location = new System.Drawing.Point(143, 306);
+            this.txtCodPostal.Name = "txtCodPostal";
+            this.txtCodPostal.Size = new System.Drawing.Size(57, 20);
+            this.txtCodPostal.TabIndex = 16;
             // 
-            // textBox3
+            // txtNroDoc
             // 
-            this.textBox3.MaxLength = 8;
-            this.textBox3.Location = new System.Drawing.Point(143, 198);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 27;
+            this.txtNroDoc.Location = new System.Drawing.Point(143, 198);
+            this.txtNroDoc.MaxLength = 8;
+            this.txtNroDoc.Name = "txtNroDoc";
+            this.txtNroDoc.Size = new System.Drawing.Size(100, 20);
+            this.txtNroDoc.TabIndex = 7;
             // 
-            // textBox4
+            // txtApellido
             // 
-            this.textBox4.MaxLength = 10;
-            this.textBox4.Location = new System.Drawing.Point(143, 145);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 28;
+            this.txtApellido.Location = new System.Drawing.Point(143, 145);
+            this.txtApellido.MaxLength = 10;
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(100, 20);
+            this.txtApellido.TabIndex = 4;
             // 
-            // textBox5
+            // txtNombre
             // 
-            this.textBox5.MaxLength = 10;
-            this.textBox5.Location = new System.Drawing.Point(143, 117);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 29;
+            this.txtNombre.Location = new System.Drawing.Point(143, 117);
+            this.txtNombre.MaxLength = 10;
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(100, 20);
+            this.txtNombre.TabIndex = 3;
             // 
-            // textBox6
+            // txtCorreo
             // 
-
-            this.textBox6.MaxLength = 30;
-            this.textBox6.Location = new System.Drawing.Point(143, 91);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(180, 20);
-            this.textBox6.TabIndex = 30;
+            this.txtCorreo.Location = new System.Drawing.Point(143, 91);
+            this.txtCorreo.MaxLength = 30;
+            this.txtCorreo.Name = "txtCorreo";
+            this.txtCorreo.Size = new System.Drawing.Size(180, 20);
+            this.txtCorreo.TabIndex = 3;
             // 
-            // textBox7
+            // txtContrasenia
             // 
-
-            this.textBox7.MaxLength = 8;
-            this.textBox7.PasswordChar = '*';
-            this.textBox7.Location = new System.Drawing.Point(143, 65);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 31;
+            this.txtContrasenia.Location = new System.Drawing.Point(143, 65);
+            this.txtContrasenia.MaxLength = 8;
+            this.txtContrasenia.Name = "txtContrasenia";
+            this.txtContrasenia.PasswordChar = '*';
+            this.txtContrasenia.Size = new System.Drawing.Size(100, 20);
+            this.txtContrasenia.TabIndex = 2;
             // 
-            // textBox8
+            // txtCUIT
             // 
-            this.textBox8.MaxLength = 13;
-            this.textBox8.Location = new System.Drawing.Point(339, 198);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(152, 20);
-            this.textBox8.TabIndex = 32;
+            this.txtCUIT.Location = new System.Drawing.Point(339, 198);
+            this.txtCUIT.MaxLength = 13;
+            this.txtCUIT.Name = "txtCUIT";
+            this.txtCUIT.Size = new System.Drawing.Size(152, 20);
+            this.txtCUIT.TabIndex = 8;
             // 
-            // textBox9
+            // txtAltura
             // 
-            this.textBox9.MaxLength = 4;
-            this.textBox9.Location = new System.Drawing.Point(303, 254);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(43, 20);
-            this.textBox9.TabIndex = 33;
+            this.txtAltura.Location = new System.Drawing.Point(303, 254);
+            this.txtAltura.MaxLength = 4;
+            this.txtAltura.Name = "txtAltura";
+            this.txtAltura.Size = new System.Drawing.Size(43, 20);
+            this.txtAltura.TabIndex = 12;
             // 
-            // textBox10
+            // txtCalle
             // 
-            this.textBox10.MaxLength = 10;
-            this.textBox10.Location = new System.Drawing.Point(143, 254);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(100, 20);
-            this.textBox10.TabIndex = 34;
+            this.txtCalle.Location = new System.Drawing.Point(143, 254);
+            this.txtCalle.MaxLength = 10;
+            this.txtCalle.Name = "txtCalle";
+            this.txtCalle.Size = new System.Drawing.Size(100, 20);
+            this.txtCalle.TabIndex = 11;
             // 
-            // textBox11
+            // txtTelefono
             // 
-            this.textBox11.Location = new System.Drawing.Point(143, 226);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(100, 20);
-            this.textBox11.TabIndex = 35;
+            this.txtTelefono.Location = new System.Drawing.Point(143, 226);
+            this.txtTelefono.Name = "txtTelefono";
+            this.txtTelefono.Size = new System.Drawing.Size(100, 20);
+            this.txtTelefono.TabIndex = 9;
             // 
-            // comboBox1
+            // cboTipoDoc
             // 
-
-            this.comboBox1.Text = "N/U";
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cboTipoDoc.FormattingEnabled = true;
+            this.cboTipoDoc.Items.AddRange(new object[] {
             "DNI",
             "CI",
             "LC",
             "LE"});
-            this.comboBox1.Location = new System.Drawing.Point(143, 173);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(109, 21);
-            this.comboBox1.TabIndex = 41;
+            this.cboTipoDoc.Location = new System.Drawing.Point(143, 173);
+            this.cboTipoDoc.Name = "cboTipoDoc";
+            this.cboTipoDoc.Size = new System.Drawing.Size(109, 21);
+            this.cboTipoDoc.TabIndex = 5;
+            this.cboTipoDoc.Text = "N/U";
             // 
-            // comboBox2
+            // cboRazonSocial
             // 
-            this.comboBox2.Text = "N/U";
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.cboRazonSocial.FormattingEnabled = true;
+            this.cboRazonSocial.Items.AddRange(new object[] {
             "S.A. (Sociedad Anonima)",
             "S.R.L. (Sociedad de Responsabilidad Limitada)",
             "SCI (Sociedad de Capital e Industria)",
@@ -432,35 +429,34 @@
             "SCS (Sociedad en Comandita Simple)",
             "SC (Sociedad Colectiva)",
             "Coop. Ltda. (Cooperativa Limitada)"});
-            this.comboBox2.Location = new System.Drawing.Point(339, 173);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(109, 21);
-            this.comboBox2.TabIndex = 43;
+            this.cboRazonSocial.Location = new System.Drawing.Point(339, 173);
+            this.cboRazonSocial.Name = "cboRazonSocial";
+            this.cboRazonSocial.Size = new System.Drawing.Size(109, 21);
+            this.cboRazonSocial.TabIndex = 6;
+            this.cboRazonSocial.Text = "N/U";
             // 
-            // comboBox3
+            // cboRubro
             // 
-
-            this.comboBox3.Text = "N/U";
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(339, 226);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 45;
+            this.cboRubro.FormattingEnabled = true;
+            this.cboRubro.Location = new System.Drawing.Point(339, 226);
+            this.cboRubro.Name = "cboRubro";
+            this.cboRubro.Size = new System.Drawing.Size(121, 21);
+            this.cboRubro.TabIndex = 10;
+            this.cboRubro.Text = "N/U";
             // 
-            // comboBox4
+            // cboLocalidad
             // 
-
-            this.comboBox4.Text = "N/U";
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(143, 279);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(109, 21);
-            this.comboBox4.TabIndex = 46;
+            this.cboLocalidad.FormattingEnabled = true;
+            this.cboLocalidad.Location = new System.Drawing.Point(143, 279);
+            this.cboLocalidad.Name = "cboLocalidad";
+            this.cboLocalidad.Size = new System.Drawing.Size(109, 21);
+            this.cboLocalidad.TabIndex = 15;
+            this.cboLocalidad.Text = "N/U";
             // 
-            // comboBox5
+            // cboDia
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
+            this.cboDia.FormattingEnabled = true;
+            this.cboDia.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -492,15 +488,15 @@
             "29",
             "30",
             "31"});
-            this.comboBox5.Location = new System.Drawing.Point(192, 332);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(35, 21);
-            this.comboBox5.TabIndex = 47;
+            this.cboDia.Location = new System.Drawing.Point(192, 332);
+            this.cboDia.Name = "cboDia";
+            this.cboDia.Size = new System.Drawing.Size(35, 21);
+            this.cboDia.TabIndex = 17;
             // 
-            // comboBox6
+            // cboMes
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
+            this.cboMes.FormattingEnabled = true;
+            this.cboMes.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -513,15 +509,15 @@
             "10",
             "11",
             "12"});
-            this.comboBox6.Location = new System.Drawing.Point(266, 332);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(35, 21);
-            this.comboBox6.TabIndex = 48;
+            this.cboMes.Location = new System.Drawing.Point(266, 332);
+            this.cboMes.Name = "cboMes";
+            this.cboMes.Size = new System.Drawing.Size(35, 21);
+            this.cboMes.TabIndex = 18;
             // 
-            // comboBox7
+            // cboAnio
             // 
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Items.AddRange(new object[] {
+            this.cboAnio.FormattingEnabled = true;
+            this.cboAnio.Items.AddRange(new object[] {
             "1970",
             "1971",
             "1972",
@@ -569,116 +565,53 @@
             "2014",
             "2015",
             "2016"});
-            this.comboBox7.Location = new System.Drawing.Point(339, 332);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(62, 21);
-            this.comboBox7.TabIndex = 49;
+            this.cboAnio.Location = new System.Drawing.Point(339, 332);
+            this.cboAnio.Name = "cboAnio";
+            this.cboAnio.Size = new System.Drawing.Size(62, 21);
+            this.cboAnio.TabIndex = 19;
             // 
-            // comboBox8
+            // txtPiso
             // 
-
-            this.comboBox8.Text = "N/U";
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30"});
-            this.comboBox8.Location = new System.Drawing.Point(390, 254);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(36, 21);
-            this.comboBox8.TabIndex = 50;
+            this.txtPiso.Location = new System.Drawing.Point(390, 253);
+            this.txtPiso.Name = "txtPiso";
+            this.txtPiso.Size = new System.Drawing.Size(42, 20);
+            this.txtPiso.TabIndex = 13;
             // 
-            // comboBox9
+            // txtDepto
             // 
-
-            this.comboBox9.Text = "N/U";
-            this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Items.AddRange(new object[] {
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I",
-            "J",
-            "K",
-            "L",
-            "M",
-            "N",
-            "O",
-            "P",
-            "Q",
-            "R",
-            "S",
-            "T",
-            "U",
-            "V",
-            "X",
-            "Y",
-            "Z"});
-            this.comboBox9.Location = new System.Drawing.Point(482, 254);
-            this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(48, 21);
-            this.comboBox9.TabIndex = 51;
+            this.txtDepto.Location = new System.Drawing.Point(486, 253);
+            this.txtDepto.Name = "txtDepto";
+            this.txtDepto.Size = new System.Drawing.Size(42, 20);
+            this.txtDepto.TabIndex = 14;
             // 
             // NuevoUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 403);
-            this.Controls.Add(this.comboBox9);
-            this.Controls.Add(this.comboBox8);
-            this.Controls.Add(this.comboBox7);
-            this.Controls.Add(this.comboBox6);
-            this.Controls.Add(this.comboBox5);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox11);
-            this.Controls.Add(this.textBox10);
-            this.Controls.Add(this.textBox9);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtDepto);
+            this.Controls.Add(this.txtPiso);
+            this.Controls.Add(this.cboAnio);
+            this.Controls.Add(this.cboMes);
+            this.Controls.Add(this.cboDia);
+            this.Controls.Add(this.cboLocalidad);
+            this.Controls.Add(this.cboRubro);
+            this.Controls.Add(this.cboRazonSocial);
+            this.Controls.Add(this.cboTipoDoc);
+            this.Controls.Add(this.txtTelefono);
+            this.Controls.Add(this.txtCalle);
+            this.Controls.Add(this.txtAltura);
+            this.Controls.Add(this.txtCUIT);
+            this.Controls.Add(this.txtContrasenia);
+            this.Controls.Add(this.txtCorreo);
+            this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.txtApellido);
+            this.Controls.Add(this.txtNroDoc);
+            this.Controls.Add(this.txtCodPostal);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtUsr);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
@@ -701,6 +634,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "NuevoUsuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Agregar Nuevo Usuario";
             this.Load += new System.EventHandler(this.NuevoUsuario_Load);
             this.ResumeLayout(false);
@@ -731,28 +665,28 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtUsr;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.ComboBox comboBox7;
-        private System.Windows.Forms.ComboBox comboBox8;
-        private System.Windows.Forms.ComboBox comboBox9;
+        private System.Windows.Forms.TextBox txtCodPostal;
+        private System.Windows.Forms.TextBox txtNroDoc;
+        private System.Windows.Forms.TextBox txtApellido;
+        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.TextBox txtCorreo;
+        private System.Windows.Forms.TextBox txtContrasenia;
+        private System.Windows.Forms.TextBox txtCUIT;
+        private System.Windows.Forms.TextBox txtAltura;
+        private System.Windows.Forms.TextBox txtCalle;
+        private System.Windows.Forms.TextBox txtTelefono;
+        private System.Windows.Forms.ComboBox cboTipoDoc;
+        private System.Windows.Forms.ComboBox cboRazonSocial;
+        private System.Windows.Forms.ComboBox cboRubro;
+        private System.Windows.Forms.ComboBox cboLocalidad;
+        private System.Windows.Forms.ComboBox cboDia;
+        private System.Windows.Forms.ComboBox cboMes;
+        private System.Windows.Forms.ComboBox cboAnio;
+        private System.Windows.Forms.TextBox txtPiso;
+        private System.Windows.Forms.TextBox txtDepto;
     }
 }

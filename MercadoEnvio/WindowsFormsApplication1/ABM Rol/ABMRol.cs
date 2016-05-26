@@ -10,22 +10,22 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
-    public partial class ABMRol : Form
+    public partial class frmABMRol : Form
     {
-        public ABMRol()
+        public frmABMRol()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new ABM_Rol.AgregarRol().Show();
+            new ABM_Rol.frmAgregarRol().Show();
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell oneCell in dataGridView2.SelectedCells)
+            foreach (DataGridViewCell oneCell in dgvInhabilitados.SelectedCells)
             {
                 if (String.IsNullOrEmpty(oneCell.Value as String))
                 {
@@ -35,13 +35,13 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     if (oneCell.Selected)
                     {
-                        dataGridView2.Rows.RemoveAt(oneCell.RowIndex);
+                        dgvInhabilitados.Rows.RemoveAt(oneCell.RowIndex);
                         MessageBox.Show("Rol borrada con exito!");
                     }
                 }
             }
 
-            foreach (DataGridViewCell oneCell in dataGridView1.SelectedCells)
+            foreach (DataGridViewCell oneCell in dgvHabilitados.SelectedCells)
             {
                 if (String.IsNullOrEmpty(oneCell.Value as String))
                 {
@@ -51,7 +51,7 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     if (oneCell.Selected)
                     {
-                        dataGridView1.Rows.RemoveAt(oneCell.RowIndex);
+                        dgvHabilitados.Rows.RemoveAt(oneCell.RowIndex);
                         MessageBox.Show("Rol borrado con exito!");
                     }
                 }
@@ -61,7 +61,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void button5_Click(object sender, EventArgs e)
         {
 
-            foreach (DataGridViewCell oneCell in dataGridView1.SelectedCells)
+            foreach (DataGridViewCell oneCell in dgvHabilitados.SelectedCells)
             {
                 if (String.IsNullOrEmpty(oneCell.Value as String))
                 {
@@ -71,8 +71,8 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     if (oneCell.Selected)
                     {
-                        dataGridView1.Rows.RemoveAt(oneCell.RowIndex);
-                        dataGridView2.Rows.Add(oneCell.Value);
+                        dgvHabilitados.Rows.RemoveAt(oneCell.RowIndex);
+                        dgvInhabilitados.Rows.Add(oneCell.Value);
                     }
                 }
             }
@@ -80,7 +80,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button4_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell oneCell in dataGridView2.SelectedCells)
+            foreach (DataGridViewCell oneCell in dgvInhabilitados.SelectedCells)
             {
                 if (String.IsNullOrEmpty(oneCell.Value as String))
                 {
@@ -90,8 +90,8 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     if (oneCell.Selected)
                     {
-                        dataGridView2.Rows.RemoveAt(oneCell.RowIndex);
-                        dataGridView1.Rows.Add(oneCell.Value);
+                        dgvInhabilitados.Rows.RemoveAt(oneCell.RowIndex);
+                        dgvHabilitados.Rows.Add(oneCell.Value);
                     }
                 }
             }
@@ -100,12 +100,12 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void button2_Click(object sender, EventArgs e)
         {
 
-            if (String.IsNullOrEmpty(dataGridView1.CurrentCell.Value as String))
+            if (String.IsNullOrEmpty(dgvHabilitados.CurrentCell.Value as String))
             {
                 MessageBox.Show("Intenta modificar un rol en una linea vacia");
             }
             else{
-                var rolModificar = new ABM_Rol.ModificarRoles();
+                var rolModificar = new ABM_Rol.frmModificarRoles();
                 rolModificar.Show();
             }
         }
@@ -117,7 +117,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button7_Click(object sender, EventArgs e)
         {
-            new Pantalla_Administrador().Show();
+            new frmPantallaAdministrador().Show();
             this.Close();
         }
 
