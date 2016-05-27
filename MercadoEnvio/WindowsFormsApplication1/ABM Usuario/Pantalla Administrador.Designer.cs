@@ -52,6 +52,7 @@
             this.btnUsr.TabIndex = 1;
             this.btnUsr.Text = "ABM de Usuarios";
             this.btnUsr.UseVisualStyleBackColor = true;
+            this.btnUsr.Click += new System.EventHandler(this.btnUsr_Click);
             // 
             // btnVisibilidad
             // 

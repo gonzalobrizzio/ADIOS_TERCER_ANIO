@@ -12,7 +12,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 {
     public partial class frmElegirRol : Form
     {
-        public frmElegirRol(Form sender)
+        public frmElegirRol()
         {
             InitializeComponent();
         }
@@ -36,5 +36,10 @@ namespace WindowsFormsApplication1.ABM_Rol
                     this.Close();
                 }
             }
+
+        private void frmElegirRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
         }
     }

@@ -29,5 +29,12 @@ namespace WindowsFormsApplication1
             new frmIngresar().Show();
             this.Close();
         }
+
+        private void btnUsr_Click(object sender, EventArgs e)
+        {
+            new ABM_Usuario.frmGestionUsuario().Show();
+            this.Close();
+
+        }
     }
 }

@@ -40,45 +40,43 @@ namespace WindowsFormsApplication1
             
             SqlDataReader dr = cmd.ExecuteReader();
             
-            if (dr.Read() != null)
+            if (dr.Read())
             {
                 //EN BD: if(cantFallidos>0) cantFallidos = 0;
                 //EN BD: if(cantRoles > 1) {
+                int idUsuario = Convert.ToInt16(dr[0]);
+                //MessageBox.Show(idUsuario.ToString());
+                dr.Close();
+                textoCmd = "SELECT r.nombre FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE idUsuario =" + idUsuario;
+                cmd = new SqlCommand(textoCmd, con);
+                dr = cmd.ExecuteReader();
+                dr.Read();
                 MessageBox.Show(Convert.ToString(dr[0]));
-                    new ABM_Rol.frmElegirRol(this).Show();
+
+                    new ABM_Rol.frmElegirRol().Show();
                     this.Hide();
-                // } else {
-                //using (var usrUsuario = new ABM_Usuario.ABMUsuario())
-                //{
-                //    usrUsuario.ShowDialog();
-                //    this.Close();
-                //} 
+            
             }
-            else
-            {
-                MessageBox.Show(Convert.ToString(dr["id"]));
-                txtContra.Text = "";
-                //EN BD: cantFallidos++;
-            }
+            //else
+            //{
+            //    MessageBox.Show(Convert.ToString(dr["id"]));
+            //    txtContra.Text = "";
+            //    //EN BD: cantFallidos++;
+            //}
 
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-                new ABM_Usuario.NuevoUsuario(this).Show();
-                this.Hide();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            new ABM_Rol.frmABMRol().Show();
-            this.Hide();
         }
 
         private void Ingresar_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
+
+        private void frmIngresar_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
 
     }
 }
