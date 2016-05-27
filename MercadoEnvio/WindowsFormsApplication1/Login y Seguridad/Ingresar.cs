@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
 
-            string datosConexion = "Data Source=DARWIN" + "\\" + "SQLSERVER2012;Initial Catalog=GD1C2016;User ID=gd;Password=gd2016;Trusted_Connection=False;";
+            string datosConexion = "Data Source=AGUSTINA-PC" + "\\" + "SQLSERVER2012;Initial Catalog=GD1C2016;User ID=gd;Password=gd2016;Trusted_Connection=False;";
             con.ConnectionString = datosConexion;
             try
             {
@@ -34,36 +34,59 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string textoCmd = "SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='"+ txtUsr.Text +"' and p.pass='" + txtContra.Text + "'";
+            string textoCmd = "SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='" + txtUsr.Text + "' and p.pass='" + txtContra.Text + "'";
 
-            SqlCommand cmd = new SqlCommand (textoCmd,con);
-            
+            SqlCommand cmd = new SqlCommand(textoCmd, con);
+
             SqlDataReader dr = cmd.ExecuteReader();
-            
             if (dr.Read())
             {
-                //EN BD: if(cantFallidos>0) cantFallidos = 0;
-                //EN BD: if(cantRoles > 1) {
                 int idUsuario = Convert.ToInt16(dr[0]);
                 //MessageBox.Show(idUsuario.ToString());
                 dr.Close();
-                textoCmd = "SELECT r.nombre FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE idUsuario =" + idUsuario;
+                textoCmd = "SELECT idRol FROM ADIOS_TERCER_ANIO.RolUsuario WHERE idUsuario = " + idUsuario;
                 cmd = new SqlCommand(textoCmd, con);
                 dr = cmd.ExecuteReader();
+
                 dr.Read();
-                MessageBox.Show(Convert.ToString(dr[0]));
+                int rolActual = dr.GetInt32(0);
+                if (!(dr.Read())){
+                    if(rolActual == 1){
+                        new frmPantallaAdministrador().Show();
+                        this.Hide();
+                    } else if (rolActual == 2) {
+                        new ABM_Usuario.frmPantallaUsuario().Show();
+                        this.Hide();
+                    } else if (rolActual == 3) {
+//                      new ABM_Usuario.frmPantallaEmpresa().Show();
+                        this.Hide();
+                    }
 
-                    new ABM_Rol.frmElegirRol().Show();
+                } else {
+                    dr.Close();
+                    textoCmd = "SELECT r.nombre FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE idUsuario = " +idUsuario;
+                    cmd = new SqlCommand(textoCmd, con);
+                    dr = cmd.ExecuteReader();
+                    dr.Read();
+                    string roles = dr.GetString(0);
+                    while (dr.Read())
+                    {
+                        roles = roles + "," + dr.GetString(0);
+                    }
+                    Form formRol = new ABM_Rol.frmElegirRol(roles);
+                    formRol.Show();
                     this.Hide();
-            
-            }
-            //else
-            //{
-            //    MessageBox.Show(Convert.ToString(dr["id"]));
-            //    txtContra.Text = "";
-            //    //EN BD: cantFallidos++;
-            //}
+                }
 
+
+            }
+            else
+            {
+                dr.Close();
+                MessageBox.Show(Convert.ToString("Los datos son invalidos"));
+                txtContra.Text = "";
+                //EN BD: cantFallidos++;
+            }
         }
 
         private void Ingresar_FormClosed(object sender, FormClosedEventArgs e)

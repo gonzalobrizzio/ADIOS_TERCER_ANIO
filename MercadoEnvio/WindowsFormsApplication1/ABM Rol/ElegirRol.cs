@@ -12,20 +12,17 @@ namespace WindowsFormsApplication1.ABM_Rol
 {
     public partial class frmElegirRol : Form
     {
-        public frmElegirRol()
+        public frmElegirRol(string roles)
         {
             InitializeComponent();
-        }
-
-        private void ElegirRol_Load(object sender, EventArgs e)
-        {
-            
+            string[] rolesSeparados = roles.Split(',');
+            cboRol.Items.AddRange(rolesSeparados);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
                 this.Hide();
-                if (dgvRol.SelectedCells.ToString() == "Administrador")
+                if (cboRol.SelectedItem == "Administrador")
                 {
                     new frmPantallaAdministrador().Show();
                     this.Close();

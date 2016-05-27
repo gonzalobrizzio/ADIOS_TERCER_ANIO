@@ -100,11 +100,11 @@
     <Compile Include="ABM Usuario\NuevoUsuario.Designer.cs">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\Pantalla de Usuario.cs">
+    <Compile Include="ABM Usuario\Pantalla Usuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\Pantalla de Usuario.Designer.cs">
-      <DependentUpon>Pantalla de Usuario.cs</DependentUpon>
+    <Compile Include="ABM Usuario\Pantalla Usuario.Designer.cs">
+      <DependentUpon>Pantalla Usuario.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Visibilidad\Form1.cs">
       <SubType>Form</SubType>
@@ -273,8 +273,8 @@
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\Pantalla de Usuario.resx">
-      <DependentUpon>Pantalla de Usuario.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Usuario\Pantalla Usuario.resx">
+      <DependentUpon>Pantalla Usuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

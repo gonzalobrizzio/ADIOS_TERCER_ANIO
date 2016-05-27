@@ -12,12 +12,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class NuevoUsuario : Form
     {
-        Form parent;
         public NuevoUsuario(Form sender)
         {
             
             InitializeComponent();
-            sender = parent;
         }
 
         private void NuevoUsuario_Load(object sender, EventArgs e)

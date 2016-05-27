@@ -24,10 +24,7 @@ C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplicati
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
-C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Ingresar.resources
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
-C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ElegirRol.resources
-C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.ABMUsuario.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
@@ -50,3 +47,15 @@ C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplica
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmPantallaAdministrador.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Form1.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.frmGestionUsuario.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.frmABMRol.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.frmAgregarRol.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.frmModificarRoles.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.frmElegirRol.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.BajaDeUsuarios.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.frmGestionUsuario.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.NuevoUsuario.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.frmPantallaUsuario.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.Form1.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Form1.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmIngresar.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmPantallaAdministrador.resources

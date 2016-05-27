@@ -30,9 +30,7 @@
         {
             this.lblElegir = new System.Windows.Forms.Label();
             this.btnElegir = new System.Windows.Forms.Button();
-            this.dgvRol = new System.Windows.Forms.DataGridView();
-            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRol)).BeginInit();
+            this.cboRol = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblElegir
@@ -55,36 +53,26 @@
             this.btnElegir.UseVisualStyleBackColor = true;
             this.btnElegir.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dgvRol
+            // cboRol
             // 
-            this.dgvRol.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRol.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Rol});
-            this.dgvRol.Location = new System.Drawing.Point(25, 56);
-            this.dgvRol.Name = "dgvRol";
-            this.dgvRol.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dgvRol.Size = new System.Drawing.Size(141, 105);
-            this.dgvRol.TabIndex = 3;
-            // 
-            // Rol
-            // 
-            this.Rol.HeaderText = "Rol";
-            this.Rol.Name = "Rol";
+            this.cboRol.FormattingEnabled = true;
+            this.cboRol.Location = new System.Drawing.Point(25, 68);
+            this.cboRol.Name = "cboRol";
+            this.cboRol.Size = new System.Drawing.Size(121, 21);
+            this.cboRol.TabIndex = 3;
             // 
             // frmElegirRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(188, 199);
-            this.Controls.Add(this.dgvRol);
+            this.Controls.Add(this.cboRol);
             this.Controls.Add(this.btnElegir);
             this.Controls.Add(this.lblElegir);
             this.Name = "frmElegirRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ElegirRol";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmElegirRol_FormClosed);
-            this.Load += new System.EventHandler(this.ElegirRol_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRol)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,7 +82,6 @@
 
         private System.Windows.Forms.Label lblElegir;
         private System.Windows.Forms.Button btnElegir;
-        private System.Windows.Forms.DataGridView dgvRol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Rol;
+        private System.Windows.Forms.ComboBox cboRol;
     }
 }
