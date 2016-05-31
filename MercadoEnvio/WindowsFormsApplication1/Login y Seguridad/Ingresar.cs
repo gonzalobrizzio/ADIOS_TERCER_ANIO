@@ -13,31 +13,25 @@ namespace WindowsFormsApplication1
 {
     public partial class frmIngresar : Form
     {
-        SqlConnection con = new SqlConnection();
+        Conexion conn;
 
         public frmIngresar()
         {
             InitializeComponent();
 
-            string datosConexion = "Data Source=localhost" + "\\" + "SQLSERVER2012;Initial Catalog=GD1C2016;User ID=gd;Password=gd2016;Trusted_Connection=False;";
-            con.ConnectionString = datosConexion;
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("No se pudo establecer la conexión con la Base de datos." + datosConexion); 
-                Application.Exit();
-            }
+            this.conn = new Conexion("localhost",
+                                      "SQLSERVER2012",
+                                      "GD1C2016",
+                                      "gd",
+                                      "gd2016");
+            conn.conectar();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             string textoCmd = "SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='" + txtUsr.Text + "' and p.pass='" + txtContra.Text + "'";
 
-            SqlCommand cmd = new SqlCommand(textoCmd, con);
-
+            SqlCommand cmd = new SqlCommand(textoCmd, conn.getConexion());
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
@@ -45,7 +39,7 @@ namespace WindowsFormsApplication1
                 //MessageBox.Show(idUsuario.ToString());
                 dr.Close();
                 textoCmd = "SELECT idRol FROM ADIOS_TERCER_ANIO.RolUsuario WHERE idUsuario = " + idUsuario;
-                cmd = new SqlCommand(textoCmd, con);
+                cmd = new SqlCommand(textoCmd, conn.getConexion());
                 dr = cmd.ExecuteReader();
 
                 dr.Read();
@@ -65,7 +59,7 @@ namespace WindowsFormsApplication1
                 } else {
                     dr.Close();
                     textoCmd = "SELECT r.nombre FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE idUsuario = " +idUsuario;
-                    cmd = new SqlCommand(textoCmd, con);
+                    cmd = new SqlCommand(textoCmd, conn.getConexion());
                     dr = cmd.ExecuteReader();
                     dr.Read();
                     string roles = dr.GetString(0);

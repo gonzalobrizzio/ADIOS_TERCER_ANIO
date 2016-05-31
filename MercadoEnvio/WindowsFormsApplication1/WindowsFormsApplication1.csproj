@@ -130,6 +130,7 @@
     <Compile Include="ComprarOfertar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Conexion.cs" />
     <Compile Include="Empresa.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
