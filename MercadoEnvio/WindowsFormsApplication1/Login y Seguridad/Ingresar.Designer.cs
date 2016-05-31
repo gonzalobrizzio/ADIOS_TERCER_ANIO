@@ -34,11 +34,12 @@
             this.txtContra = new System.Windows.Forms.TextBox();
             this.btnIngresar = new System.Windows.Forms.Button();
             this.lblIngresar = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUsr
             // 
-            this.txtUsr.Location = new System.Drawing.Point(89, 51);
+            this.txtUsr.Location = new System.Drawing.Point(89, 52);
             this.txtUsr.MaxLength = 11;
             this.txtUsr.Name = "txtUsr";
             this.txtUsr.Size = new System.Drawing.Size(100, 20);
@@ -94,11 +95,24 @@
             this.lblIngresar.TabIndex = 6;
             this.lblIngresar.Text = "Ingrese su usuario y contraseña para\r\ncomenzar a usar el sistema.";
             // 
+            // btnSalir
+            // 
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnSalir.Location = new System.Drawing.Point(16, 107);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(67, 29);
+            this.btnSalir.TabIndex = 7;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
             // frmIngresar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(206, 152);
+            this.ClientSize = new System.Drawing.Size(203, 148);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.lblIngresar);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.txtContra);
@@ -121,6 +135,7 @@
         private System.Windows.Forms.TextBox txtContra;
         private System.Windows.Forms.Button btnIngresar;
         private System.Windows.Forms.Label lblIngresar;
+        private System.Windows.Forms.Button btnSalir;
     }
 }
 
