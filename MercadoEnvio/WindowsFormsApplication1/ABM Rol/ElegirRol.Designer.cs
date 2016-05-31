@@ -45,11 +45,11 @@
             // 
             // btnElegir
             // 
-            this.btnElegir.Location = new System.Drawing.Point(25, 167);
+            this.btnElegir.Location = new System.Drawing.Point(25, 110);
             this.btnElegir.Name = "btnElegir";
-            this.btnElegir.Size = new System.Drawing.Size(75, 23);
+            this.btnElegir.Size = new System.Drawing.Size(141, 32);
             this.btnElegir.TabIndex = 2;
-            this.btnElegir.Text = "Elegir";
+            this.btnElegir.Text = "Seleccionar";
             this.btnElegir.UseVisualStyleBackColor = true;
             this.btnElegir.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -58,21 +58,20 @@
             this.cboRol.FormattingEnabled = true;
             this.cboRol.Location = new System.Drawing.Point(25, 68);
             this.cboRol.Name = "cboRol";
-            this.cboRol.Size = new System.Drawing.Size(121, 21);
+            this.cboRol.Size = new System.Drawing.Size(141, 21);
             this.cboRol.TabIndex = 3;
             // 
             // frmElegirRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(188, 199);
+            this.ClientSize = new System.Drawing.Size(188, 158);
             this.Controls.Add(this.cboRol);
             this.Controls.Add(this.btnElegir);
             this.Controls.Add(this.lblElegir);
             this.Name = "frmElegirRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ElegirRol";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmElegirRol_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

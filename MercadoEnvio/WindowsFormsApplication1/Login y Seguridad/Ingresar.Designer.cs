@@ -107,10 +107,8 @@
             this.Name = "frmIngresar";
             this.Text = "Login";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Ingresar_FormClosed);
-            this.Load += new System.EventHandler(this.frmIngresar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

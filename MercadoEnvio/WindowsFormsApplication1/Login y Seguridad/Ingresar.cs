@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
 
-            string datosConexion = "Data Source=AGUSTINA-PC" + "\\" + "SQLSERVER2012;Initial Catalog=GD1C2016;User ID=gd;Password=gd2016;Trusted_Connection=False;";
+            string datosConexion = "Data Source=localhost" + "\\" + "SQLSERVER2012;Initial Catalog=GD1C2016;User ID=gd;Password=gd2016;Trusted_Connection=False;";
             con.ConnectionString = datosConexion;
             try
             {
@@ -77,8 +77,6 @@ namespace WindowsFormsApplication1
                     formRol.Show();
                     this.Hide();
                 }
-
-
             }
             else
             {
@@ -93,13 +91,5 @@ namespace WindowsFormsApplication1
         {
             Application.Exit();
         }
-
-        private void frmIngresar_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-
     }
 }

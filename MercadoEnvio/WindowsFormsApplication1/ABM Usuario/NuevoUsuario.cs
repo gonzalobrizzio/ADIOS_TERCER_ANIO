@@ -14,12 +14,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
     {
         public NuevoUsuario(Form sender)
         {
-            
             InitializeComponent();
-        }
-
-        private void NuevoUsuario_Load(object sender, EventArgs e)
-        {
         }
 
         private void NuevoUsuario_FormClosed(object sender, FormClosedEventArgs e)
@@ -59,7 +54,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             else
             {
                 //new Ingresar().Show();
-                parent.Show();
                 this.Close();
             }
 
@@ -76,7 +70,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void label22_Click(object sender, EventArgs e)
         {
-            parent.Show();
             this.Close();
         }
 

@@ -115,11 +115,11 @@
     <Compile Include="Calificacion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Calificar\Form1.cs">
+    <Compile Include="Calificar\Calificar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Calificar\Calificar.Designer.cs">
+      <DependentUpon>Calificar.cs</DependentUpon>
     </Compile>
     <Compile Include="Compra.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -276,8 +276,8 @@
     <EmbeddedResource Include="ABM Usuario\Pantalla Usuario.resx">
       <DependentUpon>Pantalla Usuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Calificar\Calificar.resx">
+      <DependentUpon>Calificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOfertar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

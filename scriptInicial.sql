@@ -469,6 +469,33 @@ BEGIN
 		
 END
 
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[calificar]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+
+	INSERT INTO 
+		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idCompra, fecha, puntaje, detalle, pendiente)
+	SELECT	
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idVendedor,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
+		NULL, --TODO ID COMPRA --(select id from ADIOS_TERCER_ANIO.Compra where idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AND Compra_Fecha = fecha )
+		Compra_Fecha, -- NO SE SI ES CORRECTO PONER LA FECHA DE LA COMPRA
+		Calificacion_Cant_Estrellas,
+		Calificacion_Descripcion,
+		CASE
+			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0
+			ELSE 1
+		END
+	FROM gd_esquema.Maestra	
+	WHERE
+	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL AND Compra_Fecha IS NOT NULL
+		
+END
+GO
+
+
+
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
 
@@ -501,3 +528,5 @@ EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
 --Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
 --Calificacion--, Compra, Envio, Oferta, Pregunta, Respuesta, --Factura--
+
+

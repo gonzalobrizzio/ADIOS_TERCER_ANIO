@@ -14,9 +14,10 @@ namespace WindowsFormsApplication1
         [STAThread]
         static void Main()
         {
+            Form ingresar;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmIngresar());
+            Application.Run(ingresar = new frmIngresar());
         }
     }
 }

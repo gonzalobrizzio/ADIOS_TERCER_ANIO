@@ -55,7 +55,7 @@ C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplicati
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.frmGestionUsuario.resources
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.NuevoUsuario.resources
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.frmPantallaUsuario.resources
-C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.Form1.resources
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Form1.resources
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmIngresar.resources
 C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmPantallaAdministrador.resources
+C:\Users\Agustina\workspace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.frmCalificacion.resources

@@ -22,5 +22,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
             new frmIngresar().Show();
             this.Close();
         }
+
+        private void frmPantallaUsuario_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCalificar_Click(object sender, EventArgs e)
+        {
+            new Calificar.frmCalificacion().Show();
+            this.Close();
+        }
     }
 }

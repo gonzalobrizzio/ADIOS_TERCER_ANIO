@@ -71,6 +71,7 @@
             this.btnCalificar.TabIndex = 3;
             this.btnCalificar.Text = "Calificar Vendedor";
             this.btnCalificar.UseVisualStyleBackColor = true;
+            this.btnCalificar.Click += new System.EventHandler(this.btnCalificar_Click);
             // 
             // btnFacturas
             // 
@@ -104,6 +105,7 @@
             this.Controls.Add(this.btnGenerarPublicacion);
             this.Name = "frmPantallaUsuario";
             this.Text = "Pantalla_de_Usuario";
+            this.Load += new System.EventHandler(this.frmPantallaUsuario_Load);
             this.ResumeLayout(false);
 
         }

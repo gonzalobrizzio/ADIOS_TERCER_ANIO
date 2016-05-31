@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.Calificar
 {
-    public partial class Form1 : Form
+    public partial class frmCalificacion : Form
     {
-        public Form1()
+        public frmCalificacion()
         {
             InitializeComponent();
+        }
+
+        private void tkbCalificacion_Scroll(object sender, EventArgs e)
+        {
+            lblEstrellas.Text = tkbCalificacion.Value + " estrellas.";
         }
     }
 }

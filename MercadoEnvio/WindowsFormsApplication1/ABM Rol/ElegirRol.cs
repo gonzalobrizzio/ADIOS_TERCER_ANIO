@@ -21,22 +21,17 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-                this.Hide();
-                if (cboRol.SelectedItem == "Administrador")
+                if ((cboRol.SelectedItem).Equals("Administrativo"))
                 {
                     new frmPantallaAdministrador().Show();
                     this.Close();
                 }
-                else
+                else if ((cboRol.SelectedItem).Equals("Cliente"))
                 {
                     new ABM_Usuario.frmPantallaUsuario().Show();
                     this.Close();
                 }
             }
 
-        private void frmElegirRol_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
         }
     }
