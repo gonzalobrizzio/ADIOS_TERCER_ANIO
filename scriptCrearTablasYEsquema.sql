@@ -215,4 +215,29 @@ BEGIN
 	WHERE Forma_Pago_Desc is not null
 
 	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No especificado')
+
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', 'gd', 'gd@mailinator.com')
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('gd', 'gd', 'gd2@mailinator.com')
+	SELECT * FROM ADIOS_TERCER_ANIO.Usuario ORDER BY id DESC
+
+	DECLARE @idUsuario int;
+	DECLARE @idRol int;
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='gd')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+	VALUES(@idRol,@idUsuario)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='gd')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+	VALUES(@idRol,@idUsuario)
+	
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='gd')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+	VALUES(@idRol,@idUsuario)
+
+	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario
+	SELECT * FROM ADIOS_TERCER_ANIO.Rol
 END
