@@ -12,7 +12,135 @@ AS BEGIN
 END
 GO
 
+--SP PARA MIGRAR TODOS LAS PERSONAS DE LA TABLA MAESTRA
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPersonas]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE @idUsuario INT,
+			@nombre NVARCHAR(255),
+			@apellido NVARCHAR(255),
+			@documento NUMERIC(18,0),
+			@fechaNac DATETIME,
+			@mail NVARCHAR(255),
+			@direccion NVARCHAR(255),
+			@direccion_numero NUMERIC(18,0),
+			@piso NUMERIC(18,0),
+			@dpto NVARCHAR(255),
+			@codigoPostal NVARCHAR(255)
+	DECLARE cur CURSOR FOR
 
+	SELECT DISTINCT 
+		Cli_Nombre,
+		Cli_Apeliido,
+		Cli_Dni,
+		Cli_Fecha_Nac,
+		Cli_Mail,
+		Cli_Dom_Calle,
+		Cli_Nro_Calle,
+		Cli_Piso,
+		Cli_Depto,
+		Cli_Cod_Postal
+	FROM 
+		gd_esquema.Maestra
+	WHERE
+		Cli_Dni IS NOT NULL
+
+	OPEN cur
+	FETCH NEXT FROM cur
+		INTO 
+		@nombre,
+		@apellido,
+		@documento,
+		@fechaNac,
+		@mail,
+		@direccion,
+		@direccion_numero,
+		@piso,
+		@dpto,
+		@codigoPostal
+
+	WHILE(@@FETCH_STATUS = 0)
+		BEGIN
+			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,NULL,@mail,@ultimoID = @idUsuario OUTPUT;
+			DECLARE @idRol int;
+			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
+			VALUES(@idRol, @idUsuario)
+			
+			INSERT INTO ADIOS_TERCER_ANIO.Persona(
+				nombre,
+				apellido,
+				documento,
+				idTipoDocumento,
+				direccion,
+				direccion_numero,
+				piso,
+				dpto,
+				codigoPostal,
+				fechaNacimiento,
+				fechaCreacion,
+				idUsuario)
+			VALUES (
+				@nombre,
+				@apellido,
+				@documento,
+				(select id from ADIOS_TERCER_ANIO.TipoDocumento where descripcion = 'DNI'),
+				@direccion,
+				@direccion_numero,
+				@piso,
+				@dpto,
+				@codigoPostal,
+				@fechaNac,
+				GETDATE(),
+				@idUsuario)
+			
+				
+		FETCH NEXT FROM cur
+		INTO 
+			@nombre,
+			@apellido,
+			@documento,
+			@fechaNac,
+			@mail,
+			@direccion,
+			@direccion_numero,
+			@piso,
+			@dpto,
+			@codigoPostal
+		END
+	CLOSE cur 
+	DEALLOCATE cur
+		
+END
+GO
+
+--SP para claificar?
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[calificar]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+
+	INSERT INTO 
+		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idCompra, fecha, puntaje, detalle, pendiente)
+	SELECT	
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idVendedor,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
+		NULL, --TODO ID COMPRA --(select id from ADIOS_TERCER_ANIO.Compra where idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AND Compra_Fecha = fecha )
+		Compra_Fecha, -- NO SE SI ES CORRECTO PONER LA FECHA DE LA COMPRA
+		Calificacion_Cant_Estrellas,
+		Calificacion_Descripcion,
+		CASE
+			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0
+			ELSE 1
+		END
+	FROM gd_esquema.Maestra	
+	WHERE
+	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL AND Compra_Fecha IS NOT NULL
+		
+END
+GO
 
 --SP PARA MIGRAR TODOS LAS EMPRESAS DE LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarEmpresas]
@@ -367,143 +495,14 @@ GO
 -- MIGRACION
 -- -----------------------------------------------------
 
---SP PARA MIGRAR TODOS LAS PERSONAS DE LA TABLA MAESTRA
-BEGIN
-	set nocount on;
-	set xact_abort on;
-	DECLARE @idUsuario INT,
-			@nombre NVARCHAR(255),
-			@apellido NVARCHAR(255),
-			@documento NUMERIC(18,0),
-			@fechaNac DATETIME,
-			@mail NVARCHAR(255),
-			@direccion NVARCHAR(255),
-			@direccion_numero NUMERIC(18,0),
-			@piso NUMERIC(18,0),
-			@dpto NVARCHAR(255),
-			@codigoPostal NVARCHAR(255)
-	DECLARE cur CURSOR FOR
-
-	SELECT DISTINCT 
-		Cli_Nombre,
-		Cli_Apeliido,
-		Cli_Dni,
-		Cli_Fecha_Nac,
-		Cli_Mail,
-		Cli_Dom_Calle,
-		Cli_Nro_Calle,
-		Cli_Piso,
-		Cli_Depto,
-		Cli_Cod_Postal
-	FROM 
-		gd_esquema.Maestra
-	WHERE
-		Cli_Dni IS NOT NULL
-
-	OPEN cur
-	FETCH NEXT FROM cur
-		INTO 
-		@nombre,
-		@apellido,
-		@documento,
-		@fechaNac,
-		@mail,
-		@direccion,
-		@direccion_numero,
-		@piso,
-		@dpto,
-		@codigoPostal
-
-	WHILE(@@FETCH_STATUS = 0)
-		BEGIN
-			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
-			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,NULL,@mail,@ultimoID = @idUsuario OUTPUT;
-			DECLARE @idRol int;
-			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol, @idUsuario)
-			
-			INSERT INTO ADIOS_TERCER_ANIO.Persona(
-				nombre,
-				apellido,
-				documento,
-				idTipoDocumento,
-				direccion,
-				direccion_numero,
-				piso,
-				dpto,
-				codigoPostal,
-				fechaNacimiento,
-				fechaCreacion,
-				idUsuario)
-			VALUES (
-				@nombre,
-				@apellido,
-				@documento,
-				(select id from ADIOS_TERCER_ANIO.TipoDocumento where descripcion = 'DNI'),
-				@direccion,
-				@direccion_numero,
-				@piso,
-				@dpto,
-				@codigoPostal,
-				@fechaNac,
-				GETDATE(),
-				@idUsuario)
-			
-				
-		FETCH NEXT FROM cur
-		INTO 
-			@nombre,
-			@apellido,
-			@documento,
-			@fechaNac,
-			@mail,
-			@direccion,
-			@direccion_numero,
-			@piso,
-			@dpto,
-			@codigoPostal
-		END
-	CLOSE cur 
-	DEALLOCATE cur
-		
-END
-
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[calificar]
-AS BEGIN
-	set nocount on;
-	set xact_abort on;
-
-	INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idCompra, fecha, puntaje, detalle, pendiente)
-	SELECT	
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idVendedor,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
-		NULL, --TODO ID COMPRA --(select id from ADIOS_TERCER_ANIO.Compra where idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AND Compra_Fecha = fecha )
-		Compra_Fecha, -- NO SE SI ES CORRECTO PONER LA FECHA DE LA COMPRA
-		Calificacion_Cant_Estrellas,
-		Calificacion_Descripcion,
-		CASE
-			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0
-			ELSE 1
-		END
-	FROM gd_esquema.Maestra	
-	WHERE
-	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL AND Compra_Fecha IS NOT NULL
-		
-END
-GO
-
-
-
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
 
 --MIGRO LOS RUBROS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
 
-----MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
---EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
+--MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
