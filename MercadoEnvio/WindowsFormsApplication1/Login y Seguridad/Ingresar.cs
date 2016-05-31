@@ -27,7 +27,7 @@ namespace WindowsFormsApplication1
             conn.conectar();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnIngresar_Click(object sender, EventArgs e)
         {
             string textoCmd = "SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='" + txtUsr.Text + "' and p.pass='" + txtContra.Text + "'";
 
@@ -36,7 +36,6 @@ namespace WindowsFormsApplication1
             if (dr.Read())
             {
                 int idUsuario = Convert.ToInt16(dr[0]);
-                //MessageBox.Show(idUsuario.ToString());
                 dr.Close();
                 textoCmd = "SELECT idRol FROM ADIOS_TERCER_ANIO.RolUsuario WHERE idUsuario = " + idUsuario;
                 cmd = new SqlCommand(textoCmd, conn.getConexion());

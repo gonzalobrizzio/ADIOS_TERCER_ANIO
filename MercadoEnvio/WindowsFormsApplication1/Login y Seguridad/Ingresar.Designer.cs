@@ -76,13 +76,14 @@
             // btnIngresar
             // 
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnIngresar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnIngresar.Location = new System.Drawing.Point(89, 107);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(100, 29);
             this.btnIngresar.TabIndex = 4;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.UseVisualStyleBackColor = true;
-            this.btnIngresar.Click += new System.EventHandler(this.button1_Click);
+            this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
             // 
             // lblIngresar
             // 
@@ -109,6 +110,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Ingresar_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

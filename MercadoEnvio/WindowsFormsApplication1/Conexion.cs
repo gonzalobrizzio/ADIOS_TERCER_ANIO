@@ -34,6 +34,15 @@ namespace WindowsFormsApplication1
         public void conectar(){
             this.conn = new SqlConnection();
             conn.ConnectionString = this.conecctionString();
+            try
+            {
+                this.conn.Open();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se pudo establecer la conexión con la Base de datos.");
+                Application.Exit();
+            }
         }
             
         public String conecctionString(){
@@ -45,16 +54,11 @@ namespace WindowsFormsApplication1
         }   
         
         public SqlConnection getConexion(){
-            try
-            {
-                this.conn.Open();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("No se pudo establecer la conexión con la Base de datos."); 
-                Application.Exit();
-            }
             return this.conn;
+        }
+
+        public void cerrarConexion(){
+            this.conn.Close();
         }
     }
 }
