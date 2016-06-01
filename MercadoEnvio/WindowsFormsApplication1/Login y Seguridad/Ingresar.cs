@@ -13,81 +13,135 @@ namespace WindowsFormsApplication1
 {
     public partial class frmIngresar : Form
     {
-        Conexion conn;
+        Conexion conn = Conexion.Instance;
 
         public frmIngresar()
         {
-            InitializeComponent();
-
-            this.conn = new Conexion("localhost",
-                                      "SQLSERVER2012",
-                                      "GD1C2016",
-                                      "gd",
-                                      "gd2016");
-            conn.conectar();
+            InitializeComponent();       
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            string textoCmd = "SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='" + txtUsr.Text + "' and p.pass='" + txtContra.Text + "'";
+            SqlCommand cmd = new SqlCommand("login", conn.getConexion);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlCommand cmd = new SqlCommand(textoCmd, conn.getConexion());
-            SqlDataReader dr = cmd.ExecuteReader();
-            if (dr.Read())
+            SqlParameter usuario = new SqlParameter("@usuario", txtUsr.Text);
+            usuario.Direction = ParameterDirection.Input;
+            usuario.SqlDbType = SqlDbType.NVarChar;
+            SqlParameter pass = new SqlParameter("@pass", txtContra.Text);
+            pass.Direction = ParameterDirection.Input;
+            pass.SqlDbType = SqlDbType.NVarChar;
+            SqlParameter idUsuario = new SqlParameter("@idUsuario", null);
+            idUsuario.Direction = ParameterDirection.Output;
+            idUsuario.SqlDbType = SqlDbType.Int;
+            cmd.Parameters.Add(usuario);
+            cmd.Parameters.Add(pass);
+            cmd.Parameters.Add(idUsuario);
+            try
             {
-                int idUsuario = Convert.ToInt16(dr[0]);
-                dr.Close();
-                textoCmd = "SELECT idRol FROM ADIOS_TERCER_ANIO.RolUsuario WHERE idUsuario = " + idUsuario;
-                cmd = new SqlCommand(textoCmd, conn.getConexion());
-                dr = cmd.ExecuteReader();
-
-                dr.Read();
-                int rolActual = dr.GetInt32(0);
-                if (!(dr.Read())){
-                    if(rolActual == 1){
-                        new frmPantallaAdministrador().Show();
-                        this.Hide();
-                    } else if (rolActual == 2) {
-                        new ABM_Usuario.frmPantallaUsuario().Show();
-                        this.Hide();
-                    } else if (rolActual == 3) {
-//                      new ABM_Usuario.frmPantallaEmpresa().Show();
-                        this.Hide();
-                    }
-
-                } else {
-                    dr.Close();
-                    textoCmd = "SELECT r.nombre FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE idUsuario = " +idUsuario;
-                    cmd = new SqlCommand(textoCmd, conn.getConexion());
-                    dr = cmd.ExecuteReader();
-                    dr.Read();
-                    string roles = dr.GetString(0);
-                    while (dr.Read())
+                
+                cmd.ExecuteNonQuery();
+                int idUsuarioDB = Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString());
+                //Calculo cantidad roles
+                string queryCantidadRoles = "Select @cantidad = count(*) "
+                                + "from ADIOS_TERCER_ANIO.RolUsuario ru "
+                                + "where ru.idUsuario = @idUsuario";
+                SqlCommand cantidadRoles = new SqlCommand(queryCantidadRoles, conn.getConexion);
+                SqlParameter cantidad = new SqlParameter("@cantidad", SqlDbType.Int);
+                cantidad.Direction = ParameterDirection.Output;
+                SqlParameter idUsuarioABuscar = new SqlParameter("@idUsuario", idUsuarioDB);
+                idUsuarioABuscar.Direction = ParameterDirection.Input;
+                idUsuarioABuscar.SqlDbType = SqlDbType.Int;
+                cantidadRoles.Parameters.Add(cantidad);
+                cantidadRoles.Parameters.Add(idUsuarioABuscar);
+                cantidadRoles.ExecuteNonQuery();
+                int cantidadRolesUsuario = Int32.Parse(cantidadRoles.Parameters["@cantidad"].Value.ToString());
+                //Busco Los roles
+                string queryBuscarRoles = "Select r.id, r.nombre "
+                    //"Select @idRol = r.id, @nombreRol = r.nombre "
+                                + "from ADIOS_TERCER_ANIO.RolUsuario ru "
+                                + "inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol "
+                                + "where ru.idUsuario = @idUsuarioABuscarRoles and ru.deleted = 0";
+                SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
+                //SqlParameter idRol = new SqlParameter("@idRol", null);
+                //idRol.Direction = ParameterDirection.Output;
+                //idRol.SqlDbType = SqlDbType.Int;
+                //SqlParameter nombreRol = new SqlParameter("@nombreRol", SqlDbType.NVarChar, 255);
+                //nombreRol.Direction = ParameterDirection.Output;
+                SqlParameter idUsuarioABuscarRoles = new SqlParameter("@idUsuarioABuscarRoles", idUsuarioDB);
+                idUsuarioABuscarRoles.Direction = ParameterDirection.Input;
+                idUsuarioABuscarRoles.SqlDbType = SqlDbType.Int;
+                //buscarRoles.Parameters.Add(idRol);
+                //buscarRoles.Parameters.Add(nombreRol);
+                buscarRoles.Parameters.Add(idUsuarioABuscarRoles);                
+                SqlDataReader dataReader = buscarRoles.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    if (cantidadRolesUsuario > 1)
                     {
-                        roles = roles + "," + dr.GetString(0);
+                        dataReader.Read();
+                        string roles = dataReader.GetString(1);
+                        while (dataReader.Read())
+                        {
+                            roles = roles + "," + dataReader.GetString(1);
+                        }
+                        Form formrol = new ABM_Rol.frmElegirRol(roles);
+                        formrol.Show();
+                        this.Hide();
+
                     }
-                    Form formRol = new ABM_Rol.frmElegirRol(roles);
-                    formRol.Show();
-                    this.Hide();
+                    if (cantidadRolesUsuario == 1)
+                    {
+                        dataReader.Read();
+                        int rolActual = dataReader.GetInt32(0);
+                        switch (rolActual)
+                        {
+                            case 1:
+                                new frmPantallaAdministrador().Show();
+                                this.Hide();
+                                break;
+                            case 2:
+                                new ABM_Usuario.frmPantallaUsuario().Show();
+                                this.Hide();
+                                break;
+                            case 3:
+                                //new ABM_Usuario.frmPantallaEmpresa().Show();
+                                //this.Hide();
+                                break;
+                        }
+                    }
+
                 }
+                else
+                {
+                    MessageBox.Show("No se pudieron cargar los roles");
+                    dataReader.Close();
+                    this.Show();
+                }
+
             }
-            else
+            catch (SqlException error)
             {
-                dr.Close();
-                MessageBox.Show(Convert.ToString("Los datos son invalidos"));
+                MessageBox.Show(Convert.ToString(error.Message));
                 txtContra.Text = "";
-                //EN BD: cantFallidos++;
             }
         }
 
         private void Ingresar_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            this.salir();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
+            this.salir();
+        }
+
+        private void salir(){
+            conn.cerrarConexion();
             Application.Exit();
         }
+
+
     }
 }

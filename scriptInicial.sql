@@ -1,6 +1,9 @@
 -------------------------------------------------------
 -- PROCEDURES -----------------------------------------
 -------------------------------------------------------
+USE [GD1C2016] ;
+GO
+
 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuario](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
