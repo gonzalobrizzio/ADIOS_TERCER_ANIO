@@ -86,6 +86,7 @@ namespace WindowsFormsApplication1
                             roles = roles + "," + dataReader.GetString(1);
                         }
                         Form formrol = new ABM_Rol.frmElegirRol(roles);
+                        dataReader.Close();
                         formrol.Show();
                         this.Hide();
 
@@ -98,14 +99,17 @@ namespace WindowsFormsApplication1
                         {
                             case 1:
                                 new frmPantallaAdministrador().Show();
+                                dataReader.Close();
                                 this.Hide();
                                 break;
                             case 2:
                                 new ABM_Usuario.frmPantallaUsuario().Show();
+                                dataReader.Close();
                                 this.Hide();
                                 break;
                             case 3:
                                 //new ABM_Usuario.frmPantallaEmpresa().Show();
+                                //dataReader.Close();
                                 //this.Hide();
                                 break;
                         }
@@ -140,6 +144,11 @@ namespace WindowsFormsApplication1
         private void salir(){
             conn.cerrarConexion();
             Application.Exit();
+        }
+
+        private void frmIngresar_Load(object sender, EventArgs e)
+        {
+
         }
 
 

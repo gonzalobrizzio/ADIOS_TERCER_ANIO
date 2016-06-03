@@ -40,3 +40,8 @@ BEGIN
 	End;
 	Else THROW 50001, 'No existe el usuario', 1; 
 END
+
+UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
+UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+SELECT usuario FROM ADIOS_TERCER_ANIO.Usuario
