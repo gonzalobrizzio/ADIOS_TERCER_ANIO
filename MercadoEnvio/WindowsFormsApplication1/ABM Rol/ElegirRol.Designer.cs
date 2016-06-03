@@ -37,7 +37,7 @@
             // 
             this.lblElegir.AutoSize = true;
             this.lblElegir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblElegir.Location = new System.Drawing.Point(22, 19);
+            this.lblElegir.Location = new System.Drawing.Point(119, 32);
             this.lblElegir.Name = "lblElegir";
             this.lblElegir.Size = new System.Drawing.Size(144, 34);
             this.lblElegir.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // btnElegir
             // 
-            this.btnElegir.Location = new System.Drawing.Point(25, 110);
+            this.btnElegir.Location = new System.Drawing.Point(122, 236);
             this.btnElegir.Name = "btnElegir";
             this.btnElegir.Size = new System.Drawing.Size(141, 32);
             this.btnElegir.TabIndex = 2;
@@ -56,7 +56,7 @@
             // cboRol
             // 
             this.cboRol.FormattingEnabled = true;
-            this.cboRol.Location = new System.Drawing.Point(25, 68);
+            this.cboRol.Location = new System.Drawing.Point(122, 144);
             this.cboRol.Name = "cboRol";
             this.cboRol.Size = new System.Drawing.Size(141, 21);
             this.cboRol.TabIndex = 3;
@@ -65,13 +65,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(188, 158);
+            this.ClientSize = new System.Drawing.Size(409, 334);
             this.Controls.Add(this.cboRol);
             this.Controls.Add(this.btnElegir);
             this.Controls.Add(this.lblElegir);
             this.Name = "frmElegirRol";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ElegirRol";
+            this.Load += new System.EventHandler(this.frmElegirRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

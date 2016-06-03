@@ -21,7 +21,12 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-                if ((cboRol.SelectedItem).Equals("Administrativo"))
+
+                if (cboRol.SelectedItem == null)
+                {
+                    MessageBox.Show("No ha seleccionado un rol valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                else if ((cboRol.SelectedItem).Equals("Administrativo"))
                 {
                     new frmPantallaAdministrador().Show();
                     this.Close();
@@ -31,7 +36,13 @@ namespace WindowsFormsApplication1.ABM_Rol
                     new ABM_Usuario.frmPantallaUsuario().Show();
                     this.Close();
                 }
-            }
+
+        }
+
+        private void frmElegirRol_Load(object sender, EventArgs e)
+        {
+
+        }
 
         }
     }

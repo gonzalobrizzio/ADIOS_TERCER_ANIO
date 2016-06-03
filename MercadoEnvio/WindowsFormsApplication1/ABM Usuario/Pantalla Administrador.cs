@@ -33,7 +33,7 @@ namespace WindowsFormsApplication1
         private void btnUsr_Click(object sender, EventArgs e)
         {
             new ABM_Usuario.frmGestionUsuario().Show();
-            this.Close();
+            this.Hide();
 
         }
     }
