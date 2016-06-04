@@ -100,11 +100,11 @@
     <Compile Include="ABM Usuario\NuevoUsuario.Designer.cs">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\Pantalla Usuario.cs">
+    <Compile Include="PantallaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\Pantalla Usuario.Designer.cs">
-      <DependentUpon>Pantalla Usuario.cs</DependentUpon>
+    <Compile Include="PantallaPrincipal.Designer.cs">
+      <DependentUpon>PantallaPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Visibilidad\Form1.cs">
       <SubType>Form</SubType>
@@ -206,12 +206,6 @@
     <Compile Include="Oferta.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\Pantalla Administrador.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Usuario\Pantalla Administrador.Designer.cs">
-      <DependentUpon>Pantalla Administrador.cs</DependentUpon>
-    </Compile>
     <Compile Include="Persona.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -275,8 +269,8 @@
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\Pantalla Usuario.resx">
-      <DependentUpon>Pantalla Usuario.cs</DependentUpon>
+    <EmbeddedResource Include="PantallaPrincipal.resx">
+      <DependentUpon>PantallaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar\Calificar.resx">
       <DependentUpon>Calificar.cs</DependentUpon>
@@ -286,9 +280,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login y Seguridad\Ingresar.resx">
       <DependentUpon>Ingresar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\Pantalla Administrador.resx">
-      <DependentUpon>Pantalla Administrador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

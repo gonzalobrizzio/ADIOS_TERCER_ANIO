@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAgregar_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewCell oneCell in dgvFuncionalidadesTotales.SelectedCells)
             {
@@ -35,7 +35,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnQuitar_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewCell oneCell in dgvFuncionalidadesActuales.SelectedCells)
             {
@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void textBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) button1_Click(sender, e);
+            if (e.KeyCode == Keys.Enter) btnAgregar_Click(sender, e);
         }
 
         private void ModificarRoles_Load(object sender, EventArgs e)
@@ -64,12 +64,12 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnModificar_Click(object sender, EventArgs e)
         {
            //Igual que en el agregar, hay que modificar la BD y el mismo ABM
                 this.Close();

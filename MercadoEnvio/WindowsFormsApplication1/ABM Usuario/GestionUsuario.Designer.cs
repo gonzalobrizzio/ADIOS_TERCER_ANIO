@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Usuario
 {
-    partial class frmGestionUsuario
+    partial class frmABMUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -110,7 +110,7 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click_1);
             // 
-            // frmGestionUsuario
+            // frmABMUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -123,8 +123,9 @@
             this.Controls.Add(this.txtBuscado);
             this.Controls.Add(this.btnAgregarCliente);
             this.Controls.Add(this.btnAgregarEmpresa);
-            this.Name = "frmGestionUsuario";
-            this.Text = "GestionUsuario";
+            this.Name = "frmABMUsuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "ABM Usuarios";
             ((System.ComponentModel.ISupportInitialize)(this.dataUsuarios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

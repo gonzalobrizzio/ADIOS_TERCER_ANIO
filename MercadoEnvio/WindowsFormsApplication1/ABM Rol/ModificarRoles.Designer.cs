@@ -40,7 +40,7 @@
             this.lblFuncionalidadesTotales = new System.Windows.Forms.Label();
             this.lblFuncionalidadesActuales = new System.Windows.Forms.Label();
             this.btnModificar = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesTotales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesActuales)).BeginInit();
             this.SuspendLayout();
@@ -58,7 +58,7 @@
             // 
             this.txtNombre.Location = new System.Drawing.Point(156, 47);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(121, 20);
+            this.txtNombre.Size = new System.Drawing.Size(156, 20);
             this.txtNombre.TabIndex = 1;
             // 
             // dgvFuncionalidadesTotales
@@ -66,9 +66,9 @@
             this.dgvFuncionalidadesTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFuncionalidadesTotales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NombreDeFuncionalidad});
-            this.dgvFuncionalidadesTotales.Location = new System.Drawing.Point(15, 90);
+            this.dgvFuncionalidadesTotales.Location = new System.Drawing.Point(18, 90);
             this.dgvFuncionalidadesTotales.Name = "dgvFuncionalidadesTotales";
-            this.dgvFuncionalidadesTotales.Size = new System.Drawing.Size(144, 150);
+            this.dgvFuncionalidadesTotales.Size = new System.Drawing.Size(294, 307);
             this.dgvFuncionalidadesTotales.TabIndex = 2;
             // 
             // NombreDeFuncionalidad
@@ -81,9 +81,9 @@
             this.dgvFuncionalidadesActuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFuncionalidadesActuales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1});
-            this.dgvFuncionalidadesActuales.Location = new System.Drawing.Point(215, 90);
+            this.dgvFuncionalidadesActuales.Location = new System.Drawing.Point(346, 90);
             this.dgvFuncionalidadesActuales.Name = "dgvFuncionalidadesActuales";
-            this.dgvFuncionalidadesActuales.Size = new System.Drawing.Size(144, 150);
+            this.dgvFuncionalidadesActuales.Size = new System.Drawing.Size(305, 307);
             this.dgvFuncionalidadesActuales.TabIndex = 3;
             // 
             // dataGridViewTextBoxColumn1
@@ -104,28 +104,28 @@
             // 
             // btnQuitar
             // 
-            this.btnQuitar.Location = new System.Drawing.Point(225, 246);
+            this.btnQuitar.Location = new System.Drawing.Point(213, 415);
             this.btnQuitar.Name = "btnQuitar";
-            this.btnQuitar.Size = new System.Drawing.Size(122, 23);
+            this.btnQuitar.Size = new System.Drawing.Size(175, 23);
             this.btnQuitar.TabIndex = 6;
             this.btnQuitar.Text = "Quitar funcionalidad";
             this.btnQuitar.UseVisualStyleBackColor = true;
-            this.btnQuitar.Click += new System.EventHandler(this.button2_Click);
+            this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(21, 246);
+            this.btnAgregar.Location = new System.Drawing.Point(32, 415);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(122, 23);
+            this.btnAgregar.Size = new System.Drawing.Size(175, 23);
             this.btnAgregar.TabIndex = 7;
             this.btnAgregar.Text = "Agregar funcionalidad";
             this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.button1_Click);
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // lblFuncionalidadesTotales
             // 
             this.lblFuncionalidadesTotales.AutoSize = true;
-            this.lblFuncionalidadesTotales.Location = new System.Drawing.Point(12, 74);
+            this.lblFuncionalidadesTotales.Location = new System.Drawing.Point(15, 74);
             this.lblFuncionalidadesTotales.Name = "lblFuncionalidadesTotales";
             this.lblFuncionalidadesTotales.Size = new System.Drawing.Size(136, 13);
             this.lblFuncionalidadesTotales.TabIndex = 8;
@@ -134,7 +134,7 @@
             // lblFuncionalidadesActuales
             // 
             this.lblFuncionalidadesActuales.AutoSize = true;
-            this.lblFuncionalidadesActuales.Location = new System.Drawing.Point(215, 73);
+            this.lblFuncionalidadesActuales.Location = new System.Drawing.Point(343, 74);
             this.lblFuncionalidadesActuales.Name = "lblFuncionalidadesActuales";
             this.lblFuncionalidadesActuales.Size = new System.Drawing.Size(128, 13);
             this.lblFuncionalidadesActuales.TabIndex = 9;
@@ -142,30 +142,30 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(83, 290);
+            this.btnModificar.Location = new System.Drawing.Point(394, 415);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(75, 23);
+            this.btnModificar.Size = new System.Drawing.Size(175, 23);
             this.btnModificar.TabIndex = 10;
-            this.btnModificar.Text = "Modificar";
+            this.btnModificar.Text = "Modificar funcionalidad";
             this.btnModificar.UseVisualStyleBackColor = true;
-            this.btnModificar.Click += new System.EventHandler(this.button3_Click);
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
-            // btnCancelar
+            // btnVolver
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(215, 289);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 11;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.button4_Click);
+            this.btnVolver.Location = new System.Drawing.Point(610, 454);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 11;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // frmModificarRoles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 340);
-            this.Controls.Add(this.btnCancelar);
+            this.ClientSize = new System.Drawing.Size(697, 489);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.lblFuncionalidadesActuales);
             this.Controls.Add(this.lblFuncionalidadesTotales);
@@ -177,6 +177,7 @@
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNuevoNombre);
             this.Name = "frmModificarRoles";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Roles";
             this.Load += new System.EventHandler(this.ModificarRoles_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesTotales)).EndInit();
@@ -200,6 +201,6 @@
         private System.Windows.Forms.Label lblFuncionalidadesTotales;
         private System.Windows.Forms.Label lblFuncionalidadesActuales;
         private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

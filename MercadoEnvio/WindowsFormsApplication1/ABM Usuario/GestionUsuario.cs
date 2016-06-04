@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class frmGestionUsuario : Form
+    public partial class frmABMUsuario : Form
     {
         Conexion conn;
-        public frmGestionUsuario()
+        public frmABMUsuario()
         {
             InitializeComponent();
             String query = "SELECT usuario FROM ADIOS_TERCER_ANIO.Usuario";
@@ -34,7 +34,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
-            this.Parent.Show();
+            new frmPantallaPrincipal("Administrativo").Show();
             this.Close();
 
         }

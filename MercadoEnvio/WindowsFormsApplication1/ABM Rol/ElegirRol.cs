@@ -28,12 +28,17 @@ namespace WindowsFormsApplication1.ABM_Rol
                 }
                 else if ((cboRol.SelectedItem).Equals("Administrativo"))
                 {
-                    new frmPantallaAdministrador().Show();
+                    new ABM_Usuario.frmPantallaPrincipal("Administrativo").Show();
                     this.Close();
                 }
                 else if ((cboRol.SelectedItem).Equals("Cliente"))
                 {
-                    new ABM_Usuario.frmPantallaUsuario().Show();
+                    new ABM_Usuario.frmPantallaPrincipal("Cliente").Show();
+                    this.Close();
+                }
+                else if ((cboRol.SelectedItem).Equals("Empresa"))
+                {
+                    new ABM_Usuario.frmPantallaPrincipal("Empresa").Show();
                     this.Close();
                 }
 
