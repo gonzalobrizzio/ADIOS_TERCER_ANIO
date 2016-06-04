@@ -257,7 +257,7 @@ AS BEGIN
 END
 GO
 
---Lo empiezo pero no está terminado--
+
 --SP PARA MIGRAR LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarFacturas]
 AS BEGIN
@@ -291,7 +291,7 @@ AS BEGIN
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT 
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)	AS idComprador,
 		(select id from Publicacion p where p.codAnterior = Publicacion_Cod),
 		Compra_Fecha				AS fecha,
 		Compra_Cantidad
@@ -302,6 +302,8 @@ AS BEGIN
 		Compra_Cantidad IS NOT NULL	
 	AND	
 		Calificacion_Codigo IS NULL
+	AND 
+		Publ_Cli_Dni is not null
 
 END
 GO
@@ -315,34 +317,40 @@ AS BEGIN
 	SELECT 
 		Oferta_Monto				AS monto,
 		Oferta_Fecha				AS fecha,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador, 
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)	AS idComprador, 
 		(select id from Publicacion p where p.codAnterior = Publicacion_Cod)
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Oferta_Monto IS NOT NULL
 	AND 
 		Oferta_Fecha IS NOT NULL	
+	AND
+		Publ_Cli_Dni is not null
 END
 GO
 
 
 --SP PARA MIGRAR LOS ITEMS QUE HAY EN LA TABLA MAESTRA
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems]
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems](@nombre Nvarchar(255), @precio decimal(18,2), @cantidad int, @id int output)
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
 		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad)
-		SELECT 
-			(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS nombre,
-			Item_Factura_Monto				AS precio,
-			Item_Factura_Cantidad			AS cantidad
-		FROM gd_esquema.Maestra	
-		WHERE
-			Item_Factura_Monto IS NOT NULL
-		AND
-			Item_Factura_Cantidad IS NOT NULL
+		Values (@nombre, @precio, @cantidad)
 
+		set @id = @@IDENTITY;
+END
+GO
+
+CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcionMigrarItem](@nombre Nvarchar(255), @precio decimal(18,2), @cantidad int)
+RETURNS INTEGER
+AS
+BEGIN
+	Declare @id int;
+	EXEC ADIOS_TERCER_ANIO.migrarItems @nombre, @precio , @cantidad, @id;
+		
+	RETURN @id;
 END
 GO
 
@@ -353,22 +361,21 @@ AS BEGIN
 	set xact_abort on;
 
 	INSERT INTO 
-		ADIOS_TERCER_ANIO.Calificacion(idUsuario ,idUsuarioCalificador, idCompra, fecha, puntaje, detalle, pendiente)
+		ADIOS_TERCER_ANIO.Calificacion(idCompra, fecha, puntaje, detalle, pendiente)
 	SELECT	
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AS idVendedor,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idUsuarioCalificador,
-		NULL, --TODO ID COMPRA --(select id from ADIOS_TERCER_ANIO.Compra where idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AND Compra_Fecha = fecha )
-		Compra_Fecha, -- NO SE SI ES CORRECTO PONER LA FECHA DE LA COMPRA
+		(select id 
+		from ADIOS_TERCER_ANIO.Compra c
+		where c.idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AND c.fecha = Compra_Fecha AND 
+		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod) = c.idPublicacion) as id,
+		Compra_Fecha,
 		Calificacion_Cant_Estrellas,
 		Calificacion_Descripcion,
 		CASE
-			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0
-			ELSE 1
+			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0 ELSE 1
 		END
 	FROM gd_esquema.Maestra	
 	WHERE
-	Publ_Cli_Dni IS NOT NULL AND Cli_Dni IS NOT NULL AND Compra_Fecha IS NOT NULL
-		
+	Publ_Cli_Dni is not null AND Compra_Fecha IS NOT NULL AND Calificacion_Codigo is not null
 END
 GO
 
@@ -405,18 +412,16 @@ AS BEGIN
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )	AS idEstado, --El cambio de estado se tiene que hacer en C#
 		Publicacion_Precio AS precio,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-		CASE WHEN Publ_Cli_Dni IS NOT NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
-		ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
-		END  AS idUsuario,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)  AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock				AS stock,
-		NULL 							AS idItem, --TODO traer 
+		null, --todo (ADIOS_TERCER_ANIO.funcionMigrarItem(Publicacion_Rubro_Descripcion, Item_Factura_Monto, Item_Factura_Cantidad)) AS idItem, 
 		NULL							AS idEnvio, --TODO traer 
 		Publicacion_Cod
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
-		(Publ_Cli_Dni IS NOT NULL OR Publ_Empresa_Cuit IS NOT NULL)
+		(Publ_Empresa_Cuit IS NOT NULL)
 		and
 		Publicacion_Cod is not null
 END
@@ -460,6 +465,8 @@ BEGIN
 END
 GO
 
+
+
 -- -----------------------------------------------------
 -- VISTAS
 -- -----------------------------------------------------
@@ -485,9 +492,6 @@ EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
 
---MIGRO LOS ITEMS QUE HAY EN LA TABLA MAESTRA
-EXEC [ADIOS_TERCER_ANIO].[migrarItems];
-
 --MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
 
@@ -503,7 +507,5 @@ EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 
---Visibilidad, Rubro, Persona, Empresa, Publicaciones, Usuario
---Calificacion--, Compra, Envio, Oferta, Pregunta, Respuesta, --Factura--
 
 

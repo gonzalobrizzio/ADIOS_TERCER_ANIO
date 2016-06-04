@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    class Sesion
+    sealed class Sesion
     {
-        
+        private int idUsuario;
+        private int idRol;        
     }
 }
