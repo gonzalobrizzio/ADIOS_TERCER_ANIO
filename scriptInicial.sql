@@ -412,7 +412,10 @@ AS BEGIN
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )	AS idEstado, --El cambio de estado se tiene que hacer en C#
 		Publicacion_Precio AS precio,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)  AS idUsuario,
+		CASE 
+			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		END AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock				AS stock,
 		null, --todo (ADIOS_TERCER_ANIO.funcionMigrarItem(Publicacion_Rubro_Descripcion, Item_Factura_Monto, Item_Factura_Cantidad)) AS idItem, 
