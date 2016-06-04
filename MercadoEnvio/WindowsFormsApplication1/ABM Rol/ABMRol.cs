@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,61 +14,73 @@ namespace WindowsFormsApplication1.ABM_Rol
 {
     public partial class frmABMRol : Form
     {
+        Conexion conn;
         public frmABMRol()
         {
             InitializeComponent();
+            String queryHabilitados = "SELECT nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Rol";
+            conn = Conexion.Instance;
+            SqlCommand buscarRoles = new SqlCommand(queryHabilitados, conn.getConexion);
+            SqlDataAdapter da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
+            DataTable tablaDeRoles = new DataTable("Roles");
+            da.Fill(tablaDeRoles);
+            dgvRoles.DataSource = tablaDeRoles.DefaultView;
+
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             new ABM_Rol.frmAgregarRol().Show();
+            this.Close();
 
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewCell oneCell in dgvInhabilitados.SelectedCells)
-            {
-                if (String.IsNullOrEmpty(oneCell.Value as String))
-                {
-                    MessageBox.Show("Intenta borrar una linea vacia");
-                }
-            }
-
-            foreach (DataGridViewCell oneCell in dgvHabilitados.SelectedCells)
-            {
-                if (String.IsNullOrEmpty(oneCell.Value as String))
-                {
-                    MessageBox.Show("Intenta borrar una linea vacia");
-                }
-            }
-        }
-
-        private void btnInhabilitar_Click(object sender, EventArgs e)
+        private void btnDeshabilitar_Click(object sender, EventArgs e)
         {
 
-                if (String.IsNullOrEmpty(dgvInhabilitados.CurrentCell.Value as String))
+                if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
                 {
-                    MessageBox.Show("Intenta habilitar una linea con un rol vacio", "Error", MessageBoxButtons.OK);
+                    MessageBox.Show("Intenta deshabilitar una linea con un rol vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
+
+                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 1 WHERE @nombre = nombre";
+                SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+                nombre.SqlValue = dgvRoles.CurrentCell.Value.ToString();
+                nombre.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(nombre);
+                actualizacion.ExecuteNonQuery();
+                dgvRoles.Update();
+                dgvRoles.Refresh();
+                
             
         }
 
         private void btnHabilitar_Click(object sender, EventArgs e)
         {
             
-                if (String.IsNullOrEmpty(dgvHabilitados.CurrentCell.Value as String))
+                if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
                 {
-                    MessageBox.Show("Intenta habilitar una linea con un rol vacio", "Error", MessageBoxButtons.OK);
+                    MessageBox.Show("Intenta habilitar una linea con un rol vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
+
+                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 0 WHERE @nombre = nombre";
+                SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+                nombre.SqlValue = dgvRoles.CurrentCell.Value.ToString();
+                nombre.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(nombre);
+                actualizacion.ExecuteNonQuery();
+                dgvRoles.Update();
+                dgvRoles.Refresh();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
 
-            if (String.IsNullOrEmpty(dgvHabilitados.CurrentCell.Value as String))
+            if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
             {
-                MessageBox.Show("Intenta modificar un rol en una linea vacia", "Error", MessageBoxButtons.OK);
+                MessageBox.Show("Intenta modificar un rol en una linea vacia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 

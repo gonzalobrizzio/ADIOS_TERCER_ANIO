@@ -29,58 +29,31 @@
         private void InitializeComponent()
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.dgvHabilitados = new System.Windows.Forms.DataGridView();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvInhabilitados = new System.Windows.Forms.DataGridView();
-            this.Nombre1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRoles = new System.Windows.Forms.DataGridView();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
-            this.btnEliminar = new System.Windows.Forms.Button();
             this.lblHabilitados = new System.Windows.Forms.Label();
-            this.lblInhabilitados = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.btnInhabilitar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHabilitados)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInhabilitados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRoles)).BeginInit();
             this.SuspendLayout();
             // 
-            // dgvHabilitados
+            // dgvRoles
             // 
-            this.dgvHabilitados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHabilitados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Nombre});
-            this.dgvHabilitados.Location = new System.Drawing.Point(384, 64);
-            this.dgvHabilitados.Name = "dgvHabilitados";
-            this.dgvHabilitados.Size = new System.Drawing.Size(346, 268);
-            this.dgvHabilitados.TabIndex = 0;
-            // 
-            // Nombre
-            // 
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            // 
-            // dgvInhabilitados
-            // 
-            this.dgvInhabilitados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInhabilitados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Nombre1});
-            this.dgvInhabilitados.Location = new System.Drawing.Point(12, 64);
-            this.dgvInhabilitados.Name = "dgvInhabilitados";
-            this.dgvInhabilitados.Size = new System.Drawing.Size(346, 268);
-            this.dgvInhabilitados.TabIndex = 1;
-            // 
-            // Nombre1
-            // 
-            this.Nombre1.HeaderText = "Nombre";
-            this.Nombre1.Name = "Nombre1";
+            this.dgvRoles.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRoles.Location = new System.Drawing.Point(12, 40);
+            this.dgvRoles.Name = "dgvRoles";
+            this.dgvRoles.Size = new System.Drawing.Size(718, 292);
+            this.dgvRoles.TabIndex = 0;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(303, 359);
+            this.btnAgregar.Location = new System.Drawing.Point(313, 350);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(117, 23);
+            this.btnAgregar.Size = new System.Drawing.Size(119, 34);
             this.btnAgregar.TabIndex = 2;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -88,41 +61,21 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(439, 359);
+            this.btnModificar.Location = new System.Drawing.Point(438, 350);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(117, 23);
+            this.btnModificar.Size = new System.Drawing.Size(119, 34);
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.Location = new System.Drawing.Point(161, 359);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(117, 23);
-            this.btnEliminar.TabIndex = 4;
-            this.btnEliminar.Text = "Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // lblHabilitados
             // 
             this.lblHabilitados.AutoSize = true;
             this.lblHabilitados.Location = new System.Drawing.Point(9, 40);
             this.lblHabilitados.Name = "lblHabilitados";
-            this.lblHabilitados.Size = new System.Drawing.Size(89, 13);
+            this.lblHabilitados.Size = new System.Drawing.Size(0, 13);
             this.lblHabilitados.TabIndex = 6;
-            this.lblHabilitados.Text = "Roles Habilitados";
-            // 
-            // lblInhabilitados
-            // 
-            this.lblInhabilitados.AutoSize = true;
-            this.lblInhabilitados.Location = new System.Drawing.Point(381, 43);
-            this.lblInhabilitados.Name = "lblInhabilitados";
-            this.lblInhabilitados.Size = new System.Drawing.Size(96, 13);
-            this.lblInhabilitados.TabIndex = 7;
-            this.lblInhabilitados.Text = "Roles Inhabilitados";
             // 
             // lblTitulo
             // 
@@ -137,9 +90,9 @@
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(483, 38);
+            this.btnHabilitar.Location = new System.Drawing.Point(12, 348);
             this.btnHabilitar.Name = "btnHabilitar";
-            this.btnHabilitar.Size = new System.Drawing.Size(75, 23);
+            this.btnHabilitar.Size = new System.Drawing.Size(119, 36);
             this.btnHabilitar.TabIndex = 9;
             this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
@@ -147,19 +100,19 @@
             // 
             // btnInhabilitar
             // 
-            this.btnInhabilitar.Location = new System.Drawing.Point(104, 35);
+            this.btnInhabilitar.Location = new System.Drawing.Point(137, 348);
             this.btnInhabilitar.Name = "btnInhabilitar";
-            this.btnInhabilitar.Size = new System.Drawing.Size(75, 23);
+            this.btnInhabilitar.Size = new System.Drawing.Size(119, 36);
             this.btnInhabilitar.TabIndex = 10;
-            this.btnInhabilitar.Text = "Inhabilitar";
+            this.btnInhabilitar.Text = "Deshabilitar";
             this.btnInhabilitar.UseVisualStyleBackColor = true;
-            this.btnInhabilitar.Click += new System.EventHandler(this.btnInhabilitar_Click);
+            this.btnInhabilitar.Click += new System.EventHandler(this.btnDeshabilitar_Click);
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(655, 359);
+            this.btnVolver.Location = new System.Drawing.Point(629, 350);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.Size = new System.Drawing.Size(101, 34);
             this.btnVolver.TabIndex = 12;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -174,19 +127,15 @@
             this.Controls.Add(this.btnInhabilitar);
             this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.lblTitulo);
-            this.Controls.Add(this.lblInhabilitados);
             this.Controls.Add(this.lblHabilitados);
-            this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
-            this.Controls.Add(this.dgvInhabilitados);
-            this.Controls.Add(this.dgvHabilitados);
+            this.Controls.Add(this.dgvRoles);
             this.Name = "frmABMRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMRol";
             this.Load += new System.EventHandler(this.ABMRol_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHabilitados)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInhabilitados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRoles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,15 +144,10 @@
         #endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.DataGridView dgvHabilitados;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridView dgvInhabilitados;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre1;
+        private System.Windows.Forms.DataGridView dgvRoles;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label lblHabilitados;
-        private System.Windows.Forms.Label lblInhabilitados;
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Button btnHabilitar;
         private System.Windows.Forms.Button btnInhabilitar;
