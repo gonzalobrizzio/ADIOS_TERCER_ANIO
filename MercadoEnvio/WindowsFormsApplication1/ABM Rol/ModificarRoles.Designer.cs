@@ -34,7 +34,7 @@
             this.NombreDeFuncionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvFuncionalidadesActuales = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblRoles = new System.Windows.Forms.Label();
+            this.lblNombreAnterior = new System.Windows.Forms.Label();
             this.btnQuitar = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.lblFuncionalidadesTotales = new System.Windows.Forms.Label();
@@ -97,17 +97,17 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // lblRoles
+            // lblNombreAnterior
             // 
-            this.lblRoles.AutoSize = true;
-            this.lblRoles.Enabled = false;
-            this.lblRoles.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.lblRoles.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lblRoles.Location = new System.Drawing.Point(354, 10);
-            this.lblRoles.Name = "lblRoles";
-            this.lblRoles.Size = new System.Drawing.Size(117, 18);
-            this.lblRoles.TabIndex = 4;
-            this.lblRoles.Text = "Nombre Anterior";
+            this.lblNombreAnterior.AutoSize = true;
+            this.lblNombreAnterior.Enabled = false;
+            this.lblNombreAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblNombreAnterior.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.lblNombreAnterior.Location = new System.Drawing.Point(354, 10);
+            this.lblNombreAnterior.Name = "lblNombreAnterior";
+            this.lblNombreAnterior.Size = new System.Drawing.Size(117, 18);
+            this.lblNombreAnterior.TabIndex = 4;
+            this.lblNombreAnterior.Text = "Nombre Anterior";
             // 
             // btnQuitar
             // 
@@ -165,6 +165,7 @@
             this.btnModficar.TabIndex = 12;
             this.btnModficar.Text = "Modificar";
             this.btnModficar.UseVisualStyleBackColor = true;
+            this.btnModficar.Click += new System.EventHandler(this.btnModficar_Click);
             // 
             // frmModificarRoles
             // 
@@ -177,7 +178,7 @@
             this.Controls.Add(this.lblFuncionalidadesTotales);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnQuitar);
-            this.Controls.Add(this.lblRoles);
+            this.Controls.Add(this.lblNombreAnterior);
             this.Controls.Add(this.dgvFuncionalidadesActuales);
             this.Controls.Add(this.dgvFuncionalidadesDisponibles);
             this.Controls.Add(this.txtNombre);
@@ -201,7 +202,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NombreDeFuncionalidad;
         private System.Windows.Forms.DataGridView dgvFuncionalidadesActuales;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.Label lblRoles;
+        private System.Windows.Forms.Label lblNombreAnterior;
         private System.Windows.Forms.Button btnQuitar;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Label lblFuncionalidadesTotales;

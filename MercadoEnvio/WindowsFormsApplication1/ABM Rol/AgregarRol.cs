@@ -126,10 +126,6 @@ namespace MercadoEnvios.ABM_Rol
                 dgvFuncionalidades.Rows.Remove(rowPrincipal);
 
             }
-
-         
-
-
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)

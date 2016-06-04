@@ -145,5 +145,10 @@ namespace MercadoEnvios
             conn.cerrarConexion();
             Application.Exit();
         }
+
+        private void frmIngresar_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
