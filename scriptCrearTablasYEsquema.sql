@@ -214,8 +214,9 @@ BEGIN
 
 	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No especificado')
 
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', 'gd', 'gd@mailinator.com')
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('gd', 'gd', 'gd2@mailinator.com')
+	--password es "gd" encriptado a SHA256
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd@mailinator.com')
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('gd', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd2@mailinator.com')
 
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Logear');	--Vi en el enunciado que era una funcionalidad especial a la cual todos tienen acceso. Para mi esto no va.
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Publicacion'); 
@@ -245,17 +246,17 @@ BEGIN
 	DECLARE @idUsuario int;
 	DECLARE @idRol int;
 
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='gd')
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 	VALUES(@idRol,@idUsuario)
 
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='gd')
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 	VALUES(@idRol,@idUsuario)
 	
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='gd')
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 	VALUES(@idRol,@idUsuario)

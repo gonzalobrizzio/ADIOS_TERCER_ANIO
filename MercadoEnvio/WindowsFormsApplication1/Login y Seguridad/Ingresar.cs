@@ -8,6 +8,7 @@ using System.Text;
 
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using MercadoEnvios.Entidades;
 
 namespace MercadoEnvios
 {
@@ -17,7 +18,7 @@ namespace MercadoEnvios
 
         public frmIngresar()
         {
-            InitializeComponent();       
+            InitializeComponent();
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace MercadoEnvios
             SqlParameter usuario = new SqlParameter("@usuario", txtUsr.Text);
             usuario.Direction = ParameterDirection.Input;
             usuario.SqlDbType = SqlDbType.NVarChar;
-            SqlParameter pass = new SqlParameter("@pass", txtContra.Text);
+            SqlParameter pass = new SqlParameter("@pass", Utilidades.encriptarCadenaSHA256(txtContra.Text));
             pass.Direction = ParameterDirection.Input;
             pass.SqlDbType = SqlDbType.NVarChar;
             SqlParameter idUsuario = new SqlParameter("@idUsuario", null);
@@ -39,7 +40,7 @@ namespace MercadoEnvios
             cmd.Parameters.Add(idUsuario);
             try
             {
-                
+
                 cmd.ExecuteNonQuery();
                 int idUsuarioDB = Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString());
                 //Calculo cantidad roles
@@ -73,7 +74,7 @@ namespace MercadoEnvios
                 idUsuarioABuscarRoles.SqlDbType = SqlDbType.Int;
                 //buscarRoles.Parameters.Add(idRol);
                 //buscarRoles.Parameters.Add(nombreRol);
-                buscarRoles.Parameters.Add(idUsuarioABuscarRoles);                
+                buscarRoles.Parameters.Add(idUsuarioABuscarRoles);
                 SqlDataReader dataReader = buscarRoles.ExecuteReader();
                 if (dataReader.HasRows)
                 {
@@ -141,9 +142,14 @@ namespace MercadoEnvios
             this.salir();
         }
 
-        private void salir(){
+        private void salir()
+        {
             conn.cerrarConexion();
             Application.Exit();
+        }
+
+        private void frmIngresar_Load(object sender, EventArgs e)
+        {
         }
     }
 }
