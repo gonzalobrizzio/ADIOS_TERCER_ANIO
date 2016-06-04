@@ -41,7 +41,7 @@
             this.lblTitulo = new System.Windows.Forms.Label();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.btnInhabilitar = new System.Windows.Forms.Button();
-            this.btnCerrar = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabilitados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInhabilitados)).BeginInit();
             this.SuspendLayout();
@@ -51,9 +51,9 @@
             this.dgvHabilitados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHabilitados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Nombre});
-            this.dgvHabilitados.Location = new System.Drawing.Point(15, 54);
+            this.dgvHabilitados.Location = new System.Drawing.Point(384, 64);
             this.dgvHabilitados.Name = "dgvHabilitados";
-            this.dgvHabilitados.Size = new System.Drawing.Size(143, 150);
+            this.dgvHabilitados.Size = new System.Drawing.Size(346, 268);
             this.dgvHabilitados.TabIndex = 0;
             // 
             // Nombre
@@ -66,9 +66,9 @@
             this.dgvInhabilitados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInhabilitados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Nombre1});
-            this.dgvInhabilitados.Location = new System.Drawing.Point(257, 54);
+            this.dgvInhabilitados.Location = new System.Drawing.Point(12, 64);
             this.dgvInhabilitados.Name = "dgvInhabilitados";
-            this.dgvInhabilitados.Size = new System.Drawing.Size(143, 150);
+            this.dgvInhabilitados.Size = new System.Drawing.Size(346, 268);
             this.dgvInhabilitados.TabIndex = 1;
             // 
             // Nombre1
@@ -78,9 +78,9 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(58, 219);
+            this.btnAgregar.Location = new System.Drawing.Point(303, 359);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.Size = new System.Drawing.Size(117, 23);
             this.btnAgregar.TabIndex = 2;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -88,9 +88,9 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(172, 219);
+            this.btnModificar.Location = new System.Drawing.Point(439, 359);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(75, 23);
+            this.btnModificar.Size = new System.Drawing.Size(117, 23);
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -98,9 +98,9 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(285, 219);
+            this.btnEliminar.Location = new System.Drawing.Point(161, 359);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminar.Size = new System.Drawing.Size(117, 23);
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
@@ -109,7 +109,7 @@
             // lblHabilitados
             // 
             this.lblHabilitados.AutoSize = true;
-            this.lblHabilitados.Location = new System.Drawing.Point(12, 38);
+            this.lblHabilitados.Location = new System.Drawing.Point(9, 40);
             this.lblHabilitados.Name = "lblHabilitados";
             this.lblHabilitados.Size = new System.Drawing.Size(89, 13);
             this.lblHabilitados.TabIndex = 6;
@@ -118,7 +118,7 @@
             // lblInhabilitados
             // 
             this.lblInhabilitados.AutoSize = true;
-            this.lblInhabilitados.Location = new System.Drawing.Point(254, 38);
+            this.lblInhabilitados.Location = new System.Drawing.Point(381, 43);
             this.lblInhabilitados.Name = "lblInhabilitados";
             this.lblInhabilitados.Size = new System.Drawing.Size(96, 13);
             this.lblInhabilitados.TabIndex = 7;
@@ -129,7 +129,7 @@
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblTitulo.Location = new System.Drawing.Point(12, 13);
+            this.lblTitulo.Location = new System.Drawing.Point(9, 9);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(235, 18);
             this.lblTitulo.TabIndex = 8;
@@ -137,7 +137,7 @@
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(172, 130);
+            this.btnHabilitar.Location = new System.Drawing.Point(483, 38);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(75, 23);
             this.btnHabilitar.TabIndex = 9;
@@ -147,7 +147,7 @@
             // 
             // btnInhabilitar
             // 
-            this.btnInhabilitar.Location = new System.Drawing.Point(172, 101);
+            this.btnInhabilitar.Location = new System.Drawing.Point(104, 35);
             this.btnInhabilitar.Name = "btnInhabilitar";
             this.btnInhabilitar.Size = new System.Drawing.Size(75, 23);
             this.btnInhabilitar.TabIndex = 10;
@@ -155,22 +155,22 @@
             this.btnInhabilitar.UseVisualStyleBackColor = true;
             this.btnInhabilitar.Click += new System.EventHandler(this.button5_Click);
             // 
-            // btnCerrar
+            // btnVolver
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(172, 264);
-            this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(75, 23);
-            this.btnCerrar.TabIndex = 12;
-            this.btnCerrar.Text = "Cerrar";
-            this.btnCerrar.UseVisualStyleBackColor = true;
-            this.btnCerrar.Click += new System.EventHandler(this.button7_Click);
+            this.btnVolver.Location = new System.Drawing.Point(655, 359);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 12;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.button7_Click);
             // 
             // frmABMRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(412, 299);
-            this.Controls.Add(this.btnCerrar);
+            this.ClientSize = new System.Drawing.Size(742, 394);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnInhabilitar);
             this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.lblTitulo);
@@ -182,7 +182,7 @@
             this.Controls.Add(this.dgvInhabilitados);
             this.Controls.Add(this.dgvHabilitados);
             this.Name = "frmABMRol";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMRol";
             this.Load += new System.EventHandler(this.ABMRol_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabilitados)).EndInit();
@@ -207,6 +207,6 @@
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Button btnHabilitar;
         private System.Windows.Forms.Button btnInhabilitar;
-        private System.Windows.Forms.Button btnCerrar;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

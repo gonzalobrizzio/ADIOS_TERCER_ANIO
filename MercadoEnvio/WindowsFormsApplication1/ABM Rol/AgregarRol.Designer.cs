@@ -48,9 +48,9 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(96, 38);
+            this.txtNombre.Location = new System.Drawing.Point(96, 35);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(121, 20);
+            this.txtNombre.Size = new System.Drawing.Size(218, 20);
             this.txtNombre.TabIndex = 0;
             // 
             // lblNombre
@@ -81,14 +81,14 @@
             "Cliente"});
             this.cboFuncionalidad.Location = new System.Drawing.Point(96, 69);
             this.cboFuncionalidad.Name = "cboFuncionalidad";
-            this.cboFuncionalidad.Size = new System.Drawing.Size(121, 21);
+            this.cboFuncionalidad.Size = new System.Drawing.Size(218, 21);
             this.cboFuncionalidad.TabIndex = 3;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(142, 96);
+            this.btnAgregar.Location = new System.Drawing.Point(96, 96);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.Size = new System.Drawing.Size(146, 27);
             this.btnAgregar.TabIndex = 4;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@
             this.Column1});
             this.dgvFuncionalidades.Location = new System.Drawing.Point(20, 155);
             this.dgvFuncionalidades.Name = "dgvFuncionalidades";
-            this.dgvFuncionalidades.Size = new System.Drawing.Size(197, 144);
+            this.dgvFuncionalidades.Size = new System.Drawing.Size(491, 219);
             this.dgvFuncionalidades.TabIndex = 5;
             // 
             // Column1
@@ -131,9 +131,9 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(20, 305);
+            this.btnAceptar.Location = new System.Drawing.Point(96, 398);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(118, 31);
             this.btnAceptar.TabIndex = 8;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
@@ -141,11 +141,11 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(142, 307);
+            this.btnCancelar.Location = new System.Drawing.Point(252, 398);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(117, 31);
             this.btnCancelar.TabIndex = 9;
-            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.Text = "Volver";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -153,7 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(232, 342);
+            this.ClientSize = new System.Drawing.Size(523, 441);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.lblNuevoRol);
@@ -165,7 +165,7 @@
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.txtNombre);
             this.Name = "frmAgregarRol";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AgregarRol";
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aBMRolBindingSource)).EndInit();

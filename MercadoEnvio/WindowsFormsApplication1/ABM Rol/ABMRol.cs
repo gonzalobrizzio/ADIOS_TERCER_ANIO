@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.ABM_Usuario;
 
 namespace WindowsFormsApplication1.ABM_Rol
 {
@@ -117,7 +118,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button7_Click(object sender, EventArgs e)
         {
-            new frmPantallaAdministrador().Show();
+            new ABM_Usuario.frmPantallaPrincipal("Administrativo").Show();
             this.Close();
         }
 

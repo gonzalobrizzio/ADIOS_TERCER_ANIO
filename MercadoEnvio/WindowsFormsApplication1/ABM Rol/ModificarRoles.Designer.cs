@@ -177,6 +177,7 @@
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNuevoNombre);
             this.Name = "frmModificarRoles";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Roles";
             this.Load += new System.EventHandler(this.ModificarRoles_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesTotales)).EndInit();

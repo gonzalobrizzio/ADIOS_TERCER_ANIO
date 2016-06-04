@@ -46,7 +46,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void btnABMUsuario_Click(object sender, EventArgs e)
         {
-            new ABM_Usuario.frmGestionUsuario().Show();
+            new ABM_Usuario.frmABMUsuario().Show();
             this.Hide();
         }
 
