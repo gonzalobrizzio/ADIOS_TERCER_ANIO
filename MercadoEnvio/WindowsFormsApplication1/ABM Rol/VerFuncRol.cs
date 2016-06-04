@@ -30,7 +30,7 @@ namespace MercadoEnvios.ABM_Rol
             
             String query = "SELECT F.Descripcion FROM ADIOS_TERCER_ANIO.Funcionalidad F "
                          + "INNER JOIN ADIOS_TERCER_ANIO.FuncionalidadRol FR on FR.idFuncionalidad = F.id "
-                         + "WHERE FR.idRol = @idRol";
+                         + "WHERE FR.idRol = @idRol and FR.deleted = 0";
             conn = Conexion.Instance;
             SqlCommand buscarFuncionalidades = new SqlCommand(query, conn.getConexion);
             SqlParameter idRol = new SqlParameter("@idRol", SqlDbType.Int);

@@ -14,11 +14,18 @@ namespace MercadoEnvios.ABM_Rol
     {
         Conexion conn;
         int idRol;
+        string nombreRol;
         public frmModificarRoles(int idRolModificar, string nombreRolModificar)
         {
             InitializeComponent();
             this.conn = Conexion.Instance;
             idRol = idRolModificar;
+            nombreRol = nombreRolModificar;
+            this.loadGrid();
+        }
+
+        private void loadGrid()
+        {
             dgvFuncionalidadesActuales.ColumnCount = 2;
             dgvFuncionalidadesActuales.ColumnHeadersVisible = true;
             dgvFuncionalidadesActuales.Columns[0].Name = "Funcionalidad";
@@ -35,12 +42,14 @@ namespace MercadoEnvios.ABM_Rol
             dgvFuncionalidadesActuales.Columns[0].Width = 350;
 
             String funcionalidadesDisponibles = "SELECT F.Descripcion, F.id FROM ADIOS_TERCER_ANIO.Funcionalidad F "
-                                                + "where F.id not in (Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR where FR.idRol = @idRol)";
+                                                + "where F.id not in "
+                                                + "(Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR "
+                                                + "where FR.idRol = @idRol and FR.deleted = 0)";
             conn = Conexion.Instance;
             SqlCommand buscarFuncionalidadesDisponibles = new SqlCommand(funcionalidadesDisponibles, conn.getConexion);
             SqlParameter idRolDisponible = new SqlParameter("@idRol", SqlDbType.Int);
             idRolDisponible.Direction = ParameterDirection.Input;
-            idRolDisponible.SqlValue = idRolModificar;
+            idRolDisponible.SqlValue = this.idRol;
             buscarFuncionalidadesDisponibles.Parameters.Add(idRolDisponible);
             SqlDataReader dabuscarFuncionalidadesDisponibles = buscarFuncionalidadesDisponibles.ExecuteReader();
 
@@ -57,11 +66,13 @@ namespace MercadoEnvios.ABM_Rol
             dabuscarFuncionalidadesDisponibles.Close();
 
             String funcionalidadesActuales = "SELECT F.Descripcion, F.id FROM ADIOS_TERCER_ANIO.Funcionalidad F "
-                                                + "where F.id in (Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR where FR.idRol = @idRol)";
+                                              + "where F.id in "
+                                              + "(Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR "
+                                              + "where FR.idRol = @idRol and FR.deleted = 0)";
             SqlCommand buscarFuncionalidadesActuales = new SqlCommand(funcionalidadesActuales, conn.getConexion);
             SqlParameter idRolActual = new SqlParameter("@idRol", SqlDbType.Int);
             idRolActual.Direction = ParameterDirection.Input;
-            idRolActual.SqlValue = idRolModificar;
+            idRolActual.SqlValue = this.idRol;
             buscarFuncionalidadesActuales.Parameters.Add(idRolActual);
             SqlDataReader dabuscarFuncionalidadesActuales = buscarFuncionalidadesActuales.ExecuteReader();
             if (dabuscarFuncionalidadesActuales.HasRows)
@@ -81,9 +92,8 @@ namespace MercadoEnvios.ABM_Rol
             dgvFuncionalidadesActuales.AllowUserToAddRows = false;
             dgvFuncionalidadesActuales.AllowUserToDeleteRows = false;
 
-            lblNombreAnterior.Text = nombreRolModificar;
+            lblNombreAnterior.Text = nombreRol;
             lblNombreAnterior.Enabled = false;
-
         }
 
         private void salir()
@@ -155,11 +165,91 @@ namespace MercadoEnvios.ABM_Rol
             try
             {
                 updateRol.ExecuteNonQuery();
+                lblNombreAnterior.Text = txtNombre.Text;
+                this.updateFuncionalidades();
                 this.salir();
             }
             catch (SqlException error)
             {
                 MessageBox.Show(error.Message);
+            }
+        }
+
+        private void updateFuncionalidades()
+        {
+            foreach (DataGridViewRow rowActuales in dgvFuncionalidadesActuales.Rows)
+            {
+                object[] values = {
+                                          rowActuales.Cells["Funcionalidad"].Value,
+                                          rowActuales.Cells["ID"].Value
+                                  };
+                SqlCommand updateFuncRol = new SqlCommand("ADIOS_TERCER_ANIO.modificarFuncionalidadesRol", conn.getConexion);
+                updateFuncRol.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter idRolModificar = new SqlParameter("@idRol", this.idRol);
+                idRolModificar.Direction = ParameterDirection.Input;
+                idRolModificar.SqlDbType = SqlDbType.Int;
+
+                SqlParameter idFuncModificar = new SqlParameter("@idFunc", values[1]);
+                idFuncModificar.Direction = ParameterDirection.Input;
+                idFuncModificar.SqlDbType = SqlDbType.Int;
+
+                int borrar = 0;
+                SqlParameter deleted = new SqlParameter("@borrar", borrar);
+                deleted.Direction = ParameterDirection.Input;
+                deleted.SqlDbType = SqlDbType.Int;
+
+                updateFuncRol.Parameters.Add(idRolModificar);
+                updateFuncRol.Parameters.Add(idFuncModificar);
+                updateFuncRol.Parameters.Add(deleted);
+                try
+                {
+                    updateFuncRol.ExecuteNonQuery();
+                }
+                catch (SqlException error)
+                {
+                    MessageBox.Show(error.Message + ": No se pueden agregar las funcionalidades seleccionadas");
+                    this.loadGrid();
+                    break;
+                }
+                
+
+            }
+
+            foreach (DataGridViewRow rowDisponibles in dgvFuncionalidadesDisponibles.Rows)
+            {
+                object[] values = {
+                                          rowDisponibles.Cells["Funcionalidad"].Value,
+                                          rowDisponibles.Cells["ID"].Value
+                                  };
+                SqlCommand updateFuncRol = new SqlCommand("ADIOS_TERCER_ANIO.modificarFuncionalidadesRol", conn.getConexion);
+                updateFuncRol.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlParameter idRolModificar = new SqlParameter("@idRol", this.idRol);
+                idRolModificar.Direction = ParameterDirection.Input;
+                idRolModificar.SqlDbType = SqlDbType.Int;
+
+                SqlParameter idFuncModificar = new SqlParameter("@idFunc", values[1]);
+                idFuncModificar.Direction = ParameterDirection.Input;
+                idFuncModificar.SqlDbType = SqlDbType.Int;
+
+                int borrar = 1;
+                SqlParameter deleted = new SqlParameter("@borrar", borrar);
+                deleted.Direction = ParameterDirection.Input;
+                deleted.SqlDbType = SqlDbType.Int;
+
+                updateFuncRol.Parameters.Add(idRolModificar);
+                updateFuncRol.Parameters.Add(idFuncModificar);
+                updateFuncRol.Parameters.Add(deleted);
+                try
+                {
+                    updateFuncRol.ExecuteNonQuery();
+                }
+                catch (SqlException error)
+                {
+                    MessageBox.Show(error.Message + ": No se pueden eliminar las funcionalidades seleccionadas");
+                    this.loadGrid();
+                    break;
+                }
             }
         }
 
