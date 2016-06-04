@@ -17,12 +17,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btnAgregar_Click(object sender, EventArgs e)
         {
             if (cboFuncionalidad.Text == "")
             {
@@ -36,7 +31,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
             //Habría que agregar a la base de datos y modificar el listado del abm
             if (txtNombre.Text == "")
@@ -49,7 +44,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }

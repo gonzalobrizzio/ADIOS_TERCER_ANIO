@@ -84,7 +84,7 @@
             this.btnAgregar.TabIndex = 2;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.button1_Click);
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnModificar
             // 
@@ -94,7 +94,7 @@
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
-            this.btnModificar.Click += new System.EventHandler(this.button2_Click);
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnEliminar
             // 
@@ -104,7 +104,7 @@
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.button3_Click);
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // lblHabilitados
             // 
@@ -143,7 +143,7 @@
             this.btnHabilitar.TabIndex = 9;
             this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
-            this.btnHabilitar.Click += new System.EventHandler(this.button4_Click);
+            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
             // 
             // btnInhabilitar
             // 
@@ -153,7 +153,7 @@
             this.btnInhabilitar.TabIndex = 10;
             this.btnInhabilitar.Text = "Inhabilitar";
             this.btnInhabilitar.UseVisualStyleBackColor = true;
-            this.btnInhabilitar.Click += new System.EventHandler(this.button5_Click);
+            this.btnInhabilitar.Click += new System.EventHandler(this.btnInhabilitar_Click);
             // 
             // btnVolver
             // 
@@ -163,7 +163,7 @@
             this.btnVolver.TabIndex = 12;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.button7_Click);
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // frmABMRol
             // 

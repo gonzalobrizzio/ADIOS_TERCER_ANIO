@@ -92,7 +92,7 @@
             this.btnAgregar.TabIndex = 4;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.button1_Click_1);
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // dgvFuncionalidades
             // 
@@ -137,7 +137,7 @@
             this.btnAceptar.TabIndex = 8;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
-            this.btnAceptar.Click += new System.EventHandler(this.button2_Click);
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnCancelar
             // 
@@ -147,7 +147,7 @@
             this.btnCancelar.TabIndex = 9;
             this.btnCancelar.Text = "Volver";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.button3_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // frmAgregarRol
             // 
