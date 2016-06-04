@@ -62,7 +62,6 @@
             // 
             // dgvFuncionalidades
             // 
-            this.dgvFuncionalidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFuncionalidades.Location = new System.Drawing.Point(20, 95);
             this.dgvFuncionalidades.Name = "dgvFuncionalidades";

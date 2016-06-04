@@ -9,7 +9,7 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuario](@usuario NVARCHAR(255),@pa
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail) VALUES (@usuario,@password,@mail)
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
 	SELECT @ultimoID = SCOPE_IDENTITY();
 	RETURN
 END

@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("login", conn.getConexion);
+            SqlCommand cmd = new SqlCommand("ADIOS_TERCER_ANIO.login", conn.getConexion);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             SqlParameter usuario = new SqlParameter("@usuario", txtUsr.Text);
@@ -145,12 +145,5 @@ namespace WindowsFormsApplication1
             conn.cerrarConexion();
             Application.Exit();
         }
-
-        private void frmIngresar_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
 }
