@@ -6,10 +6,10 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1.ABM_Rol
+namespace MercadoEnvios.ABM_Rol
 {
     public partial class frmVerFuncRol : Form
     {
@@ -58,6 +58,11 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             new ABM_Rol.frmABMRol().Show();
             this.Close();
+        }
+
+        private void frmVerFuncRol_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

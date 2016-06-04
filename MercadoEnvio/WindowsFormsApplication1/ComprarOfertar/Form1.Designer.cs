@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.ComprarOfertar
+﻿namespace MercadoEnvios.ComprarOfertar
 {
     partial class Form1
     {

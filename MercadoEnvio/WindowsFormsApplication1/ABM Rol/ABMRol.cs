@@ -6,28 +6,37 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WindowsFormsApplication1.ABM_Usuario;
 
-namespace WindowsFormsApplication1.ABM_Rol
+using System.Windows.Forms;
+using MercadoEnvios.ABM_Usuario;
+
+namespace MercadoEnvios.ABM_Rol
 {
     public partial class frmABMRol : Form
     {
         Conexion conn;
+        SqlDataAdapter da;
+
         public frmABMRol()
         {
             InitializeComponent();
+            this.getData();
+        }
+
+        private void getData(){
             String queryHabilitados = "SELECT id,nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Rol";
             conn = Conexion.Instance;
             SqlCommand buscarRoles = new SqlCommand(queryHabilitados, conn.getConexion);
-            SqlDataAdapter da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
+            da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
             DataTable tablaDeRoles = new DataTable("Roles");
             da.Fill(tablaDeRoles);
-            dgvRoles.DataSource = tablaDeRoles.DefaultView;
+            dgvRoles.DataSource = tablaDeRoles;
             dgvRoles.Columns[0].Visible = false;
-            dgvRoles.Update();
-            dgvRoles.Refresh();
+            dgvRoles.Columns[1].Width = 300;
+            dgvRoles.Columns[2].Width = 300;
+            dgvRoles.AllowUserToAddRows = false;
+            dgvRoles.AllowUserToDeleteRows = false;
+            dgvRoles.ReadOnly = true;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -39,49 +48,58 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void btnDeshabilitar_Click(object sender, EventArgs e)
         {
 
-                if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
-                {
-                    MessageBox.Show("Intenta deshabilitar una linea con un rol vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-
-                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 1 WHERE @nombre = nombre";
+            if (dgvRoles.SelectedRows == null)
+            {
+                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 1 WHERE @idRol = id";
                 SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                nombre.SqlValue = dgvRoles.CurrentCell.Value.ToString();
-                nombre.Direction = ParameterDirection.Input;
-                actualizacion.Parameters.Add(nombre);
-                actualizacion.ExecuteNonQuery();
-                dgvRoles.Update();
-                dgvRoles.Refresh();
-                
-            
+                SqlParameter idRol = new SqlParameter("@idRol", SqlDbType.Int);
+                idRol.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idRol);
+                foreach(DataGridViewRow rows in dgvRoles.SelectedRows){
+                    idRol.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
+                    actualizacion.ExecuteNonQuery();
+                }
+                this.getData();
+            }
         }
 
         private void btnHabilitar_Click(object sender, EventArgs e)
         {
-            
-                if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
-                {
-                    MessageBox.Show("Intenta habilitar una linea con un rol vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-
-                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 0 WHERE @nombre = nombre";
+            if (dgvRoles.SelectedRows == null)
+            {
+                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 0 WHERE @idRol = id";
                 SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                nombre.SqlValue = dgvRoles.CurrentCell.Value.ToString();
-                nombre.Direction = ParameterDirection.Input;
-                actualizacion.Parameters.Add(nombre);
-                actualizacion.ExecuteNonQuery();
-                dgvRoles.Update();
-                dgvRoles.Refresh();
+                SqlParameter idRol = new SqlParameter("@idRol", SqlDbType.Int);
+                idRol.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idRol);
+                foreach (DataGridViewRow row in dgvRoles.SelectedRows)
+                {
+                    idRol.SqlValue = Convert.ToInt32(row.Cells[0].Value);
+                    actualizacion.ExecuteNonQuery();
+                }
+                this.getData();
+            }
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
 
-            if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
+            if (dgvRoles.SelectedRows == null || dgvRoles.SelectedRows.Count > 1)
             {
-                MessageBox.Show("Intenta modificar un rol en una linea vacia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Debe elegir un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            else
+            {
+                new ABM_Rol.frmModificarRoles(Convert.ToInt32(dgvRoles.CurrentRow.Cells[0].Value)).Show();
+                this.Close();
             }
         }
 
@@ -98,9 +116,9 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void btnFuncRol_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
+            if (dgvRoles.SelectedRows == null)
             {
-                MessageBox.Show("Intenta modificar un rol en una linea vacia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             else
             if(dgvRoles.SelectedRows.Count == 1){

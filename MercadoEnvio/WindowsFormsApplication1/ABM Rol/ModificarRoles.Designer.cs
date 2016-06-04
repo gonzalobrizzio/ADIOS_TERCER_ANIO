@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.ABM_Rol
+﻿namespace MercadoEnvios.ABM_Rol
 {
     partial class frmModificarRoles
     {
@@ -30,7 +30,7 @@
         {
             this.lblNuevoNombre = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.dgvFuncionalidadesTotales = new System.Windows.Forms.DataGridView();
+            this.dgvFuncionalidadesDisponibles = new System.Windows.Forms.DataGridView();
             this.NombreDeFuncionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvFuncionalidadesActuales = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,7 +41,7 @@
             this.lblFuncionalidadesActuales = new System.Windows.Forms.Label();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesTotales)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesDisponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesActuales)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,15 +61,15 @@
             this.txtNombre.Size = new System.Drawing.Size(156, 20);
             this.txtNombre.TabIndex = 1;
             // 
-            // dgvFuncionalidadesTotales
+            // dgvFuncionalidadesDisponibles
             // 
-            this.dgvFuncionalidadesTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFuncionalidadesTotales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvFuncionalidadesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFuncionalidadesDisponibles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NombreDeFuncionalidad});
-            this.dgvFuncionalidadesTotales.Location = new System.Drawing.Point(18, 90);
-            this.dgvFuncionalidadesTotales.Name = "dgvFuncionalidadesTotales";
-            this.dgvFuncionalidadesTotales.Size = new System.Drawing.Size(294, 307);
-            this.dgvFuncionalidadesTotales.TabIndex = 2;
+            this.dgvFuncionalidadesDisponibles.Location = new System.Drawing.Point(18, 90);
+            this.dgvFuncionalidadesDisponibles.Name = "dgvFuncionalidadesDisponibles";
+            this.dgvFuncionalidadesDisponibles.Size = new System.Drawing.Size(294, 307);
+            this.dgvFuncionalidadesDisponibles.TabIndex = 2;
             // 
             // NombreDeFuncionalidad
             // 
@@ -173,14 +173,14 @@
             this.Controls.Add(this.btnQuitar);
             this.Controls.Add(this.lblRoles);
             this.Controls.Add(this.dgvFuncionalidadesActuales);
-            this.Controls.Add(this.dgvFuncionalidadesTotales);
+            this.Controls.Add(this.dgvFuncionalidadesDisponibles);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.lblNuevoNombre);
             this.Name = "frmModificarRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Roles";
-            this.Load += new System.EventHandler(this.ModificarRoles_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesTotales)).EndInit();
+            this.Load += new System.EventHandler(this.frmModificarRoles_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesDisponibles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesActuales)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -191,7 +191,7 @@
 
         private System.Windows.Forms.Label lblNuevoNombre;
         private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.DataGridView dgvFuncionalidadesTotales;
+        private System.Windows.Forms.DataGridView dgvFuncionalidadesDisponibles;
         private System.Windows.Forms.DataGridViewTextBoxColumn NombreDeFuncionalidad;
         private System.Windows.Forms.DataGridView dgvFuncionalidadesActuales;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;

@@ -5,11 +5,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-namespace WindowsFormsApplication1
+namespace MercadoEnvios
 {
     public partial class frmIngresar : Form
     {

@@ -5,10 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1.ABM_Visibilidad
+namespace MercadoEnvios.ABM_Visibilidad
 {
     public partial class Form1 : Form
     {

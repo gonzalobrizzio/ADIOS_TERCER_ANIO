@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.ABM_Usuario
+﻿namespace MercadoEnvios.ABM_Usuario
 {
     partial class frmABMUsuario
     {

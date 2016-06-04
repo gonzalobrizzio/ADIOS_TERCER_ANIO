@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.ABM_Rol
+﻿namespace MercadoEnvios.ABM_Rol
 {
     partial class frmElegirRol
     {

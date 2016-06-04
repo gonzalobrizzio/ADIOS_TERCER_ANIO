@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.Calificar
+﻿namespace MercadoEnvios.Calificar
 {
     partial class frmCalificacion
     {

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GD1C2016Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="GD1C2016Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
         <EntityContainer Name="GD1C2016ModelStoreContainer">
-          <EntitySet Name="Calificacion" EntityType="GD1C2016Model.Store.Calificacion" store:Type="Tables" store:Schema="ADIOS_TERCER_ANIO" store:Name="Calificacion">
+          <EntitySet Name="Calificacion" EntityType="GD1C2016Model.Store.Calificacion" store:Type="Tables" store:Schema="ADIOS_TERCER_ANIO" store:Name="Calificacion" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
             <DefiningQuery>SELECT 
       [Calificacion].[id] AS [id], 
       [Calificacion].[idUsuarioCalificador] AS [idUsuarioCalificador], 
@@ -17,28 +17,28 @@
       [Calificacion].[pendiente] AS [pendiente]
       FROM [ADIOS_TERCER_ANIO].[Calificacion] AS [Calificacion]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Compra" EntityType="GD1C2016Model.Store.Compra" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Empresa" EntityType="GD1C2016Model.Store.Empresa" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Envio" EntityType="GD1C2016Model.Store.Envio" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Estado" EntityType="GD1C2016Model.Store.Estado" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Factura" EntityType="GD1C2016Model.Store.Factura" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="FormaDePago" EntityType="GD1C2016Model.Store.FormaDePago" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Funcionalidad" EntityType="GD1C2016Model.Store.Funcionalidad" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="FuncionalidadRol" EntityType="GD1C2016Model.Store.FuncionalidadRol" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Item" EntityType="GD1C2016Model.Store.Item" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Localidad" EntityType="GD1C2016Model.Store.Localidad" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Oferta" EntityType="GD1C2016Model.Store.Oferta" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Persona" EntityType="GD1C2016Model.Store.Persona" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Pregunta" EntityType="GD1C2016Model.Store.Pregunta" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Publicacion" EntityType="GD1C2016Model.Store.Publicacion" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Respuesta" EntityType="GD1C2016Model.Store.Respuesta" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Rol" EntityType="GD1C2016Model.Store.Rol" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="RolUsuario" EntityType="GD1C2016Model.Store.RolUsuario" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Rubro" EntityType="GD1C2016Model.Store.Rubro" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="TipoDocumento" EntityType="GD1C2016Model.Store.TipoDocumento" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Usuario" EntityType="GD1C2016Model.Store.Usuario" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="Visibilidad" EntityType="GD1C2016Model.Store.Visibilidad" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" />
-          <EntitySet Name="sysdiagrams" EntityType="GD1C2016Model.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Compra" EntityType="GD1C2016Model.Store.Compra" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Empresa" EntityType="GD1C2016Model.Store.Empresa" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Envio" EntityType="GD1C2016Model.Store.Envio" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Estado" EntityType="GD1C2016Model.Store.Estado" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Factura" EntityType="GD1C2016Model.Store.Factura" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="FormaDePago" EntityType="GD1C2016Model.Store.FormaDePago" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Funcionalidad" EntityType="GD1C2016Model.Store.Funcionalidad" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="FuncionalidadRol" EntityType="GD1C2016Model.Store.FuncionalidadRol" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Item" EntityType="GD1C2016Model.Store.Item" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Localidad" EntityType="GD1C2016Model.Store.Localidad" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Oferta" EntityType="GD1C2016Model.Store.Oferta" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Persona" EntityType="GD1C2016Model.Store.Persona" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Pregunta" EntityType="GD1C2016Model.Store.Pregunta" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Publicacion" EntityType="GD1C2016Model.Store.Publicacion" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Respuesta" EntityType="GD1C2016Model.Store.Respuesta" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Rol" EntityType="GD1C2016Model.Store.Rol" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="RolUsuario" EntityType="GD1C2016Model.Store.RolUsuario" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Rubro" EntityType="GD1C2016Model.Store.Rubro" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="TipoDocumento" EntityType="GD1C2016Model.Store.TipoDocumento" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Usuario" EntityType="GD1C2016Model.Store.Usuario" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Visibilidad" EntityType="GD1C2016Model.Store.Visibilidad" store:Type="Tables" Schema="ADIOS_TERCER_ANIO" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="sysdiagrams" EntityType="GD1C2016Model.Store.sysdiagrams" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK__Calificac__idPub__6477ECF3" Association="GD1C2016Model.Store.FK__Calificac__idPub__6477ECF3">
             <End Role="Publicacion" EntitySet="Publicacion" />
             <End Role="Calificacion" EntitySet="Calificacion" />
@@ -815,7 +815,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GD1C2016Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="GD1C2016Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2006/04/edm" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="GD1C2016Entities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="Calificacions" EntityType="GD1C2016Model.Calificacion" />
           <EntitySet Name="Compras" EntityType="GD1C2016Model.Compra" />
@@ -1617,7 +1617,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
         <EntityContainerMapping StorageEntityContainer="GD1C2016ModelStoreContainer" CdmEntityContainer="GD1C2016Entities">
           <EntitySetMapping Name="Calificacions">
             <EntityTypeMapping TypeName="GD1C2016Model.Calificacion">
@@ -1910,7 +1910,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -1925,6 +1925,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams />
   </Designer>
 </edmx:Edmx>

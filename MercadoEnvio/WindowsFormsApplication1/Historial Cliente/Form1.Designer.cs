@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.Historial_Cliente
+﻿namespace MercadoEnvios.Historial_Cliente
 {
     partial class Form1
     {

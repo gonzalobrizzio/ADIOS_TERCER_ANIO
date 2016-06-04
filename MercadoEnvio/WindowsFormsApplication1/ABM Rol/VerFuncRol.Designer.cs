@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1.ABM_Rol
+﻿namespace MercadoEnvios.ABM_Rol
 {
     partial class frmVerFuncRol
     {
@@ -75,7 +75,7 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // frmAgregarRol
+            // frmVerFuncRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -84,9 +84,10 @@
             this.Controls.Add(this.dgvFuncionalidades);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.txtNombre);
-            this.Name = "frmAgregarRol";
+            this.Name = "frmVerFuncRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Funcionalidades del rol";
+            this.Load += new System.EventHandler(this.frmVerFuncRol_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aBMRolBindingSource)).EndInit();
             this.ResumeLayout(false);
