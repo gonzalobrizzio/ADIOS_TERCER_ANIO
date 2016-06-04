@@ -64,6 +64,12 @@
     <Compile Include="ABM Rol\AgregarRol.Designer.cs">
       <DependentUpon>AgregarRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Rol\VerFuncRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\VerFuncRol.Designer.cs">
+      <DependentUpon>VerFuncRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\ModificarRoles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\AgregarRol.resx">
       <DependentUpon>AgregarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\VerFuncRol.resx">
+      <DependentUpon>VerFuncRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\ModificarRoles.resx">
       <DependentUpon>ModificarRoles.cs</DependentUpon>

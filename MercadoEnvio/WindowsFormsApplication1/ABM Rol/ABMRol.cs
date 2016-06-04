@@ -18,23 +18,22 @@ namespace WindowsFormsApplication1.ABM_Rol
         public frmABMRol()
         {
             InitializeComponent();
-            String queryHabilitados = "SELECT nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Rol";
+            String queryHabilitados = "SELECT id,nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Rol";
             conn = Conexion.Instance;
             SqlCommand buscarRoles = new SqlCommand(queryHabilitados, conn.getConexion);
             SqlDataAdapter da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
             DataTable tablaDeRoles = new DataTable("Roles");
             da.Fill(tablaDeRoles);
             dgvRoles.DataSource = tablaDeRoles.DefaultView;
+            dgvRoles.Columns[0].Visible = false;
             dgvRoles.Update();
             dgvRoles.Refresh();
-
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             new ABM_Rol.frmAgregarRol().Show();
             this.Close();
-
         }
 
         private void btnDeshabilitar_Click(object sender, EventArgs e)
@@ -95,6 +94,23 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             new ABM_Usuario.frmPantallaPrincipal("Administrativo").Show();
             this.Close();
+        }
+
+        private void btnFuncRol_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(dgvRoles.CurrentCell.Value as String))
+            {
+                MessageBox.Show("Intenta modificar un rol en una linea vacia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            else
+            if(dgvRoles.SelectedRows.Count == 1){
+                DataGridViewRow rowPrincipal =  dgvRoles.SelectedRows[0];
+                new ABM_Rol.frmVerFuncRol(Convert.ToInt32(rowPrincipal.Cells[0].Value), Convert.ToString(rowPrincipal.Cells[1].Value)).Show();
+                this.Close();
+            }
+            else{
+                MessageBox.Show("Debe seleccionar un rol", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
     }

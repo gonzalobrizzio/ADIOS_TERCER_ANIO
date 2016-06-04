@@ -37,6 +37,7 @@
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.btnInhabilitar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnFuncRol = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRoles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,9 +52,9 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(313, 350);
+            this.btnAgregar.Location = new System.Drawing.Point(262, 348);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(119, 34);
+            this.btnAgregar.Size = new System.Drawing.Size(119, 36);
             this.btnAgregar.TabIndex = 2;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -61,9 +62,9 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(438, 350);
+            this.btnModificar.Location = new System.Drawing.Point(387, 350);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(119, 34);
+            this.btnModificar.Size = new System.Drawing.Size(119, 35);
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -118,11 +119,22 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // btnFuncRol
+            // 
+            this.btnFuncRol.Location = new System.Drawing.Point(512, 350);
+            this.btnFuncRol.Name = "btnFuncRol";
+            this.btnFuncRol.Size = new System.Drawing.Size(111, 35);
+            this.btnFuncRol.TabIndex = 13;
+            this.btnFuncRol.Text = "Ver Funcionalidades";
+            this.btnFuncRol.UseVisualStyleBackColor = true;
+            this.btnFuncRol.Click += new System.EventHandler(this.btnFuncRol_Click);
+            // 
             // frmABMRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 394);
+            this.Controls.Add(this.btnFuncRol);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnInhabilitar);
             this.Controls.Add(this.btnHabilitar);
@@ -152,5 +164,6 @@
         private System.Windows.Forms.Button btnHabilitar;
         private System.Windows.Forms.Button btnInhabilitar;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnFuncRol;
     }
 }
