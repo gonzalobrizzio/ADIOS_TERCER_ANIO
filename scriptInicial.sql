@@ -65,8 +65,8 @@ AS BEGIN
 
 	WHILE(@@FETCH_STATUS = 0)
 		BEGIN
-			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
-			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,NULL,@mail,@ultimoID = @idUsuario OUTPUT;
+			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS || el pass es "gd"
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f',@mail,@ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
@@ -166,8 +166,8 @@ AS BEGIN
 		@codigoPostal
 	WHILE(@@FETCH_STATUS = 0)
 		BEGIN
-			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS
-			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, NULL, @mail, @ultimoID = @idUsuario OUTPUT;
+			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS || el pass es GD
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', @mail, @ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)

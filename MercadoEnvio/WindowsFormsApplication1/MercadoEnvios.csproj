@@ -107,6 +107,7 @@
     <Compile Include="ABM Usuario\NuevoUsuario.Designer.cs">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Utilidades.cs" />
     <Compile Include="PantallaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PantallaPrincipal.resx">
       <DependentUpon>PantallaPrincipal.cs</DependentUpon>
