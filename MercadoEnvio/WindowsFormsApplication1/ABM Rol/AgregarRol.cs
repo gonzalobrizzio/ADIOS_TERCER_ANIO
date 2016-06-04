@@ -17,13 +17,22 @@ namespace WindowsFormsApplication1.ABM_Rol
         public frmAgregarRol()
         {
             InitializeComponent();
-            String query = "SELECT * FROM ADIOS_TERCER_ANIO.Funcionalidad";
+            String query = "SELECT Descripcion FROM ADIOS_TERCER_ANIO.Funcionalidad";
             conn = Conexion.Instance;
             SqlCommand buscarFuncionalidades = new SqlCommand(query, conn.getConexion);
             SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
             DataTable tablaFuncionalidades = new DataTable("Funcionalidades");
             da.Fill(tablaFuncionalidades);
             dgvFuncionalidades.DataSource = tablaFuncionalidades.DefaultView;
+
+
+            dgvFuncionalidadesAgregadas.ColumnCount = 1;
+            dgvFuncionalidadesAgregadas.ColumnHeadersVisible = true;
+            dgvFuncionalidadesAgregadas.Columns[0].Name = "Descripcion";
+
+
+
+            
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -54,13 +63,12 @@ namespace WindowsFormsApplication1.ABM_Rol
             foreach (DataGridViewRow rowPrincipal in dgvFuncionalidades.SelectedRows)
             {
                 object[] values = {
-                                          rowPrincipal.Cells["id"].Value,
-                                          rowPrincipal.Cells["descripcion"].Value
+                                          rowPrincipal.Cells["Descripcion"].Value
                                   };
                 DataGridViewRow row = new DataGridViewRow();
                 row.CreateCells(dgvFuncionalidades, values);
                 dgvFuncionalidadesAgregadas.Rows.Add(row);
-                dgvFuncionalidades.Rows.Remove(row);
+                dgvFuncionalidades.Rows.Remove(rowPrincipal);
 
             }
         }
@@ -89,6 +97,11 @@ namespace WindowsFormsApplication1.ABM_Rol
             }
 
            
+        }
+
+        private void frmAgregarRol_Load(object sender, EventArgs e)
+        {
+
         }
 
 

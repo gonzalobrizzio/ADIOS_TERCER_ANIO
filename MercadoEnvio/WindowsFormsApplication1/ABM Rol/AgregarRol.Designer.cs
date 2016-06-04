@@ -132,6 +132,7 @@
             this.Name = "frmAgregarRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AgregarRol";
+            this.Load += new System.EventHandler(this.frmAgregarRol_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aBMRolBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesAgregadas)).EndInit();
