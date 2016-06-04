@@ -14,7 +14,7 @@ namespace MercadoEnvios.ABM_Rol
     {
         Conexion conn;
 
-        public frmModificarRoles(int idRolModificar)
+        public frmModificarRoles(int idRolModificar, string nombreRolModificar)
         {
             InitializeComponent();
             this.conn = Conexion.Instance;

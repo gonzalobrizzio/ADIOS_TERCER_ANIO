@@ -98,7 +98,7 @@ namespace MercadoEnvios.ABM_Rol
             }
             else
             {
-                new ABM_Rol.frmModificarRoles(Convert.ToInt32(dgvRoles.CurrentRow.Cells[0].Value)).Show();
+                new ABM_Rol.frmModificarRoles(Convert.ToInt32(dgvRoles.CurrentRow.Cells[0].Value), Convert.ToString(dgvRoles.CurrentRow.Cells[1].Value)).Show();
                 this.Close();
             }
         }
