@@ -150,10 +150,6 @@ namespace MercadoEnvios
 
         private void frmIngresar_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-
-=======
->>>>>>> 4513ca1c3d55bacf9ada1ffd72011e47833eb9af
         }
     }
 }
