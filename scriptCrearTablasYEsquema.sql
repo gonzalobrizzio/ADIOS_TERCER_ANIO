@@ -125,11 +125,12 @@ CREATE  TABLE RolUsuario (
   idRol INT REFERENCES Rol(id) ,
   deleted INT NULL ,
   )
-
-CREATE  TABLE FuncionalidadRol (
+  
+CREATE  TABLE  FuncionalidadRol (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   idRol INT REFERENCES Rol(id) ,
   idFuncionalidad INT REFERENCES Funcionalidad(id) ,
+  deleted INT DEFAULT 0
   )
 
 CREATE  TABLE Compra (

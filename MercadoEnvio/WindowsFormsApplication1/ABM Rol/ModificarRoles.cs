@@ -13,12 +13,19 @@ namespace MercadoEnvios.ABM_Rol
     public partial class frmModificarRoles : Form
     {
         Conexion conn;
-
+        int idRol;
+        string nombreRol;
         public frmModificarRoles(int idRolModificar, string nombreRolModificar)
         {
             InitializeComponent();
             this.conn = Conexion.Instance;
+            idRol = idRolModificar;
+            nombreRol = nombreRolModificar;
+            this.loadGrid();
+        }
 
+        private void loadGrid()
+        {
             dgvFuncionalidadesActuales.ColumnCount = 2;
             dgvFuncionalidadesActuales.ColumnHeadersVisible = true;
             dgvFuncionalidadesActuales.Columns[0].Name = "Funcionalidad";
@@ -35,43 +42,47 @@ namespace MercadoEnvios.ABM_Rol
             dgvFuncionalidadesActuales.Columns[0].Width = 350;
 
             String funcionalidadesDisponibles = "SELECT F.Descripcion, F.id FROM ADIOS_TERCER_ANIO.Funcionalidad F "
-                                                + "where F.id not in (Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR where FR.idRol = @idRol)";
+                                                + "where F.id not in "
+                                                + "(Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR "
+                                                + "where FR.idRol = @idRol and FR.deleted = 0)";
             conn = Conexion.Instance;
             SqlCommand buscarFuncionalidadesDisponibles = new SqlCommand(funcionalidadesDisponibles, conn.getConexion);
             SqlParameter idRolDisponible = new SqlParameter("@idRol", SqlDbType.Int);
             idRolDisponible.Direction = ParameterDirection.Input;
-            idRolDisponible.SqlValue = idRolModificar;
+            idRolDisponible.SqlValue = this.idRol;
             buscarFuncionalidadesDisponibles.Parameters.Add(idRolDisponible);
             SqlDataReader dabuscarFuncionalidadesDisponibles = buscarFuncionalidadesDisponibles.ExecuteReader();
 
-            if (!dabuscarFuncionalidadesDisponibles.HasRows)
+            if (dabuscarFuncionalidadesDisponibles.HasRows)
             {
                 while (dabuscarFuncionalidadesDisponibles.Read())
                 {
-                    DataGridViewRow row = (DataGridViewRow)dgvFuncionalidadesDisponibles.Rows[0].Clone();
-                    row.Cells[0].Value = dabuscarFuncionalidadesDisponibles.GetString(0).ToString();
-                    row.Cells[1].Value = dabuscarFuncionalidadesDisponibles.GetInt32(1);
-                    dgvFuncionalidadesDisponibles.Rows.Add(row);
+                    DataGridViewRow rowdgvFuncionalidadesDisponibles = (DataGridViewRow)dgvFuncionalidadesDisponibles.Rows[0].Clone();
+                    rowdgvFuncionalidadesDisponibles.Cells[0].Value = dabuscarFuncionalidadesDisponibles.GetString(0).ToString();
+                    rowdgvFuncionalidadesDisponibles.Cells[1].Value = dabuscarFuncionalidadesDisponibles.GetInt32(1);
+                    dgvFuncionalidadesDisponibles.Rows.Add(rowdgvFuncionalidadesDisponibles);
                 }
             }
             dabuscarFuncionalidadesDisponibles.Close();
 
             String funcionalidadesActuales = "SELECT F.Descripcion, F.id FROM ADIOS_TERCER_ANIO.Funcionalidad F "
-                                                + "where F.id in (Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR where FR.idRol = @idRol)";
+                                              + "where F.id in "
+                                              + "(Select FR.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol FR "
+                                              + "where FR.idRol = @idRol and FR.deleted = 0)";
             SqlCommand buscarFuncionalidadesActuales = new SqlCommand(funcionalidadesActuales, conn.getConexion);
             SqlParameter idRolActual = new SqlParameter("@idRol", SqlDbType.Int);
             idRolActual.Direction = ParameterDirection.Input;
-            idRolActual.SqlValue = idRolModificar;
+            idRolActual.SqlValue = this.idRol;
             buscarFuncionalidadesActuales.Parameters.Add(idRolActual);
             SqlDataReader dabuscarFuncionalidadesActuales = buscarFuncionalidadesActuales.ExecuteReader();
             if (dabuscarFuncionalidadesActuales.HasRows)
             {
                 while (dabuscarFuncionalidadesActuales.Read())
                 {
-                    DataGridViewRow row = (DataGridViewRow)dgvFuncionalidadesActuales.Rows[0].Clone();
-                    row.Cells[0].Value = dabuscarFuncionalidadesActuales.GetString(0).ToString();
-                    row.Cells[1].Value = dabuscarFuncionalidadesActuales.GetInt32(1);
-                    dgvFuncionalidadesActuales.Rows.Add(row);
+                    DataGridViewRow rowdgvFuncionalidadesActuales = (DataGridViewRow)dgvFuncionalidadesActuales.Rows[0].Clone();
+                    rowdgvFuncionalidadesActuales.Cells[0].Value = dabuscarFuncionalidadesActuales.GetString(0).ToString();
+                    rowdgvFuncionalidadesActuales.Cells[1].Value = dabuscarFuncionalidadesActuales.GetInt32(1);
+                    dgvFuncionalidadesActuales.Rows.Add(rowdgvFuncionalidadesActuales);
                 }
             }
             dabuscarFuncionalidadesActuales.Close();
@@ -81,7 +92,8 @@ namespace MercadoEnvios.ABM_Rol
             dgvFuncionalidadesActuales.AllowUserToAddRows = false;
             dgvFuncionalidadesActuales.AllowUserToDeleteRows = false;
 
-
+            lblNombreAnterior.Text = nombreRol;
+            lblNombreAnterior.Enabled = false;
         }
 
         private void salir()
@@ -92,38 +104,35 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell oneCell in dgvFuncionalidadesDisponibles.SelectedCells)
+            foreach (DataGridViewRow rowPrincipal in dgvFuncionalidadesDisponibles.SelectedRows)
             {
-                if (String.IsNullOrEmpty(oneCell.Value as String))
-                {
-                    MessageBox.Show("Intenta agregar una funcionalidad con una linea vacia");
-                }
-                else
-                {
-                    if (oneCell.Selected)
-                    {
-                        dgvFuncionalidadesActuales.Rows.Add(oneCell.Value);
-                    }
-                }
+                object[] values = {
+                                          rowPrincipal.Cells["Funcionalidad"].Value,
+                                          rowPrincipal.Cells["ID"].Value
+                                  };
+                DataGridViewRow row = (DataGridViewRow)dgvFuncionalidadesDisponibles.Rows[0].Clone();
+                row.Cells[0].Value = values[0];
+                row.Cells[1].Value = values[1];
+                dgvFuncionalidadesActuales.Rows.Add(row);
+                dgvFuncionalidadesDisponibles.Rows.Remove(rowPrincipal);
+
             }
         }
 
         private void btnQuitar_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell oneCell in dgvFuncionalidadesActuales.SelectedCells)
+            foreach (DataGridViewRow rowPrincipal in dgvFuncionalidadesActuales.SelectedRows)
             {
-                if (String.IsNullOrEmpty(oneCell.Value as String))
-                {
-                    MessageBox.Show("Intenta borrar una linea vacia");
-                }
-                else
-                {
-                    if (oneCell.Selected)
-                    {
-                        dgvFuncionalidadesDisponibles.Rows.RemoveAt(oneCell.RowIndex);
-                        MessageBox.Show("Funcionalidad borrada con exito!");
-                    }
-                }
+                object[] values = {
+                                          rowPrincipal.Cells["Funcionalidad"].Value,
+                                          rowPrincipal.Cells["ID"].Value
+                                  };
+                DataGridViewRow row = (DataGridViewRow)dgvFuncionalidadesActuales.Rows[0].Clone();
+                row.Cells[0].Value = values[0];
+                row.Cells[1].Value = values[1];
+                dgvFuncionalidadesDisponibles.Rows.Add(row);
+                dgvFuncionalidadesActuales.Rows.Remove(rowPrincipal);
+
             }
         }
 
@@ -133,15 +142,115 @@ namespace MercadoEnvios.ABM_Rol
             this.Close();
         }
 
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-           //Igual que en el agregar, hay que modificar la BD y el mismo ABM
-                this.Close();
-        }
-
         private void frmModificarRoles_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnModficar_Click(object sender, EventArgs e)
+        {
+            SqlCommand updateRol = new SqlCommand("ADIOS_TERCER_ANIO.ModificarRol", conn.getConexion);
+            updateRol.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter nuevoNombreRol = new SqlParameter("@nombre", txtNombre.Text);
+            nuevoNombreRol.Direction = ParameterDirection.Input;
+            nuevoNombreRol.SqlDbType = SqlDbType.NVarChar;
+
+            SqlParameter idRolModificar = new SqlParameter("@id", this.idRol);
+            idRolModificar.Direction = ParameterDirection.Input;
+            idRolModificar.SqlDbType = SqlDbType.Int;
+
+            updateRol.Parameters.Add(nuevoNombreRol);
+            updateRol.Parameters.Add(idRolModificar);
+            try
+            {
+                updateRol.ExecuteNonQuery();
+                lblNombreAnterior.Text = txtNombre.Text;
+                this.updateFuncionalidades();
+                this.salir();
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(error.Message);
+            }
+        }
+
+        private void updateFuncionalidades()
+        {
+            foreach (DataGridViewRow rowActuales in dgvFuncionalidadesActuales.Rows)
+            {
+                object[] values = {
+                                          rowActuales.Cells["Funcionalidad"].Value,
+                                          rowActuales.Cells["ID"].Value
+                                  };
+                SqlCommand updateFuncRol = new SqlCommand("ADIOS_TERCER_ANIO.modificarFuncionalidadesRol", conn.getConexion);
+                updateFuncRol.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter idRolModificar = new SqlParameter("@idRol", this.idRol);
+                idRolModificar.Direction = ParameterDirection.Input;
+                idRolModificar.SqlDbType = SqlDbType.Int;
+
+                SqlParameter idFuncModificar = new SqlParameter("@idFunc", values[1]);
+                idFuncModificar.Direction = ParameterDirection.Input;
+                idFuncModificar.SqlDbType = SqlDbType.Int;
+
+                int borrar = 0;
+                SqlParameter deleted = new SqlParameter("@borrar", borrar);
+                deleted.Direction = ParameterDirection.Input;
+                deleted.SqlDbType = SqlDbType.Int;
+
+                updateFuncRol.Parameters.Add(idRolModificar);
+                updateFuncRol.Parameters.Add(idFuncModificar);
+                updateFuncRol.Parameters.Add(deleted);
+                try
+                {
+                    updateFuncRol.ExecuteNonQuery();
+                }
+                catch (SqlException error)
+                {
+                    MessageBox.Show(error.Message + ": No se pueden agregar las funcionalidades seleccionadas");
+                    this.loadGrid();
+                    break;
+                }
+                
+
+            }
+
+            foreach (DataGridViewRow rowDisponibles in dgvFuncionalidadesDisponibles.Rows)
+            {
+                object[] values = {
+                                          rowDisponibles.Cells["Funcionalidad"].Value,
+                                          rowDisponibles.Cells["ID"].Value
+                                  };
+                SqlCommand updateFuncRol = new SqlCommand("ADIOS_TERCER_ANIO.modificarFuncionalidadesRol", conn.getConexion);
+                updateFuncRol.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlParameter idRolModificar = new SqlParameter("@idRol", this.idRol);
+                idRolModificar.Direction = ParameterDirection.Input;
+                idRolModificar.SqlDbType = SqlDbType.Int;
+
+                SqlParameter idFuncModificar = new SqlParameter("@idFunc", values[1]);
+                idFuncModificar.Direction = ParameterDirection.Input;
+                idFuncModificar.SqlDbType = SqlDbType.Int;
+
+                int borrar = 1;
+                SqlParameter deleted = new SqlParameter("@borrar", borrar);
+                deleted.Direction = ParameterDirection.Input;
+                deleted.SqlDbType = SqlDbType.Int;
+
+                updateFuncRol.Parameters.Add(idRolModificar);
+                updateFuncRol.Parameters.Add(idFuncModificar);
+                updateFuncRol.Parameters.Add(deleted);
+                try
+                {
+                    updateFuncRol.ExecuteNonQuery();
+                }
+                catch (SqlException error)
+                {
+                    MessageBox.Show(error.Message + ": No se pueden eliminar las funcionalidades seleccionadas");
+                    this.loadGrid();
+                    break;
+                }
+            }
         }
 
     }

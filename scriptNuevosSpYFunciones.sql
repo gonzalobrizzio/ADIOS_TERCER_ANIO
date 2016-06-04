@@ -41,6 +41,24 @@ BEGIN
 	Else THROW 50001, 'No existe el usuario', 1; 
 END
 GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarRol] (@nombre NVARCHAR(255), @id int)
+AS
+BEGIN
+	
+	if (@nombre <> '')
+	begin
+		BEGIN TRANSACTIOn
+		BEGIN TRY
+		UPDATE ADIOS_TERCER_ANIO.Rol set nombre = @nombre where id = @id
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION;
+			THROW 50004, 'No se pudo actualizar', 1; 
+		END CATCH
+		COMMIT TRANSACTION
+	end
+END
+GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarRol] (@nombre NVARCHAR(255), @id int output)
 AS
 BEGIN
@@ -57,6 +75,38 @@ BEGIN
 	RETURN @ID
 END
 GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[modificarFuncionalidadesRol] (@idRol int, @idFunc int, @borrar int)
+AS
+BEGIN
+	Declare @idFXR int = null;
+	select @idFXR = id from ADIOS_TERCER_ANIO.FuncionalidadRol where idRol = @idRol and idFuncionalidad = @idFunc
+	if(@idFXR is null and @borrar = 0)
+	begin
+		BEGIN TRANSACTION
+		BEGIN TRY
+			INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idFuncionalidad, idRol, deleted) VALUES (@idFunc, @idRol, @borrar)
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION;
+			THROW 50004, 'Error', 1; 
+		END CATCH
+		COMMIT TRANSACTION
+	end
+	if (@idFXR is not null and @borrar = 1)
+	begin
+		BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE ADIOS_TERCER_ANIO.FuncionalidadRol SET deleted = @borrar where id = @idFXR
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION;
+			THROW 50004, 'Error', 1; 
+		END CATCH
+		COMMIT TRANSACTION
+	end
+END
+GO
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
 
