@@ -17,22 +17,30 @@ namespace WindowsFormsApplication1.ABM_Rol
         public frmAgregarRol()
         {
             InitializeComponent();
-            String query = "SELECT Descripcion FROM ADIOS_TERCER_ANIO.Funcionalidad";
-            conn = Conexion.Instance;
-            SqlCommand buscarFuncionalidades = new SqlCommand(query, conn.getConexion);
-            SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
-            DataTable tablaFuncionalidades = new DataTable("Funcionalidades");
-            da.Fill(tablaFuncionalidades);
-            dgvFuncionalidades.DataSource = tablaFuncionalidades.DefaultView;
-
 
             dgvFuncionalidadesAgregadas.ColumnCount = 1;
             dgvFuncionalidadesAgregadas.ColumnHeadersVisible = true;
             dgvFuncionalidadesAgregadas.Columns[0].Name = "Descripcion";
 
+            dgvFuncionalidades.ColumnCount = 1;
+            dgvFuncionalidades.ColumnHeadersVisible = true;
+            dgvFuncionalidades.Columns[0].Name = "Descripcion";
 
-
+            String query = "SELECT Descripcion FROM ADIOS_TERCER_ANIO.Funcionalidad";
+            conn = Conexion.Instance;
+            SqlCommand buscarFuncionalidades = new SqlCommand(query, conn.getConexion);
+            SqlDataReader da = buscarFuncionalidades.ExecuteReader();
             
+            if(!da.HasRows){
+                MessageBox.Show("Error al cargar funcionalidades", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                new ABM_Rol.frmABMRol().Show();
+                this.Close();
+            }
+            while(da.Read()){
+                DataGridViewRow row = new DataGridViewRow();
+                row.CreateCells(dgvFuncionalidades, da.GetString(0).ToString());
+                dgvFuncionalidades.Rows.Add(row);
+            }            
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -78,22 +86,12 @@ namespace WindowsFormsApplication1.ABM_Rol
             foreach (DataGridViewRow rowPrincipal in dgvFuncionalidadesAgregadas.SelectedRows)
             {
                 object[] values = {
-                                          rowPrincipal.Cells["ID"].Value,
-                                          rowPrincipal.Cells["Nombre"].Value,
-                                   };
-                // Creamos un nuevo objeto DataGridViewRow.
-                //
+                                          rowPrincipal.Cells["Descripcion"].Value
+                                  };
                 DataGridViewRow row = new DataGridViewRow();
-
-                // Creamos las celdas y las rellenamos con los valores existentes
-                // en el array.
-                //
-                row.CreateCells(dgvFuncionalidades, values);
-
-                // Añadimos la nueva fila al segundo control DataGridView.
-                //
+                row.CreateCells(dgvFuncionalidadesAgregadas, values);
                 dgvFuncionalidades.Rows.Add(row);
-
+                dgvFuncionalidadesAgregadas.Rows.Remove(rowPrincipal);
             }
 
            
