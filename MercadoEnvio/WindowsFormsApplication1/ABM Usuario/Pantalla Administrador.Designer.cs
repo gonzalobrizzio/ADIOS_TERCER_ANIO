@@ -84,6 +84,7 @@
             this.Controls.Add(this.btnRol);
             this.Name = "frmPantallaAdministrador";
             this.Text = "Pantalla_Administrador";
+            this.Load += new System.EventHandler(this.frmPantallaAdministrador_Load);
             this.ResumeLayout(false);
 
         }

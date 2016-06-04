@@ -98,17 +98,17 @@ namespace WindowsFormsApplication1
                         switch (rolActual)
                         {
                             case 1:
-                                new frmPantallaAdministrador().Show();
+                                new ABM_Usuario.frmPantallaPrincipal("Administrador").Show();
                                 dataReader.Close();
                                 this.Hide();
                                 break;
                             case 2:
-                                new ABM_Usuario.frmPantallaUsuario().Show();
+                                new ABM_Usuario.frmPantallaPrincipal("Cliente").Show();
                                 dataReader.Close();
                                 this.Hide();
                                 break;
                             case 3:
-                                //new ABM_Usuario.frmPantallaEmpresa().Show();
+                                //new ABM_Usuario.frmPantallaPrincipal("Empresa").Show();
                                 //dataReader.Close();
                                 //this.Hide();
                                 break;

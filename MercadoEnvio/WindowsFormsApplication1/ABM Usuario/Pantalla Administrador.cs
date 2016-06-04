@@ -36,5 +36,10 @@ namespace WindowsFormsApplication1
             this.Hide();
 
         }
+
+        private void frmPantallaAdministrador_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

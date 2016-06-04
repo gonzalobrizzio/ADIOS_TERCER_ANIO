@@ -73,3 +73,4 @@ E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\W
 E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmIngresar.resources
 E:\WorkSpace\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.frmPantallaAdministrador.resources
 C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.frmCalificacion.resources
+C:\Users\Gonfre\workspaceDPSe\ADIOS_TERCER_ANIO\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.frmPantallaPrincipal.resources
