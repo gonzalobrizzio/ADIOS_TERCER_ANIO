@@ -40,7 +40,10 @@ namespace WindowsFormsApplication1.ABM_Rol
                 DataGridViewRow row = new DataGridViewRow();
                 row.CreateCells(dgvFuncionalidades, da.GetString(0).ToString());
                 dgvFuncionalidades.Rows.Add(row);
-            }            
+            }
+
+
+            da.Close();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -56,6 +59,15 @@ namespace WindowsFormsApplication1.ABM_Rol
                     }
             else
             {
+                String queryRol = "INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES (@nombre)";
+                SqlCommand agregarRol = new SqlCommand(queryRol, conn.getConexion);
+                SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+                nombre.SqlValue = txtNombre.Text;
+                nombre.Direction = ParameterDirection.Input;
+                agregarRol.Parameters.Add(nombre);
+                agregarRol.ExecuteNonQuery();
+                new ABM_Rol.frmABMRol().Show();
+
                 this.Close();
             }
         }
@@ -79,6 +91,10 @@ namespace WindowsFormsApplication1.ABM_Rol
                 dgvFuncionalidades.Rows.Remove(rowPrincipal);
 
             }
+
+         
+
+
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)

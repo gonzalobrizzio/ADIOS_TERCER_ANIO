@@ -25,6 +25,8 @@ namespace WindowsFormsApplication1.ABM_Rol
             DataTable tablaDeRoles = new DataTable("Roles");
             da.Fill(tablaDeRoles);
             dgvRoles.DataSource = tablaDeRoles.DefaultView;
+            dgvRoles.Update();
+            dgvRoles.Refresh();
 
         }
 
