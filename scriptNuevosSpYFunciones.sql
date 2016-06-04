@@ -1,6 +1,6 @@
 USE GD1C2016
 GO
-CREATE PROCEDURE login (@usuario NVARCHAR(255), @pass NVARCHAR(255), @idUsuario int output)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[login] (@usuario NVARCHAR(255), @pass NVARCHAR(255), @idUsuario int output)
 AS
 BEGIN
 	--Para probar el sp: (descomentar y setear valores)

@@ -150,8 +150,6 @@ CREATE  TABLE Oferta (
 
 CREATE  TABLE Calificacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
-  idUsuario INT REFERENCES Usuario(id) ,
-  idUsuarioCalificador INT REFERENCES Usuario(id) ,
   idCompra INT REFERENCES Compra(id) ,
   fecha DATETIME NULL ,
   puntaje INT NULL ,
@@ -218,7 +216,6 @@ BEGIN
 
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', 'gd', 'gd@mailinator.com')
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('gd', 'gd', 'gd2@mailinator.com')
-	SELECT * FROM ADIOS_TERCER_ANIO.Usuario ORDER BY id DESC
 
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Logear');	--Vi en el enunciado que era una funcionalidad especial a la cual todos tienen acceso. Para mi esto no va.
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Publicacion'); 
@@ -262,7 +259,4 @@ BEGIN
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 	VALUES(@idRol,@idUsuario)
-
-	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario
-	SELECT * FROM ADIOS_TERCER_ANIO.Rol
 END
