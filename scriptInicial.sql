@@ -421,9 +421,15 @@ AS BEGIN
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
-		(Publ_Empresa_Cuit IS NOT NULL)
-		and
-		Publicacion_Cod is not null
+			((Publ_Empresa_Cuit IS NOT NULL AND Publ_Cli_Dni IS NULL) OR ( Publ_Empresa_Cuit IS NULL AND Publ_Cli_Dni IS NOT NULL))
+		AND
+			Publicacion_Cod is not null
+		AND 
+			Calificacion_Codigo IS NULL
+		AND 
+			Factura_Nro IS NULL 
+		AND 
+			Compra_Cantidad IS NULL
 END
 GO
 

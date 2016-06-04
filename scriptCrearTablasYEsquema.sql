@@ -110,7 +110,7 @@ CREATE  TABLE Publicacion (
   stock INT NULL ,
   idItem INT REFERENCES Item(id) ,
   idEnvio INT REFERENCES Envio(id) ,
-  codAnterior INT NULL,
+  codAnterior NUMERIC(18,0) NULL,
   )
 
 CREATE  TABLE Rubro (
