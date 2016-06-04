@@ -17,12 +17,13 @@ namespace WindowsFormsApplication1.ABM_Rol
         public frmAgregarRol()
         {
             InitializeComponent();
-            String queryFuncionalidades = "SELECT * FROM ADIOS_TERCER_ANIO.Funcionalidad";
+            String query = "SELECT * FROM ADIOS_TERCER_ANIO.Funcionalidad";
             conn = Conexion.Instance;
-            SqlCommand buscarRoles = new SqlCommand(queryFuncionalidades, conn.getConexion);
-            SqlDataAdapter hb = new SqlDataAdapter(queryFuncionalidades, conn.getConexion);
-            DataTable tablaDeFuncionalidades = new DataTable("Funcionalidades");
-            hb.Fill(tablaDeFuncionalidades);
+            SqlCommand buscarFuncionalidades = new SqlCommand(query, conn.getConexion);
+            SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
+            DataTable tablaFuncionalidades = new DataTable("Funcionalidades");
+            da.Fill(tablaFuncionalidades);
+            dgvFuncionalidades.DataSource = tablaFuncionalidades.DefaultView;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -50,6 +51,22 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow rowPrincipal in dgvFuncionalidades.SelectedRows)
+            {
+                object[] values = {
+                                          rowPrincipal.Cells["id"].Value,
+                                          rowPrincipal.Cells["descripcion"].Value
+                                  };
+                DataGridViewRow row = new DataGridViewRow();
+                row.CreateCells(dgvFuncionalidades, values);
+                dgvFuncionalidadesAgregadas.Rows.Add(row);
+                dgvFuncionalidades.Rows.Remove(row);
+
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
             foreach (DataGridViewRow rowPrincipal in dgvFuncionalidadesAgregadas.SelectedRows)
             {
                 object[] values = {
@@ -63,37 +80,15 @@ namespace WindowsFormsApplication1.ABM_Rol
                 // Creamos las celdas y las rellenamos con los valores existentes
                 // en el array.
                 //
-                row.CreateCells(dgvFuncionalidadesAgregadas, values);
+                row.CreateCells(dgvFuncionalidades, values);
 
                 // Añadimos la nueva fila al segundo control DataGridView.
                 //
-                dgvFuncionalidadesAgregadas.Rows.Add(row);
+                dgvFuncionalidades.Rows.Add(row);
 
             }
-        }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewCell oneCell in dgvFuncionalidadesAgregadas.SelectedCells)
-            {
-                if (String.IsNullOrEmpty(oneCell.Value as String))
-                {
-                    MessageBox.Show("Intenta eliminar una funcionalidad vacia", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    if (oneCell.Selected)
-                    {
-                        dgvFuncionalidadesAgregadas.Rows.RemoveAt(oneCell.RowIndex);
-                        dgvFuncionalidades.Rows.Add(oneCell.Value);
-                    }
-                }
-            }
-        }
-
-        private void frmAgregarRol_Load(object sender, EventArgs e)
-        {
-
+           
         }
 
 
