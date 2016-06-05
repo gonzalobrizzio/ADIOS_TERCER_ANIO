@@ -291,10 +291,10 @@ AS BEGIN
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT 
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador,
-		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod),
-		Compra_Fecha				AS fecha,
-		Compra_Cantidad
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
+		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
+		Compra_Fecha																			AS fecha,
+		Compra_Cantidad																			AS cantidad
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Compra_Fecha IS NOT NULL
@@ -318,17 +318,19 @@ AS BEGIN
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Oferta (monto, fecha, idUsuario, idPublicacion)
 	SELECT 
-		Oferta_Monto				AS monto,
-		Oferta_Fecha				AS fecha,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)	AS idComprador, 
-		(select id from Publicacion p where p.codAnterior = Publicacion_Cod)
+		Oferta_Monto																			AS monto,
+		Oferta_Fecha																			AS fecha,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador, 
+		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Oferta_Monto IS NOT NULL
 	AND 
 		Oferta_Fecha IS NOT NULL	
 	AND
-		Publ_Cli_Dni is not null
+		((Publ_Cli_Dni is not null AND Publ_Empresa_Cuit IS NULL)
+		OR
+		(Publ_Cli_Dni is null AND Publ_Empresa_Cuit IS NOT NULL))
 END
 GO
 
