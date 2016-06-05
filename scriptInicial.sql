@@ -291,8 +291,8 @@ AS BEGIN
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT 
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)	AS idComprador,
-		(select id from Publicacion p where p.codAnterior = Publicacion_Cod),
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)	AS idComprador,
+		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod),
 		Compra_Fecha				AS fecha,
 		Compra_Cantidad
 	FROM gd_esquema.MAESTRA
@@ -302,9 +302,12 @@ AS BEGIN
 		Compra_Cantidad IS NOT NULL	
 	AND	
 		Calificacion_Codigo IS NULL
+	AND
+		Cli_Dni IS NOT NULL
 	AND 
-		Publ_Cli_Dni is not null
-
+		((Publ_Cli_Dni is not null AND Publ_Empresa_Cuit IS NULL)
+		OR
+		(Publ_Cli_Dni is null AND Publ_Empresa_Cuit IS NOT NULL))
 END
 GO
 
