@@ -88,6 +88,7 @@ CREATE  TABLE Item (
   nombre NVARCHAR(255) NULL ,
   precio DECIMAL(18,2) NULL ,
   cantidad INT NULL ,
+  idPublicacion INT REFERENCES Publicacion(id) ,
   )
 
 CREATE  TABLE Envio (
@@ -108,7 +109,6 @@ CREATE  TABLE Publicacion (
   idPublicador INT REFERENCES Usuario(id) ,
   idRubro INT REFERENCES Rubro(id) ,
   stock INT NULL ,
-  idItem INT REFERENCES Item(id) ,
   idEnvio INT REFERENCES Envio(id) ,
   codAnterior NUMERIC(18,0) NULL,
   )
