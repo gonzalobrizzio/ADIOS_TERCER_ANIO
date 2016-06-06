@@ -165,10 +165,10 @@ CREATE  TABLE FormaDePago (
 
 CREATE  TABLE Factura (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  fecha DATETIME NULL ,
-  importeTotal DECIMAL(18,2) NULL ,
-  idComprador INT REFERENCES Usuario(id) ,
   numero INT NULL ,
+  importeTotal DECIMAL(18,2) NULL ,
+  fecha DATETIME NULL ,
+  idVendedor INT REFERENCES Usuario(id) ,
   idFormaDePago INT REFERENCES FormaDePago(id),
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
