@@ -350,14 +350,18 @@ AS BEGIN
 
 		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 			SELECT 
-				NULL																					AS nombre,
+				CASE 
+					WHEN Item_Factura_Monto = Publicacion_Visibilidad_Precio THEN 'Costo Publicacion '+Publicacion_Visibilidad_Desc
+					WHEN Item_Factura_Cantidad = Publicacion_Precio * Publicacion_Visibilidad_Porcentaje THEN 'Comision Publiacacion '+Publicacion_Visibilidad_Desc
+					ELSE 'Costo de envio'
+				END																						AS nombre,
 				Item_Factura_Monto																		AS precio,
 				Item_Factura_Cantidad																	AS cantidad,
 				(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
 			FROM 
 				gd_esquema.Maestra
 			WHERE
-				Item_Factura_Monto IS NOT NULL
+				Item_Factura_Monto IS NOT NULL				
 END
 GO
 
