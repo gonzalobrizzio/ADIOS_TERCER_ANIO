@@ -26,17 +26,17 @@ namespace MercadoEnvios.ABM_Usuario
             dataUsuarios.DataSource = tablaDeUsuarios.DefaultView;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            new ABM_Usuario.NuevoUsuario(this).Show();
-            this.Hide();
-        }
-
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
             new frmPantallaPrincipal("Administrativo").Show();
             this.Close();
 
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            new frmNuevoUsuario().Show();
+            this.Close();
         }
     }
 }

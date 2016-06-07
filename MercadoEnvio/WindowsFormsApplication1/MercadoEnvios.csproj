@@ -100,6 +100,12 @@
     <Compile Include="ABM Usuario\GestionUsuario.Designer.cs">
       <DependentUpon>GestionUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\nuevoCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\nuevoCliente.Designer.cs">
+      <DependentUpon>nuevoCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Usuario\NuevoUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\GestionUsuario.resx">
       <DependentUpon>GestionUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\nuevoCliente.resx">
+      <DependentUpon>nuevoCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>

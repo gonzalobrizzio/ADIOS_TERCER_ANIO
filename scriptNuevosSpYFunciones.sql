@@ -107,7 +107,30 @@ BEGIN
 END
 GO
 
+
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
 
-SELECT usuario FROM ADIOS_TERCER_ANIO.Usuario
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuarioConIDRol](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT, @rol NVARCHAR(255))
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	BEGIN TRANSACTION
+	BEGIN TRY
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
+	SET @ultimoID = @@IDENTITY;
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+
+	DECLARE @idRol INT;
+	SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = @rol)
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol, @ultimoID,0)
+END
+GO
