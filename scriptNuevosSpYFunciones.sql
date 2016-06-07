@@ -107,13 +107,7 @@ BEGIN
 END
 GO
 
-
-
-UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
-UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuarioConIDRol](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT, @rol NVARCHAR(255))
+CREATE PROCEDURE ADIOS_TERCER_ANIO.generarUsuarioConIDRol (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT, @rol NVARCHAR(255))
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -134,3 +128,7 @@ AS BEGIN
 	VALUES(@idRol, @ultimoID,0)
 END
 GO
+
+
+UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
+UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;

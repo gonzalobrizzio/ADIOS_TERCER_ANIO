@@ -60,10 +60,14 @@ namespace MercadoEnvios.ABM_Usuario
             agregarUsuario.Parameters.Add(mail);
             agregarUsuario.Parameters.Add(idUsuario);
             agregarUsuario.Parameters.Add(rol);
-            agregarUsuario.ExecuteNonQuery();
 
             if ((cmbRolAsignado.SelectedItem).Equals("Cliente")) {
-                new frmNuevoCliente().Show();
+                new frmNuevoCliente(agregarUsuario).Show();
+                this.Close();
+            }
+
+            if ((cmbRolAsignado.SelectedItem).Equals("Administrador")) {
+                new frmNuevaEmpresa(agregarUsuario).Show();
                 this.Close();
             }
             
