@@ -83,14 +83,6 @@ CREATE  TABLE Visibilidad (
   porcentaje numeric(18,2) NULL ,
   )
 
-CREATE  TABLE Item (
-  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  nombre NVARCHAR(255) NULL ,
-  precio DECIMAL(18,2) NULL ,
-  cantidad INT NULL ,
-  idPublicacion INT REFERENCES Publicacion(id) ,
-  )
-
 CREATE  TABLE Envio (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   precio DECIMAL(18,2) NULL ,
@@ -172,6 +164,16 @@ CREATE  TABLE Factura (
   idFormaDePago INT REFERENCES FormaDePago(id),
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
+
+CREATE  TABLE Item (
+  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
+  nombre NVARCHAR(255) NULL ,
+  precio DECIMAL(18,2) NULL ,
+  cantidad INT NULL ,
+  idCompra INT REFERENCES Compra(id) ,
+  idFactura INT REFERENCES Factura(id) ,
+  )
+
 
 CREATE  TABLE Pregunta (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,

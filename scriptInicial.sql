@@ -348,16 +348,16 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
+		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idCompra, idFactura)
 			SELECT 
 				CASE 
 					WHEN Item_Factura_Monto = Publicacion_Visibilidad_Precio THEN 'Costo Publicacion '+Publicacion_Visibilidad_Desc
-					WHEN Item_Factura_Cantidad = Publicacion_Precio * Publicacion_Visibilidad_Porcentaje THEN 'Comision Publiacacion '+Publicacion_Visibilidad_Desc
-					ELSE 'Costo de envio'
+					ELSE 'Comision Publicacion '+Publicacion_Visibilidad_Desc
 				END																						AS nombre,
 				Item_Factura_Monto																		AS precio,
 				Item_Factura_Cantidad																	AS cantidad,
-				(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
+				NULL AS idCompra, --(SELECT id FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion = ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod))	AS idCompra,
+				(SELECT id FROM ADIOS_TERCER_ANIO.Factura f WHERE f.numero = Factura_Nro)				AS idFactura
 			FROM 
 				gd_esquema.Maestra
 			WHERE
@@ -487,7 +487,19 @@ BEGIN
 END
 GO
 
+CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerIdPublicacionDesdeCodigoVIejo](@Publicacion_Cod NUMERIC(18,0))
+RETURNS INTEGER
+AS
+BEGIN
+	DECLARE @retorno INTEGER
+	SELECT 
+		@retorno = id 
+	FROM ADIOS_TERCER_ANIO.Publicacion p 
+	WHERE p.codAnterior = @Publicacion_Cod
 
+	RETURN @retorno;
+END
+GO
 
 -- -----------------------------------------------------
 -- VISTAS
