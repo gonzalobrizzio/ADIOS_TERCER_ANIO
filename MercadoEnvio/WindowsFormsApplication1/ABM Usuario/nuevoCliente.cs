@@ -13,9 +13,12 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmNuevoCliente : Form
     {
         SqlCommand agregar;
-        public frmNuevoCliente(SqlCommand agregarUsuario)
+        SqlParameter idUsuario;
+        public frmNuevoCliente(SqlCommand agregarUsuario, SqlParameter id)
         {
             InitializeComponent();
+            agregar = agregarUsuario;
+            id = idUsuario;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

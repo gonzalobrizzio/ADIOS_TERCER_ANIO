@@ -18,7 +18,7 @@ namespace MercadoEnvios.ABM_Usuario
         {
             InitializeComponent();
 
-            string queryBuscarRoles = "SELECT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE id != 1";
+            string queryBuscarRoles = "SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE nombre != 'Administrativo'";
             SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
             SqlDataReader dataReader = buscarRoles.ExecuteReader();
             while (dataReader.Read())
@@ -62,7 +62,7 @@ namespace MercadoEnvios.ABM_Usuario
                 this.Close();
             }
 
-            if ((cmbRolAsignado.SelectedItem).Equals("Administrador")) {
+            if ((cmbRolAsignado.SelectedItem).Equals("Empresa")) {
                 new frmNuevaEmpresa(agregarUsuario, idUsuario).Show();
                 this.Close();
             }
