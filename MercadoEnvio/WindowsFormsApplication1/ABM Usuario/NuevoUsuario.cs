@@ -45,9 +45,6 @@ namespace MercadoEnvios.ABM_Usuario
             SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
             password.SqlValue = txtContrasenia.Text;
             password.Direction = ParameterDirection.Input;
-            SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
-            mail.SqlValue = txtMail.Text;
-            mail.Direction = ParameterDirection.Input;
             SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
             idUsuario.Direction = ParameterDirection.Output;
             idUsuario.SqlDbType = SqlDbType.Int;
@@ -57,17 +54,16 @@ namespace MercadoEnvios.ABM_Usuario
 
             agregarUsuario.Parameters.Add(usuario);
             agregarUsuario.Parameters.Add(password);
-            agregarUsuario.Parameters.Add(mail);
             agregarUsuario.Parameters.Add(idUsuario);
             agregarUsuario.Parameters.Add(rol);
 
             if ((cmbRolAsignado.SelectedItem).Equals("Cliente")) {
-                new frmNuevoCliente(agregarUsuario).Show();
+                new frmNuevoCliente(agregarUsuario, idUsuario).Show();
                 this.Close();
             }
 
             if ((cmbRolAsignado.SelectedItem).Equals("Administrador")) {
-                new frmNuevaEmpresa(agregarUsuario).Show();
+                new frmNuevaEmpresa(agregarUsuario, idUsuario).Show();
                 this.Close();
             }
             

@@ -16,7 +16,6 @@ namespace MercadoEnvios.ABM_Usuario
         public frmNuevoCliente(SqlCommand agregarUsuario)
         {
             InitializeComponent();
-            agregar = agregarUsuario;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
