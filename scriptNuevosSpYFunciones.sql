@@ -143,8 +143,35 @@ AS BEGIN
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @mail NVARCHAR(255), @telefono NVARCHAR(255), 
-													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ID INT)
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+
+		
+	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%'))
+		THROW 50004, 'Mail invalido',1;
+
+	IF(@password IS NULL)
+		THROW 50004, 'Necesita ingresar una contraseña', 1;
+
+	IF(@usuario IS NULL)
+		THROW 50004, 'Necesita ingresar un usuario', 1;
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, pass = @password, usuario = @usuario WHERE @ID = id
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(255), 
+													   @direccion INT, @calle NVARCHAR(255), @piso NUMERIC(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
 													   @rubro NVARCHAR(255))
 AS
@@ -172,7 +199,8 @@ BEGIN
 										  idLocalidad,
 										  calificacionPromedio,
 										  fechaCreacion) 
-	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM Rubro WHERE descripcionCorta = @rubro), @id, (SELECT id FROM Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM Rubro WHERE descripcionCorta = @rubro),
+		    @id, (SELECT id FROM Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -182,32 +210,114 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@razonSocial NVARCHAR(255) ,  @id INT , @mail NVARCHAR(255), @telefono NVARCHAR(255), 
-													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
-													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
-													   @rubro NVARCHAR(255))
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(255), 
+													     @direccion INT, @calle NVARCHAR(255), @piso NUMERIC(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
+													     @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
+													     @rubro NVARCHAR(255))
 AS
 BEGIN
+
+	IF(@razonSocial IS NULL OR @cuit IS NULL)
+		THROW 50004, 'CUIT / RAZON SOCIAL invalido/a',1;
+
 	BEGIN TRANSACTION
 	BEGIN TRY
-	DECLARE @calificacionPromedio INT
-	SET @calificacionPromedio = 0
+	
+	--Me falta verificar usuario sin repetir, y demás cosas
+	--TODO
+	UPDATE ADIOS_TERCER_ANIO.Empresa
+	SET razonSocial = @razonSocial, telefono = @telefono,direccion_numero = @calle, direccion = @direccion, piso = @piso,
+	    dpto = @depto, codigoPostal = @codigoPostal, cuit = @cuit, contacto = @contacto, idRubro = (SELECT id FROM Rubro WHERE descripcionCorta = @rubro),
+	    idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE id = @id
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se puede modificar la empresa', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 
-	INSERT INTO ADIOS_TERCER_ANIO.Persona(razonSocial,
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  @apellido INT , @documento INT, @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
+													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
+AS
+BEGIN
+	IF (@nombre IS NULL )
+		THROW 50004, 'Nombre invalido',1;
+
+	IF(@apellido IS NULL)
+		THROW 50004, 'Necesita ingresar una contraseña', 1;
+
+	IF(@documento IS NULL)
+		THROW 50004, 'Necesita ingresar un usuario', 1;
+
+	IF(@direccion IS NULL)
+		THROW 50004, 'Necesita seleccionar un rol', 1;
+	IF(@fechaNac IS NULL)
+		THROW 50004, 'Necesita indicar una fecha de nacimiento', 1;
+	IF(@codigoPostal IS NULL)
+		THROW 50004, 'Necesita indicar un código postal',1;
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+	INSERT INTO ADIOS_TERCER_ANIO.Persona(nombre,
+										  apellido,
+										  documento,
+										  idTipoDocumento,
 										  telefono,
 										  direccion,
 										  direccion_numero,
 										  piso,
 										  dpto,
 										  codigoPostal,
-										  cuit,
-										  contacto,
-										  idRubro,
+										  fechaNacimiento,
+										  fechaCreacion,
 										  idUsuario,
-										  idLocalidad,
-										  calificacionPromedio,
-										  fechaCreacion) 
-	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM Rubro WHERE descripcionCorta = @rubro), @id, (SELECT id FROM Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+										  idLocalidad) 
+	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
+			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre = @localidad))
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se puede agregar el cliente', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido INT , @documento INT, @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
+													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
+AS
+BEGIN
+	IF (@nombre IS NULL )
+		THROW 50004, 'Nombre invalido',1;
+
+	IF(@apellido IS NULL)
+		THROW 50004, 'Necesita ingresar una contraseña', 1;
+
+	IF(@documento IS NULL)
+		THROW 50004, 'Necesita ingresar un usuario', 1;
+
+	IF(@direccion IS NULL)
+		THROW 50004, 'Necesita seleccionar un rol', 1;
+	IF(@fechaNac IS NULL)
+		THROW 50004, 'Necesita indicar una fecha de nacimiento', 1;
+	IF(@codigoPostal IS NULL)
+		THROW 50004, 'Necesita indicar un código postal',1;
+
+		
+	--Me falta verificar usuario sin repetir, y demás cosas
+	--TODO
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+	UPDATE ADIOS_TERCER_ANIO.Persona
+	SET nombre = @nombre, apellido = @apellido, idTipoDocumento = (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
+				 telefono = @telefono,direccion_numero = @calle, direccion = @direccion, piso = @piso, dpto = @depto, codigoPostal = @codigoPostal, 
+				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE id = idUsuario
+	 
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;

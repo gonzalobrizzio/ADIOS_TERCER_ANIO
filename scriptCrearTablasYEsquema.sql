@@ -29,11 +29,6 @@ CREATE  TABLE TipoDocumento (
   descripcion NVARCHAR(255) NOT NULL ,
    )
 
-CREATE  TABLE RazonSocial (
-  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  descripcion NVARCHAR(255) NOT NULL ,
-  )
-
 CREATE  TABLE Localidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
@@ -202,13 +197,6 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('CI')
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
-
-	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('S.A.')
-	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('S.R.L.')
-	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('Sociedad Colectiva')
-	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('Sociedad Civil')
-	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('Sociedad en Comandita')
-
 
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')

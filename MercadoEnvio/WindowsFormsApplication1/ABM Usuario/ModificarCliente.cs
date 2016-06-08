@@ -11,17 +11,18 @@ using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Usuario
 {
-    public partial class frmNuevoCliente : Form
+    public partial class frmModificarCliente : Form
     {
         SqlDataReader dataReader;
         Conexion conn;
-        string rolU;
-        public frmNuevoCliente(string rol)
+        int idUsuario;
+        public frmModificarCliente(int id)
         {
             InitializeComponent();
+            idUsuario = id;
+
             calendarioNac.Visible = false;
             conn = Conexion.Instance;
-            rolU = rol;
 
             txtMail.MaxLength = 30;
             txtUsr.MaxLength = 20;
@@ -63,10 +64,10 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            SqlCommand agregarCliente = new SqlCommand("ADIOS_TERCER_ANIO.AgregarCliente", conn.getConexion);
-            agregarCliente.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.generarUsuarioConIDRol", conn.getConexion);
-            agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand modificarCliente = new SqlCommand("ADIOS_TERCER_ANIO.ModificarCliente", conn.getConexion);
+            modificarCliente.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand modificarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.ModificarUsuario", conn.getConexion);
+            modificarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
 
             SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
             usuario.SqlValue = txtUsr.Text;
@@ -76,24 +77,13 @@ namespace MercadoEnvios.ABM_Usuario
             password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
             password.Direction = ParameterDirection.Input;
 
-            SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
-            idUsuario.Direction = ParameterDirection.Output;
-            idUsuario.SqlDbType = SqlDbType.Int;
-
-            SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
-            rol.SqlValue = rolU;
-            rol.Direction = ParameterDirection.Input;
-
             SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
             mail.SqlValue = txtMail.Text;
             mail.Direction = ParameterDirection.Input;
 
-            agregarUsuario.Parameters.Add(usuario);
-            agregarUsuario.Parameters.Add(password);
-            agregarUsuario.Parameters.Add(idUsuario);
-            agregarUsuario.Parameters.Add(rol);
-            agregarUsuario.Parameters.Add(mail);
-            agregarUsuario.ExecuteNonQuery();
+            modificarUsuario.Parameters.Add(usuario);
+            modificarUsuario.Parameters.Add(mail);
+            modificarUsuario.ExecuteNonQuery();
 
             SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
             nombre.SqlValue = txtNombre.Text;
@@ -160,37 +150,35 @@ namespace MercadoEnvios.ABM_Usuario
             SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
             fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
 
-            agregarCliente.Parameters.Add(idUser);
-            agregarCliente.Parameters.Add(dni);
-            agregarCliente.Parameters.Add(tipoDoc);
-            agregarCliente.Parameters.Add(nombre);
-            agregarCliente.Parameters.Add(apellido);
-            agregarCliente.Parameters.Add(telefono);
-            agregarCliente.Parameters.Add(direccion);
-            agregarCliente.Parameters.Add(calle);
-            agregarCliente.Parameters.Add(piso);
-            agregarCliente.Parameters.Add(depto);
-            agregarCliente.Parameters.Add(localidad);
-            agregarCliente.Parameters.Add(codigoPostal);
-            agregarCliente.ExecuteNonQuery();
+            modificarCliente.Parameters.Add(idUser);
+            modificarCliente.Parameters.Add(dni);
+            modificarCliente.Parameters.Add(tipoDoc);
+            modificarCliente.Parameters.Add(nombre);
+            modificarCliente.Parameters.Add(apellido);
+            modificarCliente.Parameters.Add(telefono);
+            modificarCliente.Parameters.Add(direccion);
+            modificarCliente.Parameters.Add(calle);
+            modificarCliente.Parameters.Add(piso);
+            modificarCliente.Parameters.Add(depto);
+            modificarCliente.Parameters.Add(localidad);
+            modificarCliente.Parameters.Add(codigoPostal);
+            modificarCliente.ExecuteNonQuery();
 
             new frmABMUsuario().Show();
             this.Close();
 
         }
 
-        private void btnSeleccionar_Click(object sender, EventArgs e)
-        {
-            calendarioNac.Visible = true;
-        }
-
-        private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
+        private void calendarioNac_DateSelected(object sender, DateRangeEventArgs e)
         {
             txtFechaNac.Clear();
             txtFechaNac.AppendText(calendarioNac.SelectionStart.ToShortDateString());
             calendarioNac.Visible = false;
-
         }
 
+        private void btnSeleccionar_Click(object sender, EventArgs e)
+        {
+            calendarioNac.Visible = true;
+        }
     }
 }
