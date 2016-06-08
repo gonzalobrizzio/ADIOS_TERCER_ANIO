@@ -4,7 +4,8 @@
 USE [GD1C2016] ;
 GO
 
-
+--PROCEDIMIENTO PARA GENERAR USUARIO
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[generarUsuario](@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
 	set nocount on;
@@ -16,6 +17,7 @@ END
 GO
 
 --SP PARA MIGRAR TODOS LAS PERSONAS DE LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPersonas]
 AS BEGIN
 	set nocount on;
@@ -120,6 +122,7 @@ END
 GO
 
 --SP PARA MIGRAR TODOS LAS EMPRESAS DE LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarEmpresas]
 AS BEGIN
 	set nocount on;
@@ -218,6 +221,7 @@ END
 GO
 
 --SP PARA MIGRAR TODOS LAS VISIBILIDADES DE LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarVisibilidades]
 AS BEGIN
 	set nocount on;
@@ -241,6 +245,7 @@ GO
 
 
 --SP PARA MIGRAR LOS RUBROS QUE HAY EN LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarRubros]
 AS BEGIN
 	set nocount on;
@@ -259,42 +264,42 @@ GO
 
 
 --SP PARA MIGRAR LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarFacturas]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Factura(fecha, importeTotal, idComprador, numero, idFormaDePago, idPublicacion)
-	SELECT 
-		Factura_Fecha AS fecha,
-		Factura_Total AS importeTotal,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) AS idComprador,
-		Factura_Nro AS numero,
-		(select id from ADIOS_TERCER_ANIO.FormaDePago where nombre like Forma_Pago_Desc) AS idFormaDePago,
-		(select id from Publicacion p where p.codAnterior = Publicacion_Cod)
 
-	FROM gd_esquema.Maestra	
-	WHERE	Factura_Total IS NOT NULL
-			AND
-			Factura_Fecha IS NOT NULL
-			and
-			Publ_Cli_Dni is not null
-	
-
-		
+	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idVendedor, idFormaDePago, idPublicacion)
+	SELECT DISTINCT
+		Factura_Nro																				AS numero,
+		Factura_Total																			AS importeTotal,
+		Factura_Fecha																			AS fecha,
+		CASE 
+			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		END																						AS idVendedor,
+		(SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre LIKE Forma_Pago_Desc)		AS idFormaDePago,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
+	FROM 
+		gd_esquema.Maestra
+	WHERE
+		Factura_Nro IS NOT NULL
 END
 GO
 
 --SP PARA MIGRAR LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT 
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)	AS idComprador,
-		(select id from Publicacion p where p.codAnterior = Publicacion_Cod),
-		Compra_Fecha				AS fecha,
-		Compra_Cantidad
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
+		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
+		Compra_Fecha																			AS fecha,
+		Compra_Cantidad																			AS cantidad
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Compra_Fecha IS NOT NULL
@@ -302,59 +307,62 @@ AS BEGIN
 		Compra_Cantidad IS NOT NULL	
 	AND	
 		Calificacion_Codigo IS NULL
+	AND
+		Cli_Dni IS NOT NULL
 	AND 
-		Publ_Cli_Dni is not null
-
+		((Publ_Cli_Dni is not null AND Publ_Empresa_Cuit IS NULL)
+		OR
+		(Publ_Cli_Dni is null AND Publ_Empresa_Cuit IS NOT NULL))
 END
 GO
 
 --SP PARA MIGRAR LAS OFERTAS QUE HAY EN LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarOfertas]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Oferta (monto, fecha, idUsuario, idPublicacion)
 	SELECT 
-		Oferta_Monto				AS monto,
-		Oferta_Fecha				AS fecha,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)	AS idComprador, 
-		(select id from Publicacion p where p.codAnterior = Publicacion_Cod)
+		Oferta_Monto																			AS monto,
+		Oferta_Fecha																			AS fecha,
+		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador, 
+		(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Oferta_Monto IS NOT NULL
 	AND 
 		Oferta_Fecha IS NOT NULL	
 	AND
-		Publ_Cli_Dni is not null
+		((Publ_Cli_Dni is not null AND Publ_Empresa_Cuit IS NULL)
+		OR
+		(Publ_Cli_Dni is null AND Publ_Empresa_Cuit IS NOT NULL))
 END
 GO
 
 
 --SP PARA MIGRAR LOS ITEMS QUE HAY EN LA TABLA MAESTRA
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems](@nombre Nvarchar(255), @precio decimal(18,2), @cantidad int, @id int output)
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarItems]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad)
-		Values (@nombre, @precio, @cantidad)
-
-		set @id = @@IDENTITY;
-END
-GO
-
-CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcionMigrarItem](@nombre Nvarchar(255), @precio decimal(18,2), @cantidad int)
-RETURNS INTEGER
-AS
-BEGIN
-	Declare @id int;
-	EXEC ADIOS_TERCER_ANIO.migrarItems @nombre, @precio , @cantidad, @id;
-		
-	RETURN @id;
+		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
+			SELECT 
+				NULL																					AS nombre,
+				Item_Factura_Monto																		AS precio,
+				Item_Factura_Cantidad																	AS cantidad,
+				(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
+			FROM 
+				gd_esquema.Maestra
+			WHERE
+				Item_Factura_Monto IS NOT NULL
 END
 GO
 
 --SP PARA MIGRAR LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+--TODO: Revisar que funcione bien al 05/06/2016
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCalificaciones]
 AS BEGIN
 	set nocount on;
@@ -382,6 +390,7 @@ GO
 
 
 --SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS/CLIENTES QUE HAY EN LA TABLA MAESTRA
+--TODO: NOK 05/06/2016 LA MIGRACION DE PUBLICACIONES ESTA OK SUPERCHEQUEADA, FALTA VER EL TEMA DEL ENVIO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
 AS BEGIN
 	set nocount on;
@@ -399,31 +408,38 @@ AS BEGIN
 										idPublicador,
 										idRubro,
 										stock,
-										idItem,
 										idEnvio,
 										codAnterior
 									)
 	SELECT DISTINCT
-		Publicacion_Descripcion			AS descripcion,
-		Publicacion_Fecha				AS fechaIni,
-		Publicacion_Fecha_Venc			AS fechaFin,
-		1							AS tienePreguntas, --NO VIENEN CON PREGUNTAS
-		Publicacion_Tipo				AS tipo,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )	AS idEstado, --El cambio de estado se tiene que hacer en C#
-		Publicacion_Precio AS precio,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)	AS idVisibilidad,
-		ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)  AS idUsuario,
+		Publicacion_Descripcion																			AS descripcion,
+		Publicacion_Fecha																				AS fechaIni,
+		Publicacion_Fecha_Venc																			AS fechaFin,
+		0																								AS tienePreguntas, --NO VIENEN CON PREGUNTAS, por eso el cero
+		Publicacion_Tipo																				AS tipo,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )								AS idEstado, --El cambio de estado se tiene que hacer en C#
+		Publicacion_Precio																				AS precio,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)		AS idVisibilidad,
+		CASE 
+			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
-		Publicacion_Stock				AS stock,
-		null, --todo (ADIOS_TERCER_ANIO.funcionMigrarItem(Publicacion_Rubro_Descripcion, Item_Factura_Monto, Item_Factura_Cantidad)) AS idItem, 
-		NULL							AS idEnvio, --TODO traer 
-		Publicacion_Cod
+		Publicacion_Stock																				AS stock,
+		NULL																							AS idEnvio, --TODO definir si se usa o se borra
+		Publicacion_Cod																					AS idPublicacion
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
-		(Publ_Empresa_Cuit IS NOT NULL)
-		and
-		Publicacion_Cod is not null
+			((Publ_Empresa_Cuit IS NOT NULL AND Publ_Cli_Dni IS NULL) OR ( Publ_Empresa_Cuit IS NULL AND Publ_Cli_Dni IS NOT NULL))
+		AND
+			Publicacion_Cod is not null
+		AND 
+			Calificacion_Codigo IS NULL
+		AND 
+			Factura_Nro IS NULL 
+		AND 
+			Compra_Cantidad IS NULL
 END
 GO
 
@@ -432,6 +448,7 @@ GO
 -- -----------------------------------------------------
 
 -- FUNCION PARA SACAR EL idUsuario del CUIT
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerIdDeCuit](@cuit NVARCHAR(255))
 RETURNS INTEGER
 AS
@@ -449,6 +466,7 @@ END
 GO
 
 -- FUNCION PARA SACAR EL idUsuario del DNI
+--OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerIdDeDNI](@dni DECIMAL(18,0))
 RETURNS INTEGER
 AS
@@ -506,6 +524,9 @@ EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
 
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
+
+--MIGRO LOS ITEMS QUE TIENEN LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
+EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 
 

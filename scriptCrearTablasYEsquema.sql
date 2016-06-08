@@ -88,6 +88,7 @@ CREATE  TABLE Item (
   nombre NVARCHAR(255) NULL ,
   precio DECIMAL(18,2) NULL ,
   cantidad INT NULL ,
+  idPublicacion INT REFERENCES Publicacion(id) ,
   )
 
 CREATE  TABLE Envio (
@@ -108,9 +109,8 @@ CREATE  TABLE Publicacion (
   idPublicador INT REFERENCES Usuario(id) ,
   idRubro INT REFERENCES Rubro(id) ,
   stock INT NULL ,
-  idItem INT REFERENCES Item(id) ,
   idEnvio INT REFERENCES Envio(id) ,
-  codAnterior INT NULL,
+  codAnterior NUMERIC(18,0) NULL,
   )
 
 CREATE  TABLE Rubro (
@@ -165,10 +165,10 @@ CREATE  TABLE FormaDePago (
 
 CREATE  TABLE Factura (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  fecha DATETIME NULL ,
-  importeTotal DECIMAL(18,2) NULL ,
-  idComprador INT REFERENCES Usuario(id) ,
   numero INT NULL ,
+  importeTotal DECIMAL(18,2) NULL ,
+  fecha DATETIME NULL ,
+  idVendedor INT REFERENCES Usuario(id) ,
   idFormaDePago INT REFERENCES FormaDePago(id),
   idPublicacion INT REFERENCES Publicacion(id) ,
   )

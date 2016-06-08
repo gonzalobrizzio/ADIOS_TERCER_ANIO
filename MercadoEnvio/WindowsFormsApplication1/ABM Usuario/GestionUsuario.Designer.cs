@@ -28,34 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnAgregarEmpresa = new System.Windows.Forms.Button();
-            this.btnAgregarCliente = new System.Windows.Forms.Button();
             this.txtBuscado = new System.Windows.Forms.TextBox();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dataUsuarios = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataUsuarios)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnAgregarEmpresa
-            // 
-            this.btnAgregarEmpresa.Location = new System.Drawing.Point(137, 427);
-            this.btnAgregarEmpresa.Name = "btnAgregarEmpresa";
-            this.btnAgregarEmpresa.Size = new System.Drawing.Size(119, 25);
-            this.btnAgregarEmpresa.TabIndex = 3;
-            this.btnAgregarEmpresa.Text = "Agregar Empresa";
-            this.btnAgregarEmpresa.UseVisualStyleBackColor = true;
-            // 
-            // btnAgregarCliente
-            // 
-            this.btnAgregarCliente.Location = new System.Drawing.Point(12, 427);
-            this.btnAgregarCliente.Name = "btnAgregarCliente";
-            this.btnAgregarCliente.Size = new System.Drawing.Size(119, 25);
-            this.btnAgregarCliente.TabIndex = 4;
-            this.btnAgregarCliente.Text = "Agregar Cliente";
-            this.btnAgregarCliente.UseVisualStyleBackColor = true;
             // 
             // txtBuscado
             // 
@@ -67,9 +48,9 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(262, 427);
+            this.btnModificar.Location = new System.Drawing.Point(212, 427);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(119, 25);
+            this.btnModificar.Size = new System.Drawing.Size(169, 25);
             this.btnModificar.TabIndex = 6;
             this.btnModificar.Text = "Modificar Usuario";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -78,7 +59,7 @@
             // 
             this.btnEliminar.Location = new System.Drawing.Point(387, 427);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(119, 25);
+            this.btnEliminar.Size = new System.Drawing.Size(177, 25);
             this.btnEliminar.TabIndex = 7;
             this.btnEliminar.Text = "Eliminar Usuario";
             this.btnEliminar.UseVisualStyleBackColor = true;
@@ -110,19 +91,28 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click_1);
             // 
+            // btnAgregar
+            // 
+            this.btnAgregar.Location = new System.Drawing.Point(37, 427);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(169, 25);
+            this.btnAgregar.TabIndex = 11;
+            this.btnAgregar.Text = "Agregar Usuario";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
             // frmABMUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(788, 454);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dataUsuarios);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.txtBuscado);
-            this.Controls.Add(this.btnAgregarCliente);
-            this.Controls.Add(this.btnAgregarEmpresa);
             this.Name = "frmABMUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM Usuarios";
@@ -134,14 +124,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnAgregarEmpresa;
-        private System.Windows.Forms.Button btnAgregarCliente;
         private System.Windows.Forms.TextBox txtBuscado;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.DataGridView dataUsuarios;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnAgregar;
 
     }
 }

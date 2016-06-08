@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MercadoEnvios.Historial_Cliente;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Usuario
@@ -68,7 +68,8 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnHistorial_Click(object sender, EventArgs e)
         {
-
+            frmHistorialCliente frm = new frmHistorialCliente();
+            frm.Show(this);
         }
 
         private void btnGenerarPublicacion_Click(object sender, EventArgs e)
