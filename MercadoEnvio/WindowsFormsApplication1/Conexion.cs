@@ -61,14 +61,6 @@ namespace MercadoEnvios
             this.conn.Close();
         }
 
-        static Conexion()
-        {
-        }
-
-        private Conexion()
-        {
-        }
-
         public static Conexion Instance
         {
             get

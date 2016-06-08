@@ -74,6 +74,7 @@ BEGIN
 	SET @ID = @@IDENTITY
 	RETURN @ID
 END
+
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[modificarFuncionalidadesRol] (@idRol int, @idFunc int, @borrar int)
 AS
@@ -107,7 +108,34 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[obtenerCompras] (@idCalificador int)
+AS
+BEGIN
+	Select (SELECT usuario from ADIOS_TERCER_ANIO.Usuario where id = idPublicador) AS Usuario, p.descripcion, c.id from ADIOS_TERCER_ANIO.Publicacion p 
+	inner join ADIOS_TERCER_ANIO.Compra c on c.idPublicacion = p.id
+	where c.idComprador = @idCalificador;
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[cargarCalificacion] (@idCompra int, @puntaje int, @fecha datetime, @detalle nvarchar(255))
+AS
+BEGIN
+		BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE ADIOS_TERCER_ANIO.Calificacion SET puntaje = @puntaje, fecha = @fecha, detalle = @detalle, pendiente = 0 where idCompra = @idCompra
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION;
+			THROW 50004, 'Error al guardar la calificacion', 1; 
+		END CATCH
+		COMMIT TRANSACTION
+
+
+END
+GO
+
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
 
-SELECT usuario FROM ADIOS_TERCER_ANIO.Usuario
+SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by fecha
