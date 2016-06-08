@@ -93,14 +93,14 @@ namespace MercadoEnvios.ABM_Usuario
             apellido.SqlValue = txtApellido.Text;
             apellido.Direction = ParameterDirection.Input;
 
-            SqlParameter dni = new SqlParameter("@dni", SqlDbType.Decimal);
+            SqlParameter dni = new SqlParameter("@dni", SqlDbType.Int);
             if (string.IsNullOrEmpty(txtDni.Text))
             {
-                dni.SqlValue = Convert.ToDecimal(txtDni.Text);
+                MessageBox.Show("Ingrese un DNI", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else 
             {
-                dni.SqlValue = 0;
+                dni.SqlValue = Convert.ToInt32(txtDni.Text);
             }
             dni.Direction = ParameterDirection.Input;
 
@@ -119,11 +119,11 @@ namespace MercadoEnvios.ABM_Usuario
             SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
             if (string.IsNullOrEmpty(txtDni.Text))
             {
-                direccion.SqlValue = Convert.ToInt32(txtNroDeDireccion.Text);
+                MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                direccion.SqlValue = 0;
+                direccion.SqlValue = Convert.ToInt32(txtNroDeDireccion.Text);
             }
             direccion.Direction = ParameterDirection.Input;
 

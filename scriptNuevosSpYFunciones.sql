@@ -107,7 +107,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.generarUsuarioConIDRol (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT, @rol NVARCHAR(255))
+CREATE PROCEDURE ADIOS_TERCER_ANIO.AgregarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -121,9 +121,6 @@ AS BEGIN
 
 	IF(@usuario IS NULL)
 		THROW 50004, 'Necesita ingresar un usuario', 1;
-
-	IF(@rol IS NULL)
-		THROW 50004, 'Necesita seleccionar un rol', 1;
 
 	BEGIN TRANSACTION
 	BEGIN TRY
@@ -135,15 +132,38 @@ AS BEGIN
 		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
 	END CATCH
 	COMMIT TRANSACTION
+	RETURN @ultimoID
 
-	DECLARE @idRol INT;
-	SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = @rol)
-	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
-	VALUES(@idRol, @ultimoID,0)
+	
 END
 GO
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ID INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.AgregarRolUsuario ( @rol NVARCHAR(255),@id INT )
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+
+	IF(@rol IS NULL)
+		THROW 50004, 'Necesita seleccionar un rol', 1;
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+		DECLARE @idRol INT;
+		SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = @rol)
+		INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+		VALUES(@idRol, @id,0)
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'El rol no se ha agregado correctamente', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+
+END
+GO
+
+
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@id INT)
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -160,7 +180,7 @@ AS BEGIN
 
 	BEGIN TRANSACTION
 	BEGIN TRY
-	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, pass = @password, usuario = @usuario WHERE @ID = id
+	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, pass = @password, usuario = @usuario WHERE @id = id
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -171,7 +191,7 @@ END
 GO
 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(255), 
-													   @direccion INT, @calle NVARCHAR(255), @piso NUMERIC(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
+													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
 													   @rubro NVARCHAR(255))
 AS
@@ -329,3 +349,9 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+
+SELECT * FROM ADIOS_TERCER_ANIO.Usuario
+
+SELECT * FROM ADIOS_TERCER_ANIO.Rol
+SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario

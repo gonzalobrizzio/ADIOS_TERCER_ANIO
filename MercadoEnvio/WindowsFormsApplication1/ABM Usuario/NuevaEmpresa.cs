@@ -15,6 +15,7 @@ namespace MercadoEnvios.ABM_Usuario
     {
         Conexion conn;
         string rolU;
+        private object p;
         public frmNuevaEmpresa(string rol)
         {
             InitializeComponent();
@@ -55,29 +56,28 @@ namespace MercadoEnvios.ABM_Usuario
             dataReader.Close();
         }
 
+
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            
+
             SqlCommand agregarEmpresa = new SqlCommand("ADIOS_TERCER_ANIO.AgregarEmpresa", conn.getConexion);
             agregarEmpresa.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.generarUsuarioConIDRol", conn.getConexion);
+            SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarUsuario", conn.getConexion);
             agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
-            
+            SqlCommand agregarRolUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarRolUsuario", conn.getConexion);
+            agregarRolUsuario.CommandType = System.Data.CommandType.StoredProcedure;
+
             SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
             usuario.SqlValue = txtUsr.Text;
             usuario.Direction = ParameterDirection.Input;
-            
+
             SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
-            password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text); ;
+            password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
             password.Direction = ParameterDirection.Input;
-            
+
             SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
             idUsuario.Direction = ParameterDirection.Output;
             idUsuario.SqlDbType = SqlDbType.Int;
-
-            SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
-            rol.SqlValue = rolU;
-            rol.Direction = ParameterDirection.Input;
 
             SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
             mail.SqlValue = txtMail.Text;
@@ -86,17 +86,26 @@ namespace MercadoEnvios.ABM_Usuario
             agregarUsuario.Parameters.Add(usuario);
             agregarUsuario.Parameters.Add(password);
             agregarUsuario.Parameters.Add(idUsuario);
-            agregarUsuario.Parameters.Add(rol);
             agregarUsuario.Parameters.Add(mail);
             agregarUsuario.ExecuteNonQuery();
+
+            int ultimoIdRol = Convert.ToInt32(agregarUsuario.Parameters["@id"].Value);
+
+            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+            id.SqlValue = ultimoIdRol;
+            id.Direction = ParameterDirection.Input;
+
+            SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
+            rol.SqlValue = rolU;
+            rol.Direction = ParameterDirection.Input;
+
+            agregarRolUsuario.Parameters.Add(rol);
+            agregarRolUsuario.Parameters.Add(id);
+            agregarRolUsuario.ExecuteNonQuery();
 
             SqlParameter razonSocial = new SqlParameter("@razonSocial", SqlDbType.NVarChar, 255);
             razonSocial.SqlValue = txtRazonSocial.Text;
             razonSocial.Direction = ParameterDirection.Input;
-           
-            SqlParameter idUser = new SqlParameter("@id", idUsuario);
-            idUser.Direction = ParameterDirection.Input;
-            idUser.SqlDbType = SqlDbType.Int;
          
             SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
             telefono.SqlValue = txtTelefono.Text;
@@ -105,7 +114,7 @@ namespace MercadoEnvios.ABM_Usuario
             SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
             if (string.IsNullOrEmpty(txtDireccion.Text))
             {
-                direccion.SqlValue = 0;
+                MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -118,7 +127,7 @@ namespace MercadoEnvios.ABM_Usuario
             calle.Direction = ParameterDirection.Input;
 
 
-            SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
+            SqlParameter piso = new SqlParameter("@piso", SqlDbType.Int);
 
             if (string.IsNullOrEmpty(txtPiso.Text))
             {
@@ -126,7 +135,7 @@ namespace MercadoEnvios.ABM_Usuario
             }
             else
             {
-                piso.SqlValue = Convert.ToDecimal(txtPiso.Text);
+                piso.SqlValue = Convert.ToInt32(txtPiso.Text);
             }
 
             piso.Direction = ParameterDirection.Input;
@@ -160,7 +169,7 @@ namespace MercadoEnvios.ABM_Usuario
             rubro.SqlValue = cmbRubro.SelectedText;
             rubro.Direction = ParameterDirection.Input;
 
-            agregarEmpresa.Parameters.Add(idUser);
+            agregarEmpresa.Parameters.Add(id);
             agregarEmpresa.Parameters.Add(razonSocial);
             agregarEmpresa.Parameters.Add(telefono);
             agregarEmpresa.Parameters.Add(direccion);

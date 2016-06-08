@@ -37,14 +37,20 @@ namespace MercadoEnvios.ABM_Usuario
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 
+            if (cmbRolAsignado.SelectedIndex.Equals(-1))
+            {
+                MessageBox.Show("Debe indicar un ROL", "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            if ((cmbRolAsignado.SelectedItem).Equals("Cliente")) {
-                new frmNuevoCliente(cmbRolAsignado.SelectedText).Show();
+            if ((cmbRolAsignado.SelectedItem).Equals("Cliente"))
+            {
+                new frmNuevoCliente("Cliente").Show();
                 this.Close();
             }
 
-            if ((cmbRolAsignado.SelectedItem).Equals("Empresa")) {
-                new frmNuevaEmpresa(cmbRolAsignado.SelectedText).Show();
+            if ((cmbRolAsignado.SelectedItem).Equals("Empresa"))
+            {
+                new frmNuevaEmpresa("Empresa").Show();
                 this.Close();
             }
             

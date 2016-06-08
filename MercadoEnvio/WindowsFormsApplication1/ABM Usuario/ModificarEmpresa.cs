@@ -100,7 +100,7 @@ namespace MercadoEnvios.ABM_Usuario
             SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
             if (string.IsNullOrEmpty(txtDireccion.Text))
             {
-                direccion.SqlValue = 0;
+                MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -121,9 +121,8 @@ namespace MercadoEnvios.ABM_Usuario
             }
             else
             {
-                piso.SqlValue = Convert.ToDecimal(txtPiso.Text);
+                piso.SqlValue = Convert.ToInt32(txtPiso.Text);
             }
-
             piso.Direction = ParameterDirection.Input;
 
             SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
