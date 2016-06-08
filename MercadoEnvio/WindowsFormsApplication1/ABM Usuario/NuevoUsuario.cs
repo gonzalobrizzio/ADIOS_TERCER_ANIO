@@ -2,19 +2,31 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Usuario
 {
-    public partial class NuevoUsuario : Form
+    public partial class frmNuevoUsuario : Form
     {
-        public NuevoUsuario(Form sender)
+        Conexion conn = Conexion.Instance;
+
+        public frmNuevoUsuario()
         {
             InitializeComponent();
+
+            string queryBuscarRoles = "SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE nombre != 'Administrativo'";
+            SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
+            SqlDataReader dataReader = buscarRoles.ExecuteReader();
+            while (dataReader.Read())
+            {
+                cmbRolAsignado.Items.Add(dataReader.GetString(0));
+            }
+
+            dataReader.Close();
         }
 
         private void NuevoUsuario_FormClosed(object sender, FormClosedEventArgs e)
@@ -22,48 +34,32 @@ namespace MercadoEnvios.ABM_Usuario
             Application.Exit();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (txtUsr.Text.Length == 0)
+
+            if (cmbRolAsignado.SelectedIndex.Equals(-1))
             {
-                MessageBox.Show("El usuario no puede estar vacío");
-
-                if (txtUsr.Text.Length < 4) {
-                    MessageBox.Show("El usuario debe poseer más de 4 carácteres");
-                }
+                MessageBox.Show("Debe indicar un ROL", "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            else if (txtContrasenia.Text.Length < 6) {
-
-                MessageBox.Show("La contraseña posee menos de 6 carácteres");
-            }
-
-            else if (txtCorreo.Text.Length == 0)
+            if ((cmbRolAsignado.SelectedItem).Equals("Cliente"))
             {
-                MessageBox.Show("La dirección de correcto eléctronico no puede ser vacía");
-
-            }
-            else if (!(txtCUIT.Text.Length > 0 || txtNroDoc.Text.Length > 0)) {
-                MessageBox.Show("Debe indicar algún número de DNI o CUIT");
-            }
-            else if ((txtCalle.Text.Length == 0 || txtAltura.Text.Length == 0))
-            {
-                MessageBox.Show("Debe indicar alguna dirección ");
-            }
-
-            else
-            {
-                //new Ingresar().Show();
+                new frmNuevoCliente("Cliente").Show();
                 this.Close();
             }
 
-            txtContrasenia.Text = "";
+            if ((cmbRolAsignado.SelectedItem).Equals("Empresa"))
+            {
+                new frmNuevaEmpresa("Empresa").Show();
+                this.Close();
+            }
+            
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
 
-            new frmIngresar().Show();
+            new frmABMUsuario().Show();
             this.Close();
 
         }
