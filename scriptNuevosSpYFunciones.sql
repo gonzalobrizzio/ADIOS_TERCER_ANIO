@@ -111,6 +111,20 @@ CREATE PROCEDURE ADIOS_TERCER_ANIO.generarUsuarioConIDRol (@usuario NVARCHAR(255
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
+
+		
+	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%'))
+		THROW 50004, 'Mail invalido',1;
+
+	IF(@password IS NULL)
+		THROW 50004, 'Necesita ingresar una contraseña', 1;
+
+	IF(@usuario IS NULL)
+		THROW 50004, 'Necesita ingresar un usuario', 1;
+
+	IF(@rol IS NULL)
+		THROW 50004, 'Necesita seleccionar un rol', 1;
+
 	BEGIN TRANSACTION
 	BEGIN TRY
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
@@ -129,6 +143,79 @@ AS BEGIN
 END
 GO
 
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @mail NVARCHAR(255), @telefono NVARCHAR(255), 
+													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
+													   @rubro NVARCHAR(255))
+AS
+BEGIN
+
+	IF(@razonSocial IS NULL OR @cuit IS NULL)
+		THROW 50004, 'CUIT / RAZON SOCIAL invalido/a',1;
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+	DECLARE @calificacionPromedio INT
+	SET @calificacionPromedio = 0
+
+	INSERT INTO ADIOS_TERCER_ANIO.Empresa(razonSocial,
+										  telefono,
+										  direccion,
+										  direccion_numero,
+										  piso,
+										  dpto,
+										  codigoPostal,
+										  cuit,
+										  contacto,
+										  idRubro,
+										  idUsuario,
+										  idLocalidad,
+										  calificacionPromedio,
+										  fechaCreacion) 
+	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM Rubro WHERE descripcionCorta = @rubro), @id, (SELECT id FROM Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se puede agregar al usuario', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@razonSocial NVARCHAR(255) ,  @id INT , @mail NVARCHAR(255), @telefono NVARCHAR(255), 
+													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
+													   @rubro NVARCHAR(255))
+AS
+BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+	DECLARE @calificacionPromedio INT
+	SET @calificacionPromedio = 0
+
+	INSERT INTO ADIOS_TERCER_ANIO.Persona(razonSocial,
+										  telefono,
+										  direccion,
+										  direccion_numero,
+										  piso,
+										  dpto,
+										  codigoPostal,
+										  cuit,
+										  contacto,
+										  idRubro,
+										  idUsuario,
+										  idLocalidad,
+										  calificacionPromedio,
+										  fechaCreacion) 
+	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM Rubro WHERE descripcionCorta = @rubro), @id, (SELECT id FROM Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se puede agregar al usuario', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;

@@ -29,6 +29,11 @@ CREATE  TABLE TipoDocumento (
   descripcion NVARCHAR(255) NOT NULL ,
    )
 
+CREATE  TABLE RazonSocial (
+  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
+  descripcion NVARCHAR(255) NOT NULL ,
+  )
+
 CREATE  TABLE Localidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
@@ -198,6 +203,13 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LE')
 	INSERT INTO ADIOS_TERCER_ANIO.TipoDocumento(descripcion) VALUES ('LC')
 
+	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('S.A.')
+	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('S.R.L.')
+	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('Sociedad Colectiva')
+	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('Sociedad Civil')
+	INSERT INTO ADIOS_TERCER_ANIO.RazonSocial(descripcion) VALUES ('Sociedad en Comandita')
+
+
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.Rol(nombre) VALUES ('Empresa')
@@ -262,12 +274,5 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 	VALUES(@idRol,@idUsuario)
 END
-
-DELETE  FROM ADIOS_TERCER_ANIO.Rol WHERE id=6
-SELECT DISTINCT * FROM ADIOS_TERCER_ANIO.Rubro
-
-SELECT DISTINCT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento
-
-SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE nombre != 'Administrativo'
 
 
