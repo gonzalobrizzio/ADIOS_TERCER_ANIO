@@ -108,7 +108,6 @@ BEGIN
 END
 GO
 
-<<<<<<< HEAD
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[obtenerCompras] (@idCalificador int)
 AS
 BEGIN
@@ -378,7 +377,7 @@ GO
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
 
-SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by fecha
+SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by pendiente
 SELECT * FROM ADIOS_TERCER_ANIO.Usuario
 SELECT * FROM ADIOS_TERCER_ANIO.Rol
 SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario

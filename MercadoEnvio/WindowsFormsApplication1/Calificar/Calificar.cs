@@ -59,16 +59,16 @@ namespace MercadoEnvios.Calificar
             SqlCommand cargarCalificacion = new SqlCommand("ADIOS_TERCER_ANIO.cargarCalificacion", conn.getConexion);
             cargarCalificacion.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter detalle = new SqlParameter("@detalle", txtDetalle.Text);
+            SqlParameter detalle = new SqlParameter("@detalle", SqlDbType.NVarChar, 255);
             detalle.Direction = ParameterDirection.Input;
-            detalle.SqlDbType = SqlDbType.NVarChar;
+            detalle.SqlValue = txtDetalle.Text;
 
-            SqlParameter puntaje = new SqlParameter("@puntaje", tkbCalificacion.Value);
+            SqlParameter puntaje = new SqlParameter("@puntaje", SqlDbType.Int);
             puntaje.Direction = ParameterDirection.Input;
-            puntaje.SqlDbType = SqlDbType.Int;
+            puntaje.SqlValue =  Convert.ToInt32(tkbCalificacion.Value);
 
             SqlParameter idCompra = new SqlParameter("@idCompra", SqlDbType.Int);
-
+            idCompra.Direction = ParameterDirection.Input;
             if (string.IsNullOrEmpty(lblIdCompra.Text))
             {
                 idCompra.SqlValue = null;
@@ -77,8 +77,8 @@ namespace MercadoEnvios.Calificar
             {
                 idCompra.SqlValue = Convert.ToInt32(lblIdCompra.Text);
             }
-            idCompra.Direction = ParameterDirection.Input;
 
+            
             SqlParameter fecha = new SqlParameter("@fecha", DateTime.Now);
             fecha.Direction = ParameterDirection.Input;
             fecha.SqlDbType = SqlDbType.DateTime;
@@ -90,6 +90,7 @@ namespace MercadoEnvios.Calificar
             try
             {
                 cargarCalificacion.ExecuteNonQuery();
+                this.getData();
             }
             catch (SqlException error)
             {
