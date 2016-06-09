@@ -124,6 +124,12 @@
     <Compile Include="ABM Usuario\NuevoUsuario.Designer.cs">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calificar\Calificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calificar\Calificar.Designer.cs">
+      <DependentUpon>Calificar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Utilidades.cs" />
     <Compile Include="PantallaPrincipal.cs">
       <SubType>Form</SubType>
@@ -136,12 +142,6 @@
     </Compile>
     <Compile Include="ABM Visibilidad\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Calificar\Calificar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Calificar\Calificar.Designer.cs">
-      <DependentUpon>Calificar.cs</DependentUpon>
     </Compile>
     <Compile Include="ComprarOfertar\Form1.cs">
       <SubType>Form</SubType>
@@ -217,6 +217,9 @@
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calificar\Calificar.resx">
+      <DependentUpon>Calificar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -225,9 +228,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PantallaPrincipal.resx">
       <DependentUpon>PantallaPrincipal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Calificar\Calificar.resx">
-      <DependentUpon>Calificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOfertar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

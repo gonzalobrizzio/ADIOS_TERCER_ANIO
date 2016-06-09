@@ -15,6 +15,7 @@ namespace MercadoEnvios
     public partial class frmIngresar : Form
     {
         Conexion conn = Conexion.Instance;
+        Sesion sesion = Sesion.Instance;
 
         public frmIngresar()
         {
@@ -42,7 +43,7 @@ namespace MercadoEnvios
             {
 
                 cmd.ExecuteNonQuery();
-                int idUsuarioDB = Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString());
+                sesion.idUsuario = Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString());
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "
                                 + "from ADIOS_TERCER_ANIO.RolUsuario ru "
@@ -50,13 +51,13 @@ namespace MercadoEnvios
                 SqlCommand cantidadRoles = new SqlCommand(queryCantidadRoles, conn.getConexion);
                 SqlParameter cantidad = new SqlParameter("@cantidad", SqlDbType.Int);
                 cantidad.Direction = ParameterDirection.Output;
-                SqlParameter idUsuarioABuscar = new SqlParameter("@idUsuario", idUsuarioDB);
+                SqlParameter idUsuarioABuscar = new SqlParameter("@idUsuario", sesion.idUsuario);
                 idUsuarioABuscar.Direction = ParameterDirection.Input;
                 idUsuarioABuscar.SqlDbType = SqlDbType.Int;
                 cantidadRoles.Parameters.Add(cantidad);
                 cantidadRoles.Parameters.Add(idUsuarioABuscar);
                 cantidadRoles.ExecuteNonQuery();
-                int cantidadRolesUsuario = Int32.Parse(cantidadRoles.Parameters["@cantidad"].Value.ToString());
+                sesion.cantidadRoles= Int32.Parse(cantidadRoles.Parameters["@cantidad"].Value.ToString());
                 //Busco Los roles
                 string queryBuscarRoles = "Select r.id, r.nombre "
                     //"Select @idRol = r.id, @nombreRol = r.nombre "
@@ -69,7 +70,7 @@ namespace MercadoEnvios
                 //idRol.SqlDbType = SqlDbType.Int;
                 //SqlParameter nombreRol = new SqlParameter("@nombreRol", SqlDbType.NVarChar, 255);
                 //nombreRol.Direction = ParameterDirection.Output;
-                SqlParameter idUsuarioABuscarRoles = new SqlParameter("@idUsuarioABuscarRoles", idUsuarioDB);
+                SqlParameter idUsuarioABuscarRoles = new SqlParameter("@idUsuarioABuscarRoles", sesion.idUsuario);
                 idUsuarioABuscarRoles.Direction = ParameterDirection.Input;
                 idUsuarioABuscarRoles.SqlDbType = SqlDbType.Int;
                 //buscarRoles.Parameters.Add(idRol);
@@ -78,12 +79,13 @@ namespace MercadoEnvios
                 SqlDataReader dataReader = buscarRoles.ExecuteReader();
                 if (dataReader.HasRows)
                 {
-                    if (cantidadRolesUsuario > 1)
+                    if (sesion.cantidadRoles > 1)
                     {
                         dataReader.Read();
                         string roles = dataReader.GetString(1);
                         while (dataReader.Read())
                         {
+                            sesion.agregarRol(dataReader.GetString(1));
                             roles = roles + "," + dataReader.GetString(1);
                         }
                         Form formrol = new ABM_Rol.frmElegirRol(roles);
@@ -92,7 +94,7 @@ namespace MercadoEnvios
                         this.Hide();
 
                     }
-                    if (cantidadRolesUsuario == 1)
+                    if (sesion.cantidadRoles == 1)
                     {
                         dataReader.Read();
                         int rolActual = dataReader.GetInt32(0);
