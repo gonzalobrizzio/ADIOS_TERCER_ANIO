@@ -41,14 +41,12 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 MessageBox.Show("Debe indicar un ROL", "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if ((cmbRolAsignado.SelectedItem).Equals("Cliente"))
+            else if ((cmbRolAsignado.SelectedItem).Equals("Cliente"))
             {
                 new frmNuevoCliente("Cliente").Show();
                 this.Close();
             }
-
-            if ((cmbRolAsignado.SelectedItem).Equals("Empresa"))
+            else if ((cmbRolAsignado.SelectedItem).Equals("Empresa"))
             {
                 new frmNuevaEmpresa("Empresa").Show();
                 this.Close();

@@ -294,19 +294,20 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
+	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad, calificacionCodigo)
 	SELECT 
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
 		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
 		Compra_Fecha																			AS fecha,
-		Compra_Cantidad																			AS cantidad
+		Compra_Cantidad																			AS cantidad,
+		Calificacion_Codigo																		AS calificacionCodigo
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Compra_Fecha IS NOT NULL
 	AND 
 		Compra_Cantidad IS NOT NULL	
 	AND	
-		Calificacion_Codigo IS NULL
+		Calificacion_Codigo IS NOT NULL
 	AND
 		Cli_Dni IS NOT NULL
 	AND 
@@ -375,19 +376,16 @@ AS BEGIN
 	INSERT INTO 
 		ADIOS_TERCER_ANIO.Calificacion(idCompra, fecha, puntaje, detalle, pendiente)
 	SELECT	
-		(select id 
-		from ADIOS_TERCER_ANIO.Compra c
-		where c.idComprador = ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni) AND c.fecha = Compra_Fecha AND 
-		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod) = c.idPublicacion) as id,
+		tablaCompras.id as id,
 		Compra_Fecha,
 		Calificacion_Cant_Estrellas,
 		Calificacion_Descripcion,
 		CASE
 			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0 ELSE 1
 		END
-	FROM gd_esquema.Maestra	
+	FROM gd_esquema.Maestra maestra, ADIOS_TERCER_ANIO.Compra tablaCompras
 	WHERE
-	Publ_Cli_Dni is not null AND Compra_Fecha IS NOT NULL AND Calificacion_Codigo is not null
+	Publ_Cli_Dni is not null AND Compra_Fecha IS NOT NULL AND maestra.Calificacion_Codigo = tablaCompras.calificacionCodigo
 END
 GO
 
