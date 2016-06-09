@@ -375,17 +375,16 @@ AS BEGIN
 
 	INSERT INTO 
 		ADIOS_TERCER_ANIO.Calificacion(idCompra, fecha, puntaje, detalle, pendiente)
-	SELECT	
-		tablaCompras.id as id,
+	SELECT DISTINCT	
+		tablaCompra.id,
 		Compra_Fecha,
 		Calificacion_Cant_Estrellas,
 		Calificacion_Descripcion,
 		CASE
 			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0 ELSE 1
 		END
-	FROM gd_esquema.Maestra maestra, ADIOS_TERCER_ANIO.Compra tablaCompras
-	WHERE
-	Publ_Cli_Dni is not null AND Compra_Fecha IS NOT NULL AND maestra.Calificacion_Codigo = tablaCompras.calificacionCodigo
+	FROM gd_esquema.Maestra, ADIOS_TERCER_ANIO.Compra tablaCompra
+	WHERE Calificacion_Codigo = tablaCompra.calificacionCodigo
 END
 GO
 
