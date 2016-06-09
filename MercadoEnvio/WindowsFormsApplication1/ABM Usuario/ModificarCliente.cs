@@ -54,6 +54,22 @@ namespace MercadoEnvios.ABM_Usuario
             }
 
             dataReader.Close();
+
+            string sacarDatosDeUsuario = "SELECT * FROM ADIOS_TERCER_ANIO.Usuario WHERE id = @id";
+            SqlCommand obtenerUsuario = new SqlCommand(sacarDatosDeUsuario, conn.getConexion);
+            SqlParameter idU = new SqlParameter("@id", SqlDbType.Int);
+            idU.SqlValue = idUsuario;
+            idU.Direction = ParameterDirection.Input;
+            obtenerUsuario.Parameters.Add(idU);
+            dataReader = obtenerUsuario.ExecuteReader();
+            dataReader.Read();
+
+            txtUsr.Text = dataReader.GetString(1);
+            txtMail.Text = dataReader.GetString(3);
+
+            MessageBox.Show(dataReader.GetString(1));
+
+            dataReader.Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

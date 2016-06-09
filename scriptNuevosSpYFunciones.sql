@@ -270,8 +270,6 @@ BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY
 	
-	--Me falta verificar usuario sin repetir, y demás cosas
-	--TODO
 	UPDATE ADIOS_TERCER_ANIO.Empresa
 	SET razonSocial = @razonSocial, telefono = @telefono,direccion_numero = @calle, direccion = @direccion, piso = @piso,
 	    dpto = @depto, codigoPostal = @codigoPostal, cuit = @cuit, contacto = @contacto, idRubro = (SELECT id FROM Rubro WHERE descripcionCorta = @rubro),
