@@ -199,9 +199,6 @@ AS BEGIN
 	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%'))
 		THROW 50004, 'Mail invalido',1;
 
-	IF(@usuario IS NULL)
-		THROW 50004, 'Necesita ingresar un usuario', 1;
-
 	BEGIN TRANSACTION
 	BEGIN TRY
 	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, usuario = @usuario WHERE @id = id
@@ -220,9 +217,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255
 													   @rubro NVARCHAR(255))
 AS
 BEGIN
-
-	IF(@razonSocial IS NULL OR @cuit IS NULL)
-		THROW 50004, 'CUIT / RAZON SOCIAL invalido/a',1;
 
 	BEGIN TRANSACTION
 	BEGIN TRY
@@ -261,9 +255,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarEmpresa] (@razonSocial NVARCHAR(2
 AS
 BEGIN
 
-	IF(@razonSocial IS NULL OR @cuit IS NULL)
-		THROW 50004, 'CUIT / RAZON SOCIAL invalido/a',1;
-
 	BEGIN TRANSACTION
 	BEGIN TRY
 	
@@ -285,21 +276,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
 AS
 BEGIN
-	IF (@nombre IS NULL )
-		THROW 50004, 'Nombre invalido',1;
-
-	IF(@apellido IS NULL)
-		THROW 50004, 'Necesita ingresar una contraseña', 1;
-
-	IF(@documento IS NULL)
-		THROW 50004, 'Necesita ingresar un usuario', 1;
-
-	IF(@direccion IS NULL)
-		THROW 50004, 'Necesita seleccionar un rol', 1;
-	IF(@fechaNac IS NULL)
-		THROW 50004, 'Necesita indicar una fecha de nacimiento', 1;
-	IF(@codigoPostal IS NULL)
-		THROW 50004, 'Necesita indicar un código postal',1;
 
 	BEGIN TRANSACTION
 	BEGIN TRY
@@ -333,22 +309,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
 AS
 BEGIN
-	IF (@nombre IS NULL )
-		THROW 50004, 'Nombre invalido',1;
-
-	IF(@apellido IS NULL)
-		THROW 50004, 'Necesita ingresar una contraseña', 1;
-
-	IF(@documento IS NULL)
-		THROW 50004, 'Necesita ingresar un usuario', 1;
-
-	IF(@direccion IS NULL)
-		THROW 50004, 'Necesita seleccionar un rol', 1;
-	IF(@fechaNac IS NULL)
-		THROW 50004, 'Necesita indicar una fecha de nacimiento', 1;
-	IF(@codigoPostal IS NULL)
-		THROW 50004, 'Necesita indicar un código postal',1;
-
 		
 	--Me falta verificar usuario sin repetir, y demás cosas
 	--TODO
@@ -369,23 +329,20 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.validarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
+AS
+BEGIN
+ SELECT u.id FROM ADIOS_TERCER_ANIO.Usuario u WHERE u.usuario=@usuario AND u.pass=@password
+ END
+ GO
+
+CREATE PROCEDURE ADIOS_TERCER_ANIO.modificarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
+AS
+BEGIN
+UPDATE ADIOS_TERCER_ANIO.Usuario  SET pass=@password WHERE usuario=@usuario
+END
+GO 
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by pendiente
-SELECT * FROM ADIOS_TERCER_ANIO.Usuario
-SELECT * FROM ADIOS_TERCER_ANIO.Rol
-SELECT e.apellido,
-	   e.nombre,
-	   e.codigoPostal,
-	   e.direccion,
-	   e.direccion_numero,
-	   e.documento,
-	   e.dpto,
-	   e.fechaNacimiento,
-	   e.idLocalidad,
-	   (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento) AS Tipo_de_Documento,
-	   e.piso,
-	   e.telefono
-FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id
 

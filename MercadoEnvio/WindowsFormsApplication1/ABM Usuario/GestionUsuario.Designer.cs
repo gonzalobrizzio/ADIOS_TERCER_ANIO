@@ -51,7 +51,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(147, 427);
+            this.btnModificar.Location = new System.Drawing.Point(147, 510);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(129, 25);
             this.btnModificar.TabIndex = 6;
@@ -61,7 +61,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(282, 427);
+            this.btnEliminar.Location = new System.Drawing.Point(282, 510);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(129, 25);
             this.btnEliminar.TabIndex = 7;
@@ -83,12 +83,12 @@
             this.dgvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvClientes.Location = new System.Drawing.Point(12, 68);
             this.dgvClientes.Name = "dgvClientes";
-            this.dgvClientes.Size = new System.Drawing.Size(343, 353);
+            this.dgvClientes.Size = new System.Drawing.Size(455, 420);
             this.dgvClientes.TabIndex = 9;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(657, 427);
+            this.btnVolver.Location = new System.Drawing.Point(817, 510);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(119, 25);
             this.btnVolver.TabIndex = 10;
@@ -98,7 +98,7 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(12, 427);
+            this.btnAgregar.Location = new System.Drawing.Point(12, 510);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(129, 25);
             this.btnAgregar.TabIndex = 11;
@@ -108,7 +108,7 @@
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(417, 427);
+            this.btnHabilitar.Location = new System.Drawing.Point(417, 510);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(129, 25);
             this.btnHabilitar.TabIndex = 12;
@@ -119,16 +119,16 @@
             // dgvEmpresas
             // 
             this.dgvEmpresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmpresas.Location = new System.Drawing.Point(417, 68);
+            this.dgvEmpresas.Location = new System.Drawing.Point(520, 68);
             this.dgvEmpresas.Name = "dgvEmpresas";
-            this.dgvEmpresas.Size = new System.Drawing.Size(343, 353);
+            this.dgvEmpresas.Size = new System.Drawing.Size(455, 420);
             this.dgvEmpresas.TabIndex = 13;
             // 
             // frmABMUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(788, 454);
+            this.ClientSize = new System.Drawing.Size(987, 554);
             this.Controls.Add(this.dgvEmpresas);
             this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.btnAgregar);
