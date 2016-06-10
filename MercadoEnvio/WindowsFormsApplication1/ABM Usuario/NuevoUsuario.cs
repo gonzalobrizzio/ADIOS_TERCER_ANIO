@@ -18,7 +18,7 @@ namespace MercadoEnvios.ABM_Usuario
         {
             InitializeComponent();
 
-            string queryBuscarRoles = "SELECT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE id != 1";
+            string queryBuscarRoles = "SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE nombre != 'Administrativo'";
             SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
             SqlDataReader dataReader = buscarRoles.ExecuteReader();
             while (dataReader.Read())
@@ -37,49 +37,21 @@ namespace MercadoEnvios.ABM_Usuario
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 
-            SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.generarUsuarioConIDRol", conn.getConexion);
-            agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
-            usuario.SqlValue = txtUsr.Text;
-            usuario.Direction = ParameterDirection.Input;
-            SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
-            password.SqlValue = txtContrasenia.Text;
-            password.Direction = ParameterDirection.Input;
-            SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
-            mail.SqlValue = txtMail.Text;
-            mail.Direction = ParameterDirection.Input;
-            SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
-            idUsuario.Direction = ParameterDirection.Output;
-            idUsuario.SqlDbType = SqlDbType.Int;
-            SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
-            rol.SqlValue = cmbRolAsignado.SelectedItem.ToString();
-            rol.Direction = ParameterDirection.Input;
-
-            agregarUsuario.Parameters.Add(usuario);
-            agregarUsuario.Parameters.Add(password);
-            agregarUsuario.Parameters.Add(mail);
-            agregarUsuario.Parameters.Add(idUsuario);
-            agregarUsuario.Parameters.Add(rol);
-
-            if ((cmbRolAsignado.SelectedItem).Equals("Cliente")) {
-                new frmNuevoCliente(agregarUsuario).Show();
+            if (cmbRolAsignado.SelectedIndex.Equals(-1))
+            {
+                MessageBox.Show("Debe indicar un ROL", "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if ((cmbRolAsignado.SelectedItem).Equals("Cliente"))
+            {
+                new frmNuevoCliente("Cliente").Show();
                 this.Close();
             }
-
-            if ((cmbRolAsignado.SelectedItem).Equals("Administrador")) {
-                new frmNuevaEmpresa(agregarUsuario).Show();
+            else if ((cmbRolAsignado.SelectedItem).Equals("Empresa"))
+            {
+                new frmNuevaEmpresa("Empresa").Show();
                 this.Close();
             }
             
-
-            //if (txtUsr.Text.Length == 0)
-            //if (txtUsr.Text.Length < 4)
-            //if (txtContrasenia.Text.Length < 6)
-            //if (txtCorreo.Text.Length == 0)
-            //if (!(txtCUIT.Text.Length > 0 || txtNroDoc.Text.Length > 0)) 
-            //if ((txtCalle.Text.Length == 0 || txtAltura.Text.Length == 0))
-
-            //txtContrasenia.Text = "";
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

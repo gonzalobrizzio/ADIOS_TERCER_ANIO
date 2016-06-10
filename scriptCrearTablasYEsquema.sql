@@ -131,6 +131,7 @@ CREATE  TABLE Compra (
   idPublicacion INT REFERENCES Publicacion(id) ,
   fecha DATETIME NULL ,
   cantidad INT NULL,
+  calificacionCodigo INT NULL,
   )
 
 CREATE  TABLE Oferta (
@@ -265,4 +266,4 @@ BEGIN
 	VALUES(@idRol,@idUsuario)
 END
 
-DELETE  FROM ADIOS_TERCER_ANIO.Rol WHERE id=6
+

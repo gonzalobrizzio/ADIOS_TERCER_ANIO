@@ -88,17 +88,23 @@
     <Compile Include="ABM Rubro\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\BajaDeUsuarios.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Usuario\BajaDeUsuarios.Designer.cs">
-      <DependentUpon>BajaDeUsuarios.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM Usuario\GestionUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM Usuario\GestionUsuario.Designer.cs">
       <DependentUpon>GestionUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarCliente.Designer.cs">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarEmpresa.Designer.cs">
+      <DependentUpon>ModificarEmpresa.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\NuevaEmpresa.cs">
       <SubType>Form</SubType>
@@ -106,17 +112,23 @@
     <Compile Include="ABM Usuario\NuevaEmpresa.Designer.cs">
       <DependentUpon>NuevaEmpresa.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\nuevoCliente.cs">
+    <Compile Include="ABM Usuario\NuevoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\nuevoCliente.Designer.cs">
-      <DependentUpon>nuevoCliente.cs</DependentUpon>
+    <Compile Include="ABM Usuario\NuevoCliente.Designer.cs">
+      <DependentUpon>NuevoCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\NuevoUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM Usuario\NuevoUsuario.Designer.cs">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calificar\Calificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calificar\Calificar.Designer.cs">
+      <DependentUpon>Calificar.cs</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Utilidades.cs" />
     <Compile Include="PantallaPrincipal.cs">
@@ -130,12 +142,6 @@
     </Compile>
     <Compile Include="ABM Visibilidad\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Calificar\Calificar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Calificar\Calificar.Designer.cs">
-      <DependentUpon>Calificar.cs</DependentUpon>
     </Compile>
     <Compile Include="ComprarOfertar\Form1.cs">
       <SubType>Form</SubType>
@@ -193,20 +199,26 @@
     <EmbeddedResource Include="ABM Rol\ElegirRol.resx">
       <DependentUpon>ElegirRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\BajaDeUsuarios.resx">
-      <DependentUpon>BajaDeUsuarios.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\GestionUsuario.resx">
       <DependentUpon>GestionUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ModificarCliente.resx">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ModificarEmpresa.resx">
+      <DependentUpon>ModificarEmpresa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\NuevaEmpresa.resx">
       <DependentUpon>NuevaEmpresa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\nuevoCliente.resx">
-      <DependentUpon>nuevoCliente.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Usuario\NuevoCliente.resx">
+      <DependentUpon>NuevoCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calificar\Calificar.resx">
+      <DependentUpon>Calificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
@@ -216,9 +228,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PantallaPrincipal.resx">
       <DependentUpon>PantallaPrincipal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Calificar\Calificar.resx">
-      <DependentUpon>Calificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOfertar\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

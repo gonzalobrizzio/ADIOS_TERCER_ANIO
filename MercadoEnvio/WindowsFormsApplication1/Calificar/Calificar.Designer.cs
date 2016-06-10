@@ -33,16 +33,23 @@
             this.lblUsuario = new System.Windows.Forms.Label();
             this.btnCalificar = new System.Windows.Forms.Button();
             this.lblEstrellas = new System.Windows.Forms.Label();
+            this.dgvCompras = new System.Windows.Forms.DataGridView();
+            this.lblPorCompra = new System.Windows.Forms.Label();
+            this.lblCompra = new System.Windows.Forms.Label();
+            this.txtDetalle = new System.Windows.Forms.TextBox();
+            this.lblCompras = new System.Windows.Forms.Label();
+            this.lblIdCompra = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tkbCalificacion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompras)).BeginInit();
             this.SuspendLayout();
             // 
             // tkbCalificacion
             // 
-            this.tkbCalificacion.Location = new System.Drawing.Point(23, 81);
+            this.tkbCalificacion.Location = new System.Drawing.Point(490, 109);
             this.tkbCalificacion.Maximum = 5;
             this.tkbCalificacion.Minimum = 1;
             this.tkbCalificacion.Name = "tkbCalificacion";
-            this.tkbCalificacion.Size = new System.Drawing.Size(187, 45);
+            this.tkbCalificacion.Size = new System.Drawing.Size(300, 45);
             this.tkbCalificacion.TabIndex = 0;
             this.tkbCalificacion.Value = 1;
             this.tkbCalificacion.Scroll += new System.EventHandler(this.tkbCalificacion_Scroll);
@@ -50,7 +57,7 @@
             // lblCalificar
             // 
             this.lblCalificar.AutoSize = true;
-            this.lblCalificar.Location = new System.Drawing.Point(20, 21);
+            this.lblCalificar.Location = new System.Drawing.Point(487, 13);
             this.lblCalificar.Name = "lblCalificar";
             this.lblCalificar.Size = new System.Drawing.Size(95, 13);
             this.lblCalificar.TabIndex = 1;
@@ -59,33 +66,92 @@
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(37, 47);
+            this.lblUsuario.Location = new System.Drawing.Point(605, 13);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(0, 13);
             this.lblUsuario.TabIndex = 2;
             // 
             // btnCalificar
             // 
-            this.btnCalificar.Location = new System.Drawing.Point(40, 149);
+            this.btnCalificar.Location = new System.Drawing.Point(490, 221);
             this.btnCalificar.Name = "btnCalificar";
-            this.btnCalificar.Size = new System.Drawing.Size(152, 34);
+            this.btnCalificar.Size = new System.Drawing.Size(300, 37);
             this.btnCalificar.TabIndex = 3;
             this.btnCalificar.Text = "Calificar";
             this.btnCalificar.UseVisualStyleBackColor = true;
+            this.btnCalificar.Click += new System.EventHandler(this.btnCalificar_Click);
             // 
             // lblEstrellas
             // 
             this.lblEstrellas.AutoSize = true;
-            this.lblEstrellas.Location = new System.Drawing.Point(156, 47);
+            this.lblEstrellas.Location = new System.Drawing.Point(500, 79);
             this.lblEstrellas.Name = "lblEstrellas";
             this.lblEstrellas.Size = new System.Drawing.Size(0, 13);
             this.lblEstrellas.TabIndex = 4;
+            // 
+            // dgvCompras
+            // 
+            this.dgvCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCompras.Location = new System.Drawing.Point(12, 37);
+            this.dgvCompras.Name = "dgvCompras";
+            this.dgvCompras.Size = new System.Drawing.Size(457, 227);
+            this.dgvCompras.TabIndex = 5;
+            this.dgvCompras.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompras_CellContentClick);
+            // 
+            // lblPorCompra
+            // 
+            this.lblPorCompra.AutoSize = true;
+            this.lblPorCompra.Location = new System.Drawing.Point(487, 42);
+            this.lblPorCompra.Name = "lblPorCompra";
+            this.lblPorCompra.Size = new System.Drawing.Size(74, 13);
+            this.lblPorCompra.TabIndex = 6;
+            this.lblPorCompra.Text = "por la compra:";
+            // 
+            // lblCompra
+            // 
+            this.lblCompra.AutoSize = true;
+            this.lblCompra.Location = new System.Drawing.Point(605, 42);
+            this.lblCompra.Name = "lblCompra";
+            this.lblCompra.Size = new System.Drawing.Size(0, 13);
+            this.lblCompra.TabIndex = 7;
+            // 
+            // txtDetalle
+            // 
+            this.txtDetalle.Location = new System.Drawing.Point(490, 161);
+            this.txtDetalle.MaxLength = 255;
+            this.txtDetalle.Multiline = true;
+            this.txtDetalle.Name = "txtDetalle";
+            this.txtDetalle.Size = new System.Drawing.Size(300, 54);
+            this.txtDetalle.TabIndex = 8;
+            // 
+            // lblCompras
+            // 
+            this.lblCompras.AutoSize = true;
+            this.lblCompras.Location = new System.Drawing.Point(13, 13);
+            this.lblCompras.Name = "lblCompras";
+            this.lblCompras.Size = new System.Drawing.Size(125, 13);
+            this.lblCompras.TabIndex = 9;
+            this.lblCompras.Text = "Lista de últimas compras:";
+            // 
+            // lblIdCompra
+            // 
+            this.lblIdCompra.AutoSize = true;
+            this.lblIdCompra.Location = new System.Drawing.Point(476, 265);
+            this.lblIdCompra.Name = "lblIdCompra";
+            this.lblIdCompra.Size = new System.Drawing.Size(0, 13);
+            this.lblIdCompra.TabIndex = 10;
             // 
             // frmCalificacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 220);
+            this.ClientSize = new System.Drawing.Size(807, 279);
+            this.Controls.Add(this.lblIdCompra);
+            this.Controls.Add(this.lblCompras);
+            this.Controls.Add(this.txtDetalle);
+            this.Controls.Add(this.lblCompra);
+            this.Controls.Add(this.lblPorCompra);
+            this.Controls.Add(this.dgvCompras);
             this.Controls.Add(this.lblEstrellas);
             this.Controls.Add(this.btnCalificar);
             this.Controls.Add(this.lblUsuario);
@@ -94,6 +160,7 @@
             this.Name = "frmCalificacion";
             this.Text = "Calificar un usuario";
             ((System.ComponentModel.ISupportInitialize)(this.tkbCalificacion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompras)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,5 +173,11 @@
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnCalificar;
         private System.Windows.Forms.Label lblEstrellas;
+        private System.Windows.Forms.DataGridView dgvCompras;
+        private System.Windows.Forms.Label lblPorCompra;
+        private System.Windows.Forms.Label lblCompra;
+        private System.Windows.Forms.TextBox txtDetalle;
+        private System.Windows.Forms.Label lblCompras;
+        private System.Windows.Forms.Label lblIdCompra;
     }
 }

@@ -11,17 +11,18 @@ using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Usuario
 {
-    public partial class frmNuevoCliente : Form
+    public partial class frmModificarCliente : Form
     {
         SqlDataReader dataReader;
         Conexion conn;
-        string rolU;
-        public frmNuevoCliente(string rol)
+        int idUsuario;
+        public frmModificarCliente(int id)
         {
             InitializeComponent();
+            idUsuario = id;
+
             calendarioNac.Visible = false;
             conn = Conexion.Instance;
-            rolU = rol;
 
             txtMail.MaxLength = 30;
             txtUsr.MaxLength = 20;
@@ -53,6 +54,42 @@ namespace MercadoEnvios.ABM_Usuario
             }
 
             dataReader.Close();
+
+            string sacarDatosDeUsuario = "SELECT * FROM ADIOS_TERCER_ANIO.Usuario WHERE id = @id";
+            SqlCommand obtenerUsuario = new SqlCommand(sacarDatosDeUsuario, conn.getConexion);
+            SqlParameter idU = new SqlParameter("@id", SqlDbType.Int);
+            idU.SqlValue = idUsuario;
+            idU.Direction = ParameterDirection.Input;
+            obtenerUsuario.Parameters.Add(idU);
+            dataReader = obtenerUsuario.ExecuteReader();
+            dataReader.Read();
+
+            txtUsr.Text = dataReader.GetString(1);
+            txtMail.Text = dataReader.GetString(3);
+
+            dataReader.Close();
+
+            string sacarDatosDeEmpresa = "SELECT e.apellido, e.nombre, e.codigoPostal, e.direccion, e.direccion_numero, e.documento, e.dpto, (SELECT nombre FROM ADIOS_TERCER_ANIO.Localidad WHERE id = e.idLocalidad), (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento),e.piso, e.telefono  FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id";
+            SqlCommand obtenerEmpresa = new SqlCommand(sacarDatosDeEmpresa, conn.getConexion);
+            SqlParameter idUs = new SqlParameter("@id", SqlDbType.Int);
+            idUs.SqlValue = idUsuario;
+            idUs.Direction = ParameterDirection.Input;
+            obtenerEmpresa.Parameters.Add(idUs);
+            dataReader = obtenerEmpresa.ExecuteReader();
+            dataReader.Read();
+
+            txtApellido.Text = dataReader.GetString(0);
+            txtNombre.Text = dataReader.GetString(1);
+            txtCodigoPostal.Text = dataReader.GetString(2);
+            txtDireccion.Text = dataReader.GetString(3);
+            txtNroDeDireccion.Text = Convert.ToString(dataReader.GetDecimal(4));
+            txtDepto.Text = Convert.ToString(dataReader.GetDecimal(5));
+            cmbLocalidad.Text = dataReader.GetString(6);
+            cmbTipoDoc.Text = dataReader.GetString(7);
+            txtPiso.Text = Convert.ToString(dataReader.GetDecimal(8));
+            txtTelefono.Text = dataReader.GetString(9);
+
+            dataReader.Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -63,12 +100,10 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            SqlCommand agregarCliente = new SqlCommand("ADIOS_TERCER_ANIO.AgregarCliente", conn.getConexion);
-            agregarCliente.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarUsuario", conn.getConexion);
-            agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlCommand agregarRolUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarRolUsuario", conn.getConexion);
-            agregarRolUsuario.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand modificarCliente = new SqlCommand("ADIOS_TERCER_ANIO.ModificarCliente", conn.getConexion);
+            modificarCliente.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand modificarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.ModificarUsuario", conn.getConexion);
+            modificarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
 
             SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
             usuario.SqlValue = txtUsr.Text;
@@ -78,33 +113,13 @@ namespace MercadoEnvios.ABM_Usuario
             password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
             password.Direction = ParameterDirection.Input;
 
-            SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
-            idUsuario.Direction = ParameterDirection.Output;
-            idUsuario.SqlDbType = SqlDbType.Int;
-
             SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
             mail.SqlValue = txtMail.Text;
             mail.Direction = ParameterDirection.Input;
 
-            agregarUsuario.Parameters.Add(usuario);
-            agregarUsuario.Parameters.Add(password);
-            agregarUsuario.Parameters.Add(idUsuario);
-            agregarUsuario.Parameters.Add(mail);
-            agregarUsuario.ExecuteNonQuery();
-
-            int ultimoIdRol = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
-
-            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
-            id.SqlValue = ultimoIdRol;
-            id.Direction = ParameterDirection.Input;
-
-            SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
-            rol.SqlValue = rolU;
-            rol.Direction = ParameterDirection.Input;
-
-            agregarRolUsuario.Parameters.Add(rol);
-            agregarRolUsuario.Parameters.Add(id);
-            agregarRolUsuario.ExecuteNonQuery();
+            modificarUsuario.Parameters.Add(usuario);
+            modificarUsuario.Parameters.Add(mail);
+            modificarUsuario.ExecuteNonQuery();
 
             SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
             nombre.SqlValue = txtNombre.Text;
@@ -129,16 +144,19 @@ namespace MercadoEnvios.ABM_Usuario
             tipoDoc.SqlValue = cmbTipoDoc.SelectedText;
             tipoDoc.Direction = ParameterDirection.Input;
 
+            SqlParameter idUser = new SqlParameter("@id", idUsuario);
+            idUser.Direction = ParameterDirection.Input;
+            idUser.SqlDbType = SqlDbType.Int;
+
             SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
             telefono.SqlValue = txtTelefono.Text;
             telefono.Direction = ParameterDirection.Input;
 
             SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
-            if (string.IsNullOrEmpty(txtNroDeDireccion.Text))
+            if (string.IsNullOrEmpty(txtDni.Text))
             {
                 MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
             else
             {
                 direccion.SqlValue = Convert.ToInt32(txtNroDeDireccion.Text);
@@ -149,15 +167,8 @@ namespace MercadoEnvios.ABM_Usuario
             calle.SqlValue = txtDireccion.Text;
             calle.Direction = ParameterDirection.Input;
 
-            SqlParameter piso = new SqlParameter("@piso", SqlDbType.Int);
-             if (string.IsNullOrEmpty(txtPiso.Text))
-             {
-                 piso.SqlValue = 0;
-             }
-             else
-             {
-                 piso.SqlValue = Convert.ToInt32(txtPiso.Text);
-             }
+            SqlParameter piso = new SqlParameter("@piso", SqlDbType.NVarChar, 255);
+            piso.SqlValue = Convert.ToInt32(txtPiso.Text);
             piso.Direction = ParameterDirection.Input;
 
             SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
@@ -175,37 +186,35 @@ namespace MercadoEnvios.ABM_Usuario
             SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
             fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
 
-            agregarCliente.Parameters.Add(id);
-            agregarCliente.Parameters.Add(dni);
-            agregarCliente.Parameters.Add(tipoDoc);
-            agregarCliente.Parameters.Add(nombre);
-            agregarCliente.Parameters.Add(apellido);
-            agregarCliente.Parameters.Add(telefono);
-            agregarCliente.Parameters.Add(direccion);
-            agregarCliente.Parameters.Add(calle);
-            agregarCliente.Parameters.Add(piso);
-            agregarCliente.Parameters.Add(depto);
-            agregarCliente.Parameters.Add(localidad);
-            agregarCliente.Parameters.Add(codigoPostal);
-            agregarCliente.ExecuteNonQuery();
+            modificarCliente.Parameters.Add(idUser);
+            modificarCliente.Parameters.Add(dni);
+            modificarCliente.Parameters.Add(tipoDoc);
+            modificarCliente.Parameters.Add(nombre);
+            modificarCliente.Parameters.Add(apellido);
+            modificarCliente.Parameters.Add(telefono);
+            modificarCliente.Parameters.Add(direccion);
+            modificarCliente.Parameters.Add(calle);
+            modificarCliente.Parameters.Add(piso);
+            modificarCliente.Parameters.Add(depto);
+            modificarCliente.Parameters.Add(localidad);
+            modificarCliente.Parameters.Add(codigoPostal);
+            modificarCliente.ExecuteNonQuery();
 
             new frmABMUsuario().Show();
             this.Close();
 
         }
 
-        private void btnSeleccionar_Click(object sender, EventArgs e)
-        {
-            calendarioNac.Visible = true;
-        }
-
-        private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
+        private void calendarioNac_DateSelected(object sender, DateRangeEventArgs e)
         {
             txtFechaNac.Clear();
             txtFechaNac.AppendText(calendarioNac.SelectionStart.ToShortDateString());
             calendarioNac.Visible = false;
-
         }
 
+        private void btnSeleccionar_Click(object sender, EventArgs e)
+        {
+            calendarioNac.Visible = true;
+        }
     }
 }
