@@ -371,21 +371,3 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by pendiente
-SELECT * FROM ADIOS_TERCER_ANIO.Usuario
-SELECT * FROM ADIOS_TERCER_ANIO.Rol
-SELECT e.apellido,
-	   e.nombre,
-	   e.codigoPostal,
-	   e.direccion,
-	   e.direccion_numero,
-	   e.documento,
-	   e.dpto,
-	   e.fechaNacimiento,
-	   e.idLocalidad,
-	   (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento) AS Tipo_de_Documento,
-	   e.piso,
-	   e.telefono
-FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id
-
