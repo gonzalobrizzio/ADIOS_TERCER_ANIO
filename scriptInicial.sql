@@ -294,20 +294,17 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad, calificacionCodigo)
+	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT DISTINCT
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
 		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
 		Compra_Fecha																			AS fecha,
-		Compra_Cantidad																			AS cantidad,
-		Calificacion_Codigo																		AS calificacionCodigo
+		Compra_Cantidad																			AS cantidad
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Compra_Fecha IS NOT NULL
 	AND 
 		Compra_Cantidad IS NOT NULL	
-	AND	
-		Calificacion_Codigo IS NOT NULL
 	AND
 		Cli_Dni IS NOT NULL
 	AND 
@@ -375,16 +372,24 @@ AS BEGIN
 
 	INSERT INTO 
 		ADIOS_TERCER_ANIO.Calificacion(idCompra, fecha, puntaje, detalle, pendiente)
-	SELECT DISTINCT	
-		tablaCompra.id,
-		Compra_Fecha,
-		CASE WHEN (Calificacion_Cant_Estrellas = 1) THEN 1 ELSE Calificacion_Cant_Estrellas / 2 END,
-		Calificacion_Descripcion,
-		CASE
-			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0 ELSE 1
-		END
-	FROM gd_esquema.Maestra, ADIOS_TERCER_ANIO.Compra tablaCompra
-	WHERE Calificacion_Codigo = tablaCompra.calificacionCodigo
+--	SELECT DISTINCT	
+--		tablaCompra.id,
+--		Compra_Fecha,
+--		CASE WHEN (Calificacion_Cant_Estrellas = 1) THEN 1 ELSE Calificacion_Cant_Estrellas / 2 END,
+--		Calificacion_Descripcion,
+--		CASE
+--			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0 ELSE 1
+--		END
+--	FROM gd_esquema.Maestra, ADIOS_TERCER_ANIO.Compra tablaCompra
+--	WHERE Calificacion_Codigo = tablaCompra.calificacionCodigo
+	SELECT	
+		NULL																		AS idCompra, --TODO sacar el id de compra
+		Compra_Fecha																AS fecha,
+		ADIOS_TERCER_ANIO.funcConvertirCalificacion(Calificacion_Cant_Estrellas)	AS puntaje,
+		Calificacion_Descripcion													AS detalle,
+		0																			AS pendiente
+	FROM gd_esquema.Maestra
+	WHERE Calificacion_Codigo IS NOT NULL
 END
 GO
 
@@ -495,6 +500,26 @@ BEGIN
 	WHERE p.codAnterior = @Publicacion_Cod
 
 	RETURN @retorno;
+END
+GO
+
+
+-- 	FUNC PARA CONVERTIR LA CALIFICACION ANTERIOR, EN LA NUEVA
+CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcConvertirCalificacion](@valorViejo NUMERIC(18,0))
+RETURNS NUMERIC (18,0)
+AS BEGIN
+	DECLARE @retorno NUMERIC(18,0)
+	
+	SET @retorno = 1;
+	
+	IF @valorViejo >= 1 AND @valorViejo <= 2 	SET @retorno = 1;
+	IF @valorViejo >= 3 AND @valorViejo <= 4 	SET @retorno = 2;
+	IF @valorViejo >= 5 AND @valorViejo <= 6 	SET @retorno = 3;
+	IF @valorViejo >= 7 AND @valorViejo <= 8 	SET @retorno = 4;
+	IF @valorViejo >= 9 AND @valorViejo <= 10	SET @retorno = 5;
+	
+	RETURN @retorno;
+		
 END
 GO
 
