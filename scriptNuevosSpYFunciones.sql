@@ -116,8 +116,6 @@ BEGIN
 	where c.idComprador = @idCalificador order by c.fecha desc
 END
 
-DROP PROCEDURE [ADIOS_TERCER_ANIO].[cargarCalificacion];
-
 GO
 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[cargarCalificacion] (@idCompra int, @puntaje int, @fecha datetime, @detalle nvarchar(255))
@@ -352,29 +350,29 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.cargarUltimasCalificaciones(@idCalificador INT)
 AS
 BEGIN
-	Select TOP 5 calif.fecha, calif.puntaje, calif.detalle, usr.usuario from ADIOS_TERCER_ANIO.Calificacion calif 
+	--declare @idCalificador int = 17;
+	Select TOP 5 calif.fecha, calif.puntaje, calif.detalle from ADIOS_TERCER_ANIO.Calificacion calif 
 	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
 	inner join ADIOS_TERCER_ANIO.Publicacion publicacion on compra.idPublicacion = publicacion.id
 	inner join ADIOS_TERCER_ANIO.Usuario usr on usr.id = publicacion.idPublicador
-	where compra.idComprador = @idCalificador and pendiente = 0 order by calif.fecha desc
+	where compra.idComprador = @idCalificador and pendiente = 0 
 END
 
 GO 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerTipoDeCompraConNPuntaje(@puntaje INT, @tipo NVARCHAR(255), @idCalificador INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerTipoDeCompraConNPuntaje(@puntaje INT, @tipo NVARCHAR(255), @idCalificador INT, @cant INT OUTPUT)
 AS
 BEGIN
-	declare @idCalificador int = 17;
-	declare @tipo NVARCHAR(255) = 'Subasta';
-	declare @puntaje INT = 2;
-	Select TOP 10 COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
+	
+--	declare @idCalificador int = 17;
+--	declare @tipo NVARCHAR(255) = 'Subasta';
+--	declare @puntaje INT = 2;
+	SET @cant = (select COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
 	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
 	inner join ADIOS_TERCER_ANIO.Publicacion publicacion on compra.idPublicacion = publicacion.id
-	where compra.idComprador = @idCalificador and pendiente = 0 and publicacion.tipo = @tipo and calif.puntaje = @puntaje order by calif.fecha desc
+	where compra.idComprador = @idCalificador and pendiente = 0 and publicacion.tipo = @tipo and calif.puntaje = @puntaje)
 END
 GO 
 
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by puntaje 

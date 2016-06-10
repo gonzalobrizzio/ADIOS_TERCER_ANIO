@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvHistorial = new System.Windows.Forms.DataGridView();
             this.lblSuHistorial = new System.Windows.Forms.Label();
             this.lblComprasTitulo = new System.Windows.Forms.Label();
             this.lblComprasCon1Estrella = new System.Windows.Forms.Label();
@@ -52,16 +52,16 @@
             this.lblSubastasCon2Estrellas = new System.Windows.Forms.Label();
             this.lblSubastasCon1Estrella = new System.Windows.Forms.Label();
             this.lblSubastasTitulo = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgvHistorial
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(18, 239);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(623, 98);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHistorial.Location = new System.Drawing.Point(18, 239);
+            this.dgvHistorial.Name = "dgvHistorial";
+            this.dgvHistorial.Size = new System.Drawing.Size(623, 98);
+            this.dgvHistorial.TabIndex = 0;
             // 
             // lblSuHistorial
             // 
@@ -289,10 +289,10 @@
             this.Controls.Add(this.lblComprasCon1Estrella);
             this.Controls.Add(this.lblComprasTitulo);
             this.Controls.Add(this.lblSuHistorial);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvHistorial);
             this.Name = "frmHistorial";
             this.Text = "Historial";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -300,7 +300,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvHistorial;
         private System.Windows.Forms.Label lblSuHistorial;
         private System.Windows.Forms.Label lblComprasTitulo;
         private System.Windows.Forms.Label lblComprasCon1Estrella;

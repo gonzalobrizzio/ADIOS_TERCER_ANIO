@@ -24,7 +24,7 @@ namespace MercadoEnvios.Calificar
 
         private void getData()
         {
-            SqlParameter idCalificador = new SqlParameter("@idCalificador", SqlDbType.NVarChar, 255);
+            SqlParameter idCalificador = new SqlParameter("@idCalificador", SqlDbType.Int);
             idCalificador.SqlValue = 17;
             idCalificador.Direction = ParameterDirection.Input;            
 
