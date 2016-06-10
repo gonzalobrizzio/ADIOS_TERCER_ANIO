@@ -118,12 +118,12 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(42, 57);
+            this.label7.Location = new System.Drawing.Point(43, 57);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.Size = new System.Drawing.Size(98, 13);
             this.label7.TabIndex = 79;
-            this.label7.Text = "Contraseña:";
+            this.label7.Text = "Nueva contraseña:";
             // 
             // label8
             // 

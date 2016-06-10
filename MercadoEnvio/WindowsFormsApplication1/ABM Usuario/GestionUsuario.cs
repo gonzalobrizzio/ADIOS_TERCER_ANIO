@@ -43,18 +43,11 @@ namespace MercadoEnvios.ABM_Usuario
             String queryAdm = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Usuario u "
                                + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE ru.idRol = 3";
 
-            dgvEmpresas.ColumnCount = 3;
-            dgvEmpresas.ColumnHeadersVisible = true;
-            dgvEmpresas.Columns[1].Name = "Nombre_De_Usuario";
-            dgvEmpresas.Columns[2].Name = "Estado";
-            dgvEmpresas.Columns[0].Visible = false;
-
-
             SqlCommand buscarEmpresas = new SqlCommand(queryAdm, conn.getConexion);
             SqlDataAdapter emp = new SqlDataAdapter(queryAdm, conn.getConexion);
             DataTable tablaDeEmpresas = new DataTable("Empresas");
             emp.Fill(tablaDeEmpresas);
-
+            dgvEmpresas.DataSource = tablaDeEmpresas.DefaultView;
 
             dgvEmpresas.AllowUserToAddRows = false;
             dgvEmpresas.AllowUserToDeleteRows = false;

@@ -295,7 +295,7 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad, calificacionCodigo)
-	SELECT 
+	SELECT DISTINCT
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
 		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
 		Compra_Fecha																			AS fecha,

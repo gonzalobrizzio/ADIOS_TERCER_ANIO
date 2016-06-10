@@ -190,7 +190,7 @@ END
 GO
 
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@id INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255), @mail NVARCHAR(255),@id INT)
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -199,15 +199,12 @@ AS BEGIN
 	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%'))
 		THROW 50004, 'Mail invalido',1;
 
-	IF(@password IS NULL)
-		THROW 50004, 'Necesita ingresar una contraseña', 1;
-
 	IF(@usuario IS NULL)
 		THROW 50004, 'Necesita ingresar un usuario', 1;
 
 	BEGIN TRANSACTION
 	BEGIN TRY
-	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, pass = @password, usuario = @usuario WHERE @id = id
+	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, usuario = @usuario WHERE @id = id
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -378,4 +375,17 @@ UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
 SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by pendiente
 SELECT * FROM ADIOS_TERCER_ANIO.Usuario
 SELECT * FROM ADIOS_TERCER_ANIO.Rol
-SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario
+SELECT e.apellido,
+	   e.nombre,
+	   e.codigoPostal,
+	   e.direccion,
+	   e.direccion_numero,
+	   e.documento,
+	   e.dpto,
+	   e.fechaNacimiento,
+	   e.idLocalidad,
+	   (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento) AS Tipo_de_Documento,
+	   e.piso,
+	   e.telefono
+FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id
+

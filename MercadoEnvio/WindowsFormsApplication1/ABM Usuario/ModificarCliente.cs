@@ -67,7 +67,27 @@ namespace MercadoEnvios.ABM_Usuario
             txtUsr.Text = dataReader.GetString(1);
             txtMail.Text = dataReader.GetString(3);
 
-            MessageBox.Show(dataReader.GetString(1));
+            dataReader.Close();
+
+            string sacarDatosDeEmpresa = "SELECT e.apellido, e.nombre, e.codigoPostal, e.direccion, e.direccion_numero, e.documento, e.dpto, (SELECT nombre FROM ADIOS_TERCER_ANIO.Localidad WHERE id = e.idLocalidad), (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento),e.piso, e.telefono  FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id";
+            SqlCommand obtenerEmpresa = new SqlCommand(sacarDatosDeEmpresa, conn.getConexion);
+            SqlParameter idUs = new SqlParameter("@id", SqlDbType.Int);
+            idUs.SqlValue = idUsuario;
+            idUs.Direction = ParameterDirection.Input;
+            obtenerEmpresa.Parameters.Add(idUs);
+            dataReader = obtenerEmpresa.ExecuteReader();
+            dataReader.Read();
+
+            txtApellido.Text = dataReader.GetString(0);
+            txtNombre.Text = dataReader.GetString(1);
+            txtCodigoPostal.Text = dataReader.GetString(2);
+            txtDireccion.Text = dataReader.GetString(3);
+            txtNroDeDireccion.Text = Convert.ToString(dataReader.GetDecimal(4));
+            txtDepto.Text = Convert.ToString(dataReader.GetDecimal(5));
+            cmbLocalidad.Text = dataReader.GetString(6);
+            cmbTipoDoc.Text = dataReader.GetString(7);
+            txtPiso.Text = Convert.ToString(dataReader.GetDecimal(8));
+            txtTelefono.Text = dataReader.GetString(9);
 
             dataReader.Close();
         }

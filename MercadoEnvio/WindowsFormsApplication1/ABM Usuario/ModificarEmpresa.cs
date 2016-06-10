@@ -67,8 +67,36 @@ namespace MercadoEnvios.ABM_Usuario
             txtUsr.Text = dataReader.GetString(1);
             txtMail.Text = dataReader.GetString(3);
 
-            MessageBox.Show(dataReader.GetString(1));
+            dataReader.Close();
 
+            string sacarDatosDeEmpresa = "SELECT e.codigoPostal,"
+	                                             +"e.contacto,"
+	                                             +"e.cuit,"
+	                                             +"e.direccion,"
+	                                             +"e.direccion_numero,"
+	                                             +"e.dpto,"
+	                                             +"(SELECT nombre FROM ADIOS_TERCER_ANIO.Localidad where id = e.idLocalidad) AS Localidad,"
+	                                             +"(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE id = e.idRubro) AS Rubro,"
+	                                             +"e.piso,"
+	                                             +"e.razonSocial,"
+	                                             +"e.telefono"
+                                                 +"FROM ADIOS_TERCER_ANIO.Usuario u inner join ADIOS_TERCER_ANIO.Empresa e on u.id = e.idUsuario WHERE @id = u.id";
+            SqlCommand obtenerEmpresa = new SqlCommand(sacarDatosDeEmpresa, conn.getConexion);
+            obtenerEmpresa.Parameters.Add(idU);
+            dataReader = obtenerEmpresa.ExecuteReader();
+            dataReader.Read();
+
+            txtCodigoPostal.Text = dataReader.GetString(0);
+            txtNombreDeContacto.Text = dataReader.GetString(1);
+            txtCalle.Text = dataReader.GetString(2);
+            txtDireccion.Text = Convert.ToString(dataReader.GetInt32(3));
+            txtDepto.Text = dataReader.GetString(4);
+            cmbLocalidad.Text = dataReader.GetString(5);
+            cmbRubro.Text = dataReader.GetString(6);
+            txtPiso.Text = Convert.ToString(dataReader.GetDecimal(7));
+            txtRazonSocial.Text = dataReader.GetString(8);
+            txtTelefono.Text = dataReader.GetString(9);
+            
             dataReader.Close();
 
         }

@@ -326,9 +326,9 @@
             this.label14.Location = new System.Drawing.Point(46, 56);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(64, 13);
+            this.label14.Size = new System.Drawing.Size(98, 13);
             this.label14.TabIndex = 81;
-            this.label14.Text = "Contraseña:";
+            this.label14.Text = "Nueva contraseña:";
             // 
             // frmModificarEmpresa
             // 
