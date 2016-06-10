@@ -111,15 +111,21 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[obtenerCompras] (@idCalificador int)
 AS
 BEGIN
-	Select (SELECT usuario from ADIOS_TERCER_ANIO.Usuario where id = idPublicador) AS Usuario, p.descripcion, c.id from ADIOS_TERCER_ANIO.Publicacion p 
+	Select (SELECT usuario from ADIOS_TERCER_ANIO.Usuario where id = idPublicador) AS Usuario, p.descripcion, c.id, p.tipo from ADIOS_TERCER_ANIO.Publicacion p 
 	inner join ADIOS_TERCER_ANIO.Compra c on c.idPublicacion = p.id
-	where c.idComprador = @idCalificador;
+	where c.idComprador = @idCalificador order by c.fecha desc
 END
+
+DROP PROCEDURE [ADIOS_TERCER_ANIO].[cargarCalificacion];
+
 GO
 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[cargarCalificacion] (@idCompra int, @puntaje int, @fecha datetime, @detalle nvarchar(255))
 AS
 BEGIN
+		IF (@puntaje IS null)
+		THROW 50004, 'No ingresó puntaje',1;
+
 		BEGIN TRANSACTION
 		BEGIN TRY
 			UPDATE ADIOS_TERCER_ANIO.Calificacion SET puntaje = @puntaje, fecha = @fecha, detalle = @detalle, pendiente = 0 where idCompra = @idCompra
@@ -332,16 +338,43 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.validarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
 AS
 BEGIN
- SELECT u.id FROM ADIOS_TERCER_ANIO.Usuario u WHERE u.usuario=@usuario AND u.pass=@password
- END
- GO
+SELECT u.id FROM ADIOS_TERCER_ANIO.Usuario u WHERE u.usuario=@usuario AND u.pass=@password
+END
+GO
 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.modificarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
 AS
 BEGIN
 UPDATE ADIOS_TERCER_ANIO.Usuario  SET pass=@password WHERE usuario=@usuario
 END
+
 GO 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.cargarUltimasCalificaciones(@idCalificador INT)
+AS
+BEGIN
+	Select TOP 5 calif.fecha, calif.puntaje, calif.detalle, usr.usuario from ADIOS_TERCER_ANIO.Calificacion calif 
+	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
+	inner join ADIOS_TERCER_ANIO.Publicacion publicacion on compra.idPublicacion = publicacion.id
+	inner join ADIOS_TERCER_ANIO.Usuario usr on usr.id = publicacion.idPublicador
+	where compra.idComprador = @idCalificador and pendiente = 0 order by calif.fecha desc
+END
+
+GO 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerTipoDeCompraConNPuntaje(@puntaje INT, @tipo NVARCHAR(255), @idCalificador INT)
+AS
+BEGIN
+	declare @idCalificador int = 17;
+	declare @tipo NVARCHAR(255) = 'Subasta';
+	declare @puntaje INT = 2;
+	Select TOP 10 COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
+	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
+	inner join ADIOS_TERCER_ANIO.Publicacion publicacion on compra.idPublicacion = publicacion.id
+	where compra.idComprador = @idCalificador and pendiente = 0 and publicacion.tipo = @tipo and calif.puntaje = @puntaje order by calif.fecha desc
+END
+GO 
+
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+SELECT * FROM ADIOS_TERCER_ANIO.Calificacion order by puntaje 

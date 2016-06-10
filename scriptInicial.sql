@@ -378,7 +378,7 @@ AS BEGIN
 	SELECT DISTINCT	
 		tablaCompra.id,
 		Compra_Fecha,
-		Calificacion_Cant_Estrellas,
+		CASE WHEN (Calificacion_Cant_Estrellas = 1) THEN 1 ELSE Calificacion_Cant_Estrellas / 2 END,
 		Calificacion_Descripcion,
 		CASE
 			WHEN (Calificacion_Cant_Estrellas is not null) THEN 0 ELSE 1
