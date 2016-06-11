@@ -300,7 +300,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-ALTER PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
 													   @direccion decimal(18,0), @calle NVARCHAR(255), @piso decimal(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
 AS
@@ -319,11 +319,12 @@ BEGIN
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se puede agregar al usuario', 1; 
+		THROW 50004, 'No se puede modificar a la persona', 1; 
 	END CATCH
 	COMMIT TRANSACTION
 END
 GO
+
 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.validarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
 AS
