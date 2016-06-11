@@ -72,6 +72,7 @@
             this.Name = "frmElegirRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ElegirRol";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmElegirRol_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

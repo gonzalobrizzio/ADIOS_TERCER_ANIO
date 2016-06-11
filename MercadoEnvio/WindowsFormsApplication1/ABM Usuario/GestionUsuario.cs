@@ -60,7 +60,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
-            new frmPantallaPrincipal("Administrativo").Show();
+            new frmPantallaPrincipal().Show();
             this.Close();
 
         }

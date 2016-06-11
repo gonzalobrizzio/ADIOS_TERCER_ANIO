@@ -15,17 +15,20 @@ namespace MercadoEnvios.Calificar
         Conexion conn = Conexion.Instance;
         Entidades.Utilidades funciones = new Entidades.Utilidades();
         SqlDataAdapter da;
+        Form anterior;
+        Sesion sesion = Sesion.Instance;
 
         public frmCalificacion()
         {
             InitializeComponent();
+            anterior = sesion.anterior;
             this.getData();
         }
 
         private void getData()
         {
             SqlParameter idCalificador = new SqlParameter("@idCalificador", SqlDbType.Int);
-            idCalificador.SqlValue = 17;
+            idCalificador.SqlValue = sesion.idUsuario;
             idCalificador.Direction = ParameterDirection.Input;            
 
             String cmd = "ADIOS_TERCER_ANIO.obtenerCompras";
@@ -103,6 +106,7 @@ namespace MercadoEnvios.Calificar
 
         private void btnReputacion_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new frmHistorial().Show();
             this.Hide(); //VOY A QUERER QUE VUELVA
         }
@@ -113,6 +117,11 @@ namespace MercadoEnvios.Calificar
             lblCompra.Text = dgvCompras[1, dgvCompras.CurrentCell.RowIndex].Value.ToString();
             lblIdCompra.Text = dgvCompras[2, dgvCompras.CurrentCell.RowIndex].Value.ToString();
 
+        }
+
+        private void frmCalificacion_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
         }
     }
 }

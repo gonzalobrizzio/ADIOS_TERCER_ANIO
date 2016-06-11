@@ -172,6 +172,7 @@
             this.Controls.Add(this.tkbCalificacion);
             this.Name = "frmCalificacion";
             this.Text = "Calificar un usuario";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCalificacion_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.tkbCalificacion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompras)).EndInit();
             this.ResumeLayout(false);

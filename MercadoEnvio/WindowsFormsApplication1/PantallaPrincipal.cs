@@ -13,26 +13,29 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmPantallaPrincipal : Form
     {
         Sesion sesion = Sesion.Instance;
+        Form anterior;
 
-        public frmPantallaPrincipal(String rol)
+        public frmPantallaPrincipal()
         {
             InitializeComponent();
-            label1.Text = sesion.idUsuario.ToString() + " asdad   " + sesion.idRol.ToString();
+            anterior = sesion.anterior;
 
-            if (rol.Equals("Administrativo")) {
+            if (sesion.idRol == 1) {
                 btnCalificarVendedor.Visible = false;
                 btnComprarOfertar.Visible = false;
                 btnConsultarFacturas.Visible = false;
                 btnGenerarPublicacion.Visible = false;
                 btnHistorial.Visible = false;
             }
-            else if (rol.Equals("Cliente")) {
+            else if (sesion.idRol == 2)
+            {
                 btnABMRol.Visible = false;
                 btnABMUsuario.Visible = false;
                 btnABMVisibilidad.Visible = false;
                 btnGenerarPublicacion.Visible = false;
             }
-            else if (rol.Equals("Empresa")) {
+            else if (sesion.idRol == 3)
+            {
                 btnABMRol.Visible = false;
                 btnABMUsuario.Visible = false;
                 btnABMVisibilidad.Visible = false;
@@ -45,18 +48,21 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnComprarOfertar_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new ComprarOfertar.ComprarOfertar().Show();
             this.Hide();
         }
 
         private void btnABMUsuario_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new ABM_Usuario.frmABMUsuario().Show();
             this.Hide();
         }
 
         private void btnABMRol_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Hide();
         }
@@ -73,6 +79,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnHistorial_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             frmHistorialCliente frm = new frmHistorialCliente();
             frm.Show(this);
         }
@@ -84,15 +91,24 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            new frmIngresar().Show();
-            this.Close();
+            this.Hide();
         }
 
         private void btnCalificarVendedor_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
             new Calificar.frmCalificacion().Show();
-            this.Close();
+            this.Hide();
+        }
+
+        private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
+        }
+
+        private void frmPantallaPrincipal_Shown(object sender, EventArgs e)
+        {
+            sesion.anterior = anterior;
         }
     }
 }

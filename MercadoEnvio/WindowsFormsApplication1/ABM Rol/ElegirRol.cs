@@ -13,10 +13,12 @@ namespace MercadoEnvios.ABM_Rol
     public partial class frmElegirRol : Form
     {
         Sesion sesion = Sesion.Instance;
+        Form anterior;
 
         public frmElegirRol(string roles)
         {
             InitializeComponent();
+            anterior = sesion.anterior;
             string[] rolesSeparados = roles.Split(',');
             cboRol.Items.AddRange(rolesSeparados);
         }
@@ -30,22 +32,28 @@ namespace MercadoEnvios.ABM_Rol
                 else if ((cboRol.SelectedItem).Equals("Administrativo"))
                 {
                     sesion.idRol = 1;
-                    new ABM_Usuario.frmPantallaPrincipal("Administrativo").Show();
+                    new ABM_Usuario.frmPantallaPrincipal().Show();
                     this.Close();
                 }
                 else if ((cboRol.SelectedItem).Equals("Cliente"))
                 {
                     sesion.idRol = 2;
-                    new ABM_Usuario.frmPantallaPrincipal("Cliente").Show();
+                    new ABM_Usuario.frmPantallaPrincipal().Show();
                     this.Close();
                 }
                 else if ((cboRol.SelectedItem).Equals("Empresa"))
                 {
                     sesion.idRol = 3;
-                    new ABM_Usuario.frmPantallaPrincipal("Empresa").Show();
+                    new ABM_Usuario.frmPantallaPrincipal().Show();
                     this.Close();
                 }
 
         }
+
+        private void frmElegirRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
+        }
+
         }
     }

@@ -16,6 +16,7 @@ namespace MercadoEnvios
     {
         Conexion conn = Conexion.Instance;
         Sesion sesion;
+        Form anterior;
 
         public frmIngresar()
         {
@@ -47,7 +48,7 @@ namespace MercadoEnvios
 
                 cmd.ExecuteNonQuery();
 
-                sesion = new Sesion(Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString()), 0);
+                sesion = new Sesion(Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString()), 0, null);
 
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "
@@ -92,6 +93,7 @@ namespace MercadoEnvios
                         {
                             roles = roles + "," + dataReader.GetString(1);
                         }
+                        sesion.anterior = this;
                         Form formrol = new ABM_Rol.frmElegirRol(roles);
                         dataReader.Close();
                         formrol.Show();
@@ -103,20 +105,22 @@ namespace MercadoEnvios
                         dataReader.Read();
                         int rolActual = dataReader.GetInt32(0);
                         sesion.idRol = rolActual;
+                        sesion.anterior = this;
                         switch (rolActual)
                         {
                             case 1:
-                                new ABM_Usuario.frmPantallaPrincipal("Administrador").Show();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 dataReader.Close();
                                 this.Hide();
                                 break;
                             case 2:
-                                new ABM_Usuario.frmPantallaPrincipal("Cliente").Show();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 dataReader.Close();
                                 this.Hide();
                                 break;
                             case 3:
-                                //new ABM_Usuario.frmPantallaPrincipal("Empresa").Show();
+                                //sesion.anterior = this;
+                                //new ABM_Usuario.frmPantallaPrincipal().Show();
                                 //dataReader.Close();
                                 //this.Hide();
                                 break;
@@ -156,6 +160,10 @@ namespace MercadoEnvios
         }
 
         private void frmIngresar_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void frmIngresar_Shown(object sender, EventArgs e)
         {
         }
     }
