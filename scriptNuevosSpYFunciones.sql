@@ -376,15 +376,16 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
 AS
 BEGIN
-	declare @idUsuario int = 17;
-	declare @pagina INT = 52;
+--	declare @idUsuario int = 17;
+--	declare @pagina INT = 235;
+
+	declare @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion where publicacion.idPublicador != @idUsuario) - @pagina * 20;
 	
-	declare @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion where publicacion.idPublicador != @idUsuario) - @pagina * 20
 	with hola as (select TOP (@cant) publicacion.descripcion, publicacion.id, visib.porcentaje from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario ORDER BY visib.porcentaje ASC)
+	where publicacion.idPublicador != @idUsuario ORDER BY visib.porcentaje asc, publicacion.id ASC)
 	
-	SELECT TOP 20 * FROM hola ORDER by hola.porcentaje desc
+	SELECT top 20 * FROM hola ORDER by hola.porcentaje desc, hola.id desc
 END
 
 GO 
