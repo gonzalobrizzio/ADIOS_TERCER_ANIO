@@ -410,8 +410,10 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
+	SET IDENTITY_INSERT ADIOS_TERCER_ANIO.Publicacion ON
 
 	INSERT INTO ADIOS_TERCER_ANIO.Publicacion(
+										id,
 										descripcion,
 										fechaInicio,
 										fechaFin,
@@ -423,10 +425,10 @@ AS BEGIN
 										idPublicador,
 										idRubro,
 										stock,
-										idEnvio,
-										codAnterior
+										idEnvio
 									)
 	SELECT DISTINCT
+		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)						AS id,
 		Publicacion_Descripcion																			AS descripcion,
 		Publicacion_Fecha																				AS fechaIni,
 		Publicacion_Fecha_Venc																			AS fechaFin,
@@ -441,8 +443,7 @@ AS BEGIN
 		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock																				AS stock,
-		NULL																							AS idEnvio, --LAS PUBLICACIONES DE LA BASE MAESTRA NO TIENE ENVIO
-		Publicacion_Cod																					AS idPublicacion
+		NULL																							AS idEnvio
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
@@ -455,7 +456,9 @@ AS BEGIN
 			Factura_Nro IS NULL 
 		AND 
 			Compra_Cantidad IS NULL
-	ORDER BY Publicacion_Cod DESC
+	ORDER BY id DESC
+
+	SET IDENTITY_INSERT ADIOS_TERCER_ANIO.Publicacion OFF
 END
 GO
 

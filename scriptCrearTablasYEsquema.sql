@@ -102,7 +102,7 @@ CREATE  TABLE Publicacion (
   idRubro INT REFERENCES Rubro(id) ,
   stock INT NULL ,
   idEnvio INT REFERENCES Envio(id) ,
-  codAnterior NUMERIC(18,0) NULL,
+--#FIX NO VA MAS  codAnterior NUMERIC(18,0) NULL,
   )
 
 CREATE  TABLE Rubro (
