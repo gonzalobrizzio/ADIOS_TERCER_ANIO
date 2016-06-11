@@ -72,14 +72,14 @@ namespace MercadoEnvios.ABM_Usuario
             txtMail.Text = dataReader.GetString(3);
 
             dataReader.Close();
-
-            string sacarDatosDeEmpresa = "SELECT e.apellido, e.nombre, e.codigoPostal, e.direccion, e.direccion_numero, e.documento, e.dpto, (SELECT nombre FROM ADIOS_TERCER_ANIO.Localidad WHERE id = e.idLocalidad), (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento),e.piso, e.telefono  FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id";
-            SqlCommand obtenerEmpresa = new SqlCommand(sacarDatosDeEmpresa, conn.getConexion);
+            //Hay que corregir bastante creo
+            string sacarDatosClientes = "SELECT e.apellido, e.nombre, e.codigoPostal, e.direccion, e.direccion_numero, e.documento, e.dpto, (SELECT nombre FROM ADIOS_TERCER_ANIO.Localidad WHERE id = e.idLocalidad), (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento),e.piso, e.telefono, e.fechaNacimiento  FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id";
+            SqlCommand ObtenerCliente = new SqlCommand(sacarDatosClientes, conn.getConexion);
             SqlParameter idUs = new SqlParameter("@id", SqlDbType.Int);
             idUs.SqlValue = idUsuario;
             idUs.Direction = ParameterDirection.Input;
-            obtenerEmpresa.Parameters.Add(idUs);
-            dataReader = obtenerEmpresa.ExecuteReader();
+            ObtenerCliente.Parameters.Add(idUs);
+            dataReader = ObtenerCliente.ExecuteReader();
             dataReader.Read();
 
             if (dataReader.HasRows)
@@ -95,6 +95,7 @@ namespace MercadoEnvios.ABM_Usuario
                 if (!dataReader[8].Equals(DBNull.Value)) { cmbTipoDoc.Text = dataReader.GetString(8); }
                 if (!dataReader[9].Equals(DBNull.Value)) { txtPiso.Text = Convert.ToString(dataReader.GetDecimal(9)); }
                 if (!dataReader[10].Equals(DBNull.Value)) { txtTelefono.Text = dataReader.GetString(10); }
+                if (!dataReader[11].Equals(DBNull.Value)) { txtFechaNac.Text = Convert.ToString(dataReader.GetDateTime(11)); }
             }
             dataReader.Close();
         }
