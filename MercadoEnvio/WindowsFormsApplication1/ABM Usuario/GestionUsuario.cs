@@ -22,7 +22,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         public void getData() 
         {
-            String query = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Usuario u "
+            String query = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, r.id as idrol FROM ADIOS_TERCER_ANIO.Usuario u "
                               + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE ru.idRol = 2";
 
             conn = Conexion.Instance;
@@ -39,6 +39,7 @@ namespace MercadoEnvios.ABM_Usuario
             dgvClientes.Columns[0].Visible = false;
             dgvClientes.Columns[1].Width = 150;
             dgvClientes.Columns[2].Width = 150;
+            dgvClientes.Columns[3].Width = 50;
 
             String queryAdm = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Usuario u "
                                + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE ru.idRol = 3";
@@ -60,7 +61,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
-            new frmPantallaPrincipal("Administrativo").Show();
+            new frmPantallaPrincipal().Show();
             this.Close();
 
         }
@@ -174,6 +175,11 @@ namespace MercadoEnvios.ABM_Usuario
                 new frmModificarCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value)).Show();
                 this.Close();
             }
+
+        }
+
+        private void frmABMUsuario_Load(object sender, EventArgs e)
+        {
 
         }
 

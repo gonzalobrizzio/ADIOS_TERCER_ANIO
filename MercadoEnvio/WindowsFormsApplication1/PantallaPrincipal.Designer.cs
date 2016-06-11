@@ -146,6 +146,8 @@
             this.Name = "frmPantallaPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PantallaPrincipal";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPantallaPrincipal_FormClosed);
+            this.Shown += new System.EventHandler(this.frmPantallaPrincipal_Shown);
             this.ResumeLayout(false);
 
         }

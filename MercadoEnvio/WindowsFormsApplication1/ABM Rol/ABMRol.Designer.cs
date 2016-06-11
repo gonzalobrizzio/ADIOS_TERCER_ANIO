@@ -146,7 +146,9 @@
             this.Name = "frmABMRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMRol";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmABMRol_FormClosed);
             this.Load += new System.EventHandler(this.ABMRol_Load);
+            this.Shown += new System.EventHandler(this.frmABMRol_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRoles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -101,7 +101,7 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 validaciones = false;
                 MessageBox.Show(mensajeDeAviso.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mensajeDeAviso = null;
+                mensajeDeAviso = new StringBuilder();
 
             }
             else
@@ -109,7 +109,7 @@ namespace MercadoEnvios.ABM_Usuario
 
             if (validaciones)
             {
-                SqlCommand agregarCliente = new SqlCommand("ADIOS_TERCER_ANIO.AgregarCliente", conn.getConexion);
+                SqlCommand agregarCliente = new SqlCommand("ADIOS_TERCER_ANIO.AgregarPersona", conn.getConexion);
                 agregarCliente.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarUsuario", conn.getConexion);
                 agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
@@ -174,34 +174,34 @@ namespace MercadoEnvios.ABM_Usuario
                 apellido.SqlValue = txtApellido.Text;
                 apellido.Direction = ParameterDirection.Input;
 
-                SqlParameter dni = new SqlParameter("@dni", SqlDbType.Int);
+                SqlParameter dni = new SqlParameter("@documento", SqlDbType.Decimal);
                 if (string.IsNullOrEmpty(txtDni.Text))
                 {
-                    MessageBox.Show("Ingrese un DNI", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dni.SqlValue = DBNull.Value;
                 }
                 else
                 {
-                    dni.SqlValue = Convert.ToInt32(txtDni.Text);
+                    dni.SqlValue = Convert.ToDecimal(txtDni.Text);
                 }
                 dni.Direction = ParameterDirection.Input;
 
-                SqlParameter tipoDoc = new SqlParameter("@tipoDoc", SqlDbType.NVarChar, 255);
-                tipoDoc.SqlValue = cmbTipoDoc.SelectedText;
+                SqlParameter tipoDoc = new SqlParameter("@tipoDeDocumento", SqlDbType.NVarChar, 255);
+                tipoDoc.SqlValue = (cmbTipoDoc.Text);
                 tipoDoc.Direction = ParameterDirection.Input;
 
                 SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
                 telefono.SqlValue = txtTelefono.Text;
                 telefono.Direction = ParameterDirection.Input;
 
-                SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
+                SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Decimal);
                 if (string.IsNullOrEmpty(txtNroDeDireccion.Text))
                 {
-                    MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    direccion.SqlValue = DBNull.Value;
                 }
 
                 else
                 {
-                    direccion.SqlValue = Convert.ToInt32(txtNroDeDireccion.Text);
+                    direccion.SqlValue = Convert.ToDecimal(txtNroDeDireccion.Text);
                 }
                 direccion.Direction = ParameterDirection.Input;
 
@@ -209,14 +209,14 @@ namespace MercadoEnvios.ABM_Usuario
                 calle.SqlValue = txtDireccion.Text;
                 calle.Direction = ParameterDirection.Input;
 
-                SqlParameter piso = new SqlParameter("@piso", SqlDbType.Int);
+                SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
                 if (string.IsNullOrEmpty(txtPiso.Text))
                 {
-                    piso.SqlValue = 0;
+                    piso.SqlValue = DBNull.Value;
                 }
                 else
                 {
-                    piso.SqlValue = Convert.ToInt32(txtPiso.Text);
+                    piso.SqlValue = Convert.ToDecimal(txtPiso.Text);
                 }
                 piso.Direction = ParameterDirection.Input;
 
@@ -235,7 +235,11 @@ namespace MercadoEnvios.ABM_Usuario
                 SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
                 fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
 
-                agregarCliente.Parameters.Add(id);
+                SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
+                otroid.SqlValue = ultimoIdRol;
+                otroid.Direction = ParameterDirection.Input;
+                
+                agregarCliente.Parameters.Add(otroid);
                 agregarCliente.Parameters.Add(dni);
                 agregarCliente.Parameters.Add(tipoDoc);
                 agregarCliente.Parameters.Add(nombre);
@@ -247,6 +251,7 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarCliente.Parameters.Add(depto);
                 agregarCliente.Parameters.Add(localidad);
                 agregarCliente.Parameters.Add(codigoPostal);
+                agregarCliente.Parameters.Add(fechaNac);
 
                 try{
                 agregarCliente.ExecuteNonQuery();
@@ -271,6 +276,11 @@ namespace MercadoEnvios.ABM_Usuario
             txtFechaNac.Clear();
             txtFechaNac.AppendText(calendarioNac.SelectionStart.ToShortDateString());
             calendarioNac.Visible = false;
+
+        }
+
+        private void frmNuevoCliente_Load(object sender, EventArgs e)
+        {
 
         }
 

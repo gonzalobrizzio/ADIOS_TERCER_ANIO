@@ -15,7 +15,8 @@ namespace MercadoEnvios
     public partial class frmIngresar : Form
     {
         Conexion conn = Conexion.Instance;
-        Sesion sesion = Sesion.Instance;
+        Sesion sesion;
+        Form anterior;
 
         public frmIngresar()
         {
@@ -30,12 +31,15 @@ namespace MercadoEnvios
             SqlParameter usuario = new SqlParameter("@usuario", txtUsr.Text);
             usuario.Direction = ParameterDirection.Input;
             usuario.SqlDbType = SqlDbType.NVarChar;
+
             SqlParameter pass = new SqlParameter("@pass", Utilidades.encriptarCadenaSHA256(txtContra.Text));
             pass.Direction = ParameterDirection.Input;
             pass.SqlDbType = SqlDbType.NVarChar;
+            
             SqlParameter idUsuario = new SqlParameter("@idUsuario", null);
             idUsuario.Direction = ParameterDirection.Output;
             idUsuario.SqlDbType = SqlDbType.Int;
+            
             cmd.Parameters.Add(usuario);
             cmd.Parameters.Add(pass);
             cmd.Parameters.Add(idUsuario);
@@ -43,7 +47,9 @@ namespace MercadoEnvios
             {
 
                 cmd.ExecuteNonQuery();
-                sesion.idUsuario = Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString());
+
+                sesion = new Sesion(Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString()), 0, null);
+
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "
                                 + "from ADIOS_TERCER_ANIO.RolUsuario ru "
@@ -57,7 +63,7 @@ namespace MercadoEnvios
                 cantidadRoles.Parameters.Add(cantidad);
                 cantidadRoles.Parameters.Add(idUsuarioABuscar);
                 cantidadRoles.ExecuteNonQuery();
-                sesion.cantidadRoles= Int32.Parse(cantidadRoles.Parameters["@cantidad"].Value.ToString());
+                int cantRoles= Int32.Parse(cantidadRoles.Parameters["@cantidad"].Value.ToString());
                 //Busco Los roles
                 string queryBuscarRoles = "Select r.id, r.nombre "
                     //"Select @idRol = r.id, @nombreRol = r.nombre "
@@ -79,39 +85,42 @@ namespace MercadoEnvios
                 SqlDataReader dataReader = buscarRoles.ExecuteReader();
                 if (dataReader.HasRows)
                 {
-                    if (sesion.cantidadRoles > 1)
+                    if (cantRoles > 1)
                     {
                         dataReader.Read();
                         string roles = dataReader.GetString(1);
                         while (dataReader.Read())
                         {
-                            sesion.agregarRol(dataReader.GetString(1));
                             roles = roles + "," + dataReader.GetString(1);
                         }
+                        sesion.anterior = this;
                         Form formrol = new ABM_Rol.frmElegirRol(roles);
                         dataReader.Close();
                         formrol.Show();
                         this.Hide();
 
                     }
-                    if (sesion.cantidadRoles == 1)
+                    if (cantRoles == 1)
                     {
                         dataReader.Read();
                         int rolActual = dataReader.GetInt32(0);
+                        sesion.idRol = rolActual;
+                        sesion.anterior = this;
                         switch (rolActual)
                         {
                             case 1:
-                                new ABM_Usuario.frmPantallaPrincipal("Administrador").Show();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 dataReader.Close();
                                 this.Hide();
                                 break;
                             case 2:
-                                new ABM_Usuario.frmPantallaPrincipal("Cliente").Show();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 dataReader.Close();
                                 this.Hide();
                                 break;
                             case 3:
-                                //new ABM_Usuario.frmPantallaPrincipal("Empresa").Show();
+                                //sesion.anterior = this;
+                                //new ABM_Usuario.frmPantallaPrincipal().Show();
                                 //dataReader.Close();
                                 //this.Hide();
                                 break;
@@ -151,6 +160,10 @@ namespace MercadoEnvios
         }
 
         private void frmIngresar_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void frmIngresar_Shown(object sender, EventArgs e)
         {
         }
     }
