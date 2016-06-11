@@ -391,6 +391,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmModificarCliente";
             this.Text = "ModificarCliente";
+            this.Load += new System.EventHandler(this.frmModificarCliente_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

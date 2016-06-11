@@ -140,10 +140,10 @@ AS BEGIN
 	set xact_abort on;
 
 		
-	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%'))
+	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%') OR @mail = '')
 		THROW 50004, 'Mail invalido',1;
 
-	IF(@password IS NULL)
+	IF(@password IS NULL OR @password = '')
 		THROW 50004, 'Necesita ingresar una contraseña', 1;
 
 	IF(@usuario IS NULL)
@@ -151,17 +151,14 @@ AS BEGIN
 
 	BEGIN TRANSACTION
 	BEGIN TRY
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
-	SET @ultimoID = @@IDENTITY;
+		INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
+		SET @ultimoID = @@IDENTITY;
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
 		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
 	END CATCH
-	COMMIT TRANSACTION
-	RETURN @ultimoID
-
-	
+	COMMIT TRANSACTION	
 END
 GO
 
@@ -176,21 +173,21 @@ AS BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY
 		DECLARE @idRol INT;
-		SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = @rol)
-		INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
-		VALUES(@idRol, @id,0)
+		Select @idRol = id from ADIOS_TERCER_ANIO.Rol r where r.nombre = @rol;
+		IF(@idRol IS not NULL)
+		bEGIN
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idUsuario, idRol, deleted) VALUES(@id, @idRol,0)
+		End 
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
-		THROW 50004, 'El rol no se ha agregado correctamente', 1; 
+		THROW 50004, 'No se ha podido asignar el usuario', 1; 
 	END CATCH
 	COMMIT TRANSACTION
-
 END
 GO
 
-
-CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255), @mail NVARCHAR(255),@id INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255), @mail NVARCHAR(255), @password NVARCHAR(255), @id INT)
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -201,7 +198,7 @@ AS BEGIN
 
 	BEGIN TRANSACTION
 	BEGIN TRY
-	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, usuario = @usuario WHERE @id = id
+	UPDATE ADIOS_TERCER_ANIO.Usuario SET mail = @mail, usuario = @usuario, pass = @password WHERE @id = id
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -247,7 +244,6 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(255), 
 													     @direccion INT, @calle NVARCHAR(255), @piso NUMERIC(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													     @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
@@ -271,8 +267,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  @apellido INT , @documento INT, @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
-													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
+													   @direccion decimal(18,0), @calle NVARCHAR(255), @piso decimal(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
 AS
 BEGIN
@@ -293,8 +289,8 @@ BEGIN
 										  fechaCreacion,
 										  idUsuario,
 										  idLocalidad) 
-	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
-			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre = @localidad))
+	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion like @tipoDeDocumento),
+			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre like @localidad))
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -303,7 +299,6 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido INT , @documento INT, @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
 													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
@@ -345,3 +340,5 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+

@@ -93,7 +93,7 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 validaciones = false;
                 MessageBox.Show(mensajeDeAviso.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mensajeDeAviso = null;
+                mensajeDeAviso = new StringBuilder();
 
             }
             else
@@ -129,18 +129,9 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarUsuario.Parameters.Add(idUsuario);
                 agregarUsuario.Parameters.Add(mail);
 
-                try{
-                agregarUsuario.ExecuteNonQuery();
-                }
-                catch (SqlException error)
-                {
-                    MessageBox.Show(error.Message);
-                }
 
-                int ultimoIdRol = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
-
+                
                 SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
-                id.SqlValue = ultimoIdRol;
                 id.Direction = ParameterDirection.Input;
 
                 SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
@@ -151,11 +142,14 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarRolUsuario.Parameters.Add(id);
                 
                 try{
-                agregarRolUsuario.ExecuteNonQuery();
+                    agregarUsuario.ExecuteNonQuery();
+                    id.SqlValue = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
+                    agregarRolUsuario.ExecuteNonQuery();
                 }
                 catch (SqlException error)
                 {
                     MessageBox.Show(error.Message);
+                    this.Show();
                 }
 
                 SqlParameter razonSocial = new SqlParameter("@razonSocial", SqlDbType.NVarChar, 255);
@@ -167,14 +161,12 @@ namespace MercadoEnvios.ABM_Usuario
                 telefono.Direction = ParameterDirection.Input;
 
                 SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
-                if (string.IsNullOrEmpty(txtDireccion.Text))
-                {
-                    MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
+
+                if (!(txtDireccion.Text == ""))
                 {
                     direccion.SqlValue = Convert.ToInt32(txtDireccion.Text);
                 }
+                else { direccion.SqlValue = DBNull.Value; }
                 direccion.Direction = ParameterDirection.Input;
 
                 SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
@@ -182,17 +174,12 @@ namespace MercadoEnvios.ABM_Usuario
                 calle.Direction = ParameterDirection.Input;
 
 
-                SqlParameter piso = new SqlParameter("@piso", SqlDbType.Int);
-
-                if (string.IsNullOrEmpty(txtPiso.Text))
+                SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
+                if (!(txtPiso.Text == ""))
                 {
-                    piso.SqlValue = 0;
+                    piso.SqlValue = Convert.ToDecimal(txtPiso.Text);
                 }
-                else
-                {
-                    piso.SqlValue = Convert.ToInt32(txtPiso.Text);
-                }
-
+                else { piso.SqlValue = DBNull.Value; }
                 piso.Direction = ParameterDirection.Input;
 
                 SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
@@ -224,8 +211,13 @@ namespace MercadoEnvios.ABM_Usuario
                 rubro.SqlValue = cmbRubro.SelectedText;
                 rubro.Direction = ParameterDirection.Input;
 
-                agregarEmpresa.Parameters.Add(id);
+                SqlParameter otroId = new SqlParameter("@id", SqlDbType.Int);
+                otroId.Direction = ParameterDirection.Input;
+                otroId.SqlValue = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
+
+                
                 agregarEmpresa.Parameters.Add(razonSocial);
+                agregarEmpresa.Parameters.Add(otroId);
                 agregarEmpresa.Parameters.Add(telefono);
                 agregarEmpresa.Parameters.Add(direccion);
                 agregarEmpresa.Parameters.Add(calle);
@@ -255,6 +247,10 @@ namespace MercadoEnvios.ABM_Usuario
         {
             new frmABMUsuario().Show();
             this.Close();
+        }
+
+        private void salir(){
+            return;
         }
     }
 }

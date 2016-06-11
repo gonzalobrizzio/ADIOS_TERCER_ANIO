@@ -66,7 +66,7 @@ namespace MercadoEnvios.Entidades
         public void validarEmail(Control mail, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Persona p WHERE p.mail='{0}'", mail.Text);
+            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Usuario u WHERE u.mail='{0}'", mail.Text);
             if (ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El email {0} ya existe.", mail.Text));
@@ -77,7 +77,7 @@ namespace MercadoEnvios.Entidades
         public void validarDNI(string tipo, Control numero, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Persona p WHERE e.dni_tipo=(SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE {0} = e.idTipoDocumento) AND e.dni_nro={1}", tipo, numero.Text);
+            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Persona e WHERE e.idTipoDocumento = (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE '{0}' = nombre) AND e.documento = {1}", tipo, numero.Text);
             if (ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El tipo de dni {0} con el numero {1} ya existe.", tipo, numero.Text));
@@ -87,7 +87,7 @@ namespace MercadoEnvios.Entidades
         public void validarRazonSocial(Control razonSocial, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Empresa e WHERE {0} = e.razonSocial ", razonSocial.Text);
+            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Empresa e WHERE e.razonSocial = '{0}'", razonSocial.Text);
             if (ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El razón social {0} ya existe.", razonSocial.Text));
@@ -97,7 +97,7 @@ namespace MercadoEnvios.Entidades
         public void validarCUIT( Control cuit, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Empresa e WHERE {0} = e.cuit ", cuit.Text);
+            query.AppendFormat("SELECT e.cuit FROM ADIOS_TERCER_ANIO.Empresa e WHERE e.cuit = '{0}'", cuit.Text);
             if (ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El CUIT con el numero {0} ya existe.", cuit.Text));

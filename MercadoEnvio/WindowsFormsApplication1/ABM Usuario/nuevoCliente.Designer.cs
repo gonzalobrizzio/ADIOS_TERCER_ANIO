@@ -391,6 +391,7 @@
             this.Controls.Add(this.btnAceptar);
             this.Name = "frmNuevoCliente";
             this.Text = "Nuevo Cliente";
+            this.Load += new System.EventHandler(this.frmNuevoCliente_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
