@@ -147,9 +147,6 @@ AS BEGIN
 	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%') OR @mail = '')
 		THROW 50004, 'Mail invalido',1;
 
-	IF(@password IS NULL OR @password = '')
-		THROW 50004, 'Necesita ingresar una contraseña', 1;
-
 	IF(@usuario IS NULL)
 		THROW 50004, 'Necesita ingresar un usuario', 1;
 
@@ -303,8 +300,8 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido INT , @documento INT, @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
-													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+ALTER PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
+													   @direccion decimal(18,0), @calle NVARCHAR(255), @piso decimal(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
 AS
 BEGIN
@@ -317,7 +314,7 @@ BEGIN
 	UPDATE ADIOS_TERCER_ANIO.Persona
 	SET nombre = @nombre, apellido = @apellido, idTipoDocumento = (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
 				 telefono = @telefono,direccion_numero = @calle, direccion = @direccion, piso = @piso, dpto = @depto, codigoPostal = @codigoPostal, 
-				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE id = idUsuario
+				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE @id = idUsuario
 	 
 	END TRY
 	BEGIN CATCH

@@ -67,6 +67,7 @@ namespace MercadoEnvios.ABM_Usuario
             dataReader = obtenerUsuario.ExecuteReader();
             dataReader.Read();
 
+            txtContrasenia.Text = dataReader.GetString(2);
             txtUsr.Text = dataReader.GetString(1);
             txtMail.Text = dataReader.GetString(3);
 
@@ -106,227 +107,137 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-                SqlCommand modificarCliente = new SqlCommand("ADIOS_TERCER_ANIO.ModificarPersona", conn.getConexion);
-                modificarCliente.CommandType = System.Data.CommandType.StoredProcedure;
-                SqlCommand modificarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.ModificarUsuario", conn.getConexion);
-                modificarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand modificarCliente = new SqlCommand("ADIOS_TERCER_ANIO.ModificarPersona", conn.getConexion);
+            modificarCliente.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand modificarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.ModificarUsuario", conn.getConexion);
+            modificarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
 
-                SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
-                usuario.SqlValue = txtUsr.Text;
-                usuario.Direction = ParameterDirection.Input;
+            SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
+            usuario.SqlValue = txtUsr.Text;
+            usuario.Direction = ParameterDirection.Input;
 
-                SqlParameter id = new SqlParameter("@id", idUsuario);
-                id.Direction = ParameterDirection.Input;
-                id.SqlDbType = SqlDbType.Int;
+            SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
+            password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
+            password.Direction = ParameterDirection.Input;
 
-                SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
-                password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
-                password.Direction = ParameterDirection.Input;
+            SqlParameter idUf = new SqlParameter("@id", SqlDbType.Int);
+            idUf.SqlValue = idUsuario;
+            idUf.Direction = ParameterDirection.Input;
 
-                SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtMail.Text))
-                {
-                    mail.SqlValue = DBNull.Value;
-                }
+            SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
+            mail.SqlValue = txtMail.Text;
+            mail.Direction = ParameterDirection.Input;
 
-                else
-                {
-                    mail.SqlValue = txtMail.Text;
-                }  
-                
-                mail.Direction = ParameterDirection.Input;
+            modificarUsuario.Parameters.Add(usuario);
+            modificarUsuario.Parameters.Add(password);
+            modificarUsuario.Parameters.Add(idUf);
+            modificarUsuario.Parameters.Add(mail);
+            modificarUsuario.ExecuteNonQuery();
 
-                modificarUsuario.Parameters.Add(usuario);
-                modificarUsuario.Parameters.Add(password);
-                modificarUsuario.Parameters.Add(mail);
-                modificarUsuario.Parameters.Add(id);
-               
-                try{
-                modificarUsuario.ExecuteNonQuery();
-                }
-                catch (SqlException error)
-                {
-                    MessageBox.Show(error.Message);
-                }
+            SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+            nombre.SqlValue = txtNombre.Text;
+            nombre.Direction = ParameterDirection.Input;
 
-                SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtNombre.Text))
-                {
-                    nombre.SqlValue = DBNull.Value;
-                }
+            SqlParameter apellido = new SqlParameter("@apellido", SqlDbType.NVarChar, 255);
+            apellido.SqlValue = txtApellido.Text;
+            apellido.Direction = ParameterDirection.Input;
 
-                else
-                {
-                    nombre.SqlValue = txtNombre.Text;
-                } 
-                nombre.Direction = ParameterDirection.Input;
+            SqlParameter dni = new SqlParameter("@documento", SqlDbType.Decimal);
+            if (string.IsNullOrEmpty(txtDni.Text))
+            {
+                dni.SqlValue = DBNull.Value;
+            }
+            else
+            {
+                dni.SqlValue = Convert.ToDecimal(txtDni.Text);
+            }
+            dni.Direction = ParameterDirection.Input;
 
-                SqlParameter apellido = new SqlParameter("@apellido", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtApellido.Text))
-                {
-                    apellido.SqlValue = DBNull.Value;
-                }
+            SqlParameter tipoDoc = new SqlParameter("@tipoDeDocumento", SqlDbType.NVarChar, 255);
+            tipoDoc.SqlValue = (cmbTipoDoc.Text);
+            tipoDoc.Direction = ParameterDirection.Input;
 
-                else
-                {
-                    apellido.SqlValue = txtApellido.Text;
-                }
-                apellido.Direction = ParameterDirection.Input;
+            SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
+            telefono.SqlValue = txtTelefono.Text;
+            telefono.Direction = ParameterDirection.Input;
 
-                SqlParameter dni = new SqlParameter("@documento", SqlDbType.Int);
-                if (string.IsNullOrEmpty(txtDni.Text))
-                {
-                    dni.SqlValue = DBNull.Value;
-                }
+            SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Decimal);
+            if (string.IsNullOrEmpty(txtNroDeDireccion.Text))
+            {
+                direccion.SqlValue = DBNull.Value;
+            }
 
-                else
-                {
-                    dni.SqlValue = Convert.ToInt32(txtDni.Text);
-                }    
-                dni.Direction = ParameterDirection.Input;
+            else
+            {
+                direccion.SqlValue = Convert.ToDecimal(txtNroDeDireccion.Text);
+            }
+            direccion.Direction = ParameterDirection.Input;
 
-                SqlParameter tipoDoc = new SqlParameter("@tipoDeDocumento", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(cmbTipoDoc.Text))
-                {
-                    tipoDoc.SqlValue = DBNull.Value;
-                }
+            SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
+            calle.SqlValue = txtDireccion.Text;
+            calle.Direction = ParameterDirection.Input;
 
-                else
-                {
-                    tipoDoc.SqlValue = cmbTipoDoc.Text;
-                }    
-                tipoDoc.Direction = ParameterDirection.Input;
+            SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
+            if (string.IsNullOrEmpty(txtPiso.Text))
+            {
+                piso.SqlValue = DBNull.Value;
+            }
+            else
+            {
+                piso.SqlValue = Convert.ToDecimal(txtPiso.Text);
+            }
+            piso.Direction = ParameterDirection.Input;
 
-                SqlParameter idUser = new SqlParameter("@id", SqlDbType.Int);
-                idUser.Direction = ParameterDirection.Input;
-                if (idUsuario == null)
-                {
-                    idUser.SqlValue = DBNull.Value;
-                }
+            SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
+            depto.SqlValue = txtDepto.Text;
+            depto.Direction = ParameterDirection.Input;
 
-                else
-                {
-                    idUser.SqlValue = idUsuario;
-                }    
+            SqlParameter localidad = new SqlParameter("@localidad", SqlDbType.NVarChar, 255);
+            localidad.SqlValue = cmbLocalidad.SelectedText;
+            localidad.Direction = ParameterDirection.Input;
 
-                SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtTelefono.Text))
-                {
-                    telefono.SqlValue = DBNull.Value;
-                }
+            SqlParameter codigoPostal = new SqlParameter("@codigoPostal", SqlDbType.NVarChar, 255);
+            codigoPostal.SqlValue = txtCodigoPostal.Text;
+            codigoPostal.Direction = ParameterDirection.Input;
 
-                else
-                {
-                    telefono.SqlValue = txtTelefono.Text;
-                }       
-                telefono.Direction = ParameterDirection.Input;
+            SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
+            if(string.IsNullOrEmpty(txtFechaNac.Text))
+            {
+                fechaNac.SqlValue = DBNull.Value;
+            }
+            else
+            {
+            fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
+            }
+            SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
+            otroid.SqlValue = idUsuario;
+            otroid.Direction = ParameterDirection.Input;
 
-                SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
-                if (string.IsNullOrEmpty(txtNroDeDireccion.Text))
-                {
-                    direccion.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    direccion.SqlValue = Convert.ToInt32(txtNroDeDireccion.Text);
-                }
-                direccion.Direction = ParameterDirection.Input;
+            modificarCliente.Parameters.Add(otroid);
+            modificarCliente.Parameters.Add(dni);
+            modificarCliente.Parameters.Add(tipoDoc);
+            modificarCliente.Parameters.Add(nombre);
+            modificarCliente.Parameters.Add(apellido);
+            modificarCliente.Parameters.Add(telefono);
+            modificarCliente.Parameters.Add(direccion);
+            modificarCliente.Parameters.Add(calle);
+            modificarCliente.Parameters.Add(piso);
+            modificarCliente.Parameters.Add(depto);
+            modificarCliente.Parameters.Add(localidad);
+            modificarCliente.Parameters.Add(codigoPostal);
+            modificarCliente.Parameters.Add(fechaNac);
 
-                SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtDireccion.Text))
-                {
-                    calle.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    calle.SqlValue = txtDireccion.Text;
-                }    
-                calle.Direction = ParameterDirection.Input;
-
-                SqlParameter piso = new SqlParameter("@piso", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtPiso.Text))
-                {
-                    piso.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    piso.SqlValue = Convert.ToInt32(txtPiso.Text);
-                }   
-            
-            
-                piso.Direction = ParameterDirection.Input;
-
-                SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtDepto.Text))
-                {
-                    depto.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    depto.SqlValue = txtDepto.Text;
-                }   
-            
-                depto.Direction = ParameterDirection.Input;
-
-                SqlParameter localidad = new SqlParameter("@localidad", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(cmbLocalidad.Text))
-                {
-                    localidad.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    localidad.SqlValue = cmbLocalidad.Text;
-                }    
-            
-                localidad.Direction = ParameterDirection.Input;
-
-                SqlParameter codigoPostal = new SqlParameter("@codigoPostal", SqlDbType.NVarChar, 255);
-                if (string.IsNullOrEmpty(txtCodigoPostal.Text))
-                {
-                    codigoPostal.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    codigoPostal.SqlValue = txtCodigoPostal.Text;
-                }    
-            
-                codigoPostal.Direction = ParameterDirection.Input;
-
-                SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
-                if (string.IsNullOrEmpty(txtFechaNac.Text))
-                {
-                    fechaNac.SqlValue = DBNull.Value;
-                }
-                else
-                {
-                    fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
-                }   
-            
-
-                modificarCliente.Parameters.Add(idUser);
-                modificarCliente.Parameters.Add(dni);
-                modificarCliente.Parameters.Add(tipoDoc);
-                modificarCliente.Parameters.Add(nombre);
-                modificarCliente.Parameters.Add(apellido);
-                modificarCliente.Parameters.Add(telefono);
-                modificarCliente.Parameters.Add(direccion);
-                modificarCliente.Parameters.Add(calle);
-                modificarCliente.Parameters.Add(piso);
-                modificarCliente.Parameters.Add(depto);
-                modificarCliente.Parameters.Add(localidad);
-                modificarCliente.Parameters.Add(codigoPostal);
-                modificarCliente.Parameters.Add(fechaNac);
-                
-                try{
+            try
+            {
                 modificarCliente.ExecuteNonQuery();
-                }
-                catch (SqlException error)
-                {
-                    MessageBox.Show(error.Message);
-                }
+            }
+            catch (SqlException error)
+            {
+                MessageBox.Show(error.Message);
+            }
 
-                new frmABMUsuario().Show();
-                this.Close();
+            new frmABMUsuario().Show();
+            this.Close();
         }
 
         private void calendarioNac_DateSelected(object sender, DateRangeEventArgs e)
