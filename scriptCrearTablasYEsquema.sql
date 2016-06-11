@@ -131,7 +131,6 @@ CREATE  TABLE Compra (
   idPublicacion INT REFERENCES Publicacion(id) ,
   fecha DATETIME NULL ,
   cantidad INT NULL,
-  calificacionCodigo INT NULL,
   )
 
 CREATE  TABLE Oferta (

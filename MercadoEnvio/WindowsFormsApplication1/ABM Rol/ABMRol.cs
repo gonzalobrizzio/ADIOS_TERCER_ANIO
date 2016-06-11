@@ -16,10 +16,13 @@ namespace MercadoEnvios.ABM_Rol
     {
         Conexion conn;
         SqlDataAdapter da;
+        Sesion sesion = Sesion.Instance;
+        Form anterior;
 
         public frmABMRol()
         {
             InitializeComponent();
+            anterior = sesion.anterior;
             this.getData();
         }
 
@@ -41,8 +44,9 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new ABM_Rol.frmAgregarRol().Show();
-            this.Close();
+            this.Hide();
         }
 
         private void btnDeshabilitar_Click(object sender, EventArgs e)
@@ -98,8 +102,9 @@ namespace MercadoEnvios.ABM_Rol
             }
             else
             {
+                sesion.anterior = this;
                 new ABM_Rol.frmModificarRoles(Convert.ToInt32(dgvRoles.CurrentRow.Cells[0].Value), Convert.ToString(dgvRoles.CurrentRow.Cells[1].Value)).Show();
-                this.Close();
+                this.Hide();
             }
         }
 
@@ -110,8 +115,9 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            new ABM_Usuario.frmPantallaPrincipal("Administrativo").Show();
-            this.Close();
+            sesion.anterior = this;
+            new ABM_Usuario.frmPantallaPrincipal().Show();
+            this.Hide();
         }
 
         private void btnFuncRol_Click(object sender, EventArgs e)
@@ -123,12 +129,23 @@ namespace MercadoEnvios.ABM_Rol
             else
             if(dgvRoles.SelectedRows.Count == 1){
                 DataGridViewRow rowPrincipal =  dgvRoles.SelectedRows[0];
+                sesion.anterior = this;
                 new ABM_Rol.frmVerFuncRol(Convert.ToInt32(rowPrincipal.Cells[0].Value), Convert.ToString(rowPrincipal.Cells[1].Value)).Show();
-                this.Close();
+                this.Hide();
             }
             else{
                 MessageBox.Show("Debe seleccionar un rol", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void frmABMRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
+        }
+
+        private void frmABMRol_Shown(object sender, EventArgs e)
+        {
+            sesion.anterior = anterior;
         }
 
     }
