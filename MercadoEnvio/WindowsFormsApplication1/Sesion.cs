@@ -8,21 +8,23 @@ namespace MercadoEnvios
     sealed class Sesion
     {
         public int idUsuario;
-        public string[] idRol = {null, null, null, null, null};
-        public int cantidadRoles;
+        public int idRol;
+        private static Sesion instance;
+
+        public Sesion(int usr, int rol)
+        {
+            instance = this;
+            this.idUsuario = usr;
+            this.idRol = rol;
+        }
 
         public static Sesion Instance
         {
             get
             {
-                return new Sesion();
+                return instance;
             }
         }
 
-        public void agregarRol(string rol){
-            int i = 0;
-            while (this.idRol[i] != null) i++;
-            idRol[i] = String.Copy(rol);
-        }
     }
 }

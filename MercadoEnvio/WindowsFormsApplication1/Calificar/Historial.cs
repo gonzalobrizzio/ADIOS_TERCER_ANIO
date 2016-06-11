@@ -189,7 +189,6 @@ namespace MercadoEnvios.Calificar
             lblSubastas5.Text = Convert.ToInt32(obtenerCantidad.Parameters["@cant"].Value).ToString();
 
             obtenerCantidad.Parameters.Clear();
-            // FALTA hacer los counts
         }
     }
 }

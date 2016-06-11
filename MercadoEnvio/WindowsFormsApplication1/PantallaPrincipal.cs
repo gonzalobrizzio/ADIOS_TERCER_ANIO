@@ -12,9 +12,13 @@ namespace MercadoEnvios.ABM_Usuario
 {
     public partial class frmPantallaPrincipal : Form
     {
+        Sesion sesion = Sesion.Instance;
+
         public frmPantallaPrincipal(String rol)
         {
             InitializeComponent();
+            label1.Text = sesion.idUsuario.ToString() + " asdad   " + sesion.idRol.ToString();
+
             if (rol.Equals("Administrativo")) {
                 btnCalificarVendedor.Visible = false;
                 btnComprarOfertar.Visible = false;
@@ -41,7 +45,8 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnComprarOfertar_Click(object sender, EventArgs e)
         {
-
+            new ComprarOfertar.ComprarOfertar().Show();
+            this.Hide();
         }
 
         private void btnABMUsuario_Click(object sender, EventArgs e)

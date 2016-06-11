@@ -155,11 +155,11 @@
     <Compile Include="ABM Visibilidad\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComprarOfertar\Form1.cs">
+    <Compile Include="ComprarOfertar\ComprarOfertar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComprarOfertar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ComprarOfertar\ComprarOfertar.Designer.cs">
+      <DependentUpon>ComprarOfertar.cs</DependentUpon>
     </Compile>
     <Compile Include="Conexion.cs" />
     <Compile Include="Facturas\Form1.cs">
@@ -247,8 +247,8 @@
     <EmbeddedResource Include="PantallaPrincipal.resx">
       <DependentUpon>PantallaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComprarOfertar\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ComprarOfertar\ComprarOfertar.resx">
+      <DependentUpon>ComprarOfertar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login y Seguridad\Ingresar.resx">
       <DependentUpon>Ingresar.cs</DependentUpon>

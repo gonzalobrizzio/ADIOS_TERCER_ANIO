@@ -12,6 +12,8 @@ namespace MercadoEnvios.ABM_Rol
 {
     public partial class frmElegirRol : Form
     {
+        Sesion sesion = Sesion.Instance;
+
         public frmElegirRol(string roles)
         {
             InitializeComponent();
@@ -21,33 +23,29 @@ namespace MercadoEnvios.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-
                 if (cboRol.SelectedItem == null)
                 {
                     MessageBox.Show("No ha seleccionado un rol valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 else if ((cboRol.SelectedItem).Equals("Administrativo"))
                 {
+                    sesion.idRol = 1;
                     new ABM_Usuario.frmPantallaPrincipal("Administrativo").Show();
                     this.Close();
                 }
                 else if ((cboRol.SelectedItem).Equals("Cliente"))
                 {
+                    sesion.idRol = 2;
                     new ABM_Usuario.frmPantallaPrincipal("Cliente").Show();
                     this.Close();
                 }
                 else if ((cboRol.SelectedItem).Equals("Empresa"))
                 {
+                    sesion.idRol = 3;
                     new ABM_Usuario.frmPantallaPrincipal("Empresa").Show();
                     this.Close();
                 }
 
         }
-
-        private void frmElegirRol_Load(object sender, EventArgs e)
-        {
-
-        }
-
         }
     }

@@ -379,17 +379,16 @@ BEGIN
 --	declare @idUsuario int = 17;
 --	declare @pagina INT = 235;
 
-	declare @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion where publicacion.idPublicador != @idUsuario) - @pagina * 20;
+	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion where publicacion.idPublicador != @idUsuario) - @pagina * 20;
 	
-	with hola as (select TOP (@cant) publicacion.descripcion, publicacion.id, visib.porcentaje from ADIOS_TERCER_ANIO.Publicacion publicacion
+	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, publicacion.tipo, publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario ORDER BY visib.porcentaje asc, publicacion.id ASC)
-	
-	SELECT top 20 * FROM hola ORDER by hola.porcentaje desc, hola.id desc
+	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
+
+	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
 END
 
 GO 
-
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
