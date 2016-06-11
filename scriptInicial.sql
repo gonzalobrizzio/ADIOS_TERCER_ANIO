@@ -289,22 +289,22 @@ END
 GO
 
 --SP PARA MIGRAR LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
---OK SUPER CHEQUEADO 05/06/2016 (NO MODIFICAR, borrar linea para entrega)
+--OK SUPER CHEQUEADO 11/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
-	SELECT DISTINCT
+	SELECT DISTINCT -- EL DISTINCT ES PORQUE HAY COMPRAS REPETIDAS DE MISMA CANTDAD AL MISMO INSTANTE EN LA MISMA FECHA, LAS ASUMO COMO DUPLICADA POR ERROR
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
 		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
 		Compra_Fecha																			AS fecha,
 		Compra_Cantidad																			AS cantidad
 	FROM gd_esquema.MAESTRA
 	WHERE 
-		Compra_Fecha IS NOT NULL
+		Compra_Cantidad IS NOT NULL
 	AND 
-		Compra_Cantidad IS NOT NULL	
+		Calificacion_Codigo IS NULL	
 	AND
 		Cli_Dni IS NOT NULL
 	AND 
@@ -364,7 +364,6 @@ END
 GO
 
 --SP PARA MIGRAR LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
---TODO: Revisar que funcione bien al 05/06/2016
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCalificaciones]
 AS BEGIN
 	set nocount on;
@@ -372,14 +371,35 @@ AS BEGIN
 
 	INSERT INTO 
 		ADIOS_TERCER_ANIO.Calificacion(idCompra, fecha, puntaje, detalle, pendiente)
-	SELECT	
-		NULL																		AS idCompra, --TODO sacar el id de compra
+	SELECT DISTINCT --EL DISTINCT VA PARA ELIMINAR LAS CALIFICACIONES IGUALES DE LAS COMPRAS QUE ESTABAN DOS VECES AL MISMO INSTANTE Y POR LA MISMA CANTIDAD DE PRODUCTOS
+		(select id from ADIOS_TERCER_ANIO.Compra c where (c.idPublicacion = (select id 
+																			from ADIOS_TERCER_ANIO.Publicacion p
+																			where p.codAnterior = m.Publicacion_Cod) 
+															and ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) = c.idComprador 
+															and m.Compra_Fecha = c.fecha)
+															and m.Compra_Cantidad = c.cantidad)	AS idCompra,
 		Compra_Fecha																AS fecha,
 		ADIOS_TERCER_ANIO.funcConvertirCalificacion(Calificacion_Cant_Estrellas)	AS puntaje,
 		Calificacion_Descripcion													AS detalle,
 		0																			AS pendiente
-	FROM gd_esquema.Maestra
+	FROM gd_esquema.Maestra m
 	WHERE Calificacion_Codigo IS NOT NULL
+	
+	--ELIMINO LAS CALIFICACIONES DUPLICADAS QUE ARRASTRO DE HABER TENIDO COMPRAS DUPLICADAS
+	DELETE FROM ADIOS_TERCER_ANIO.Calificacion
+	WHERE id IN(
+		SELECT MIN(id)
+		FROM ADIOS_TERCER_ANIO.Calificacion
+		WHERE idCompra IN (
+			SELECT idCompra
+			FROM ADIOS_TERCER_ANIO.Calificacion
+			GROUP BY idCompra
+			HAVING count( idCompra ) > 1
+		)
+		GROUP BY idCompra
+	)
+
+
 END
 GO
 
