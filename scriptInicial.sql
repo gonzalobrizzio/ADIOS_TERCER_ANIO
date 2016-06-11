@@ -280,7 +280,7 @@ AS BEGIN
 			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
 		END																						AS idVendedor,
 		(SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre LIKE Forma_Pago_Desc)		AS idFormaDePago,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
+		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
 	FROM 
 		gd_esquema.Maestra
 	WHERE
@@ -297,7 +297,7 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 	SELECT DISTINCT -- EL DISTINCT ES PORQUE HAY COMPRAS REPETIDAS DE MISMA CANTDAD AL MISMO INSTANTE EN LA MISMA FECHA, LAS ASUMO COMO DUPLICADA POR ERROR
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
-		(select id from ADIOS_TERCER_ANIO.Publicacion p where p.codAnterior = Publicacion_Cod)	AS idPublicacion,
+		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion,
 		Compra_Fecha																			AS fecha,
 		Compra_Cantidad																			AS cantidad
 	FROM gd_esquema.MAESTRA
@@ -325,7 +325,7 @@ AS BEGIN
 		Oferta_Monto																			AS monto,
 		Oferta_Fecha																			AS fecha,
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador, 
-		(SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod)	AS idPublicacion
+		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Oferta_Monto IS NOT NULL
@@ -346,7 +346,7 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idCompra, idFactura)
+		INSERT INTO ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idFactura)
 			SELECT 
 				CASE 
 					WHEN Item_Factura_Monto = Publicacion_Visibilidad_Precio THEN 'Costo Publicacion '+Publicacion_Visibilidad_Desc
@@ -354,7 +354,6 @@ AS BEGIN
 				END																						AS nombre,
 				Item_Factura_Monto																		AS precio,
 				Item_Factura_Cantidad																	AS cantidad,
-				NULL AS idCompra, --(SELECT id FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion = ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod))	AS idCompra,
 				(SELECT id FROM ADIOS_TERCER_ANIO.Factura f WHERE f.numero = Factura_Nro)				AS idFactura
 			FROM 
 				gd_esquema.Maestra
@@ -364,6 +363,7 @@ END
 GO
 
 --SP PARA MIGRAR LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+--OK SUPER CHEQUEADO 11/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCalificaciones]
 AS BEGIN
 	set nocount on;
@@ -372,9 +372,8 @@ AS BEGIN
 	INSERT INTO 
 		ADIOS_TERCER_ANIO.Calificacion(idCompra, fecha, puntaje, detalle, pendiente)
 	SELECT DISTINCT --EL DISTINCT VA PARA ELIMINAR LAS CALIFICACIONES IGUALES DE LAS COMPRAS QUE ESTABAN DOS VECES AL MISMO INSTANTE Y POR LA MISMA CANTIDAD DE PRODUCTOS
-		(select id from ADIOS_TERCER_ANIO.Compra c where (c.idPublicacion = (select id 
-																			from ADIOS_TERCER_ANIO.Publicacion p
-																			where p.codAnterior = m.Publicacion_Cod) 
+		(select id from ADIOS_TERCER_ANIO.Compra c where (c.idPublicacion = 
+															ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)
 															and ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni) = c.idComprador 
 															and m.Compra_Fecha = c.fecha)
 															and m.Compra_Cantidad = c.cantidad)	AS idCompra,
@@ -406,7 +405,7 @@ GO
 
 
 --SP PARA MIGRAR LAS PUBLICACIONES DE EMPRESAS/CLIENTES QUE HAY EN LA TABLA MAESTRA
---TODO: NOK 05/06/2016 LA MIGRACION DE PUBLICACIONES ESTA OK SUPERCHEQUEADA, FALTA VER EL TEMA DEL ENVIO
+--OK SUPER CHEQUEADO 11/06/2016 (NO MODIFICAR, borrar linea para entrega)
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarPublicaciones]
 AS BEGIN
 	set nocount on;
@@ -433,7 +432,7 @@ AS BEGIN
 		Publicacion_Fecha_Venc																			AS fechaFin,
 		0																								AS tienePreguntas, --NO VIENEN CON PREGUNTAS, por eso el cero
 		Publicacion_Tipo																				AS tipo,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa' )								AS idEstado, --El cambio de estado se tiene que hacer en C#
+		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )							AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)		AS idVisibilidad,
 		CASE 
@@ -442,7 +441,7 @@ AS BEGIN
 		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock																				AS stock,
-		NULL																							AS idEnvio, --TODO definir si se usa o se borra
+		NULL																							AS idEnvio, --LAS PUBLICACIONES DE LA BASE MAESTRA NO TIENE ENVIO
 		Publicacion_Cod																					AS idPublicacion
 	FROM 
 		gd_esquema.Maestra
@@ -456,6 +455,7 @@ AS BEGIN
 			Factura_Nro IS NULL 
 		AND 
 			Compra_Cantidad IS NULL
+	ORDER BY Publicacion_Cod DESC
 END
 GO
 
@@ -503,16 +503,16 @@ CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerIdPublicacionDesdeCodigoVIejo](@
 RETURNS INTEGER
 AS
 BEGIN
-	DECLARE @retorno INTEGER
-	SELECT 
-		@retorno = id 
-	FROM ADIOS_TERCER_ANIO.Publicacion p 
-	WHERE p.codAnterior = @Publicacion_Cod
+	--REEMPLAZA
+	-- SELECT id FROM ADIOS_TERCER_ANIO.Publicacion p WHERE p.codAnterior = Publicacion_Cod
+	-- PARA ELIMINAR LA COLUMNA DE MAS
+	DECLARE @retorno NUMERIC(18,0)
+	
+	SET @retorno = @Publicacion_Cod - 12352
 
 	RETURN @retorno;
 END
 GO
-
 
 -- 	FUNC PARA CONVERTIR LA CALIFICACION ANTERIOR, EN LA NUEVA
 CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcConvertirCalificacion](@valorViejo NUMERIC(18,0))

@@ -170,7 +170,6 @@ CREATE  TABLE Item (
   nombre NVARCHAR(255) NULL ,
   precio DECIMAL(18,2) NULL ,
   cantidad INT NULL ,
-  idCompra INT REFERENCES Compra(id) ,
   idFactura INT REFERENCES Factura(id) ,
   )
 
