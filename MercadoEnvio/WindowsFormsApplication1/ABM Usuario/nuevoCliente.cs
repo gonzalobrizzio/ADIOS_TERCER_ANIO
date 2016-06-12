@@ -22,27 +22,26 @@ namespace MercadoEnvios.ABM_Usuario
         public frmNuevoCliente(string rol)
         {
             InitializeComponent();
-            calendarioNac.Visible = false;
             conn = Conexion.Instance;
             rolU = rol;
 
-            txtMail.MaxLength = 30;
-            txtUsr.MaxLength = 20;
-            txtContrasenia.MaxLength = 20;
-            txtDni.MaxLength = 8;
-            txtDireccion.MaxLength = 5;
-            txtCodigoPostal.MaxLength = 4;
-            txtNroDeDireccion.MaxLength = 20;
-            txtDepto.MaxLength = 3;
-            txtTelefono.MaxLength = 11;
-            txtPiso.MaxLength = 3;
+            campoMail.MaxLength = 30;
+            campoUsuario.MaxLength = 20;
+            campoContrasenia.MaxLength = 20;
+            campoNroDeDoc.MaxLength = 8;
+            campoDireccion.MaxLength = 30;
+            campoCodigoPostal.MaxLength = 4;
+            campoNroDeDireccion.MaxLength = 5;
+            campoDepto.MaxLength = 3;
+            campoTelefono.MaxLength = 11;
+            campoPiso.MaxLength = 3;
 
             string queryTiposDeDoc = "SELECT DISTINCT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento";
             SqlCommand buscarTiposDeDoc = new SqlCommand(queryTiposDeDoc, conn.getConexion);
             dataReader = buscarTiposDeDoc.ExecuteReader();
             while (dataReader.Read())
             {
-                cmbTipoDoc.Items.Add(dataReader.GetString(0));
+                comboTipoDeDocumento.Items.Add(dataReader.GetString(0));
             }
 
             dataReader.Close();
@@ -52,7 +51,7 @@ namespace MercadoEnvios.ABM_Usuario
             dataReader = buscarLocalidades.ExecuteReader();
             while (dataReader.Read())
             {
-                cmbLocalidad.Items.Add(dataReader.GetString(0));
+                comboLocalidad.Items.Add(dataReader.GetString(0));
             }
 
             dataReader.Close();
@@ -68,33 +67,35 @@ namespace MercadoEnvios.ABM_Usuario
         {
             
 
-            bool usuarioB = this.funcionesValidacion.validarNoVacio(txtUsr, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(txtContrasenia, mensajeDeAviso);
-            bool mailB = this.funcionesValidacion.validarNoVacio(txtMail, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(txtNombre, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(txtApellido, mensajeDeAviso);
-            bool dniB = this.funcionesValidacion.validarNoVacio(txtDni, mensajeDeAviso);
-            this.funcionesValidacion.validarNumerico(txtDni, mensajeDeAviso);
-            bool tipoB = this.funcionesValidacion.validarComboVacio(cmbTipoDoc, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(txtDireccion, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(txtCodigoPostal, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(txtFechaNac, mensajeDeAviso);
+            bool usuarioB = this.funcionesValidacion.validarNoVacio(campoUsuario, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoContrasenia, mensajeDeAviso);
+            bool mailB = this.funcionesValidacion.validarNoVacio(campoMail, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoNombre, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoApellido, mensajeDeAviso);
+            bool dniB = this.funcionesValidacion.validarNoVacio(campoNroDeDoc, mensajeDeAviso);
+            this.funcionesValidacion.validarNumerico(campoNroDeDoc, mensajeDeAviso);
+            bool tipoB = this.funcionesValidacion.validarComboVacio(comboTipoDeDocumento, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoDireccion, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoCodigoPostal, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoFechaDeNacimiento, mensajeDeAviso);
+            this.funcionesValidacion.validarNumerico(campoNroDeDireccion, mensajeDeAviso);
+            this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
             
             bool validaciones;
 
             if (usuarioB)
             {
-                this.funcionesValidacion.validarUsuario(txtUsr, mensajeDeAviso);
+                this.funcionesValidacion.validarUsuario(campoUsuario, mensajeDeAviso);
             }
 
             if(dniB && tipoB) 
             {
-                this.funcionesValidacion.validarDNI(cmbTipoDoc.Text,txtDni,mensajeDeAviso);
+                this.funcionesValidacion.validarDNI(comboTipoDeDocumento.Text,campoNroDeDoc,mensajeDeAviso);
             }
 
             if (mailB)
             {
-                this.funcionesValidacion.validarEmail(txtMail, mensajeDeAviso);
+                this.funcionesValidacion.validarEmail(campoMail, mensajeDeAviso);
             }
 
             if (mensajeDeAviso.Length > 0)
@@ -117,11 +118,11 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarRolUsuario.CommandType = System.Data.CommandType.StoredProcedure;
 
                 SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
-                usuario.SqlValue = txtUsr.Text;
+                usuario.SqlValue = campoUsuario.Text;
                 usuario.Direction = ParameterDirection.Input;
 
                 SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
-                password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
+                password.SqlValue = Utilidades.encriptarCadenaSHA256(campoContrasenia.Text);
                 password.Direction = ParameterDirection.Input;
 
                 SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
@@ -129,7 +130,7 @@ namespace MercadoEnvios.ABM_Usuario
                 idUsuario.SqlDbType = SqlDbType.Int;
 
                 SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
-                mail.SqlValue = txtMail.Text;
+                mail.SqlValue = campoMail.Text;
                 mail.Direction = ParameterDirection.Input;
 
                 agregarUsuario.Parameters.Add(usuario);
@@ -167,73 +168,73 @@ namespace MercadoEnvios.ABM_Usuario
                 }
 
                 SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                nombre.SqlValue = txtNombre.Text;
+                nombre.SqlValue = campoNombre.Text;
                 nombre.Direction = ParameterDirection.Input;
 
                 SqlParameter apellido = new SqlParameter("@apellido", SqlDbType.NVarChar, 255);
-                apellido.SqlValue = txtApellido.Text;
+                apellido.SqlValue = campoApellido.Text;
                 apellido.Direction = ParameterDirection.Input;
 
                 SqlParameter dni = new SqlParameter("@documento", SqlDbType.Decimal);
-                if (string.IsNullOrEmpty(txtDni.Text))
+                if (string.IsNullOrEmpty(campoNroDeDoc.Text))
                 {
                     dni.SqlValue = DBNull.Value;
                 }
                 else
                 {
-                    dni.SqlValue = Convert.ToDecimal(txtDni.Text);
+                    dni.SqlValue = Convert.ToDecimal(campoNroDeDoc.Text);
                 }
                 dni.Direction = ParameterDirection.Input;
 
                 SqlParameter tipoDoc = new SqlParameter("@tipoDeDocumento", SqlDbType.NVarChar, 255);
-                tipoDoc.SqlValue = (cmbTipoDoc.Text);
+                tipoDoc.SqlValue = (comboTipoDeDocumento.Text);
                 tipoDoc.Direction = ParameterDirection.Input;
 
                 SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
-                telefono.SqlValue = txtTelefono.Text;
+                telefono.SqlValue = campoTelefono.Text;
                 telefono.Direction = ParameterDirection.Input;
 
                 SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Decimal);
-                if (string.IsNullOrEmpty(txtNroDeDireccion.Text))
+                if (string.IsNullOrEmpty(campoNroDeDireccion.Text))
                 {
                     direccion.SqlValue = DBNull.Value;
                 }
 
                 else
                 {
-                    direccion.SqlValue = Convert.ToDecimal(txtNroDeDireccion.Text);
+                    direccion.SqlValue = Convert.ToDecimal(campoNroDeDireccion.Text);
                 }
                 direccion.Direction = ParameterDirection.Input;
 
                 SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
-                calle.SqlValue = txtDireccion.Text;
+                calle.SqlValue = campoDireccion.Text;
                 calle.Direction = ParameterDirection.Input;
 
                 SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
-                if (string.IsNullOrEmpty(txtPiso.Text))
+                if (string.IsNullOrEmpty(campoPiso.Text))
                 {
                     piso.SqlValue = DBNull.Value;
                 }
                 else
                 {
-                    piso.SqlValue = Convert.ToDecimal(txtPiso.Text);
+                    piso.SqlValue = Convert.ToDecimal(campoPiso.Text);
                 }
                 piso.Direction = ParameterDirection.Input;
 
                 SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
-                depto.SqlValue = txtDepto.Text;
+                depto.SqlValue = campoDepto.Text;
                 depto.Direction = ParameterDirection.Input;
 
                 SqlParameter localidad = new SqlParameter("@localidad", SqlDbType.NVarChar, 255);
-                localidad.SqlValue = cmbLocalidad.SelectedText;
+                localidad.SqlValue = comboLocalidad.SelectedText;
                 localidad.Direction = ParameterDirection.Input;
 
                 SqlParameter codigoPostal = new SqlParameter("@codigoPostal", SqlDbType.NVarChar, 255);
-                codigoPostal.SqlValue = txtCodigoPostal.Text;
+                codigoPostal.SqlValue = campoCodigoPostal.Text;
                 codigoPostal.Direction = ParameterDirection.Input;
 
                 SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
-                fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
+                fechaNac.SqlValue = DateTime.Parse(campoFechaDeNacimiento.Text);
 
                 SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
                 otroid.SqlValue = ultimoIdRol;
@@ -266,21 +267,11 @@ namespace MercadoEnvios.ABM_Usuario
             }
         }
 
-        private void btnSeleccionar_Click(object sender, EventArgs e)
-        {
-            calendarioNac.Visible = true;
-        }
 
         private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
         {
-            txtFechaNac.Clear();
-            txtFechaNac.AppendText(calendarioNac.SelectionStart.ToShortDateString());
-            calendarioNac.Visible = false;
-
-        }
-
-        private void frmNuevoCliente_Load(object sender, EventArgs e)
-        {
+            campoFechaDeNacimiento.Clear();
+            campoFechaDeNacimiento.AppendText(calendarioNac.SelectionStart.ToShortDateString());
 
         }
 

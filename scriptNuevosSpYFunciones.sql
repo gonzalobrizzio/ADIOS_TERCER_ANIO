@@ -182,7 +182,7 @@ AS BEGIN
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se ha podido asignar el usuario', 1; 
+		THROW 50004, 'No se ha podido asignar un rol al usuario', 1; 
 	END CATCH
 	COMMIT TRANSACTION
 END
@@ -203,18 +203,21 @@ AS BEGIN
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
-		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
+		THROW 50004, 'El usuario no se ha podido modificar', 1; 
 	END CATCH
 	COMMIT TRANSACTION
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(255), 
-													   @direccion INT, @calle NVARCHAR(255), @piso INT, @depto NVARCHAR(50), @localidad NVARCHAR(255),
+ALTER PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(20), 
+													   @direccion DECIMAL(18,0), @calle NVARCHAR(255), @piso DECIMAL(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
 													   @rubro NVARCHAR(255))
 AS
 BEGIN
+
+		IF(@cuit NOT LIKE '%-%-%')
+		THROW 50004, 'Necesita ingresar un cuit valido', 1;
 
 	BEGIN TRANSACTION
 	BEGIN TRY
@@ -235,30 +238,30 @@ BEGIN
 										  idLocalidad,
 										  calificacionPromedio,
 										  fechaCreacion) 
-	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM Rubro WHERE descripcionCorta = @rubro),
-		    @id, (SELECT id FROM Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro),
+		    @id, (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se puede agregar al usuario', 1; 
+		THROW 50004, 'No se puede agregar al usuario de tipo Empresa', 1; 
 	END CATCH
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(255), 
-													     @direccion INT, @calle NVARCHAR(255), @piso NUMERIC(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
-													     @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
-													     @rubro NVARCHAR(255))
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(20), 
+														 @direccion DECIMAL(18,0), @calle NVARCHAR(255), @piso DECIMAL(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
+														 @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
+														 @rubro NVARCHAR(255))
 AS
 BEGIN
 
 	BEGIN TRANSACTION
 	BEGIN TRY
-	
 	UPDATE ADIOS_TERCER_ANIO.Empresa
-	SET razonSocial = @razonSocial, telefono = @telefono,direccion_numero = @calle, direccion = @direccion, piso = @piso,
-	    dpto = @depto, codigoPostal = @codigoPostal, cuit = @cuit, contacto = @contacto, idRubro = (SELECT id FROM Rubro WHERE descripcionCorta = @rubro),
-	    idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE id = @id
+	SET razonSocial = @razonSocial, telefono = @telefono, direccion = @calle, direccion_numero = @direccion, piso = @piso, dpto = @depto,
+		idLocalidad= (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), codigoPostal = @codigoPostal, cuit = @cuit, contacto = @contacto,
+		idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro)
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -313,7 +316,7 @@ BEGIN
 	BEGIN TRY
 	UPDATE ADIOS_TERCER_ANIO.Persona
 	SET nombre = @nombre, apellido = @apellido, idTipoDocumento = (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
-				 telefono = @telefono,direccion_numero = @calle, direccion = @direccion, piso = @piso, dpto = @depto, codigoPostal = @codigoPostal, 
+				 telefono = @telefono,direccion_numero = @direccion, direccion = @calle, piso = @piso, dpto = @depto, codigoPostal = @codigoPostal, 
 				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE @id = idUsuario
 	 
 	END TRY
@@ -324,7 +327,6 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-
 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.validarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
 AS
@@ -385,4 +387,3 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-

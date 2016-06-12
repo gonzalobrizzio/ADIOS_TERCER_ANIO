@@ -39,7 +39,6 @@ namespace MercadoEnvios.ABM_Usuario
             dgvClientes.Columns[0].Visible = false;
             dgvClientes.Columns[1].Width = 150;
             dgvClientes.Columns[2].Width = 150;
-            dgvClientes.Columns[3].Width = 50;
 
             String queryAdm = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Usuario u "
                                + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE ru.idRol = 3";
@@ -53,7 +52,7 @@ namespace MercadoEnvios.ABM_Usuario
             dgvEmpresas.AllowUserToAddRows = false;
             dgvEmpresas.AllowUserToDeleteRows = false;
             dgvEmpresas.ReadOnly = true;
-            dgvEmpresas.Columns[0].Visible = false;
+            dgvEmpresas.Columns[0].Visible = true;
             dgvEmpresas.Columns[1].Width = 150;
             dgvEmpresas.Columns[2].Width = 150;
 
@@ -76,25 +75,8 @@ namespace MercadoEnvios.ABM_Usuario
         {
             if (dgvClientes.SelectedRows == null)
             {
-                if (dgvEmpresas.SelectedRows == null)
-                {
-                    MessageBox.Show("Debe seleccionar un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE @idUsuario = id";
-                    SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                    SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-                    idUsuario.Direction = ParameterDirection.Input;
-                    actualizacion.Parameters.Add(idUsuario);
-                    foreach (DataGridViewRow rows in dgvEmpresas.SelectedRows)
-                    {
-                        idUsuario.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
-                        actualizacion.ExecuteNonQuery();
-                    }
-
-                    this.getData();
-                }
+                MessageBox.Show("Debe seleccionar un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
             }
             else
             {
@@ -117,25 +99,8 @@ namespace MercadoEnvios.ABM_Usuario
         {
             if (dgvClientes.SelectedRows == null)
             {
-                if (dgvEmpresas.SelectedRows == null)
-                {
-                    MessageBox.Show("Debe seleccionar un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else 
-                {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0 WHERE @idUsuario = id";
-                    SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                    SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-                    idUsuario.Direction = ParameterDirection.Input;
-                    actualizacion.Parameters.Add(idUsuario);
-                    foreach (DataGridViewRow rows in dgvEmpresas.SelectedRows)
-                    {
-                        idUsuario.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
-                        actualizacion.ExecuteNonQuery();
-                    }
-
-                    this.getData();
-                }
+                MessageBox.Show("Debe seleccionar un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
             }
             else
             {
@@ -159,16 +124,8 @@ namespace MercadoEnvios.ABM_Usuario
 
             if (dgvClientes.SelectedRows == null || dgvClientes.SelectedRows.Count > 1)
             {
-                if (dgvEmpresas.SelectedRows == null || dgvEmpresas.SelectedRows.Count > 1)
-                {
-                    MessageBox.Show("Debe elegir un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-                else 
-                {
-                    new frmModificarEmpresa(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value)).Show();
-                    this.Close();
 
-                }
+                MessageBox.Show("Debe elegir un usuario de Clientes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             else
             {
@@ -181,6 +138,66 @@ namespace MercadoEnvios.ABM_Usuario
         private void frmABMUsuario_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnModificarCliente_Click(object sender, EventArgs e)
+        {
+            if (dgvEmpresas.SelectedRows == null || dgvEmpresas.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Debe elegir un usuario de Empresas", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            else
+            {
+                new frmModificarEmpresa(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value)).Show();
+                this.Close();
+
+            }
+        }
+
+        private void btnHabilitarEmpresa_Click(object sender, EventArgs e)
+        {
+            if (dgvEmpresas.SelectedRows == null)
+            {
+                MessageBox.Show("Debe seleccionar un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0 WHERE @idUsuario = id";
+                SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+                idUsuario.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idUsuario);
+                foreach (DataGridViewRow rows in dgvEmpresas.SelectedRows)
+                {
+                    idUsuario.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
+                    actualizacion.ExecuteNonQuery();
+                }
+
+                this.getData();
+            }
+        }
+
+        private void btnDeshabilitarEmpresa_Click(object sender, EventArgs e)
+        {
+            if (dgvEmpresas.SelectedRows == null)
+            {
+                MessageBox.Show("Debe seleccionar un usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE @idUsuario = id";
+                SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+                idUsuario.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idUsuario);
+                foreach (DataGridViewRow rows in dgvEmpresas.SelectedRows)
+                {
+                    idUsuario.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
+                    actualizacion.ExecuteNonQuery();
+                }
+
+                this.getData();
+            }
         }
 
         }

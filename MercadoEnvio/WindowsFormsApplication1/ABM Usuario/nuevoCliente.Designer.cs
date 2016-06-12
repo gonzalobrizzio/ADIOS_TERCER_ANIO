@@ -42,26 +42,25 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.cmbTipoDoc = new System.Windows.Forms.ComboBox();
+            this.comboTipoDeDocumento = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtNombre = new System.Windows.Forms.TextBox();
-            this.txtApellido = new System.Windows.Forms.TextBox();
-            this.txtDni = new System.Windows.Forms.TextBox();
-            this.txtTelefono = new System.Windows.Forms.TextBox();
-            this.txtDireccion = new System.Windows.Forms.TextBox();
-            this.txtNroDeDireccion = new System.Windows.Forms.TextBox();
-            this.txtDepto = new System.Windows.Forms.TextBox();
-            this.txtPiso = new System.Windows.Forms.TextBox();
-            this.txtCodigoPostal = new System.Windows.Forms.TextBox();
-            this.cmbLocalidad = new System.Windows.Forms.ComboBox();
+            this.campoNombre = new System.Windows.Forms.TextBox();
+            this.campoApellido = new System.Windows.Forms.TextBox();
+            this.campoNroDeDoc = new System.Windows.Forms.TextBox();
+            this.campoTelefono = new System.Windows.Forms.TextBox();
+            this.campoDireccion = new System.Windows.Forms.TextBox();
+            this.campoNroDeDireccion = new System.Windows.Forms.TextBox();
+            this.campoDepto = new System.Windows.Forms.TextBox();
+            this.campoPiso = new System.Windows.Forms.TextBox();
+            this.campoCodigoPostal = new System.Windows.Forms.TextBox();
+            this.comboLocalidad = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtMail = new System.Windows.Forms.TextBox();
-            this.txtContrasenia = new System.Windows.Forms.TextBox();
-            this.txtUsr = new System.Windows.Forms.TextBox();
+            this.campoMail = new System.Windows.Forms.TextBox();
+            this.campoContrasenia = new System.Windows.Forms.TextBox();
+            this.campoUsuario = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtFechaNac = new System.Windows.Forms.TextBox();
-            this.btnSeleccionar = new System.Windows.Forms.Button();
+            this.campoFechaDeNacimiento = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnAceptar
@@ -118,7 +117,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Codigo Postal:";
+            this.label4.Text = "Código Postal:";
             // 
             // label9
             // 
@@ -152,9 +151,9 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(39, 168);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
+            this.label13.Size = new System.Drawing.Size(118, 13);
             this.label13.TabIndex = 14;
-            this.label13.Text = "DNI:";
+            this.label13.Text = "Número de documento:";
             // 
             // calendarioNac
             // 
@@ -191,13 +190,13 @@
             this.label15.TabIndex = 30;
             this.label15.Text = "Depto.:";
             // 
-            // cmbTipoDoc
+            // comboTipoDeDocumento
             // 
-            this.cmbTipoDoc.FormattingEnabled = true;
-            this.cmbTipoDoc.Location = new System.Drawing.Point(149, 191);
-            this.cmbTipoDoc.Name = "cmbTipoDoc";
-            this.cmbTipoDoc.Size = new System.Drawing.Size(81, 21);
-            this.cmbTipoDoc.TabIndex = 7;
+            this.comboTipoDeDocumento.FormattingEnabled = true;
+            this.comboTipoDeDocumento.Location = new System.Drawing.Point(149, 191);
+            this.comboTipoDeDocumento.Name = "comboTipoDeDocumento";
+            this.comboTipoDeDocumento.Size = new System.Drawing.Size(81, 21);
+            this.comboTipoDeDocumento.TabIndex = 7;
             // 
             // label5
             // 
@@ -208,76 +207,76 @@
             this.label5.TabIndex = 32;
             this.label5.Text = "Localidad:";
             // 
-            // txtNombre
+            // campoNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(149, 113);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(100, 20);
-            this.txtNombre.TabIndex = 4;
+            this.campoNombre.Location = new System.Drawing.Point(149, 113);
+            this.campoNombre.Name = "campoNombre";
+            this.campoNombre.Size = new System.Drawing.Size(100, 20);
+            this.campoNombre.TabIndex = 4;
             // 
-            // txtApellido
+            // campoApellido
             // 
-            this.txtApellido.Location = new System.Drawing.Point(149, 139);
-            this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(100, 20);
-            this.txtApellido.TabIndex = 5;
+            this.campoApellido.Location = new System.Drawing.Point(149, 139);
+            this.campoApellido.Name = "campoApellido";
+            this.campoApellido.Size = new System.Drawing.Size(100, 20);
+            this.campoApellido.TabIndex = 5;
             // 
-            // txtDni
+            // campoNroDeDoc
             // 
-            this.txtDni.Location = new System.Drawing.Point(149, 165);
-            this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(100, 20);
-            this.txtDni.TabIndex = 6;
+            this.campoNroDeDoc.Location = new System.Drawing.Point(167, 165);
+            this.campoNroDeDoc.Name = "campoNroDeDoc";
+            this.campoNroDeDoc.Size = new System.Drawing.Size(100, 20);
+            this.campoNroDeDoc.TabIndex = 6;
             // 
-            // txtTelefono
+            // campoTelefono
             // 
-            this.txtTelefono.Location = new System.Drawing.Point(149, 218);
-            this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(100, 20);
-            this.txtTelefono.TabIndex = 8;
+            this.campoTelefono.Location = new System.Drawing.Point(149, 218);
+            this.campoTelefono.Name = "campoTelefono";
+            this.campoTelefono.Size = new System.Drawing.Size(100, 20);
+            this.campoTelefono.TabIndex = 8;
             // 
-            // txtDireccion
+            // campoDireccion
             // 
-            this.txtDireccion.Location = new System.Drawing.Point(149, 244);
-            this.txtDireccion.Name = "txtDireccion";
-            this.txtDireccion.Size = new System.Drawing.Size(100, 20);
-            this.txtDireccion.TabIndex = 9;
+            this.campoDireccion.Location = new System.Drawing.Point(149, 244);
+            this.campoDireccion.Name = "campoDireccion";
+            this.campoDireccion.Size = new System.Drawing.Size(100, 20);
+            this.campoDireccion.TabIndex = 9;
             // 
-            // txtNroDeDireccion
+            // campoNroDeDireccion
             // 
-            this.txtNroDeDireccion.Location = new System.Drawing.Point(149, 277);
-            this.txtNroDeDireccion.Name = "txtNroDeDireccion";
-            this.txtNroDeDireccion.Size = new System.Drawing.Size(81, 20);
-            this.txtNroDeDireccion.TabIndex = 10;
+            this.campoNroDeDireccion.Location = new System.Drawing.Point(149, 277);
+            this.campoNroDeDireccion.Name = "campoNroDeDireccion";
+            this.campoNroDeDireccion.Size = new System.Drawing.Size(81, 20);
+            this.campoNroDeDireccion.TabIndex = 10;
             // 
-            // txtDepto
+            // campoDepto
             // 
-            this.txtDepto.Location = new System.Drawing.Point(149, 306);
-            this.txtDepto.Name = "txtDepto";
-            this.txtDepto.Size = new System.Drawing.Size(49, 20);
-            this.txtDepto.TabIndex = 11;
+            this.campoDepto.Location = new System.Drawing.Point(149, 306);
+            this.campoDepto.Name = "campoDepto";
+            this.campoDepto.Size = new System.Drawing.Size(49, 20);
+            this.campoDepto.TabIndex = 11;
             // 
-            // txtPiso
+            // campoPiso
             // 
-            this.txtPiso.Location = new System.Drawing.Point(149, 332);
-            this.txtPiso.Name = "txtPiso";
-            this.txtPiso.Size = new System.Drawing.Size(57, 20);
-            this.txtPiso.TabIndex = 12;
+            this.campoPiso.Location = new System.Drawing.Point(149, 332);
+            this.campoPiso.Name = "campoPiso";
+            this.campoPiso.Size = new System.Drawing.Size(57, 20);
+            this.campoPiso.TabIndex = 12;
             // 
-            // txtCodigoPostal
+            // campoCodigoPostal
             // 
-            this.txtCodigoPostal.Location = new System.Drawing.Point(149, 385);
-            this.txtCodigoPostal.Name = "txtCodigoPostal";
-            this.txtCodigoPostal.Size = new System.Drawing.Size(100, 20);
-            this.txtCodigoPostal.TabIndex = 14;
+            this.campoCodigoPostal.Location = new System.Drawing.Point(149, 385);
+            this.campoCodigoPostal.Name = "campoCodigoPostal";
+            this.campoCodigoPostal.Size = new System.Drawing.Size(100, 20);
+            this.campoCodigoPostal.TabIndex = 14;
             // 
-            // cmbLocalidad
+            // comboLocalidad
             // 
-            this.cmbLocalidad.FormattingEnabled = true;
-            this.cmbLocalidad.Location = new System.Drawing.Point(149, 358);
-            this.cmbLocalidad.Name = "cmbLocalidad";
-            this.cmbLocalidad.Size = new System.Drawing.Size(130, 21);
-            this.cmbLocalidad.TabIndex = 13;
+            this.comboLocalidad.FormattingEnabled = true;
+            this.comboLocalidad.Location = new System.Drawing.Point(149, 358);
+            this.comboLocalidad.Name = "comboLocalidad";
+            this.comboLocalidad.Size = new System.Drawing.Size(130, 21);
+            this.comboLocalidad.TabIndex = 13;
             // 
             // label6
             // 
@@ -288,30 +287,30 @@
             this.label6.TabIndex = 48;
             this.label6.Text = "Dirección de Mail:";
             // 
-            // txtMail
+            // campoMail
             // 
-            this.txtMail.Location = new System.Drawing.Point(149, 87);
-            this.txtMail.Name = "txtMail";
-            this.txtMail.Size = new System.Drawing.Size(159, 20);
-            this.txtMail.TabIndex = 3;
+            this.campoMail.Location = new System.Drawing.Point(149, 87);
+            this.campoMail.Name = "campoMail";
+            this.campoMail.Size = new System.Drawing.Size(159, 20);
+            this.campoMail.TabIndex = 3;
             // 
-            // txtContrasenia
+            // campoContrasenia
             // 
-            this.txtContrasenia.Location = new System.Drawing.Point(149, 61);
-            this.txtContrasenia.MaxLength = 8;
-            this.txtContrasenia.Name = "txtContrasenia";
-            this.txtContrasenia.PasswordChar = '*';
-            this.txtContrasenia.Size = new System.Drawing.Size(159, 20);
-            this.txtContrasenia.TabIndex = 2;
+            this.campoContrasenia.Location = new System.Drawing.Point(149, 61);
+            this.campoContrasenia.MaxLength = 8;
+            this.campoContrasenia.Name = "campoContrasenia";
+            this.campoContrasenia.PasswordChar = '*';
+            this.campoContrasenia.Size = new System.Drawing.Size(159, 20);
+            this.campoContrasenia.TabIndex = 2;
             // 
-            // txtUsr
+            // campoUsuario
             // 
-            this.txtUsr.AcceptsReturn = true;
-            this.txtUsr.Location = new System.Drawing.Point(149, 35);
-            this.txtUsr.MaxLength = 11;
-            this.txtUsr.Name = "txtUsr";
-            this.txtUsr.Size = new System.Drawing.Size(159, 20);
-            this.txtUsr.TabIndex = 1;
+            this.campoUsuario.AcceptsReturn = true;
+            this.campoUsuario.Location = new System.Drawing.Point(149, 35);
+            this.campoUsuario.MaxLength = 11;
+            this.campoUsuario.Name = "campoUsuario";
+            this.campoUsuario.Size = new System.Drawing.Size(159, 20);
+            this.campoUsuario.TabIndex = 1;
             // 
             // label7
             // 
@@ -333,48 +332,37 @@
             this.label8.TabIndex = 43;
             this.label8.Text = "Usuario: ";
             // 
-            // txtFechaNac
+            // campoFechaDeNacimiento
             // 
-            this.txtFechaNac.Location = new System.Drawing.Point(501, 247);
-            this.txtFechaNac.Name = "txtFechaNac";
-            this.txtFechaNac.Size = new System.Drawing.Size(133, 20);
-            this.txtFechaNac.TabIndex = 49;
-            // 
-            // btnSeleccionar
-            // 
-            this.btnSeleccionar.Location = new System.Drawing.Point(530, 275);
-            this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.Size = new System.Drawing.Size(75, 23);
-            this.btnSeleccionar.TabIndex = 50;
-            this.btnSeleccionar.Text = "Seleccionar";
-            this.btnSeleccionar.UseVisualStyleBackColor = true;
-            this.btnSeleccionar.Click += new System.EventHandler(this.btnSeleccionar_Click);
+            this.campoFechaDeNacimiento.Location = new System.Drawing.Point(501, 247);
+            this.campoFechaDeNacimiento.Name = "campoFechaDeNacimiento";
+            this.campoFechaDeNacimiento.Size = new System.Drawing.Size(133, 20);
+            this.campoFechaDeNacimiento.TabIndex = 49;
             // 
             // frmNuevoCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 455);
-            this.Controls.Add(this.btnSeleccionar);
-            this.Controls.Add(this.txtFechaNac);
+            this.Controls.Add(this.campoFechaDeNacimiento);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtMail);
-            this.Controls.Add(this.txtContrasenia);
-            this.Controls.Add(this.txtUsr);
+            this.Controls.Add(this.campoMail);
+            this.Controls.Add(this.campoContrasenia);
+            this.Controls.Add(this.campoUsuario);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.cmbLocalidad);
-            this.Controls.Add(this.txtCodigoPostal);
-            this.Controls.Add(this.txtPiso);
-            this.Controls.Add(this.txtDepto);
-            this.Controls.Add(this.txtNroDeDireccion);
-            this.Controls.Add(this.txtDireccion);
-            this.Controls.Add(this.txtTelefono);
-            this.Controls.Add(this.txtDni);
-            this.Controls.Add(this.txtApellido);
-            this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.comboLocalidad);
+            this.Controls.Add(this.campoCodigoPostal);
+            this.Controls.Add(this.campoPiso);
+            this.Controls.Add(this.campoDepto);
+            this.Controls.Add(this.campoNroDeDireccion);
+            this.Controls.Add(this.campoDireccion);
+            this.Controls.Add(this.campoTelefono);
+            this.Controls.Add(this.campoNroDeDoc);
+            this.Controls.Add(this.campoApellido);
+            this.Controls.Add(this.campoNombre);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.cmbTipoDoc);
+            this.Controls.Add(this.comboTipoDeDocumento);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label14);
@@ -391,7 +379,6 @@
             this.Controls.Add(this.btnAceptar);
             this.Name = "frmNuevoCliente";
             this.Text = "Nuevo Cliente";
-            this.Load += new System.EventHandler(this.frmNuevoCliente_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -413,25 +400,24 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox cmbTipoDoc;
+        private System.Windows.Forms.ComboBox comboTipoDeDocumento;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.TextBox txtApellido;
-        private System.Windows.Forms.TextBox txtDni;
-        private System.Windows.Forms.TextBox txtTelefono;
-        private System.Windows.Forms.TextBox txtDireccion;
-        private System.Windows.Forms.TextBox txtNroDeDireccion;
-        private System.Windows.Forms.TextBox txtDepto;
-        private System.Windows.Forms.TextBox txtPiso;
-        private System.Windows.Forms.TextBox txtCodigoPostal;
-        private System.Windows.Forms.ComboBox cmbLocalidad;
+        private System.Windows.Forms.TextBox campoNombre;
+        private System.Windows.Forms.TextBox campoApellido;
+        private System.Windows.Forms.TextBox campoNroDeDoc;
+        private System.Windows.Forms.TextBox campoTelefono;
+        private System.Windows.Forms.TextBox campoDireccion;
+        private System.Windows.Forms.TextBox campoNroDeDireccion;
+        private System.Windows.Forms.TextBox campoDepto;
+        private System.Windows.Forms.TextBox campoPiso;
+        private System.Windows.Forms.TextBox campoCodigoPostal;
+        private System.Windows.Forms.ComboBox comboLocalidad;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtMail;
-        private System.Windows.Forms.TextBox txtContrasenia;
-        private System.Windows.Forms.TextBox txtUsr;
+        private System.Windows.Forms.TextBox campoMail;
+        private System.Windows.Forms.TextBox campoContrasenia;
+        private System.Windows.Forms.TextBox campoUsuario;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtFechaNac;
-        private System.Windows.Forms.Button btnSeleccionar;
+        private System.Windows.Forms.TextBox campoFechaDeNacimiento;
     }
 }
