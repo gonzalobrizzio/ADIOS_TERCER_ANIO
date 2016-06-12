@@ -11,13 +11,14 @@ CREATE  TABLE Funcionalidad (
 
 CREATE  TABLE Usuario (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  usuario NVARCHAR(255) NOT NULL UNIQUE,
+  usuario NVARCHAR(255) NOT NULL,
   pass NVARCHAR(255) NULL ,
-  mail NVARCHAR(255) NOT NULL UNIQUE,
+  mail NVARCHAR(255) NOT NULL,
   deleted INT DEFAULT 0 ,
   intentos INT DEFAULT 0 ,
   )
 
+  
 CREATE  TABLE Rol (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   nombre NVARCHAR(255) NULL ,
@@ -61,7 +62,7 @@ CREATE  TABLE Empresa (
   piso DECIMAL(18,0) NULL,
   dpto NVARCHAR(50) NULL ,
   codigoPostal NVARCHAR(50) NULL ,
-  cuit NVARCHAR(50) NOT NULL UNIQUE,
+  cuit NVARCHAR(50) NOT NULL,
   contacto NVARCHAR(45) NULL ,
   idRubro INT REFERENCES Rubro(id) NULL,
   idUsuario INT REFERENCES Usuario(id) ,
@@ -79,8 +80,8 @@ CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   codigo INT NULL ,
   descripcion NVARCHAR(255) NOT NULL ,
-  precio numeric(18,2) NULL ,
-  porcentaje numeric(18,2) NULL ,
+  precio DECIMAL(18,2) NULL ,
+  porcentaje DECIMAL(18,2) NULL ,
   )
 
 CREATE  TABLE Envio (
@@ -96,7 +97,7 @@ CREATE  TABLE Publicacion (
   tienePreguntas INT NULL ,
   tipo NVARCHAR(255) ,
   idEstado INT REFERENCES Estado(id) ,
-  precio NUMERIC(18,2),
+  precio DECIMAL(18,2),
   idVisibilidad INT REFERENCES Visibilidad(id) ,
   idPublicador INT REFERENCES Usuario(id) ,
   idRubro INT REFERENCES Rubro(id) ,
