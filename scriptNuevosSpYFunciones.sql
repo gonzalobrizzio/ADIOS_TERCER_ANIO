@@ -385,5 +385,21 @@ END
 
 GO 
 
+ALTER PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
+AS
+BEGIN
+
+	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
+	
+	WITH TablaP as (select TOP (@cant) factura.numero ,  usr.usuario, factura.importeTotal, factura.fecha, forma.nombre from ADIOS_TERCER_ANIO.Factura factura
+	inner join ADIOS_TERCER_ANIO.FormaDePago forma on factura.idFormaDePago = forma.id
+	inner join ADIOS_TERCER_ANIO.Usuario usr on factura.idVendedor = usr.id
+	where factura.idVendedor = @idUsuario)
+
+	SELECT top 5 * FROM TablaP ORDER by TablaP.numero desc, TablaP.importeTotal desc
+END
+
+GO 
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;

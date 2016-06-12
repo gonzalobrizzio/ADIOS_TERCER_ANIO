@@ -74,7 +74,9 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnConsultarFacturas_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
+            new Facturas.HistorialDeFacturas().Show();
+            this.Hide();
         }
 
         private void btnHistorial_Click(object sender, EventArgs e)

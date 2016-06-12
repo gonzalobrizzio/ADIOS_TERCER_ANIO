@@ -162,11 +162,11 @@
       <DependentUpon>ComprarOfertar.cs</DependentUpon>
     </Compile>
     <Compile Include="Conexion.cs" />
-    <Compile Include="Facturas\Form1.cs">
+    <Compile Include="Facturas\HistorialDeFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Facturas\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Facturas\HistorialDeFacturas.Designer.cs">
+      <DependentUpon>HistorialDeFacturas.cs</DependentUpon>
     </Compile>
     <Compile Include="Login y Seguridad\Ingresar.cs">
       <SubType>Form</SubType>
@@ -234,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar\Historial.resx">
       <DependentUpon>Historial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturas\HistorialDeFacturas.resx">
+      <DependentUpon>HistorialDeFacturas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
