@@ -15,6 +15,7 @@ namespace MercadoEnvios.ABM_Usuario
     {
         SqlDataReader dataReader;
         Conexion conn;
+        Sesion sesion;
         string rolU;
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();

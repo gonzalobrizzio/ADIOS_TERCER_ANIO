@@ -123,6 +123,7 @@
             this.Controls.Add(this.contraseñaConfirmada);
             this.Controls.Add(this.contraseñaActual);
             this.Name = "frmCambiarContraseña";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cambiar Contraseña";
             this.ResumeLayout(false);
             this.PerformLayout();

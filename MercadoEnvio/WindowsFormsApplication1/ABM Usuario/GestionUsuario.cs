@@ -14,6 +14,7 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmABMUsuario : Form
     {
         Conexion conn;
+        Sesion sesion;
         public frmABMUsuario()
         {
             InitializeComponent();
@@ -67,6 +68,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+
             new frmNuevoUsuario().Show();
             this.Close();
         }

@@ -42,7 +42,7 @@ namespace MercadoEnvios.Entidades
                 return true;
             else
             {
-
+                mensajeValidacion.AppendLine(string.Format("Lo siguiente : {0}, no puede estar vacio, debe llenarlo", combo.Name));
                 return false;
             }
         }
@@ -73,7 +73,6 @@ namespace MercadoEnvios.Entidades
             };
         }
 
-        //TODO
         public void validarDNI(string tipo, Control numero, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
@@ -104,6 +103,20 @@ namespace MercadoEnvios.Entidades
             };
         }
 
+        public void verSiElCuitEsValido(Control cuit, StringBuilder mensajeValidación)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendFormat("IF('{0}' NOT LIKE '%-%-%') SELECT * FROM ADIOS_TERCER_ANIO.TipoDocumento", cuit.Text);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandTimeout = 800;
+            cmd.CommandText = query.ToString();
+            if (darEscalar(cmd))
+            {
+                mensajeValidación.AppendLine(string.Format("El cuit tiene un formato invalido"));
+            }
+
+        }
+       
         public void validarUsuario(Control usuario, StringBuilder mensajeValidacion)
         {
             conn = Conexion.Instance;

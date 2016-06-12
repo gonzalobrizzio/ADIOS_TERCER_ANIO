@@ -32,7 +32,7 @@ namespace MercadoEnvios.ABM_Usuario
                 btnABMRol.Visible = false;
                 btnABMUsuario.Visible = false;
                 btnABMVisibilidad.Visible = false;
-                btnGenerarPublicacion.Visible = false;
+                btnConsultarFacturas.Visible = false;
             }
             else if (sesion.idRol == 3)
             {
@@ -41,7 +41,6 @@ namespace MercadoEnvios.ABM_Usuario
                 btnABMVisibilidad.Visible = false;
                 btnCalificarVendedor.Visible = false;
                 btnComprarOfertar.Visible = false;
-                btnConsultarFacturas.Visible = false;
                 btnHistorial.Visible = false;
             }
         }
@@ -88,7 +87,9 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnGenerarPublicacion_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
+            new Generar_Publicación.frmElegirAccion().Show();
+            this.Hide();
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)

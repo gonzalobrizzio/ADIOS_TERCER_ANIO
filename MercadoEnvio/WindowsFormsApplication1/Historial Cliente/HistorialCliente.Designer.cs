@@ -98,6 +98,7 @@
             this.ClientSize = new System.Drawing.Size(766, 334);
             this.Controls.Add(this.grillaDeCompras);
             this.Name = "frmHistorialCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistorialCliente";
             ((System.ComponentModel.ISupportInitialize)(this.grillaDeCompras)).EndInit();
             this.ResumeLayout(false);

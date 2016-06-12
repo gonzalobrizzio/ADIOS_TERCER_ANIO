@@ -60,6 +60,12 @@
             this.campoDireccion = new System.Windows.Forms.TextBox();
             this.campoCalle = new System.Windows.Forms.TextBox();
             this.campoTelefono = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancelar
@@ -77,7 +83,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(466, 411);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 68;
+            this.btnAceptar.TabIndex = 16;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -87,7 +93,7 @@
             this.campoRazonSocial.Location = new System.Drawing.Point(174, 117);
             this.campoRazonSocial.Name = "campoRazonSocial";
             this.campoRazonSocial.Size = new System.Drawing.Size(159, 20);
-            this.campoRazonSocial.TabIndex = 72;
+            this.campoRazonSocial.TabIndex = 4;
             // 
             // label2
             // 
@@ -103,7 +109,7 @@
             this.campoMail.Location = new System.Drawing.Point(174, 86);
             this.campoMail.Name = "campoMail";
             this.campoMail.Size = new System.Drawing.Size(159, 20);
-            this.campoMail.TabIndex = 71;
+            this.campoMail.TabIndex = 3;
             // 
             // campoContrasenia
             // 
@@ -112,7 +118,7 @@
             this.campoContrasenia.Name = "campoContrasenia";
             this.campoContrasenia.PasswordChar = '*';
             this.campoContrasenia.Size = new System.Drawing.Size(159, 20);
-            this.campoContrasenia.TabIndex = 70;
+            this.campoContrasenia.TabIndex = 2;
             // 
             // campoUsuario
             // 
@@ -121,7 +127,7 @@
             this.campoUsuario.MaxLength = 11;
             this.campoUsuario.Name = "campoUsuario";
             this.campoUsuario.Size = new System.Drawing.Size(159, 20);
-            this.campoUsuario.TabIndex = 69;
+            this.campoUsuario.TabIndex = 1;
             // 
             // label14
             // 
@@ -149,7 +155,7 @@
             this.comboRubro.Location = new System.Drawing.Point(174, 366);
             this.comboRubro.Name = "comboRubro";
             this.comboRubro.Size = new System.Drawing.Size(200, 21);
-            this.comboRubro.TabIndex = 83;
+            this.comboRubro.TabIndex = 15;
             // 
             // comboLocalidad
             // 
@@ -157,7 +163,7 @@
             this.comboLocalidad.Location = new System.Drawing.Point(174, 231);
             this.comboLocalidad.Name = "comboLocalidad";
             this.comboLocalidad.Size = new System.Drawing.Size(136, 21);
-            this.comboLocalidad.TabIndex = 78;
+            this.comboLocalidad.TabIndex = 10;
             // 
             // label13
             // 
@@ -272,69 +278,141 @@
             this.campoNombreDeContacto.Location = new System.Drawing.Point(174, 340);
             this.campoNombreDeContacto.Name = "campoNombreDeContacto";
             this.campoNombreDeContacto.Size = new System.Drawing.Size(100, 20);
-            this.campoNombreDeContacto.TabIndex = 82;
+            this.campoNombreDeContacto.TabIndex = 14;
             // 
             // campoCUIT
             // 
             this.campoCUIT.Location = new System.Drawing.Point(174, 314);
             this.campoCUIT.Name = "campoCUIT";
             this.campoCUIT.Size = new System.Drawing.Size(100, 20);
-            this.campoCUIT.TabIndex = 81;
+            this.campoCUIT.TabIndex = 13;
             // 
             // campoCiudad
             // 
             this.campoCiudad.Location = new System.Drawing.Point(174, 288);
             this.campoCiudad.Name = "campoCiudad";
             this.campoCiudad.Size = new System.Drawing.Size(100, 20);
-            this.campoCiudad.TabIndex = 80;
+            this.campoCiudad.TabIndex = 12;
             // 
             // campoCodigoPostal
             // 
             this.campoCodigoPostal.Location = new System.Drawing.Point(174, 262);
             this.campoCodigoPostal.Name = "campoCodigoPostal";
             this.campoCodigoPostal.Size = new System.Drawing.Size(100, 20);
-            this.campoCodigoPostal.TabIndex = 79;
+            this.campoCodigoPostal.TabIndex = 11;
             // 
             // campoDepto
             // 
             this.campoDepto.Location = new System.Drawing.Point(380, 205);
             this.campoDepto.Name = "campoDepto";
             this.campoDepto.Size = new System.Drawing.Size(100, 20);
-            this.campoDepto.TabIndex = 77;
+            this.campoDepto.TabIndex = 9;
             // 
             // campoPiso
             // 
             this.campoPiso.Location = new System.Drawing.Point(174, 202);
             this.campoPiso.Name = "campoPiso";
             this.campoPiso.Size = new System.Drawing.Size(100, 20);
-            this.campoPiso.TabIndex = 76;
+            this.campoPiso.TabIndex = 8;
             // 
             // campoDireccion
             // 
             this.campoDireccion.Location = new System.Drawing.Point(380, 176);
             this.campoDireccion.Name = "campoDireccion";
             this.campoDireccion.Size = new System.Drawing.Size(100, 20);
-            this.campoDireccion.TabIndex = 75;
+            this.campoDireccion.TabIndex = 7;
             // 
             // campoCalle
             // 
             this.campoCalle.Location = new System.Drawing.Point(174, 176);
             this.campoCalle.Name = "campoCalle";
             this.campoCalle.Size = new System.Drawing.Size(100, 20);
-            this.campoCalle.TabIndex = 74;
+            this.campoCalle.TabIndex = 6;
             // 
             // campoTelefono
             // 
             this.campoTelefono.Location = new System.Drawing.Point(174, 146);
             this.campoTelefono.Name = "campoTelefono";
             this.campoTelefono.Size = new System.Drawing.Size(100, 20);
-            this.campoTelefono.TabIndex = 73;
+            this.campoTelefono.TabIndex = 5;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.ForeColor = System.Drawing.Color.Red;
+            this.label28.Location = new System.Drawing.Point(499, 35);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(159, 15);
+            this.label28.TabIndex = 273;
+            this.label28.Text = "* : Campos Obligatorios";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Red;
+            this.label17.Location = new System.Drawing.Point(347, 35);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(14, 16);
+            this.label17.TabIndex = 275;
+            this.label17.Text = "*";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Red;
+            this.label16.Location = new System.Drawing.Point(347, 61);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(14, 16);
+            this.label16.TabIndex = 276;
+            this.label16.Text = "*";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.Red;
+            this.label18.Location = new System.Drawing.Point(347, 87);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(14, 16);
+            this.label18.TabIndex = 277;
+            this.label18.Text = "*";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.Red;
+            this.label19.Location = new System.Drawing.Point(347, 117);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(14, 16);
+            this.label19.TabIndex = 278;
+            this.label19.Text = "*";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Red;
+            this.label20.Location = new System.Drawing.Point(280, 317);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(14, 16);
+            this.label20.TabIndex = 279;
+            this.label20.Text = "*";
             // 
             // frmModificarEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 455);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label28);
             this.Controls.Add(this.campoRazonSocial);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.campoMail);
@@ -409,5 +487,11 @@
         private System.Windows.Forms.TextBox campoDireccion;
         private System.Windows.Forms.TextBox campoCalle;
         private System.Windows.Forms.TextBox campoTelefono;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
     }
 }

@@ -13,6 +13,7 @@ namespace MercadoEnvios.ABM_Usuario
 {
     public partial class frmModificarCliente : Form
     {
+        Sesion sesion;
         SqlDataReader dataReader;
         Conexion conn;
         StringBuilder mensajeDeAviso = new StringBuilder();

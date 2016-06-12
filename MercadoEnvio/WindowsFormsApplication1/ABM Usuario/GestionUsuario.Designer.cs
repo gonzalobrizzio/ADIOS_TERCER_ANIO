@@ -50,14 +50,14 @@
             this.txtBuscado.Location = new System.Drawing.Point(12, 12);
             this.txtBuscado.Name = "txtBuscado";
             this.txtBuscado.Size = new System.Drawing.Size(343, 26);
-            this.txtBuscado.TabIndex = 5;
+            this.txtBuscado.TabIndex = 1;
             // 
             // btnModificarEmpresa
             // 
             this.btnModificarEmpresa.Location = new System.Drawing.Point(171, 515);
             this.btnModificarEmpresa.Name = "btnModificarEmpresa";
             this.btnModificarEmpresa.Size = new System.Drawing.Size(129, 25);
-            this.btnModificarEmpresa.TabIndex = 6;
+            this.btnModificarEmpresa.TabIndex = 4;
             this.btnModificarEmpresa.Text = "Modificar Cliente";
             this.btnModificarEmpresa.UseVisualStyleBackColor = true;
             this.btnModificarEmpresa.Click += new System.EventHandler(this.btnModificar_Click);
@@ -67,7 +67,7 @@
             this.btnEliminar.Location = new System.Drawing.Point(171, 577);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(129, 25);
-            this.btnEliminar.TabIndex = 7;
+            this.btnEliminar.TabIndex = 6;
             this.btnEliminar.Text = "Deshabilitar Cliente";
             this.btnEliminar.UseVisualStyleBackColor = true;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
@@ -77,7 +77,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(361, 12);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(104, 26);
-            this.btnBuscar.TabIndex = 8;
+            this.btnBuscar.TabIndex = 2;
             this.btnBuscar.Text = "Buscar Usuario";
             this.btnBuscar.UseVisualStyleBackColor = true;
             // 
@@ -87,7 +87,7 @@
             this.dgvClientes.Location = new System.Drawing.Point(33, 89);
             this.dgvClientes.Name = "dgvClientes";
             this.dgvClientes.Size = new System.Drawing.Size(455, 420);
-            this.dgvClientes.TabIndex = 9;
+            this.dgvClientes.TabIndex = 11;
             // 
             // btnVolver
             // 
@@ -104,7 +104,7 @@
             this.btnAgregar.Location = new System.Drawing.Point(461, 58);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(129, 25);
-            this.btnAgregar.TabIndex = 11;
+            this.btnAgregar.TabIndex = 3;
             this.btnAgregar.Text = "Agregar Usuario";
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
@@ -114,7 +114,7 @@
             this.btnHabilitar.Location = new System.Drawing.Point(171, 546);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(129, 25);
-            this.btnHabilitar.TabIndex = 12;
+            this.btnHabilitar.TabIndex = 5;
             this.btnHabilitar.Text = "Habilitar Cliente";
             this.btnHabilitar.UseVisualStyleBackColor = true;
             this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
@@ -125,14 +125,14 @@
             this.dgvEmpresas.Location = new System.Drawing.Point(555, 89);
             this.dgvEmpresas.Name = "dgvEmpresas";
             this.dgvEmpresas.Size = new System.Drawing.Size(455, 420);
-            this.dgvEmpresas.TabIndex = 13;
+            this.dgvEmpresas.TabIndex = 12;
             // 
             // btnModificarCliente
             // 
             this.btnModificarCliente.Location = new System.Drawing.Point(705, 515);
             this.btnModificarCliente.Name = "btnModificarCliente";
             this.btnModificarCliente.Size = new System.Drawing.Size(129, 25);
-            this.btnModificarCliente.TabIndex = 14;
+            this.btnModificarCliente.TabIndex = 7;
             this.btnModificarCliente.Text = "Modificar Empresa";
             this.btnModificarCliente.UseVisualStyleBackColor = true;
             this.btnModificarCliente.Click += new System.EventHandler(this.btnModificarCliente_Click);
@@ -142,7 +142,7 @@
             this.btnHabilitarEmpresa.Location = new System.Drawing.Point(705, 546);
             this.btnHabilitarEmpresa.Name = "btnHabilitarEmpresa";
             this.btnHabilitarEmpresa.Size = new System.Drawing.Size(129, 25);
-            this.btnHabilitarEmpresa.TabIndex = 15;
+            this.btnHabilitarEmpresa.TabIndex = 8;
             this.btnHabilitarEmpresa.Text = "Habilitar Empresa";
             this.btnHabilitarEmpresa.UseVisualStyleBackColor = true;
             this.btnHabilitarEmpresa.Click += new System.EventHandler(this.btnHabilitarEmpresa_Click);
@@ -152,7 +152,7 @@
             this.btnDeshabilitarEmpresa.Location = new System.Drawing.Point(705, 577);
             this.btnDeshabilitarEmpresa.Name = "btnDeshabilitarEmpresa";
             this.btnDeshabilitarEmpresa.Size = new System.Drawing.Size(129, 25);
-            this.btnDeshabilitarEmpresa.TabIndex = 16;
+            this.btnDeshabilitarEmpresa.TabIndex = 9;
             this.btnDeshabilitarEmpresa.Text = "Deshabilitar Empresa";
             this.btnDeshabilitarEmpresa.UseVisualStyleBackColor = true;
             this.btnDeshabilitarEmpresa.Click += new System.EventHandler(this.btnDeshabilitarEmpresa_Click);

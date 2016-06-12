@@ -15,6 +15,7 @@ namespace MercadoEnvios.ABM_Usuario
     {
         Conexion conn;
         int idUsuario;
+        Sesion sesion;
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
 
@@ -100,6 +101,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+
             new frmABMUsuario().Show();
             this.Close();
         }

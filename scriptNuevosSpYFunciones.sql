@@ -216,9 +216,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255
 AS
 BEGIN
 
-		IF(@cuit NOT LIKE '%-%-%')
-		THROW 50004, 'Necesita ingresar un cuit valido', 1;
-
 	BEGIN TRANSACTION
 	BEGIN TRY
 	DECLARE @calificacionPromedio INT
@@ -308,9 +305,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,
 													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
 AS
 BEGIN
-		
-	--Me falta verificar usuario sin repetir, y demás cosas
-	--TODO
 
 	BEGIN TRANSACTION
 	BEGIN TRY

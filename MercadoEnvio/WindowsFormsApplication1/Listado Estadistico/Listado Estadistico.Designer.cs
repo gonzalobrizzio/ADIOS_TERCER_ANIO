@@ -1,4 +1,4 @@
-﻿namespace MercadoEnvios.Generar_Publicación
+﻿namespace MercadoEnvios.Listado_Estadistico
 {
     partial class Form1
     {
@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(667, 444);
+            this.Name = "Form1";
+            this.Text = "Listado Estadistico";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

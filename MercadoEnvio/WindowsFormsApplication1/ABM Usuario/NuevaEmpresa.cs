@@ -17,6 +17,8 @@ namespace MercadoEnvios.ABM_Usuario
         string rolU;
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
+        bool errorSql = false;
+        Sesion sesion;
 
         public frmNuevaEmpresa(string rol)
         {
@@ -66,6 +68,7 @@ namespace MercadoEnvios.ABM_Usuario
             bool mailB = this.funcionesValidacion.validarNoVacio(campoMail, mensajeDeAviso);
             bool razonSocialB = this.funcionesValidacion.validarNoVacio(campoRazonSocial, mensajeDeAviso);
             bool cuitB = this.funcionesValidacion.validarNoVacio(campoCUIT, mensajeDeAviso);
+            this.funcionesValidacion.verSiElCuitEsValido(campoCUIT, mensajeDeAviso);
             if (!(string.IsNullOrEmpty(campoDireccion.Text)))
             {
                 this.funcionesValidacion.validarNumerico(campoDireccion, mensajeDeAviso);
@@ -241,15 +244,21 @@ namespace MercadoEnvios.ABM_Usuario
                 catch (SqlException error)
                 {
                     MessageBox.Show(error.Message);
+                    errorSql = true;
                 }
 
-                new frmABMUsuario().Show();
-                this.Close();
+                if (!errorSql)
+                {
+
+                    new frmABMUsuario().Show();
+                    this.Close();
+                }
             }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+
             new frmABMUsuario().Show();
             this.Close();
         }

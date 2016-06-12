@@ -291,6 +291,7 @@
             this.Controls.Add(this.lblSuHistorial);
             this.Controls.Add(this.dgvHistorial);
             this.Name = "frmHistorial";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Historial";
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).EndInit();
             this.ResumeLayout(false);
