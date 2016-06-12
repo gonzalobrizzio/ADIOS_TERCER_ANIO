@@ -88,23 +88,35 @@
     <Compile Include="ABM Rubro\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\BajaDeUsuarios.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Usuario\BajaDeUsuarios.Designer.cs">
-      <DependentUpon>BajaDeUsuarios.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM Usuario\GestionUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM Usuario\GestionUsuario.Designer.cs">
       <DependentUpon>GestionUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\nuevoCliente.cs">
+    <Compile Include="ABM Usuario\ModificarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\nuevoCliente.Designer.cs">
-      <DependentUpon>nuevoCliente.cs</DependentUpon>
+    <Compile Include="ABM Usuario\ModificarCliente.Designer.cs">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ModificarEmpresa.Designer.cs">
+      <DependentUpon>ModificarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\NuevaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\NuevaEmpresa.Designer.cs">
+      <DependentUpon>NuevaEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\NuevoCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\NuevoCliente.Designer.cs">
+      <DependentUpon>NuevoCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\NuevoUsuario.cs">
       <SubType>Form</SubType>
@@ -187,14 +199,20 @@
     <EmbeddedResource Include="ABM Rol\ElegirRol.resx">
       <DependentUpon>ElegirRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\BajaDeUsuarios.resx">
-      <DependentUpon>BajaDeUsuarios.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\GestionUsuario.resx">
       <DependentUpon>GestionUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\nuevoCliente.resx">
-      <DependentUpon>nuevoCliente.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Usuario\ModificarCliente.resx">
+      <DependentUpon>ModificarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ModificarEmpresa.resx">
+      <DependentUpon>ModificarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\NuevaEmpresa.resx">
+      <DependentUpon>NuevaEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\NuevoCliente.resx">
+      <DependentUpon>NuevoCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\NuevoUsuario.resx">
       <DependentUpon>NuevoUsuario.cs</DependentUpon>
