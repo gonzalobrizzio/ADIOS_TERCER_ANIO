@@ -5,14 +5,13 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
 
-namespace MercadoEnvios.Facturas
+namespace MercadoEnvios.Generar_Publicación
 {
-    public partial class Form1 : Form
+    public partial class frmModificarPublicacion : Form
     {
-        public Form1()
+        public frmModificarPublicacion()
         {
             InitializeComponent();
         }

@@ -112,6 +112,7 @@
             this.Text = "Login";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Ingresar_FormClosed);
             this.Load += new System.EventHandler(this.frmIngresar_Load);
+            this.Shown += new System.EventHandler(this.frmIngresar_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

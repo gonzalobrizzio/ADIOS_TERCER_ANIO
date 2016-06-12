@@ -15,23 +15,27 @@ namespace MercadoEnvios.ABM_Usuario
     {
         Conexion conn;
         string rolU;
-        private object p;
+        StringBuilder mensajeDeAviso = new StringBuilder();
+        private Utilidades funcionesValidacion = new Utilidades();
+        bool errorSql = false;
+        Sesion sesion;
+
         public frmNuevaEmpresa(string rol)
         {
             InitializeComponent();
-            txtMail.MaxLength = 30;
-            txtUsr.MaxLength = 20;
-            txtContrasenia.MaxLength = 20;
-            txtDireccion.MaxLength = 5;
-            txtCiudad.MaxLength = 15;
-            txtCodigoPostal.MaxLength = 4;
-            txtCalle.MaxLength = 20;
-            txtCUIT.MaxLength = 13;
-            txtDepto.MaxLength = 3;
-            txtNombreDeContacto.MaxLength = 30;
-            txtTelefono.MaxLength = 11;
-            txtPiso.MaxLength = 3;
-            txtRazonSocial.MaxLength = 50;
+            campoMail.MaxLength = 30;
+            campoUsuario.MaxLength = 20;
+            campoContrasenia.MaxLength = 20;
+            campoDireccion.MaxLength = 5;
+            campoCiudad.MaxLength = 15;
+            campoCodigoPostal.MaxLength = 4;
+            campoCalle.MaxLength = 20;
+            campoCUIT.MaxLength = 13;
+            campoDepto.MaxLength = 3;
+            campoNombreDeContacto.MaxLength = 30;
+            campoTelefono.MaxLength = 11;
+            campoPiso.MaxLength = 3;
+            campoRazonSocial.MaxLength = 50;
 
             conn = Conexion.Instance;
             rolU = rol;
@@ -40,7 +44,7 @@ namespace MercadoEnvios.ABM_Usuario
             SqlDataReader dataReader = buscarRubros.ExecuteReader();
             while (dataReader.Read())
             {
-                cmbRubro.Items.Add(dataReader.GetString(0));
+                comboRubro.Items.Add(dataReader.GetString(0));
             }
 
             dataReader.Close();
@@ -50,7 +54,7 @@ namespace MercadoEnvios.ABM_Usuario
             dataReader = buscarLocalidades.ExecuteReader();
             while (dataReader.Read())
             {
-                cmbLocalidad.Items.Add(dataReader.GetString(0));
+                comboLocalidad.Items.Add(dataReader.GetString(0));
             }
 
             dataReader.Close();
@@ -59,139 +63,208 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-
-            SqlCommand agregarEmpresa = new SqlCommand("ADIOS_TERCER_ANIO.AgregarEmpresa", conn.getConexion);
-            agregarEmpresa.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarUsuario", conn.getConexion);
-            agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlCommand agregarRolUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarRolUsuario", conn.getConexion);
-            agregarRolUsuario.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
-            usuario.SqlValue = txtUsr.Text;
-            usuario.Direction = ParameterDirection.Input;
-
-            SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
-            password.SqlValue = Utilidades.encriptarCadenaSHA256(txtContrasenia.Text);
-            password.Direction = ParameterDirection.Input;
-
-            SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
-            idUsuario.Direction = ParameterDirection.Output;
-            idUsuario.SqlDbType = SqlDbType.Int;
-
-            SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
-            mail.SqlValue = txtMail.Text;
-            mail.Direction = ParameterDirection.Input;
-
-            agregarUsuario.Parameters.Add(usuario);
-            agregarUsuario.Parameters.Add(password);
-            agregarUsuario.Parameters.Add(idUsuario);
-            agregarUsuario.Parameters.Add(mail);
-            agregarUsuario.ExecuteNonQuery();
-
-            int ultimoIdRol = Convert.ToInt32(agregarUsuario.Parameters["@id"].Value);
-
-            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
-            id.SqlValue = ultimoIdRol;
-            id.Direction = ParameterDirection.Input;
-
-            SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
-            rol.SqlValue = rolU;
-            rol.Direction = ParameterDirection.Input;
-
-            agregarRolUsuario.Parameters.Add(rol);
-            agregarRolUsuario.Parameters.Add(id);
-            agregarRolUsuario.ExecuteNonQuery();
-
-            SqlParameter razonSocial = new SqlParameter("@razonSocial", SqlDbType.NVarChar, 255);
-            razonSocial.SqlValue = txtRazonSocial.Text;
-            razonSocial.Direction = ParameterDirection.Input;
-         
-            SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
-            telefono.SqlValue = txtTelefono.Text;
-            telefono.Direction = ParameterDirection.Input;
-          
-            SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Int);
-            if (string.IsNullOrEmpty(txtDireccion.Text))
+            bool usuarioB = this.funcionesValidacion.validarNoVacio(campoUsuario, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(campoContrasenia, mensajeDeAviso);
+            bool mailB = this.funcionesValidacion.validarNoVacio(campoMail, mensajeDeAviso);
+            bool razonSocialB = this.funcionesValidacion.validarNoVacio(campoRazonSocial, mensajeDeAviso);
+            bool cuitB = this.funcionesValidacion.validarNoVacio(campoCUIT, mensajeDeAviso);
+            this.funcionesValidacion.verSiElCuitEsValido(campoCUIT, mensajeDeAviso);
+            if (!(string.IsNullOrEmpty(campoDireccion.Text)))
             {
-                MessageBox.Show("Ingrese un formato correcto en la dirección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.funcionesValidacion.validarNumerico(campoDireccion, mensajeDeAviso);
+            }
+
+            if (!(string.IsNullOrEmpty(campoPiso.Text)))
+            {
+                this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
+            }
+
+            bool validaciones;
+
+            if (cuitB)
+            {
+                this.funcionesValidacion.validarCUIT(campoCUIT, mensajeDeAviso);
+            }
+
+            if (razonSocialB)
+            {
+                this.funcionesValidacion.validarRazonSocial(campoRazonSocial, mensajeDeAviso);
+            }
+
+            if (usuarioB)
+            {
+                this.funcionesValidacion.validarUsuario(campoUsuario, mensajeDeAviso);
+            }
+
+            if (mailB)
+            {
+                this.funcionesValidacion.validarEmail(campoMail, mensajeDeAviso);
+            }
+
+            if (mensajeDeAviso.Length > 0)
+            {
+                validaciones = false;
+                MessageBox.Show(mensajeDeAviso.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mensajeDeAviso = new StringBuilder();
+
             }
             else
+            {validaciones = true;}
+
+            if (validaciones)
             {
-                direccion.SqlValue = Convert.ToInt32(txtDireccion.Text);
+                SqlCommand agregarEmpresa = new SqlCommand("ADIOS_TERCER_ANIO.AgregarEmpresa", conn.getConexion);
+                agregarEmpresa.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommand agregarUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarUsuario", conn.getConexion);
+                agregarUsuario.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommand agregarRolUsuario = new SqlCommand("ADIOS_TERCER_ANIO.AgregarRolUsuario", conn.getConexion);
+                agregarRolUsuario.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
+                usuario.SqlValue = campoUsuario.Text;
+                usuario.Direction = ParameterDirection.Input;
+
+                SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
+                password.SqlValue = Utilidades.encriptarCadenaSHA256(campoContrasenia.Text);
+                password.Direction = ParameterDirection.Input;
+
+                SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
+                idUsuario.Direction = ParameterDirection.Output;
+                idUsuario.SqlDbType = SqlDbType.Int;
+
+                SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
+                mail.SqlValue = campoMail.Text;
+                mail.Direction = ParameterDirection.Input;
+
+                agregarUsuario.Parameters.Add(usuario);
+                agregarUsuario.Parameters.Add(password);
+                agregarUsuario.Parameters.Add(idUsuario);
+                agregarUsuario.Parameters.Add(mail);
+                
+                SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                id.Direction = ParameterDirection.Input;
+
+                SqlParameter rol = new SqlParameter("@rol", SqlDbType.NVarChar, 255);
+                rol.SqlValue = rolU;
+                rol.Direction = ParameterDirection.Input;
+
+                agregarRolUsuario.Parameters.Add(rol);
+                agregarRolUsuario.Parameters.Add(id);
+                
+                try{
+                    agregarUsuario.ExecuteNonQuery();
+                    id.SqlValue = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
+                    agregarRolUsuario.ExecuteNonQuery();
+                }
+                catch (SqlException error)
+                {
+                    MessageBox.Show(error.Message);
+                    this.Show();
+                }
+
+                SqlParameter razonSocial = new SqlParameter("@razonSocial", SqlDbType.NVarChar, 255);
+                razonSocial.SqlValue = campoRazonSocial.Text;
+                razonSocial.Direction = ParameterDirection.Input;
+
+                SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
+                telefono.SqlValue = campoTelefono.Text;
+                telefono.Direction = ParameterDirection.Input;
+
+                SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Decimal);
+
+                if (!(campoDireccion.Text == ""))
+                {
+                    direccion.SqlValue = Convert.ToDecimal(campoDireccion.Text);
+                }
+                else { direccion.SqlValue = DBNull.Value; }
+                direccion.Direction = ParameterDirection.Input;
+
+                SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
+                calle.SqlValue = campoCalle.Text;
+                calle.Direction = ParameterDirection.Input;
+
+                SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
+                if (!(campoPiso.Text == ""))
+                {
+                    piso.SqlValue = Convert.ToDecimal(campoPiso.Text);
+                }
+                else { piso.SqlValue = DBNull.Value; }
+                piso.Direction = ParameterDirection.Input;
+
+                SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
+                depto.SqlValue = campoDepto.Text;
+                depto.Direction = ParameterDirection.Input;
+
+                SqlParameter localidad = new SqlParameter("@localidad", SqlDbType.NVarChar, 255);
+                localidad.SqlValue = comboLocalidad.SelectedText;
+                localidad.Direction = ParameterDirection.Input;
+
+                SqlParameter codigoPostal = new SqlParameter("@codigoPostal", SqlDbType.NVarChar, 255);
+                codigoPostal.SqlValue = campoCodigoPostal.Text;
+                codigoPostal.Direction = ParameterDirection.Input;
+
+                SqlParameter ciudad = new SqlParameter("@ciudad", SqlDbType.NVarChar, 255);
+                ciudad.SqlValue = campoCiudad.Text;
+                ciudad.Direction = ParameterDirection.Input;
+
+                SqlParameter cuit = new SqlParameter("@cuit", SqlDbType.NVarChar, 255);
+                cuit.SqlValue = campoCUIT.Text;
+                cuit.Direction = ParameterDirection.Input;
+
+                SqlParameter contacto = new SqlParameter("@contacto", SqlDbType.NVarChar, 255);
+                contacto.SqlValue = campoNombreDeContacto.Text;
+                contacto.Direction = ParameterDirection.Input;
+
+                SqlParameter rubro = new SqlParameter("@rubro", SqlDbType.NVarChar, 255);
+                rubro.SqlValue = comboRubro.SelectedText;
+                rubro.Direction = ParameterDirection.Input;
+
+                SqlParameter otroId = new SqlParameter("@id", SqlDbType.Int);
+                otroId.Direction = ParameterDirection.Input;
+                otroId.SqlValue = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
+
+                
+                agregarEmpresa.Parameters.Add(razonSocial);
+                agregarEmpresa.Parameters.Add(otroId);
+                agregarEmpresa.Parameters.Add(telefono);
+                agregarEmpresa.Parameters.Add(direccion);
+                agregarEmpresa.Parameters.Add(calle);
+                agregarEmpresa.Parameters.Add(piso);
+                agregarEmpresa.Parameters.Add(depto);
+                agregarEmpresa.Parameters.Add(localidad);
+                agregarEmpresa.Parameters.Add(codigoPostal);
+                agregarEmpresa.Parameters.Add(ciudad);
+                agregarEmpresa.Parameters.Add(cuit);
+                agregarEmpresa.Parameters.Add(contacto);
+                agregarEmpresa.Parameters.Add(rubro);
+                
+                try{
+                agregarEmpresa.ExecuteNonQuery();
+                }
+                catch (SqlException error)
+                {
+                    MessageBox.Show(error.Message);
+                    errorSql = true;
+                }
+
+                if (!errorSql)
+                {
+
+                    new frmABMUsuario().Show();
+                    this.Close();
+                }
             }
-            direccion.Direction = ParameterDirection.Input;
-          
-            SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
-            calle.SqlValue = txtCalle.Text;
-            calle.Direction = ParameterDirection.Input;
+        }
 
-
-            SqlParameter piso = new SqlParameter("@piso", SqlDbType.Int);
-
-            if (string.IsNullOrEmpty(txtPiso.Text))
-            {
-                piso.SqlValue = 0;
-            }
-            else
-            {
-                piso.SqlValue = Convert.ToInt32(txtPiso.Text);
-            }
-
-            piso.Direction = ParameterDirection.Input;
-           
-            SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
-         
-            depto.SqlValue = txtDepto.Text;
-            depto.Direction = ParameterDirection.Input;
-           
-            SqlParameter localidad = new SqlParameter("@localidad", SqlDbType.NVarChar, 255);
-            localidad.SqlValue = cmbLocalidad.SelectedText;
-            localidad.Direction = ParameterDirection.Input;
-           
-            SqlParameter codigoPostal = new SqlParameter("@codigoPostal", SqlDbType.NVarChar, 255);
-            codigoPostal.SqlValue = txtCodigoPostal.Text;
-            codigoPostal.Direction = ParameterDirection.Input;
-           
-            SqlParameter ciudad = new SqlParameter("@ciudad", SqlDbType.NVarChar, 255);
-            ciudad.SqlValue = txtCiudad.Text;
-            ciudad.Direction = ParameterDirection.Input;
-           
-            SqlParameter cuit = new SqlParameter("@cuit", SqlDbType.NVarChar, 255);
-            cuit.SqlValue = txtCUIT.Text;
-            cuit.Direction = ParameterDirection.Input;
-           
-            SqlParameter contacto = new SqlParameter("@contacto", SqlDbType.NVarChar, 255);
-            contacto.SqlValue = txtNombreDeContacto.Text;
-            contacto.Direction = ParameterDirection.Input;
-            
-            SqlParameter rubro = new SqlParameter("@rubro", SqlDbType.NVarChar, 255);
-            rubro.SqlValue = cmbRubro.SelectedText;
-            rubro.Direction = ParameterDirection.Input;
-
-            agregarEmpresa.Parameters.Add(id);
-            agregarEmpresa.Parameters.Add(razonSocial);
-            agregarEmpresa.Parameters.Add(telefono);
-            agregarEmpresa.Parameters.Add(direccion);
-            agregarEmpresa.Parameters.Add(calle);
-            agregarEmpresa.Parameters.Add(piso);
-            agregarEmpresa.Parameters.Add(depto);
-            agregarEmpresa.Parameters.Add(localidad);
-            agregarEmpresa.Parameters.Add(codigoPostal);
-            agregarEmpresa.Parameters.Add(ciudad);
-            agregarEmpresa.Parameters.Add(cuit);
-            agregarEmpresa.Parameters.Add(contacto);
-            agregarEmpresa.Parameters.Add(rubro);
-            agregarEmpresa.ExecuteNonQuery();
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
 
             new frmABMUsuario().Show();
             this.Close();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            new frmABMUsuario().Show();
-            this.Close();
+        private void salir(){
+            return;
         }
     }
 }
