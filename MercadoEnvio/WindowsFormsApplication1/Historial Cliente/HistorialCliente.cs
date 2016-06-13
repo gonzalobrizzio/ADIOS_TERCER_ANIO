@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.ABM_Usuario;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,12 +16,13 @@ namespace MercadoEnvios.Historial_Cliente
         Conexion conn;
         public frmHistorialCliente()
         {
+            //CORREGIR ESTO, IRÍA UN INNER JOIN CON COMPRA, OFERTA!
             InitializeComponent();
             String query = "SELECT * FROM ADIOS_TERCER_ANIO.Compra WHERE idComprador=26";
             conn = Conexion.Instance;
             SqlCommand buscarCompras = new SqlCommand(query, conn.getConexion);
             SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
-            DataTable tablaDeCompras = new DataTable("Compras");
+            DataTable tablaDeCompras = new DataTable("Compras/Subastas");
             da.Fill(tablaDeCompras);
             grillaDeCompras.DataSource = tablaDeCompras.DefaultView;
         }
@@ -28,6 +30,12 @@ namespace MercadoEnvios.Historial_Cliente
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            new frmPantallaPrincipal().Show();
+            this.Close();
         }
     }
 }
