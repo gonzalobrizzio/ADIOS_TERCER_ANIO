@@ -43,7 +43,7 @@
             this.btnActivar.Location = new System.Drawing.Point(148, 469);
             this.btnActivar.Name = "btnActivar";
             this.btnActivar.Size = new System.Drawing.Size(93, 35);
-            this.btnActivar.TabIndex = 28;
+            this.btnActivar.TabIndex = 2;
             this.btnActivar.Text = "Activar";
             this.btnActivar.UseVisualStyleBackColor = true;
             this.btnActivar.Click += new System.EventHandler(this.btnActivar_Click);
@@ -53,7 +53,7 @@
             this.btnFinalizar.Location = new System.Drawing.Point(346, 469);
             this.btnFinalizar.Name = "btnFinalizar";
             this.btnFinalizar.Size = new System.Drawing.Size(93, 35);
-            this.btnFinalizar.TabIndex = 27;
+            this.btnFinalizar.TabIndex = 4;
             this.btnFinalizar.Text = "Finalizar";
             this.btnFinalizar.UseVisualStyleBackColor = true;
             this.btnFinalizar.Click += new System.EventHandler(this.btnFinalizar_Click);
@@ -63,7 +63,7 @@
             this.btnPausar.Location = new System.Drawing.Point(247, 469);
             this.btnPausar.Name = "btnPausar";
             this.btnPausar.Size = new System.Drawing.Size(93, 35);
-            this.btnPausar.TabIndex = 26;
+            this.btnPausar.TabIndex = 3;
             this.btnPausar.Text = "Pausar";
             this.btnPausar.UseVisualStyleBackColor = true;
             this.btnPausar.Click += new System.EventHandler(this.btnPausar_Click);
@@ -73,7 +73,7 @@
             this.btnModificar.Location = new System.Drawing.Point(49, 469);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(93, 35);
-            this.btnModificar.TabIndex = 25;
+            this.btnModificar.TabIndex = 1;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
@@ -103,7 +103,7 @@
             this.btnVolver.Location = new System.Drawing.Point(1061, 469);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(93, 35);
-            this.btnVolver.TabIndex = 30;
+            this.btnVolver.TabIndex = 5;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
@@ -121,6 +121,7 @@
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.publicaciones);
             this.Name = "frmModificarPublicacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Publicación";
             ((System.ComponentModel.ISupportInitialize)(this.publicaciones)).EndInit();
             this.ResumeLayout(false);

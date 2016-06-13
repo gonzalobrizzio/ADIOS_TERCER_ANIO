@@ -39,7 +39,6 @@ namespace MercadoEnvios.Calificar
             dgvHistorial.Columns[0].Width = 100;
             dgvHistorial.Columns[1].Width = 200;
             dgvHistorial.Columns[2].Visible = false;
-            dgvHistorial.Columns[3].Width = 200;
             dgvHistorial.AllowUserToAddRows = false;
             dgvHistorial.AllowUserToDeleteRows = false;
             dgvHistorial.ReadOnly = true;
@@ -59,6 +58,8 @@ namespace MercadoEnvios.Calificar
             cantidad.Direction = ParameterDirection.Output;
             cantidad.SqlDbType = SqlDbType.Int;
 
+
+            tipo.SqlValue = "Compra Inmediata";
             puntaje.SqlValue = 1;
 
             obtenerCantidad.Parameters.Add(idCalificador);
@@ -189,6 +190,12 @@ namespace MercadoEnvios.Calificar
             lblSubastas5.Text = Convert.ToInt32(obtenerCantidad.Parameters["@cant"].Value).ToString();
 
             obtenerCantidad.Parameters.Clear();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            new frmCalificacion().Show();
+            this.Close();
         }
     }
 }

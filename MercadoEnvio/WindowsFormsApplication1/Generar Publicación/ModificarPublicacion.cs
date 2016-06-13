@@ -28,14 +28,14 @@ namespace MercadoEnvios.Generar_Publicación
 
         public void getData()
         {
-            string sacarDatosPublicacion = "SELECT id, descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id) AS Visibilidad, tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id) AS Rubro, iif(tienePreguntas = 0, 'SI', 'NO') AS Acepta_Preguntas, iif(idEnvio IS NULL, 'NO', 'SI') AS Permite_Envios, (SELECT nombre FROM ADIOS_TERCER_ANIO.Estado WHERE idEstado = id) AS Estado FROM ADIOS_TERCER_ANIO.Publicacion WHERE 41 = idPublicador";
-            SqlCommand obtenerPublicacion = new SqlCommand(sacarDatosPublicacion, conn.getConexion);
+            string sacarDatosPublicacion = "SELECT id, descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id) AS Visibilidad, tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id) AS Rubro, iif(tienePreguntas = 0, 'SI', 'NO') AS Acepta_Preguntas, iif(idEnvio IS NULL, 'NO', 'SI') AS Permite_Envios, (SELECT nombre FROM ADIOS_TERCER_ANIO.Estado WHERE idEstado = id) AS Estado, fechaFin AS Fecha_Finalización FROM ADIOS_TERCER_ANIO.Publicacion WHERE @idPublic = idPublicador";
             SqlParameter idPu = new SqlParameter("@idPublic", SqlDbType.Int);
             idPu.SqlValue = sesion.idUsuario;
             idPu.Direction = ParameterDirection.Input;
-            obtenerPublicacion.Parameters.Add(idPu);
 
             SqlDataAdapter da = new SqlDataAdapter(sacarDatosPublicacion, conn.getConexion);
+            da.SelectCommand.Parameters.Add(idPu);
+            da.SelectCommand.ExecuteNonQuery();
             DataTable tablaDeClientes = new DataTable("Publicaciones");
             da.Fill(tablaDeClientes);
             publicaciones.DataSource = tablaDeClientes.DefaultView;
@@ -44,6 +44,9 @@ namespace MercadoEnvios.Generar_Publicación
             publicaciones.AllowUserToDeleteRows = false;
             publicaciones.ReadOnly = true;
             publicaciones.Columns[0].Visible = false;
+            publicaciones.Columns[10].Width = 162;
+
+            
         }
 
         private void btnActivar_Click(object sender, EventArgs e)
@@ -69,6 +72,20 @@ namespace MercadoEnvios.Generar_Publicación
                 actualizarPublicacion.Parameters.Add(id);
                 actualizarPublicacion.Parameters.Add(fechaInicio);
                 actualizarPublicacion.Parameters.Add(fechaFin);
+                actualizarPublicacion.ExecuteNonQuery();
+                this.getData();
+            }
+
+            if (this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Pausada")
+            {
+                string despausar = "UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2 WHERE @idPublicacion = id";
+                SqlCommand actualizarPublicacion = new SqlCommand(despausar, conn.getConexion);
+                SqlParameter id = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                id.SqlValue = Convert.ToInt32(this.publicaciones.CurrentRow.Cells[0].Value);
+                id.Direction = ParameterDirection.Input;
+
+                actualizarPublicacion.Parameters.Add(id);
+                actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
             }
         }
@@ -83,6 +100,7 @@ namespace MercadoEnvios.Generar_Publicación
                 id.SqlValue = Convert.ToInt32(this.publicaciones.CurrentRow.Cells[0].Value);
                 id.Direction = ParameterDirection.Input;
                 actualizarPublicacion.Parameters.Add(id);
+                actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
             }
         }
@@ -96,7 +114,14 @@ namespace MercadoEnvios.Generar_Publicación
                 SqlParameter id = new SqlParameter("@idPublicacion", SqlDbType.Int);
                 id.SqlValue = Convert.ToInt32(this.publicaciones.CurrentRow.Cells[0].Value);
                 id.Direction = ParameterDirection.Input;
+
+                SqlParameter fechaFin = new SqlParameter("@fechaFin", SqlDbType.DateTime);
+                fechaFin.SqlValue = DateTime.Today;
+                fechaFin.Direction = ParameterDirection.Input;
+
                 actualizarPublicacion.Parameters.Add(id);
+                actualizarPublicacion.Parameters.Add(fechaFin);
+                actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
             }
         }

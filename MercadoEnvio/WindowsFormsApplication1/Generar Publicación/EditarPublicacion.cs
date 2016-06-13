@@ -16,8 +16,7 @@ namespace MercadoEnvios.Generar_Publicación
         Conexion conn;
         Sesion sesion;
         int idPublicacion;
-        SqlDataReader dataReader;
-        StringBuilder mensajeValidacion;
+        StringBuilder mensajeValidacion = new StringBuilder();
         Utilidades funcion = new Utilidades();
         public EditarPublicacion(int id)
         {
@@ -27,6 +26,27 @@ namespace MercadoEnvios.Generar_Publicación
             idPublicacion = id;
             int preguntas = 1;
             int envio = 1;
+
+            string rubrosDisponibles = "SELECT r.descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro r";
+            conn = Conexion.Instance;
+            SqlCommand buscarRubrosDisponibles = new SqlCommand(rubrosDisponibles, conn.getConexion);
+            SqlDataReader dabuscarRubrosDisponibles = buscarRubrosDisponibles.ExecuteReader();
+
+            while (dabuscarRubrosDisponibles.Read())
+            {
+                rubros.Items.Add(dabuscarRubrosDisponibles.GetString(0));
+            }
+            dabuscarRubrosDisponibles.Close();
+
+            string queryVisibilidad = "SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad";
+            SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
+            SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
+            while (dataReader.Read())
+            {
+                visibilidad.Items.Add(dataReader.GetString(0));
+            }
+
+            dataReader.Close();
 
             string sacarDatosPublicacion = "SELECT descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id), tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id), tienePreguntas, idEnvio FROM ADIOS_TERCER_ANIO.Publicacion WHERE @id = id";
             SqlCommand obtenerPublicacion = new SqlCommand(sacarDatosPublicacion, conn.getConexion);

@@ -40,6 +40,7 @@
             this.lblCompras = new System.Windows.Forms.Label();
             this.btnReputacion = new System.Windows.Forms.Button();
             this.lblIdCompra = new System.Windows.Forms.Label();
+            this.btnCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tkbCalificacion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompras)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +78,7 @@
             this.btnCalificar.Location = new System.Drawing.Point(482, 221);
             this.btnCalificar.Name = "btnCalificar";
             this.btnCalificar.Size = new System.Drawing.Size(300, 46);
-            this.btnCalificar.TabIndex = 3;
+            this.btnCalificar.TabIndex = 2;
             this.btnCalificar.Text = "Calificar";
             this.btnCalificar.UseVisualStyleBackColor = true;
             this.btnCalificar.Click += new System.EventHandler(this.btnCalificar_Click);
@@ -123,7 +124,7 @@
             this.txtDetalle.Multiline = true;
             this.txtDetalle.Name = "txtDetalle";
             this.txtDetalle.Size = new System.Drawing.Size(300, 54);
-            this.txtDetalle.TabIndex = 8;
+            this.txtDetalle.TabIndex = 1;
             // 
             // lblCompras
             // 
@@ -139,7 +140,7 @@
             this.btnReputacion.Location = new System.Drawing.Point(12, 221);
             this.btnReputacion.Name = "btnReputacion";
             this.btnReputacion.Size = new System.Drawing.Size(458, 46);
-            this.btnReputacion.TabIndex = 11;
+            this.btnReputacion.TabIndex = 3;
             this.btnReputacion.Text = "Reputación e historial";
             this.btnReputacion.UseVisualStyleBackColor = true;
             this.btnReputacion.Click += new System.EventHandler(this.btnReputacion_Click);
@@ -153,11 +154,22 @@
             this.lblIdCompra.TabIndex = 10;
             this.lblIdCompra.Visible = false;
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(753, 284);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(112, 33);
+            this.btnCancelar.TabIndex = 11;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // frmCalificacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 274);
+            this.ClientSize = new System.Drawing.Size(877, 326);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnReputacion);
             this.Controls.Add(this.lblIdCompra);
             this.Controls.Add(this.lblCompras);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.Label lblCompras;
         private System.Windows.Forms.Button btnReputacion;
         private System.Windows.Forms.Label lblIdCompra;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }

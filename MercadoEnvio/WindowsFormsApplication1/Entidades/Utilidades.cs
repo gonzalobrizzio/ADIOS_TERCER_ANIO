@@ -167,6 +167,8 @@ namespace MercadoEnvios.Entidades
             dataReader.Read();
             dias = dataReader.GetInt32(0);
 
+            dataReader.Close();
+
             return dias;
         }
     }

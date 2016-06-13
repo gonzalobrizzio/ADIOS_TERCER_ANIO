@@ -14,6 +14,7 @@ namespace MercadoEnvios.ComprarOfertar
     {
         Conexion conn = Conexion.Instance;
         SqlDataAdapter da;
+        Sesion sesion = Sesion.Instance;
 
         int nroPagina = 0;
 
@@ -71,6 +72,12 @@ namespace MercadoEnvios.ComprarOfertar
             nroPagina--;
             if (nroPagina == 0) btnAnt.Enabled = false;
             this.getData();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            sesion.anterior.Show();
+            this.Close();
         }
     }
 }

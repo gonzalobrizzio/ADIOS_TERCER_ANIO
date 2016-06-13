@@ -57,7 +57,7 @@
             this.rubros.Location = new System.Drawing.Point(22, 293);
             this.rubros.Name = "rubros";
             this.rubros.Size = new System.Drawing.Size(177, 21);
-            this.rubros.TabIndex = 822;
+            this.rubros.TabIndex = 6;
             // 
             // habilitarEnvios
             // 
@@ -65,7 +65,7 @@
             this.habilitarEnvios.Location = new System.Drawing.Point(22, 354);
             this.habilitarEnvios.Name = "habilitarEnvios";
             this.habilitarEnvios.Size = new System.Drawing.Size(98, 17);
-            this.habilitarEnvios.TabIndex = 821;
+            this.habilitarEnvios.TabIndex = 8;
             this.habilitarEnvios.Text = "Habilitar envios";
             this.habilitarEnvios.UseVisualStyleBackColor = true;
             // 
@@ -98,14 +98,14 @@
             this.tipoDePublicacion.Location = new System.Drawing.Point(266, 244);
             this.tipoDePublicacion.Name = "tipoDePublicacion";
             this.tipoDePublicacion.Size = new System.Drawing.Size(180, 21);
-            this.tipoDePublicacion.TabIndex = 807;
+            this.tipoDePublicacion.TabIndex = 5;
             // 
             // btnCancelar
             // 
             this.btnCancelar.Location = new System.Drawing.Point(361, 391);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(129, 34);
-            this.btnCancelar.TabIndex = 810;
+            this.btnCancelar.TabIndex = 10;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -116,7 +116,7 @@
             this.visibilidad.Location = new System.Drawing.Point(22, 244);
             this.visibilidad.Name = "visibilidad";
             this.visibilidad.Size = new System.Drawing.Size(177, 21);
-            this.visibilidad.TabIndex = 806;
+            this.visibilidad.TabIndex = 4;
             // 
             // label8
             // 
@@ -142,7 +142,7 @@
             this.habilitarPreguntas.Location = new System.Drawing.Point(22, 331);
             this.habilitarPreguntas.Name = "habilitarPreguntas";
             this.habilitarPreguntas.Size = new System.Drawing.Size(114, 17);
-            this.habilitarPreguntas.TabIndex = 808;
+            this.habilitarPreguntas.TabIndex = 7;
             this.habilitarPreguntas.Text = "Habilitar preguntas";
             this.habilitarPreguntas.UseVisualStyleBackColor = true;
             // 
@@ -151,7 +151,7 @@
             this.precio.Location = new System.Drawing.Point(22, 188);
             this.precio.Name = "precio";
             this.precio.Size = new System.Drawing.Size(177, 20);
-            this.precio.TabIndex = 804;
+            this.precio.TabIndex = 2;
             // 
             // stock
             // 
@@ -168,7 +168,7 @@
             0});
             this.stock.Name = "stock";
             this.stock.Size = new System.Drawing.Size(180, 20);
-            this.stock.TabIndex = 805;
+            this.stock.TabIndex = 3;
             this.stock.Value = new decimal(new int[] {
             1,
             0,
@@ -212,7 +212,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(226, 391);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(129, 34);
-            this.btnAceptar.TabIndex = 809;
+            this.btnAceptar.TabIndex = 9;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -250,7 +250,7 @@
             this.descripcion.Multiline = true;
             this.descripcion.Name = "descripcion";
             this.descripcion.Size = new System.Drawing.Size(472, 79);
-            this.descripcion.TabIndex = 803;
+            this.descripcion.TabIndex = 1;
             // 
             // EditarPublicacion
             // 
@@ -278,6 +278,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.descripcion);
             this.Name = "EditarPublicacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditarPublicacion";
             ((System.ComponentModel.ISupportInitialize)(this.stock)).EndInit();
             this.ResumeLayout(false);

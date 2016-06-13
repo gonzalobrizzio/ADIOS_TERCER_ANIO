@@ -124,7 +124,7 @@
             this.habilitarPreguntas.Location = new System.Drawing.Point(16, 341);
             this.habilitarPreguntas.Name = "habilitarPreguntas";
             this.habilitarPreguntas.Size = new System.Drawing.Size(114, 17);
-            this.habilitarPreguntas.TabIndex = 8;
+            this.habilitarPreguntas.TabIndex = 7;
             this.habilitarPreguntas.Text = "Habilitar preguntas";
             this.habilitarPreguntas.UseVisualStyleBackColor = true;
             // 
@@ -240,7 +240,7 @@
             this.habilitarEnvios.Location = new System.Drawing.Point(16, 364);
             this.habilitarEnvios.Name = "habilitarEnvios";
             this.habilitarEnvios.Size = new System.Drawing.Size(98, 17);
-            this.habilitarEnvios.TabIndex = 801;
+            this.habilitarEnvios.TabIndex = 8;
             this.habilitarEnvios.Text = "Habilitar envios";
             this.habilitarEnvios.UseVisualStyleBackColor = true;
             // 
@@ -250,7 +250,7 @@
             this.rubros.Location = new System.Drawing.Point(16, 303);
             this.rubros.Name = "rubros";
             this.rubros.Size = new System.Drawing.Size(177, 21);
-            this.rubros.TabIndex = 802;
+            this.rubros.TabIndex = 6;
             // 
             // frmGenerarPublicacion
             // 

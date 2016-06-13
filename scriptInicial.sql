@@ -658,4 +658,3 @@ EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 --CALCULO LOS PROMEDIOS DE LO MIGRADO
 EXEC [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio];
-

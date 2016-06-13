@@ -38,7 +38,7 @@
             this.btnModificarPublicacion.Location = new System.Drawing.Point(54, 127);
             this.btnModificarPublicacion.Name = "btnModificarPublicacion";
             this.btnModificarPublicacion.Size = new System.Drawing.Size(193, 48);
-            this.btnModificarPublicacion.TabIndex = 0;
+            this.btnModificarPublicacion.TabIndex = 2;
             this.btnModificarPublicacion.Text = "Modificar Publicación";
             this.btnModificarPublicacion.UseVisualStyleBackColor = true;
             this.btnModificarPublicacion.Click += new System.EventHandler(this.btnModificarPublicacion_Click);
@@ -58,7 +58,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(222, 198);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(93, 34);
-            this.btnCancelar.TabIndex = 2;
+            this.btnCancelar.TabIndex = 3;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);

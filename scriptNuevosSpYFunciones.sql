@@ -431,29 +431,33 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ActivarPublicacion] (@idPublicacion, @fechaInicio, @fechaFin)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ActivarPublicacion] (@idPublicacion INT, @fechaInicio DATETIME, @fechaFin DATETIME)
 AS
 BEGIN
 		UPDATE	ADIOS_TERCER_ANIO.Publicacion
-		 SET idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa'), fechaInicio = @fechaInicio, fechaFin = @fechaFin WHERE id = @idPublicacion
+		 SET idEstado = 2, fechaInicio = @fechaInicio, fechaFin = @fechaFin WHERE id = @idPublicacion
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarPublicacion] (@idPublicacion)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarPublicacion] (@idPublicacion INT, @fechaFin DATETIME)
 AS
 BEGIN
+
 		UPDATE	ADIOS_TERCER_ANIO.Publicacion
-		 SET idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada') WHERE id = @idPublicacion
+		 SET idEstado = 4, fechaFin = @fechaFin WHERE id = @idPublicacion
 END
 GO
 
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion INT)
 AS
 BEGIN
 		UPDATE	ADIOS_TERCER_ANIO.Publicacion
-		 SET idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Pausada'), fechaInicio = @fechaInicio, fechaFin = @fechaFin WHERE id = @idPublicacion
+		 SET idEstado = 3 WHERE id = @idPublicacion
 END
 GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+
+SELECT * FROM ADIOS_TERCER_ANIO.Publicacion

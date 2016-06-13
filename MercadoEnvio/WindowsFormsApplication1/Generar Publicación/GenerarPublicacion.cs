@@ -28,7 +28,7 @@ namespace MercadoEnvios.Generar_Publicación
 
         private void loadGrid()
         {
-            String rubrosDisponibles = "SELECT r.descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro r";
+            string rubrosDisponibles = "SELECT r.descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro r";
             conn = Conexion.Instance;
             SqlCommand buscarRubrosDisponibles = new SqlCommand(rubrosDisponibles, conn.getConexion);
             SqlDataReader dabuscarRubrosDisponibles = buscarRubrosDisponibles.ExecuteReader();
