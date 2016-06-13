@@ -157,7 +157,7 @@ namespace MercadoEnvios.Entidades
         public int obtenerDuracionDeVisibilidad(string visibilidad)
         {
             int dias = 0;
-            string sacarDuracion = "SELECT duracionDias FROM ADIOS_TERCER_ANIO.Visibilidad WHERE @visibilidad = descripcion";
+            string sacarDuracion = "SELECT duracionDias FROM ADIOS_TERCER_ANIO.Visibilidad WHERE @visibilidad = nombre";
             SqlCommand obtenerDuracion = new SqlCommand(sacarDuracion, conn.getConexion);
             SqlParameter vis = new SqlParameter("@visibilidad", SqlDbType.NVarChar, 255);
             vis.SqlValue = visibilidad;
