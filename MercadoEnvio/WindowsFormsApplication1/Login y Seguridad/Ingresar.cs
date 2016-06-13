@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using MercadoEnvios.Entidades;
 
-namespace MercadoEnvios
+namespace MercadoEnvios.Login_y_Seguridad
 {
     public partial class frmIngresar : Form
     {

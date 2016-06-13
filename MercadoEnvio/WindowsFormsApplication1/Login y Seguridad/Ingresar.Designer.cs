@@ -1,4 +1,4 @@
-﻿namespace MercadoEnvios
+﻿namespace MercadoEnvios.Login_y_Seguridad
 {
     partial class frmIngresar
     {

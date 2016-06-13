@@ -24,24 +24,56 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void getData()
         {
-            String queryHabilitados = "SELECT id,nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Visibilidad";
+            String queryHabilitados = "SELECT id,nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, duracionDias as duracion, precio, porcentaje FROM ADIOS_TERCER_ANIO.Visibilidad";
             conn = Conexion.Instance;
             da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
             DataTable tablaDeVisibilidades = new DataTable("Visibilidades");
             da.Fill(tablaDeVisibilidades);
             dgvVisibilidad.DataSource = tablaDeVisibilidades;
             dgvVisibilidad.Columns[0].Visible = false;
-            dgvVisibilidad.Columns[1].Width = 300;
-            dgvVisibilidad.Columns[2].Width = 300;
+            dgvVisibilidad.Columns[1].Width = 120;
+            dgvVisibilidad.Columns[2].Width = 120;
+            dgvVisibilidad.Columns[3].Width = 120;
+            dgvVisibilidad.Columns[4].Width = 120;
+            dgvVisibilidad.Columns[5].Width = 120;
             dgvVisibilidad.AllowUserToAddRows = false;
             dgvVisibilidad.AllowUserToDeleteRows = false;
             dgvVisibilidad.ReadOnly = true;
         }
 
+        private void btnHabilitar_Click_1(object sender, EventArgs e)
+        {
+            if (dgvVisibilidad.SelectedRows == null)
+            {
+                MessageBox.Show("Debe seleccionar una visibilidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                String query = "UPDATE ADIOS_TERCER_ANIO.Visibilidad SET deleted = 0 WHERE @idVisibilidad = id";
+                SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                SqlParameter idVisibilidad = new SqlParameter("@idVisibilidad", SqlDbType.Int);
+                idVisibilidad.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idVisibilidad);
+                foreach (DataGridViewRow row in dgvVisibilidad.SelectedRows)
+                {
+                    idVisibilidad.SqlValue = Convert.ToInt32(row.Cells[0].Value);
+                    actualizacion.ExecuteNonQuery();
+                }
+                this.getData();
+            }
+        }
+
+
+        private void btnVolver_Click_1(object sender, EventArgs e)
+        {
+            new ABM_Usuario.frmPantallaPrincipal().Show();
+            this.Close();
+        }
+
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             new ABM_Visibilidad.frmAgregarVisibilidad().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnDeshabilitar_Click(object sender, EventArgs e)
@@ -67,28 +99,6 @@ namespace MercadoEnvios.ABM_Visibilidad
             }
         }
 
-        private void btnHabilitar_Click(object sender, EventArgs e)
-        {
-            if (dgvVisibilidad.SelectedRows == null)
-            {
-                MessageBox.Show("Debe seleccionar una visibilidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                String query = "UPDATE ADIOS_TERCER_ANIO.Visibilidad SET deleted = 0 WHERE @idVisibilidad = id";
-                SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                SqlParameter idVisibilidad = new SqlParameter("@idVisibilidad", SqlDbType.Int);
-                idVisibilidad.Direction = ParameterDirection.Input;
-                actualizacion.Parameters.Add(idVisibilidad);
-                foreach (DataGridViewRow row in dgvVisibilidad.SelectedRows)
-                {
-                    idVisibilidad.SqlValue = Convert.ToInt32(row.Cells[0].Value);
-                    actualizacion.ExecuteNonQuery();
-                }
-                this.getData();
-            }
-        }
-
         private void btnModificar_Click(object sender, EventArgs e)
         {
 
@@ -98,15 +108,10 @@ namespace MercadoEnvios.ABM_Visibilidad
             }
             else
             {
-                //new ABM_Visibilidad.frmModificarVisibilidad(Convert.ToInt32(dgvVisibilidad.CurrentRow.Cells[0].Value), Convert.ToString(dgvVisibilidad.CurrentRow.Cells[1].Value)).Show();
+                new ABM_Visibilidad.frmModificarVisibilidad(Convert.ToInt32(dgvVisibilidad.CurrentRow.Cells[0].Value), Convert.ToString(dgvVisibilidad.CurrentRow.Cells[1].Value)).Show();
                 this.Hide();
             }
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            new ABM_Usuario.frmPantallaPrincipal().Show();
-            this.Hide();
-        }
     }
 }

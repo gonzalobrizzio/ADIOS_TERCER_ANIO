@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnVolver = new System.Windows.Forms.Button();
-            this.btnInhabilitar = new System.Windows.Forms.Button();
+            this.btnDeshabilitar = new System.Windows.Forms.Button();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.btnModificar = new System.Windows.Forms.Button();
@@ -46,15 +46,17 @@
             this.btnVolver.TabIndex = 20;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click_1);
             // 
-            // btnInhabilitar
+            // btnDeshabilitar
             // 
-            this.btnInhabilitar.Location = new System.Drawing.Point(146, 349);
-            this.btnInhabilitar.Name = "btnInhabilitar";
-            this.btnInhabilitar.Size = new System.Drawing.Size(119, 36);
-            this.btnInhabilitar.TabIndex = 19;
-            this.btnInhabilitar.Text = "Deshabilitar";
-            this.btnInhabilitar.UseVisualStyleBackColor = true;
+            this.btnDeshabilitar.Location = new System.Drawing.Point(146, 349);
+            this.btnDeshabilitar.Name = "btnDeshabilitar";
+            this.btnDeshabilitar.Size = new System.Drawing.Size(119, 36);
+            this.btnDeshabilitar.TabIndex = 19;
+            this.btnDeshabilitar.Text = "Deshabilitar";
+            this.btnDeshabilitar.UseVisualStyleBackColor = true;
+            this.btnDeshabilitar.Click += new System.EventHandler(this.btnDeshabilitar_Click);
             // 
             // btnHabilitar
             // 
@@ -64,6 +66,7 @@
             this.btnHabilitar.TabIndex = 18;
             this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
+            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click_1);
             // 
             // lblTitulo
             // 
@@ -84,6 +87,7 @@
             this.btnModificar.TabIndex = 16;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnAgregar
             // 
@@ -93,6 +97,7 @@
             this.btnAgregar.TabIndex = 15;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // dgvVisibilidad
             // 
@@ -109,7 +114,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 396);
             this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.btnInhabilitar);
+            this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.btnModificar);
@@ -126,7 +131,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Button btnInhabilitar;
+        private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.Button btnHabilitar;
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Button btnModificar;

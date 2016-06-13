@@ -25,29 +25,52 @@ namespace MercadoEnvios.ABM_Visibilidad
             this.Close();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.salir();
-        }
-
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void btnAceptar_Click_1(object sender, EventArgs e)
         {
             SqlCommand agregarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.AgregarVisibilidad", conn.getConexion);
             agregarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
             SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-            nombre.SqlValue = txtNombre.Text;
+            if (string.IsNullOrEmpty(txtNombre.Text))
+            {
+                nombre.SqlValue = DBNull.Value;
+            }
+            else
+            {
+                nombre.SqlValue = txtNombre.Text;
+            }
             nombre.Direction = ParameterDirection.Input;
 
             SqlParameter duracion = new SqlParameter("@duracion", SqlDbType.Int);
-            duracion.SqlValue = Convert.ToInt32(txtDuracion.Text);
+            if (string.IsNullOrEmpty(txtDuracion.Text))
+            {
+                duracion.SqlValue = DBNull.Value;
+            }
+            else
+            {
+                duracion.SqlValue = Convert.ToInt32(txtDuracion.Text);
+            }
             duracion.Direction = ParameterDirection.Input;
-           
+
             SqlParameter precio = new SqlParameter("@precio", SqlDbType.Decimal);
-            precio.SqlValue = Convert.ToDecimal(txtPrecio.Text);
+            if (string.IsNullOrEmpty(txtPrecio.Text))
+            {
+                precio.SqlValue = DBNull.Value;
+            }
+            else
+            {
+                precio.SqlValue = Convert.ToDecimal(txtPrecio.Text);
+            }
             precio.Direction = ParameterDirection.Input;
 
             SqlParameter porcentaje = new SqlParameter("@porcentaje", SqlDbType.Decimal);
-            porcentaje.SqlValue = Convert.ToDecimal(txtPorcentaje.Text);
+            if (string.IsNullOrEmpty(txtPorcentaje.Text))
+            {
+                porcentaje.SqlValue = DBNull.Value;
+            }
+            else
+            {
+                porcentaje.SqlValue = Convert.ToDecimal(txtPorcentaje.Text);
+            }
             porcentaje.Direction = ParameterDirection.Input;
 
             agregarVisibilidad.Parameters.Add(nombre);
@@ -58,12 +81,17 @@ namespace MercadoEnvios.ABM_Visibilidad
             try
             {
                 agregarVisibilidad.ExecuteNonQuery();
+                this.salir();
             }
             catch (SqlException error)
             {
                 MessageBox.Show(error.Message);
             }
+        }
 
+        private void btnCancelar_Click_1(object sender, EventArgs e)
+        {
+            this.salir();
         }
     }
 }
