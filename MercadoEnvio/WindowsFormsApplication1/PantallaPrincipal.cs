@@ -1,4 +1,5 @@
-﻿using MercadoEnvios.Historial_Cliente;
+﻿using MercadoEnvios.ABM_Visibilidad;
+using MercadoEnvios.Historial_Cliente;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,7 +69,9 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnABMVisibilidad_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
+            new ABM_Visibilidad.frmABMVisibilidad().Show();
+            this.Hide();
         }
 
         private void btnConsultarFacturas_Click(object sender, EventArgs e)

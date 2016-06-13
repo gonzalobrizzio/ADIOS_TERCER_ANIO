@@ -48,7 +48,7 @@ namespace MercadoEnvios
 
                 cmd.ExecuteNonQuery();
 
-                sesion = new Sesion(Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString()), 0, null);
+                sesion = new Sesion(Convert.ToInt32(cmd.Parameters["@idUsuario"].Value), 0, null);
 
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "

@@ -44,7 +44,6 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarRol] (@nombre NVARCHAR(255), @id int)
 AS
 BEGIN
-	
 	if (@nombre <> '')
 	begin
 		BEGIN TRANSACTIOn
@@ -74,7 +73,6 @@ BEGIN
 	SET @ID = @@IDENTITY
 	RETURN @ID
 END
-
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[modificarFuncionalidadesRol] (@idRol int, @idFunc int, @borrar int)
 AS

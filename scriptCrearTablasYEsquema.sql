@@ -79,9 +79,10 @@ CREATE  TABLE Estado (
 CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   codigo INT NULL ,
-  descripcion NVARCHAR(255) NOT NULL ,
+  nombre NVARCHAR(255) NOT NULL ,
   precio DECIMAL(18,2) NULL ,
   porcentaje DECIMAL(18,2) NULL ,
+  deleted INT DEFAULT 0,
   )
 
 CREATE  TABLE Envio (
