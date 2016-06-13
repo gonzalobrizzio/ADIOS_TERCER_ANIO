@@ -107,7 +107,6 @@ BEGIN
 	end
 END
 GO
-
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[obtenerCompras] (@idCalificador int)
 AS
 BEGIN
@@ -137,7 +136,6 @@ BEGIN
 
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.AgregarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
 	set nocount on;
