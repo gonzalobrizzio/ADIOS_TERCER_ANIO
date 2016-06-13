@@ -123,5 +123,13 @@ namespace MercadoEnvios.Calificar
         {
             sesion.anterior.Show();
         }
+
+         
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            sesion.anterior.Show();
+            this.Close();
+        }
     }
 }

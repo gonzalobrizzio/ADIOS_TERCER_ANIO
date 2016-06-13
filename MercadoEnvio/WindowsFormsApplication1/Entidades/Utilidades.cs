@@ -153,5 +153,23 @@ namespace MercadoEnvios.Entidades
                 return false;
         }
 
+
+        public int obtenerDuracionDeVisibilidad(string visibilidad)
+        {
+            int dias = 0;
+            string sacarDuracion = "SELECT duracionDias FROM ADIOS_TERCER_ANIO.Visibilidad WHERE @visibilidad = descripcion";
+            SqlCommand obtenerDuracion = new SqlCommand(sacarDuracion, conn.getConexion);
+            SqlParameter vis = new SqlParameter("@visibilidad", SqlDbType.NVarChar, 255);
+            vis.SqlValue = visibilidad;
+            vis.Direction = ParameterDirection.Input;
+            obtenerDuracion.Parameters.Add(vis);
+            SqlDataReader dataReader = obtenerDuracion.ExecuteReader();
+            dataReader.Read();
+            dias = dataReader.GetInt32(0);
+
+            dataReader.Close();
+
+            return dias;
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace MercadoEnvios.ABM_Usuario
         public frmABMUsuario()
         {
             InitializeComponent();
+            sesion = Sesion.Instance;
             this.getData();
         }
 

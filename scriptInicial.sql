@@ -86,7 +86,8 @@ AS BEGIN
 				codigoPostal,
 				fechaNacimiento,
 				fechaCreacion,
-				idUsuario)
+				idUsuario,
+				calificacionPromedio)
 			VALUES (
 				@nombre,
 				@apellido,
@@ -99,7 +100,8 @@ AS BEGIN
 				@codigoPostal,
 				@fechaNac,
 				GETDATE(),
-				@idUsuario)
+				@idUsuario,
+				0)
 			
 				
 		FETCH NEXT FROM cur
@@ -228,13 +230,13 @@ AS BEGIN
 	set xact_abort on;
 
 	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(
-							codigo, 
+							duracionDias, 
 							descripcion, 
 							precio, 
 							porcentaje
 							)
 	SELECT DISTINCT
-		Publicacion_Visibilidad_Cod, 
+		7,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
 		Publicacion_Visibilidad_Desc, 
 		Publicacion_Visibilidad_Precio,
 		Publicacion_Visibilidad_Porcentaje
@@ -270,15 +272,15 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idVendedor, idFormaDePago, idPublicacion)
+	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idFormaDePago, idPublicacion)
 	SELECT DISTINCT
 		Factura_Nro																				AS numero,
 		Factura_Total																			AS importeTotal,
 		Factura_Fecha																			AS fecha,
-		CASE 
-			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
-			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
-		END																						AS idVendedor,
+		--LO SACO #REDUNDANTE CASE 
+		--LO SACO #REDUNDANTE 	WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+		--LO SACO #REDUNDANTE 	ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		--LO SACO #REDUNDANTE END																						AS idVendedor,
 		(SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre LIKE Forma_Pago_Desc)		AS idFormaDePago,
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
 	FROM 
@@ -436,7 +438,7 @@ AS BEGIN
 		Publicacion_Tipo																				AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )							AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)		AS idVisibilidad,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
 		CASE 
 			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
 			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
@@ -456,11 +458,86 @@ AS BEGIN
 			Factura_Nro IS NULL 
 		AND 
 			Compra_Cantidad IS NULL
+		AND
+			Oferta_Fecha IS NULL
 	ORDER BY id DESC
 
 	SET IDENTITY_INSERT ADIOS_TERCER_ANIO.Publicacion OFF
 END
 GO
+
+--ACTUALIZO EL VALOR DE LAS CALIFICACIONES PROMEDIO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio]
+AS BEGIN
+	set nocount on;
+	set xact_abort on;
+	DECLARE @idPersona INT,
+			@promedioPer INT,
+			@idEmpresa INT,
+			@promedioEmp INT
+
+	---CURSOR PARA LAS PERSONAS
+	DECLARE cur CURSOR FOR
+	SELECT	per.id					AS persona, 
+			AVG(cal.puntaje)		AS califPromedio
+	FROM ADIOS_TERCER_ANIO.Usuario usu
+		LEFT JOIN ADIOS_TERCER_ANIO.Persona per ON usu.id = per.idUsuario
+		LEFT JOIN ADIOS_TERCER_ANIO.Publicacion pub ON per.id = pub.idPublicador
+		LEFT JOIN ADIOS_TERCER_ANIO.Compra com on com.idPublicacion = pub.id
+		LEFT JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
+		WHERE pub.id IS NOT NULL
+		GROUP BY per.id
+		ORDER BY per.id
+	
+	---CURSOR PARA LAS EMPRESAS
+	DECLARE cur2 CURSOR FOR
+	SELECT	emp.id					AS empresa, 
+			AVG(cal.puntaje)		AS califPromedio
+	FROM ADIOS_TERCER_ANIO.Usuario usu
+		LEFT JOIN ADIOS_TERCER_ANIO.Empresa emp ON usu.id = emp.idUsuario
+		LEFT JOIN ADIOS_TERCER_ANIO.Publicacion pub ON emp.id = pub.idPublicador
+		LEFT JOIN ADIOS_TERCER_ANIO.Compra com on com.idPublicacion = pub.id
+		LEFT JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
+		WHERE pub.id IS NOT NULL
+		GROUP BY emp.id
+		ORDER BY emp.id
+
+	OPEN cur
+	FETCH NEXT FROM cur
+		INTO 
+		@idPersona,
+		@promedioPer 
+	WHILE(@@FETCH_STATUS = 0)
+		BEGIN		
+			UPDATE ADIOS_TERCER_ANIO.Persona SET calificacionPromedio = @promedioPer WHERE id = @idPersona
+		FETCH NEXT FROM cur
+		INTO 
+		@idPersona,
+		@promedioPer 
+		END
+	-----------------------------------
+	
+	OPEN cur2
+	FETCH NEXT FROM cur2
+		INTO 
+		@idEmpresa,
+		@promedioEmp 
+	WHILE(@@FETCH_STATUS = 0)
+		BEGIN		
+			UPDATE ADIOS_TERCER_ANIO.Empresa SET calificacionPromedio = @promedioEmp WHERE id = @idEmpresa
+		FETCH NEXT FROM cur2
+		INTO 
+		@idEmpresa,
+		@promedioEmp 
+		END
+	
+	CLOSE cur 
+	CLOSE cur2
+	DEALLOCATE cur
+	DEALLOCATE cur2	
+END
+GO
+
 
 -- -----------------------------------------------------
 -- FUNCIONES
@@ -579,5 +656,5 @@ EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
 --MIGRO LOS ITEMS QUE TIENEN LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
-
-
+--CALCULO LOS PROMEDIOS DE LO MIGRADO
+EXEC [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio];

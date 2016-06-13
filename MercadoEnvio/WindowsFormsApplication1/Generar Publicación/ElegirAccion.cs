@@ -21,6 +21,7 @@ namespace MercadoEnvios.Generar_Publicación
         private void btnNuevaPublicacion_Click(object sender, EventArgs e)
         {
             new Generar_Publicación.frmGenerarPublicacion().Show();
+            this.Close();
 
         }
 
@@ -33,6 +34,7 @@ namespace MercadoEnvios.Generar_Publicación
         private void btnModificarPublicacion_Click(object sender, EventArgs e)
         {
             new Generar_Publicación.frmModificarPublicacion().Show();
+            this.Close();
         }
     }
 }
