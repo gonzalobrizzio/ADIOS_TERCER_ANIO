@@ -84,7 +84,7 @@ namespace MercadoEnvios.Generar_Publicación
 
             if (validaciones)
             {
-                SqlCommand actualizarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.AgregarPublicacion", conn.getConexion);
+                SqlCommand actualizarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.EditarPublicacion", conn.getConexion);
                 actualizarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
 
                 SqlParameter descripcionP = new SqlParameter("@descripcion", SqlDbType.NVarChar, 255);
@@ -134,8 +134,8 @@ namespace MercadoEnvios.Generar_Publicación
                 estadoP.SqlValue = "Borrador";
                 estadoP.Direction = ParameterDirection.Input;
 
-                SqlParameter idP = new SqlParameter("@idPublicador", SqlDbType.Int);
-                idP.SqlValue = sesion.idUsuario;
+                SqlParameter idP = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                idP.SqlValue = idPublicacion;
                 idP.Direction = ParameterDirection.Input;
 
                 SqlParameter envio = new SqlParameter("@envio", SqlDbType.Int);
