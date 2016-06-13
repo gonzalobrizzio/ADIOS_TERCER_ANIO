@@ -86,7 +86,8 @@ AS BEGIN
 				codigoPostal,
 				fechaNacimiento,
 				fechaCreacion,
-				idUsuario)
+				idUsuario,
+				calificacionPromedio)
 			VALUES (
 				@nombre,
 				@apellido,
@@ -99,7 +100,8 @@ AS BEGIN
 				@codigoPostal,
 				@fechaNac,
 				GETDATE(),
-				@idUsuario)
+				@idUsuario,
+				0)
 			
 				
 		FETCH NEXT FROM cur
@@ -228,13 +230,13 @@ AS BEGIN
 	set xact_abort on;
 
 	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(
-							codigo, 
+							duracionDias, 
 							descripcion, 
 							precio, 
 							porcentaje
 							)
 	SELECT DISTINCT
-		Publicacion_Visibilidad_Cod, 
+		7,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
 		Publicacion_Visibilidad_Desc, 
 		Publicacion_Visibilidad_Precio,
 		Publicacion_Visibilidad_Porcentaje
@@ -270,15 +272,15 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idVendedor, idFormaDePago, idPublicacion)
+	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idFormaDePago, idPublicacion)
 	SELECT DISTINCT
 		Factura_Nro																				AS numero,
 		Factura_Total																			AS importeTotal,
 		Factura_Fecha																			AS fecha,
-		CASE 
-			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
-			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
-		END																						AS idVendedor,
+		--LO SACO #REDUNDANTE CASE 
+		--LO SACO #REDUNDANTE 	WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+		--LO SACO #REDUNDANTE 	ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		--LO SACO #REDUNDANTE END																						AS idVendedor,
 		(SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre LIKE Forma_Pago_Desc)		AS idFormaDePago,
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
 	FROM 
@@ -436,7 +438,7 @@ AS BEGIN
 		Publicacion_Tipo																				AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )							AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE codigo = Publicacion_Visibilidad_Cod)		AS idVisibilidad,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
 		CASE 
 			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
 			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
@@ -456,6 +458,8 @@ AS BEGIN
 			Factura_Nro IS NULL 
 		AND 
 			Compra_Cantidad IS NULL
+		AND
+			Oferta_Fecha IS NULL
 	ORDER BY id DESC
 
 	SET IDENTITY_INSERT ADIOS_TERCER_ANIO.Publicacion OFF

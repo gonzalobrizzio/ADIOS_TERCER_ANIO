@@ -51,6 +51,7 @@ CREATE  TABLE Persona (
   fechaCreacion DATETIME NOT NULL ,
   idUsuario INT REFERENCES usuario(id) ,
   idLocalidad INT REFERENCES Localidad(id) NULL,
+  calificacionPromedio INT NULL DEFAULT 0,
   )
 
 CREATE  TABLE Empresa (
@@ -78,7 +79,7 @@ CREATE  TABLE Estado (
 
 CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  codigo INT NULL ,
+  duracionDias INT NULL ,
   descripcion NVARCHAR(255) NOT NULL ,
   precio DECIMAL(18,2) NULL ,
   porcentaje DECIMAL(18,2) NULL ,
@@ -92,8 +93,8 @@ CREATE  TABLE Envio (
 CREATE  TABLE Publicacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   descripcion NVARCHAR(255) NULL ,
-  fechaInicio DATETIME NOT NULL ,
-  fechaFin DATETIME NOT NULL ,
+  fechaInicio DATETIME NULL ,
+  fechaFin DATETIME NULL ,
   tienePreguntas INT NULL ,
   tipo NVARCHAR(255) ,
   idEstado INT REFERENCES Estado(id) ,
@@ -161,7 +162,7 @@ CREATE  TABLE Factura (
   numero INT NULL ,
   importeTotal DECIMAL(18,2) NULL ,
   fecha DATETIME NULL ,
-  idVendedor INT REFERENCES Usuario(id) ,
+  --LO SACO #REDUNDANTE idVendedor INT REFERENCES Usuario(id) ,
   idFormaDePago INT REFERENCES FormaDePago(id),
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
