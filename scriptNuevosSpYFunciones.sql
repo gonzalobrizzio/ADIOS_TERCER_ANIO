@@ -107,13 +107,6 @@ BEGIN
 	end
 END
 GO
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
-UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-=======
-=======
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[obtenerCompras] (@idCalificador int)
 AS
 BEGIN
@@ -143,8 +136,6 @@ BEGIN
 
 END
 GO
-
->>>>>>> 2743dfdac43aed950d0afd2b56a54260fa8a2025
 CREATE PROCEDURE ADIOS_TERCER_ANIO.AgregarUsuario (@usuario NVARCHAR(255),@password NVARCHAR(255), @mail NVARCHAR(255),@ultimoID INT OUTPUT)
 AS BEGIN
 	set nocount on;
@@ -166,15 +157,7 @@ AS BEGIN
 		ROLLBACK TRANSACTION;
 		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
 	END CATCH
-<<<<<<< HEAD
-	COMMIT TRANSACTION
-	RETURN @ultimoID
->>>>>>> 0571ff01cd568ce197e25fa475d0d73c9f80290d
-
-	
-=======
 	COMMIT TRANSACTION	
->>>>>>> 2743dfdac43aed950d0afd2b56a54260fa8a2025
 END
 GO
 
