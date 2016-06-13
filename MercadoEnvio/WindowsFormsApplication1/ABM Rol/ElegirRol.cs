@@ -33,19 +33,19 @@ namespace MercadoEnvios.ABM_Rol
                 {
                     sesion.idRol = 1;
                     new ABM_Usuario.frmPantallaPrincipal().Show();
-                    this.Close();
+                    this.Hide();
                 }
                 else if ((cboRol.SelectedItem).Equals("Cliente"))
                 {
                     sesion.idRol = 2;
                     new ABM_Usuario.frmPantallaPrincipal().Show();
-                    this.Close();
+                    this.Hide();
                 }
                 else if ((cboRol.SelectedItem).Equals("Empresa"))
                 {
                     sesion.idRol = 3;
                     new ABM_Usuario.frmPantallaPrincipal().Show();
-                    this.Close();
+                    this.Hide();
                 }
 
         }

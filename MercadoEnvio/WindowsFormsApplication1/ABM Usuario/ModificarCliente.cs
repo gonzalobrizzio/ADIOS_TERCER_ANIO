@@ -17,12 +17,16 @@ namespace MercadoEnvios.ABM_Usuario
         Conexion conn;
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
-        int idUsuario;
+
+        Sesion sesion = Sesion.Instance;
+        Form anterior;
 
         public frmModificarCliente(int id)
         {
             InitializeComponent();
-            idUsuario = id;
+            anterior = sesion.anterior;
+
+            sesion.idUsuario = id;
 
             calendarioNac.Visible = false;
             conn = Conexion.Instance;
@@ -61,7 +65,7 @@ namespace MercadoEnvios.ABM_Usuario
             string sacarDatosDeUsuario = "SELECT * FROM ADIOS_TERCER_ANIO.Usuario WHERE id = @id";
             SqlCommand obtenerUsuario = new SqlCommand(sacarDatosDeUsuario, conn.getConexion);
             SqlParameter idU = new SqlParameter("@id", SqlDbType.Int);
-            idU.SqlValue = idUsuario;
+            idU.SqlValue = sesion.idUsuario;
             idU.Direction = ParameterDirection.Input;
             obtenerUsuario.Parameters.Add(idU);
             dataReader = obtenerUsuario.ExecuteReader();
@@ -76,7 +80,7 @@ namespace MercadoEnvios.ABM_Usuario
             string sacarDatosDeEmpresa = "SELECT e.apellido, e.nombre, e.codigoPostal, e.direccion, e.direccion_numero, e.documento, e.dpto, (SELECT nombre FROM ADIOS_TERCER_ANIO.Localidad WHERE id = e.idLocalidad), (SELECT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE id = e.idTipoDocumento),e.piso, e.telefono  FROM ADIOS_TERCER_ANIO.Usuario p inner join ADIOS_TERCER_ANIO.Persona e on e.idUsuario = p.id WHERE @id = e.id";
             SqlCommand obtenerEmpresa = new SqlCommand(sacarDatosDeEmpresa, conn.getConexion);
             SqlParameter idUs = new SqlParameter("@id", SqlDbType.Int);
-            idUs.SqlValue = idUsuario;
+            idUs.SqlValue = sesion.idUsuario;
             idUs.Direction = ParameterDirection.Input;
             obtenerEmpresa.Parameters.Add(idUs);
             dataReader = obtenerEmpresa.ExecuteReader();
@@ -101,8 +105,8 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            new frmABMUsuario().Show();
-            this.Close();
+            sesion.anterior.Show();
+            this.Hide();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -121,7 +125,7 @@ namespace MercadoEnvios.ABM_Usuario
             password.Direction = ParameterDirection.Input;
 
             SqlParameter idUf = new SqlParameter("@id", SqlDbType.Int);
-            idUf.SqlValue = idUsuario;
+            idUf.SqlValue = sesion.idUsuario;
             idUf.Direction = ParameterDirection.Input;
 
             SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
@@ -210,7 +214,7 @@ namespace MercadoEnvios.ABM_Usuario
             fechaNac.SqlValue = DateTime.Parse(txtFechaNac.Text);
             }
             SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
-            otroid.SqlValue = idUsuario;
+            otroid.SqlValue = sesion.idUsuario;
             otroid.Direction = ParameterDirection.Input;
 
             modificarCliente.Parameters.Add(otroid);
@@ -253,6 +257,16 @@ namespace MercadoEnvios.ABM_Usuario
         }
 
         private void frmModificarCliente_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmModificarCliente_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
+        private void frmModificarCliente_Shown(object sender, EventArgs e)
         {
 
         }

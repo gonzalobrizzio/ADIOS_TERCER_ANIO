@@ -14,9 +14,13 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmABMUsuario : Form
     {
         Conexion conn;
+        Form anterior;
+        Sesion sesion = Sesion.Instance;
+
         public frmABMUsuario()
         {
             InitializeComponent();
+            anterior = sesion.anterior;
             this.getData();
         }
 
@@ -61,15 +65,16 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
-            new frmPantallaPrincipal().Show();
-            this.Close();
+            sesion.anterior.Show();
+            this.Hide();
 
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new frmNuevoUsuario().Show();
-            this.Close();
+            this.Hide();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -165,24 +170,30 @@ namespace MercadoEnvios.ABM_Usuario
                 }
                 else 
                 {
+                    sesion.anterior = this;
                     new frmModificarEmpresa(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value)).Show();
-                    this.Close();
+                    this.Hide();
 
                 }
             }
             else
             {
+                sesion.anterior = this;
                 new frmModificarCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value)).Show();
-                this.Close();
+                this.Hide();
             }
 
         }
 
-        private void frmABMUsuario_Load(object sender, EventArgs e)
+        private void frmABMUsuario_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            sesion.anterior.Show();
         }
 
+        private void frmABMUsuario_Shown(object sender, EventArgs e)
+        {
+            sesion.anterior = anterior;
+        }
         }
 
     }

@@ -391,7 +391,9 @@
             this.Controls.Add(this.label1);
             this.Name = "frmModificarCliente";
             this.Text = "ModificarCliente";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmModificarCliente_FormClosed);
             this.Load += new System.EventHandler(this.frmModificarCliente_Load);
+            this.Shown += new System.EventHandler(this.frmModificarCliente_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

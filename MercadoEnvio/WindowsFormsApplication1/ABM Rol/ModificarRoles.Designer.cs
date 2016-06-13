@@ -186,7 +186,9 @@
             this.Name = "frmModificarRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Roles";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmModificarRoles_FormClosed_1);
             this.Load += new System.EventHandler(this.frmModificarRoles_Load);
+            this.Shown += new System.EventHandler(this.frmModificarRoles_Shown_1);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesDisponibles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesActuales)).EndInit();
             this.ResumeLayout(false);
