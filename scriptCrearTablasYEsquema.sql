@@ -78,7 +78,7 @@ CREATE  TABLE Estado (
 
 CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  codigo INT NULL ,
+  duracionDias INT NULL ,
   descripcion NVARCHAR(255) NOT NULL ,
   precio DECIMAL(18,2) NULL ,
   porcentaje DECIMAL(18,2) NULL ,
@@ -161,7 +161,7 @@ CREATE  TABLE Factura (
   numero INT NULL ,
   importeTotal DECIMAL(18,2) NULL ,
   fecha DATETIME NULL ,
-  idVendedor INT REFERENCES Usuario(id) ,
+  --LO SACO #REDUNDANTE idVendedor INT REFERENCES Usuario(id) ,
   idFormaDePago INT REFERENCES FormaDePago(id),
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
