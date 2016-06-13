@@ -378,7 +378,6 @@ END
 
 GO 
 
-<<<<<<< HEAD
 --#FIX
 --ROMPE PORQUE LE SACAMOS EL idVendedor a la factura
 --OJO que habría que usar el id de factura en lugar del numero de factura
@@ -388,23 +387,17 @@ GO
 --
 --	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
 --	
-=======
 --CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
 --AS
 --BEGIN
 
 --	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
 	
->>>>>>> 72ae5fd77dfc947f6dd73dbee86fb2f963b67648
 --	WITH TablaP as (select TOP (@cant) factura.numero ,  usr.usuario, factura.importeTotal, factura.fecha, forma.nombre from ADIOS_TERCER_ANIO.Factura factura
 --	inner join ADIOS_TERCER_ANIO.FormaDePago forma on factura.idFormaDePago = forma.id
 --	inner join ADIOS_TERCER_ANIO.Usuario usr on factura.idVendedor = usr.id
 --	where factura.idVendedor = @idUsuario)
-<<<<<<< HEAD
 --
-=======
-
->>>>>>> 72ae5fd77dfc947f6dd73dbee86fb2f963b67648
 --	SELECT top 5 * FROM TablaP ORDER by TablaP.numero desc, TablaP.importeTotal desc
 --END
 --GO 
@@ -502,6 +495,3 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-
-SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
