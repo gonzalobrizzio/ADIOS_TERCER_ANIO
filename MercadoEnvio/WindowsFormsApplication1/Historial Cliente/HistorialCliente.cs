@@ -16,7 +16,7 @@ namespace MercadoEnvios.Historial_Cliente
         public frmHistorialCliente()
         {
             InitializeComponent();
-            String query = "SELECT * FROM ADIOS_TERCER_ANIO.Compra WHERE idComprador='26'";
+            String query = "SELECT * FROM ADIOS_TERCER_ANIO.Compra WHERE idComprador=26";
             conn = Conexion.Instance;
             SqlCommand buscarCompras = new SqlCommand(query, conn.getConexion);
             SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);

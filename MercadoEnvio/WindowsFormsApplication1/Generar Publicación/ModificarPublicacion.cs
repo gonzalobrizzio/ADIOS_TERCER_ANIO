@@ -15,5 +15,30 @@ namespace MercadoEnvios.Generar_Publicación
         {
             InitializeComponent();
         }
+
+        private void btnActivar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPausar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnFinalizar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

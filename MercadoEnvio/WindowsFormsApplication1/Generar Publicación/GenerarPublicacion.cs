@@ -27,43 +27,16 @@ namespace MercadoEnvios.Generar_Publicación
 
         private void loadGrid()
         {
-
-            rubrosSeleccionados.ColumnCount = 2;
-            rubrosSeleccionados.ColumnHeadersVisible = true;
-            rubrosSeleccionados.Columns[1].Name = "Rubro";
-            rubrosSeleccionados.Columns[0].Name = "ID";
-            rubrosSeleccionados.Columns[0].Visible = false;
-
-            rubros.ColumnCount = 2;
-            rubros.ColumnHeadersVisible = true;
-            rubros.Columns[1].Name = "Rubro";
-            rubros.Columns[0].Name = "ID";
-            rubros.Columns[0].Visible = false;
-
-            rubros.Columns[1].Width = 350;
-            rubrosSeleccionados.Columns[1].Width = 350;
-
             String rubrosDisponibles = "SELECT r.id, r.descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro r";
             conn = Conexion.Instance;
             SqlCommand buscarRubrosDisponibles = new SqlCommand(rubrosDisponibles, conn.getConexion);
             SqlDataReader dabuscarRubrosDisponibles = buscarRubrosDisponibles.ExecuteReader();
 
-            if (dabuscarRubrosDisponibles.HasRows)
+            while (dabuscarRubrosDisponibles.Read())
             {
-                while (dabuscarRubrosDisponibles.Read())
-                {
-                    DataGridViewRow rowdgvRubrosDisponibles = (DataGridViewRow)rubros.Rows[0].Clone();
-                    rowdgvRubrosDisponibles.Cells[1].Value = dabuscarRubrosDisponibles.GetString(1).ToString();
-                    rowdgvRubrosDisponibles.Cells[0].Value = dabuscarRubrosDisponibles.GetInt32(0);
-                    rubros.Rows.Add(rowdgvRubrosDisponibles);
-                }
+                rubros.Items.Add(dabuscarRubrosDisponibles.GetString(0));
             }
             dabuscarRubrosDisponibles.Close();
-
-            rubros.AllowUserToAddRows = false;
-            rubros.AllowUserToDeleteRows = false;
-            rubrosSeleccionados.AllowUserToAddRows = false;
-            rubrosSeleccionados.AllowUserToDeleteRows = false;
 
             string queryVisibilidad = "SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad";
             SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
@@ -80,15 +53,11 @@ namespace MercadoEnvios.Generar_Publicación
         {
             funcion.validarComboVacio(visibilidad, mensajeValidacion);
             funcion.validarComboVacio(tipoDePublicacion, mensajeValidacion);
+            funcion.validarComboVacio(rubros, mensajeValidacion);
             funcion.validarNoVacio(descripcion, mensajeValidacion);
             funcion.validarNoVacio(precio, mensajeValidacion);
 
             bool validaciones;
-
-            if (rubrosSeleccionados.Rows.Count == 0)
-            {
-                mensajeValidacion.AppendLine("No ha agregado funcionalidades a el rol que desea crear");
-            }
 
             if (mensajeValidacion.Length > 0)
             {
@@ -102,6 +71,87 @@ namespace MercadoEnvios.Generar_Publicación
 
             if (validaciones)
             {
+                SqlCommand generarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.AgregarPublicacion", conn.getConexion);
+                generarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter descripcionP = new SqlParameter("@descripcion", SqlDbType.NVarChar, 255);
+                descripcionP.SqlValue = descripcion.Text;
+                descripcionP.Direction = ParameterDirection.Input;
+
+                SqlParameter precioP = new SqlParameter("@precio", SqlDbType.Decimal);
+                precioP.SqlValue = Convert.ToDecimal(precio.Text);
+                precioP.Direction = ParameterDirection.Input;
+
+                SqlParameter stockP = new SqlParameter("@stock", SqlDbType.Int);
+                stockP.SqlValue = Convert.ToInt32(stock.Value);
+                stockP.Direction = ParameterDirection.Input;
+
+                SqlParameter visibilidadP = new SqlParameter("@visibilidad", SqlDbType.NVarChar, 255);
+                visibilidadP.SqlValue = visibilidad.Text;
+                visibilidadP.Direction = ParameterDirection.Input;
+
+                SqlParameter tipoDePublicacionP = new SqlParameter("@tipo", SqlDbType.NVarChar, 255);
+                descripcionP.SqlValue = descripcion.Text;
+                descripcionP.Direction = ParameterDirection.Input;
+
+                SqlParameter rubro = new SqlParameter("@rubro", SqlDbType.NVarChar, 255);
+                rubro.SqlValue = rubros.Text;
+                rubro.Direction = ParameterDirection.Input;
+
+                SqlParameter habilitaPreguntas = new SqlParameter("@tienePreguntas", SqlDbType.Int);
+                if (habilitarEnvios.Checked)
+                {
+                    habilitaPreguntas.SqlValue = 0;
+                }
+                else
+                {
+                    habilitaPreguntas.SqlValue = 1;
+                }
+                habilitaPreguntas.Direction = ParameterDirection.Input;
+
+                SqlParameter fechaInicio = new SqlParameter("@fechaInicio", SqlDbType.DateTime);
+                fechaInicio.SqlValue = DBNull.Value;
+                fechaInicio.Direction = ParameterDirection.Input;
+
+                SqlParameter fechaFin = new SqlParameter("@fechaFin", SqlDbType.DateTime);
+                fechaFin.SqlValue = DBNull.Value;
+                fechaFin.Direction = ParameterDirection.Input;
+
+                SqlParameter estadoP = new SqlParameter("@estado", SqlDbType.NVarChar, 255);
+                estadoP.SqlValue = "Borrador";
+                estadoP.Direction = ParameterDirection.Input;
+
+                SqlParameter idP = new SqlParameter("@id", SqlDbType.Int);
+                idP.SqlValue = sesion.idUsuario;
+                idP.Direction = ParameterDirection.Input;
+
+                SqlParameter envio = new SqlParameter("@envio", SqlDbType.Int);
+
+                if (habilitarEnvios.Checked)
+                {
+                    envio.SqlValue = 0;
+                }
+                else
+                {
+                    envio.SqlValue = 1;
+                }
+                envio.Direction = ParameterDirection.Input;
+
+
+                generarPublicacion.Parameters.Add(descripcionP);
+
+                generarPublicacion.Parameters.Add(precioP);
+                generarPublicacion.Parameters.Add(stockP);
+                generarPublicacion.Parameters.Add(visibilidadP);
+                generarPublicacion.Parameters.Add(tipoDePublicacionP);
+                generarPublicacion.Parameters.Add(rubro);
+                generarPublicacion.Parameters.Add(habilitaPreguntas);
+                generarPublicacion.Parameters.Add(fechaInicio);
+                generarPublicacion.Parameters.Add(fechaFin);
+                generarPublicacion.Parameters.Add(estadoP);
+                generarPublicacion.Parameters.Add(idP);
+                generarPublicacion.Parameters.Add(envio);
+                generarPublicacion.ExecuteNonQuery();
 
                 new frmPantallaPrincipal().Show();
                 this.Close();
@@ -113,39 +163,6 @@ namespace MercadoEnvios.Generar_Publicación
         {
             new frmPantallaPrincipal().Show();
             this.Close();
-        }
-
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in rubros.SelectedRows) 
-            {
-                object[] values = {
-                                      row.Cells["ID"].Value,
-                                      row.Cells["Rubro"].Value
-                                  };
-                DataGridViewRow rowp = (DataGridViewRow) rubros.Rows[0].Clone();
-                rowp.Cells[0].Value = values[0];
-                rowp.Cells[1].Value = values[1];
-                rubrosSeleccionados.Rows.Add(rowp);
-                rubros.Rows.Remove(row);
-            }
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow rowPrincipal in rubrosSeleccionados.SelectedRows)
-            {
-                object[] values = {
-                                          rowPrincipal.Cells["ID"].Value,
-                                          rowPrincipal.Cells["Rubro"].Value
-                                  };
-                DataGridViewRow row = (DataGridViewRow)rubrosSeleccionados.Rows[0].Clone();
-                row.Cells[0].Value = values[0];
-                row.Cells[1].Value = values[1];
-                rubros.Rows.Add(row);
-                rubrosSeleccionados.Rows.Remove(rowPrincipal);
-
-            }
         }
     }
 

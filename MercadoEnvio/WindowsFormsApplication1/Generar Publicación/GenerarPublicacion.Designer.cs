@@ -31,9 +31,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tipoDePublicacion = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnEliminar = new System.Windows.Forms.Button();
-            this.btnAgregar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.visibilidad = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -49,11 +46,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.descripcion = new System.Windows.Forms.TextBox();
-            this.rubros = new System.Windows.Forms.DataGridView();
-            this.rubrosSeleccionados = new System.Windows.Forms.DataGridView();
+            this.habilitarEnvios = new System.Windows.Forms.CheckBox();
+            this.rubros = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.stock)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rubros)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rubrosSeleccionados)).BeginInit();
             this.SuspendLayout();
             // 
             // label9
@@ -70,7 +65,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(447, 238);
+            this.label6.Location = new System.Drawing.Point(257, 238);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(101, 13);
             this.label6.TabIndex = 282;
@@ -82,43 +77,14 @@
             this.tipoDePublicacion.Items.AddRange(new object[] {
             "Compra inmediata",
             "Subasta"});
-            this.tipoDePublicacion.Location = new System.Drawing.Point(450, 254);
+            this.tipoDePublicacion.Location = new System.Drawing.Point(260, 254);
             this.tipoDePublicacion.Name = "tipoDePublicacion";
             this.tipoDePublicacion.Size = new System.Drawing.Size(180, 21);
             this.tipoDePublicacion.TabIndex = 5;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(447, 285);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 13);
-            this.label2.TabIndex = 281;
-            this.label2.Text = "Rubros Sellecionados:";
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.Location = new System.Drawing.Point(351, 437);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(75, 21);
-            this.btnEliminar.TabIndex = 7;
-            this.btnEliminar.Text = "<<";
-            this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
-            // 
-            // btnAgregar
-            // 
-            this.btnAgregar.Location = new System.Drawing.Point(351, 383);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 21);
-            this.btnAgregar.TabIndex = 6;
-            this.btnAgregar.Text = ">>";
-            this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
-            // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(636, 578);
+            this.btnCancelar.Location = new System.Drawing.Point(355, 401);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(129, 34);
             this.btnCancelar.TabIndex = 10;
@@ -148,18 +114,18 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(13, 287);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 13);
+            this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 274;
-            this.label4.Text = "Rubros:";
+            this.label4.Text = "Rubro:";
             // 
             // habilitarPreguntas
             // 
             this.habilitarPreguntas.AutoSize = true;
-            this.habilitarPreguntas.Location = new System.Drawing.Point(23, 528);
+            this.habilitarPreguntas.Location = new System.Drawing.Point(16, 341);
             this.habilitarPreguntas.Name = "habilitarPreguntas";
-            this.habilitarPreguntas.Size = new System.Drawing.Size(109, 17);
+            this.habilitarPreguntas.Size = new System.Drawing.Size(114, 17);
             this.habilitarPreguntas.TabIndex = 8;
-            this.habilitarPreguntas.Text = "Habilitar pregunta";
+            this.habilitarPreguntas.Text = "Habilitar preguntas";
             this.habilitarPreguntas.UseVisualStyleBackColor = true;
             // 
             // precio
@@ -171,7 +137,7 @@
             // 
             // stock
             // 
-            this.stock.Location = new System.Drawing.Point(450, 198);
+            this.stock.Location = new System.Drawing.Point(260, 198);
             this.stock.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -225,7 +191,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(501, 578);
+            this.btnAceptar.Location = new System.Drawing.Point(220, 401);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(129, 34);
             this.btnAceptar.TabIndex = 9;
@@ -245,7 +211,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(447, 183);
+            this.label3.Location = new System.Drawing.Point(257, 183);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 268;
@@ -268,35 +234,34 @@
             this.descripcion.Size = new System.Drawing.Size(472, 79);
             this.descripcion.TabIndex = 1;
             // 
+            // habilitarEnvios
+            // 
+            this.habilitarEnvios.AutoSize = true;
+            this.habilitarEnvios.Location = new System.Drawing.Point(16, 364);
+            this.habilitarEnvios.Name = "habilitarEnvios";
+            this.habilitarEnvios.Size = new System.Drawing.Size(98, 17);
+            this.habilitarEnvios.TabIndex = 801;
+            this.habilitarEnvios.Text = "Habilitar envios";
+            this.habilitarEnvios.UseVisualStyleBackColor = true;
+            // 
             // rubros
             // 
-            this.rubros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.rubros.Location = new System.Drawing.Point(16, 317);
+            this.rubros.FormattingEnabled = true;
+            this.rubros.Location = new System.Drawing.Point(16, 303);
             this.rubros.Name = "rubros";
-            this.rubros.Size = new System.Drawing.Size(315, 205);
-            this.rubros.TabIndex = 800;
-            // 
-            // rubrosSeleccionados
-            // 
-            this.rubrosSeleccionados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.rubrosSeleccionados.Location = new System.Drawing.Point(450, 317);
-            this.rubrosSeleccionados.Name = "rubrosSeleccionados";
-            this.rubrosSeleccionados.Size = new System.Drawing.Size(315, 205);
-            this.rubrosSeleccionados.TabIndex = 286;
+            this.rubros.Size = new System.Drawing.Size(177, 21);
+            this.rubros.TabIndex = 802;
             // 
             // frmGenerarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 636);
-            this.Controls.Add(this.rubrosSeleccionados);
+            this.ClientSize = new System.Drawing.Size(495, 448);
             this.Controls.Add(this.rubros);
+            this.Controls.Add(this.habilitarEnvios);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tipoDePublicacion);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnEliminar);
-            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.visibilidad);
             this.Controls.Add(this.label8);
@@ -316,8 +281,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Generar Publicación";
             ((System.ComponentModel.ISupportInitialize)(this.stock)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rubros)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rubrosSeleccionados)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,9 +291,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox tipoDePublicacion;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ComboBox visibilidad;
         private System.Windows.Forms.Label label8;
@@ -346,8 +306,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox descripcion;
-        private System.Windows.Forms.DataGridView rubros;
-        private System.Windows.Forms.DataGridView rubrosSeleccionados;
+        private System.Windows.Forms.CheckBox habilitarEnvios;
+        private System.Windows.Forms.ComboBox rubros;
 
     }
 }
