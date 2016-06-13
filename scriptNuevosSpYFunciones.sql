@@ -512,5 +512,28 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+
+--#FIX
+--ME FALTA AGREGAR LOS CAMPOS PARA DARLE VARIAVILIDAD
+--Vendedores con mayor cantidad de productos no vendidos, dicho listado debe
+--filtrarse por grado de visibilidad de la publicación y por mes-año. Primero se deberá
+--ordenar por fecha y luego por visibilidad.
+--CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@nombre NVARCHAR(255),)
+--AS
+--BEGIN
+--SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario, usu.usuario, per.nombre, pub.descripcion, pub.fechaFin, idVisibilidad 
+--					FROM ADIOS_TERCER_ANIO.Publicacion pub
+--					LEFT JOIN (	SELECT idUsuario, nombre FROM ADIOS_TERCER_ANIO.Persona
+--								UNION
+--								SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) as per ON per.idUsuario = pub.idPublicador
+--					LEFT JOIN ADIOS_TERCER_ANIO.Usuario usu ON per.idUsuario = usu.id
+--				WHERE	pub.id NOT IN(SELECT com.idPublicacion FROM ADIOS_TERCER_ANIO.Compra com) 
+--						AND 
+--						pub.idEstado = (select id from ADIOS_TERCER_ANIO.Estado e where e.nombre LIKE 'Finalizada')) publSinCompra
+--GROUP BY idUsuario, nombre
+--ORDER BY cantidad DESC
+--END
+--GO
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
