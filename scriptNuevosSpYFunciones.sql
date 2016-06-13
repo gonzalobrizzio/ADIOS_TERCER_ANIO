@@ -287,9 +287,10 @@ BEGIN
 										  fechaNacimiento,
 										  fechaCreacion,
 										  idUsuario,
-										  idLocalidad) 
+										  idLocalidad,
+										  calificacionPromedio) 
 	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion like @tipoDeDocumento),
-			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre like @localidad))
+			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre like @localidad), 0)
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -377,20 +378,20 @@ END
 
 GO 
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
-AS
-BEGIN
+--CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
+--AS
+--BEGIN
 
-	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
+--	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
 	
-	WITH TablaP as (select TOP (@cant) factura.numero ,  usr.usuario, factura.importeTotal, factura.fecha, forma.nombre from ADIOS_TERCER_ANIO.Factura factura
-	inner join ADIOS_TERCER_ANIO.FormaDePago forma on factura.idFormaDePago = forma.id
-	inner join ADIOS_TERCER_ANIO.Usuario usr on factura.idVendedor = usr.id
-	where factura.idVendedor = @idUsuario)
+--	WITH TablaP as (select TOP (@cant) factura.numero ,  usr.usuario, factura.importeTotal, factura.fecha, forma.nombre from ADIOS_TERCER_ANIO.Factura factura
+--	inner join ADIOS_TERCER_ANIO.FormaDePago forma on factura.idFormaDePago = forma.id
+--	inner join ADIOS_TERCER_ANIO.Usuario usr on factura.idVendedor = usr.id
+--	where factura.idVendedor = @idUsuario)
 
-	SELECT top 5 * FROM TablaP ORDER by TablaP.numero desc, TablaP.importeTotal desc
-END
-GO 
+--	SELECT top 5 * FROM TablaP ORDER by TablaP.numero desc, TablaP.importeTotal desc
+--END
+--GO 
 
 
 --HAY QUE VER LO DE LOS ENVIOS Y FECHAS
@@ -411,16 +412,48 @@ BEGIN
 												  idRubro, 
 												  stock, 
 												  idEnvio)
-		 VALUES (@descripcion, GETDATE(), GETDATE(), @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
+		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
 	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = @visibilidad), @idPublicador, 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, NULL)
 END
 GO
 
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[EditarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
+														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
+														   @visibilidad NVARCHAR(255), @idPublicacion INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
+AS
+BEGIN
+		UPDATE	ADIOS_TERCER_ANIO.Publicacion
+		 SET descripcion = @descripcion, fechaInicio = @fechaInicio, fechaFin = @fechaFin, tienePreguntas = @tienePreguntas, 
+		 tipo = @tipo, idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), precio = @precio,
+	     idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = @visibilidad), 
+		 idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro),stock = @stock WHERE id = @idPublicacion
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ActivarPublicacion] (@idPublicacion, @fechaInicio, @fechaFin)
+AS
+BEGIN
+		UPDATE	ADIOS_TERCER_ANIO.Publicacion
+		 SET idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Activa'), fechaInicio = @fechaInicio, fechaFin = @fechaFin WHERE id = @idPublicacion
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarPublicacion] (@idPublicacion)
+AS
+BEGIN
+		UPDATE	ADIOS_TERCER_ANIO.Publicacion
+		 SET idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada') WHERE id = @idPublicacion
+END
+GO
+
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion)
+AS
+BEGIN
+		UPDATE	ADIOS_TERCER_ANIO.Publicacion
+		 SET idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Pausada'), fechaInicio = @fechaInicio, fechaFin = @fechaFin WHERE id = @idPublicacion
+END
+GO
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-
-SELECT * FROM ADIOS_TERCER_ANIO.Publicacion WHERE 7 = id
-
-SELECT descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id) AS Visibilidad, tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id) AS Rubro, iif(tienePreguntas = 0, 'SI', 'NO') AS Acepta_Preguntas, idEnvio FROM ADIOS_TERCER_ANIO.Publicacion WHERE 41 = idPublicador
