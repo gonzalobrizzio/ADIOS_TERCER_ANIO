@@ -86,7 +86,8 @@ AS BEGIN
 				codigoPostal,
 				fechaNacimiento,
 				fechaCreacion,
-				idUsuario)
+				idUsuario,
+				calificacionPromedio)
 			VALUES (
 				@nombre,
 				@apellido,
@@ -99,7 +100,8 @@ AS BEGIN
 				@codigoPostal,
 				@fechaNac,
 				GETDATE(),
-				@idUsuario)
+				@idUsuario,
+				0)
 			
 				
 		FETCH NEXT FROM cur
@@ -456,6 +458,8 @@ AS BEGIN
 			Factura_Nro IS NULL 
 		AND 
 			Compra_Cantidad IS NULL
+		AND
+			Oferta_Fecha IS NULL
 	ORDER BY id DESC
 
 	SET IDENTITY_INSERT ADIOS_TERCER_ANIO.Publicacion OFF

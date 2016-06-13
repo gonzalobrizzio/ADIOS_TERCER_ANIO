@@ -51,6 +51,7 @@ CREATE  TABLE Persona (
   fechaCreacion DATETIME NOT NULL ,
   idUsuario INT REFERENCES usuario(id) ,
   idLocalidad INT REFERENCES Localidad(id) NULL,
+  calificacionPromedio INT NULL DEFAULT 0,
   )
 
 CREATE  TABLE Empresa (
@@ -92,8 +93,8 @@ CREATE  TABLE Envio (
 CREATE  TABLE Publicacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   descripcion NVARCHAR(255) NULL ,
-  fechaInicio DATETIME NOT NULL ,
-  fechaFin DATETIME NOT NULL ,
+  fechaInicio DATETIME NULL ,
+  fechaFin DATETIME NULL ,
   tienePreguntas INT NULL ,
   tipo NVARCHAR(255) ,
   idEstado INT REFERENCES Estado(id) ,
