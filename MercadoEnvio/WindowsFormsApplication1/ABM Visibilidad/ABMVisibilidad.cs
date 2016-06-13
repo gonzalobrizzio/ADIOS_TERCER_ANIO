@@ -108,9 +108,14 @@ namespace MercadoEnvios.ABM_Visibilidad
             }
             else
             {
-                new ABM_Visibilidad.frmModificarVisibilidad(Convert.ToInt32(dgvVisibilidad.CurrentRow.Cells[0].Value), Convert.ToString(dgvVisibilidad.CurrentRow.Cells[1].Value)).Show();
-                this.Hide();
+                new ABM_Visibilidad.frmModificarVisibilidad(Convert.ToInt32(dgvVisibilidad.CurrentRow.Cells[0].Value)).Show();
+                this.Close();
             }
+        }
+
+        private void frmABMVisibilidad_Load(object sender, EventArgs e)
+        {
+
         }
 
     }

@@ -122,6 +122,7 @@
             this.Controls.Add(this.dgvVisibilidad);
             this.Name = "frmABMVisibilidad";
             this.Text = "ABMVisibilidad";
+            this.Load += new System.EventHandler(this.frmABMVisibilidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisibilidad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
