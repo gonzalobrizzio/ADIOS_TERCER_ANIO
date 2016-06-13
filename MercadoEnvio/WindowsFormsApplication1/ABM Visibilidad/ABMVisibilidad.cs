@@ -15,25 +15,21 @@ namespace MercadoEnvios.ABM_Visibilidad
     {
         Conexion conn;
         SqlDataAdapter da;
-        Sesion sesion = Sesion.Instance;
-        Form anterior;
 
         public frmABMVisibilidad()
         {
             InitializeComponent();
-            anterior = sesion.anterior;
             this.getData();
         }
 
         private void getData()
         {
-            String queryHabilitados = "SELECT id,descripcion, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Visibilidad";
+            String queryHabilitados = "SELECT id,nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Visibilidad";
             conn = Conexion.Instance;
-            SqlCommand buscarRoles = new SqlCommand(queryHabilitados, conn.getConexion);
             da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
-            DataTable tablaDeRoles = new DataTable("Roles");
-            da.Fill(tablaDeRoles);
-            dgvVisibilidad.DataSource = tablaDeRoles;
+            DataTable tablaDeVisibilidades = new DataTable("Visibilidades");
+            da.Fill(tablaDeVisibilidades);
+            dgvVisibilidad.DataSource = tablaDeVisibilidades;
             dgvVisibilidad.Columns[0].Visible = false;
             dgvVisibilidad.Columns[1].Width = 300;
             dgvVisibilidad.Columns[2].Width = 300;
@@ -44,8 +40,7 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            sesion.anterior = this;
-            new ABM_Rol.frmAgregarRol().Show();
+            new ABM_Visibilidad.frmAgregarVisibilidad().Show();
             this.Hide();
         }
 
@@ -54,18 +49,18 @@ namespace MercadoEnvios.ABM_Visibilidad
 
             if (dgvVisibilidad.SelectedRows == null)
             {
-                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe seleccionar una visibilidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 1 WHERE @idRol = id";
+                String query = "UPDATE ADIOS_TERCER_ANIO.Visibilidad SET deleted = 1 WHERE @idVisibilidad = id";
                 SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                SqlParameter idRol = new SqlParameter("@idRol", SqlDbType.Int);
-                idRol.Direction = ParameterDirection.Input;
-                actualizacion.Parameters.Add(idRol);
+                SqlParameter idVisibilidad = new SqlParameter("@idVisibilidad", SqlDbType.Int);
+                idVisibilidad.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idVisibilidad);
                 foreach (DataGridViewRow rows in dgvVisibilidad.SelectedRows)
                 {
-                    idRol.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
+                    idVisibilidad.SqlValue = Convert.ToInt32(rows.Cells[0].Value);
                     actualizacion.ExecuteNonQuery();
                 }
                 this.getData();
@@ -76,18 +71,18 @@ namespace MercadoEnvios.ABM_Visibilidad
         {
             if (dgvVisibilidad.SelectedRows == null)
             {
-                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe seleccionar una visibilidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                String query = "UPDATE ADIOS_TERCER_ANIO.Rol SET deleted = 0 WHERE @idRol = id";
+                String query = "UPDATE ADIOS_TERCER_ANIO.Visibilidad SET deleted = 0 WHERE @idVisibilidad = id";
                 SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                SqlParameter idRol = new SqlParameter("@idRol", SqlDbType.Int);
-                idRol.Direction = ParameterDirection.Input;
-                actualizacion.Parameters.Add(idRol);
+                SqlParameter idVisibilidad = new SqlParameter("@idVisibilidad", SqlDbType.Int);
+                idVisibilidad.Direction = ParameterDirection.Input;
+                actualizacion.Parameters.Add(idVisibilidad);
                 foreach (DataGridViewRow row in dgvVisibilidad.SelectedRows)
                 {
-                    idRol.SqlValue = Convert.ToInt32(row.Cells[0].Value);
+                    idVisibilidad.SqlValue = Convert.ToInt32(row.Cells[0].Value);
                     actualizacion.ExecuteNonQuery();
                 }
                 this.getData();
@@ -99,58 +94,19 @@ namespace MercadoEnvios.ABM_Visibilidad
 
             if (dgvVisibilidad.SelectedRows == null || dgvVisibilidad.SelectedRows.Count > 1)
             {
-                MessageBox.Show("Debe elegir un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Debe elegir una Visibilidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             else
             {
-                sesion.anterior = this;
-                new ABM_Rol.frmModificarRoles(Convert.ToInt32(dgvVisibilidad.CurrentRow.Cells[0].Value), Convert.ToString(dgvVisibilidad.CurrentRow.Cells[1].Value)).Show();
+                //new ABM_Visibilidad.frmModificarVisibilidad(Convert.ToInt32(dgvVisibilidad.CurrentRow.Cells[0].Value), Convert.ToString(dgvVisibilidad.CurrentRow.Cells[1].Value)).Show();
                 this.Hide();
             }
         }
 
-        private void ABMRol_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            sesion.anterior = this;
             new ABM_Usuario.frmPantallaPrincipal().Show();
             this.Hide();
         }
-
-        private void btnFuncRol_Click(object sender, EventArgs e)
-        {
-            if (dgvVisibilidad.SelectedRows == null)
-            {
-                MessageBox.Show("Debe seleccionar un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else
-                if (dgvVisibilidad.SelectedRows.Count == 1)
-                {
-                    DataGridViewRow rowPrincipal = dgvVisibilidad.SelectedRows[0];
-                    sesion.anterior = this;
-                    new ABM_Rol.frmVerFuncRol(Convert.ToInt32(rowPrincipal.Cells[0].Value), Convert.ToString(rowPrincipal.Cells[1].Value)).Show();
-                    this.Hide();
-                }
-                else
-                {
-                    MessageBox.Show("Debe seleccionar un rol", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-        }
-
-        private void frmABMRol_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            sesion.anterior.Show();
-        }
-
-        private void frmABMRol_Shown(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
-        }
-
-
     }
 }

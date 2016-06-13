@@ -35,6 +35,7 @@ namespace MercadoEnvios.Historial_Cliente
 
         private void frmHistorialCliente_Load(object sender, EventArgs e)
         {
+        }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
