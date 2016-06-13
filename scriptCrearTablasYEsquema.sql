@@ -267,3 +267,5 @@ BEGIN
 END
 
 
+
+SELECT id, monto FROM ADIOS_TERCER_ANIO.Oferta where idUsuario = 10 UNION SELECT id, monto FROM ADIOS_TERCER_ANIO.Compra WHERE idComprador = 10 
