@@ -363,8 +363,8 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
 AS
 BEGIN
---	declare @idUsuario int = 17;
---	declare @pagina INT = 235;
+	--declare @idUsuario int = 17;
+	--declare @pagina INT = 235;
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion where publicacion.idPublicador != @idUsuario) - @pagina * 20;
 	
@@ -392,6 +392,8 @@ BEGIN
 END
 GO 
 
+
+--HAY QUE VER LO DE LOS ENVIOS Y FECHAS
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -409,11 +411,16 @@ BEGIN
 												  idRubro, 
 												  stock, 
 												  idEnvio)
-		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
+		 VALUES (@descripcion, GETDATE(), GETDATE(), @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
 	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = @visibilidad), @idPublicador, 
-		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, @envio)
+		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, NULL)
 END
 GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+
+SELECT * FROM ADIOS_TERCER_ANIO.Publicacion WHERE 7 = id
+
+SELECT descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id) AS Visibilidad, tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id) AS Rubro, iif(tienePreguntas = 0, 'SI', 'NO') AS Acepta_Preguntas, idEnvio FROM ADIOS_TERCER_ANIO.Publicacion WHERE 41 = idPublicador

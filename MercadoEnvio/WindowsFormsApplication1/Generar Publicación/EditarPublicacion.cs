@@ -1,5 +1,4 @@
-﻿using MercadoEnvios.ABM_Usuario;
-using MercadoEnvios.Entidades;
+﻿using MercadoEnvios.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,39 +11,52 @@ using System.Windows.Forms;
 
 namespace MercadoEnvios.Generar_Publicación
 {
-    public partial class frmGenerarPublicacion : Form
+    public partial class EditarPublicacion : Form
     {
         Conexion conn;
         Sesion sesion;
+        int idPublicacion;
+        SqlDataReader dataReader;
+        StringBuilder mensajeValidacion;
         Utilidades funcion = new Utilidades();
-        StringBuilder mensajeValidacion = new StringBuilder();
-        public frmGenerarPublicacion()
+        public EditarPublicacion(int id)
         {
             InitializeComponent();
             sesion = Sesion.Instance;
-            this.conn = Conexion.Instance;
-            this.loadGrid();
-        }
-
-        private void loadGrid()
-        {
-            String rubrosDisponibles = "SELECT r.descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro r";
             conn = Conexion.Instance;
-            SqlCommand buscarRubrosDisponibles = new SqlCommand(rubrosDisponibles, conn.getConexion);
-            SqlDataReader dabuscarRubrosDisponibles = buscarRubrosDisponibles.ExecuteReader();
+            idPublicacion = id;
+            int preguntas = 1;
+            int envio = 1;
 
-            while (dabuscarRubrosDisponibles.Read())
+            string sacarDatosPublicacion = "SELECT descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id), tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id), tienePreguntas, idEnvio FROM ADIOS_TERCER_ANIO.Publicacion WHERE @id = id";
+            SqlCommand obtenerPublicacion = new SqlCommand(sacarDatosPublicacion, conn.getConexion);
+            SqlParameter idPu = new SqlParameter("@id", SqlDbType.Int);
+            idPu.SqlValue = id;
+            idPu.Direction = ParameterDirection.Input;
+            obtenerPublicacion.Parameters.Add(idPu);
+            dataReader = obtenerPublicacion.ExecuteReader();
+            dataReader.Read();
+
+            if (dataReader.HasRows)
             {
-                rubros.Items.Add(dabuscarRubrosDisponibles.GetString(0));
+                if (!dataReader[0].Equals(DBNull.Value)) { descripcion.Text = dataReader.GetString(0); }
+                if (!dataReader[1].Equals(DBNull.Value)) { precio.Text = Convert.ToString(dataReader.GetDecimal(1)); }
+                if (!dataReader[2].Equals(DBNull.Value)) { stock.Text = Convert.ToString(dataReader.GetInt32(2)); }
+                if (!dataReader[3].Equals(DBNull.Value)) { visibilidad.Text = dataReader.GetString(3); }
+                if (!dataReader[4].Equals(DBNull.Value)) { tipoDePublicacion.Text = dataReader.GetString(4); }
+                if (!dataReader[5].Equals(DBNull.Value)) { rubros.Text = dataReader.GetString(5); }
+                if (!dataReader[6].Equals(DBNull.Value)) { preguntas = dataReader.GetInt32(6); }
+                if (!dataReader[7].Equals(DBNull.Value)) { envio = dataReader.GetInt32(7); }
             }
-            dabuscarRubrosDisponibles.Close();
 
-            string queryVisibilidad = "SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad";
-            SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
-            SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
-            while (dataReader.Read())
+            if (preguntas.Equals(0))
             {
-                visibilidad.Items.Add(dataReader.GetString(0));
+                habilitarPreguntas.Checked = true;
+            }
+
+            if(envio.Equals(0))
+            {
+                habilitarEnvios.Checked = true;
             }
 
             dataReader.Close();
@@ -72,8 +84,8 @@ namespace MercadoEnvios.Generar_Publicación
 
             if (validaciones)
             {
-                SqlCommand generarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.AgregarPublicacion", conn.getConexion);
-                generarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommand actualizarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.AgregarPublicacion", conn.getConexion);
+                actualizarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
 
                 SqlParameter descripcionP = new SqlParameter("@descripcion", SqlDbType.NVarChar, 255);
                 descripcionP.SqlValue = descripcion.Text;
@@ -139,33 +151,30 @@ namespace MercadoEnvios.Generar_Publicación
                 envio.Direction = ParameterDirection.Input;
 
 
-                generarPublicacion.Parameters.Add(descripcionP);
+                actualizarPublicacion.Parameters.Add(descripcionP);
 
-                generarPublicacion.Parameters.Add(precioP);
-                generarPublicacion.Parameters.Add(stockP);
-                generarPublicacion.Parameters.Add(visibilidadP);
-                generarPublicacion.Parameters.Add(tipoDePublicacionP);
-                generarPublicacion.Parameters.Add(rubro);
-                generarPublicacion.Parameters.Add(habilitaPreguntas);
-                generarPublicacion.Parameters.Add(fechaInicio);
-                generarPublicacion.Parameters.Add(fechaFin);
-                generarPublicacion.Parameters.Add(estadoP);
-                generarPublicacion.Parameters.Add(idP);
-                generarPublicacion.Parameters.Add(envio);
-                generarPublicacion.ExecuteNonQuery();
+                actualizarPublicacion.Parameters.Add(precioP);
+                actualizarPublicacion.Parameters.Add(stockP);
+                actualizarPublicacion.Parameters.Add(visibilidadP);
+                actualizarPublicacion.Parameters.Add(tipoDePublicacionP);
+                actualizarPublicacion.Parameters.Add(rubro);
+                actualizarPublicacion.Parameters.Add(habilitaPreguntas);
+                actualizarPublicacion.Parameters.Add(fechaInicio);
+                actualizarPublicacion.Parameters.Add(fechaFin);
+                actualizarPublicacion.Parameters.Add(estadoP);
+                actualizarPublicacion.Parameters.Add(idP);
+                actualizarPublicacion.Parameters.Add(envio);
+                actualizarPublicacion.ExecuteNonQuery();
 
-                new frmElegirAccion().Show();
+                new frmModificarPublicacion().Show();
                 this.Close();
             }
-
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            new frmElegirAccion().Show();
+            new frmModificarPublicacion().Show();
             this.Close();
         }
     }
-
-
 }
