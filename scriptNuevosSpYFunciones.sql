@@ -378,17 +378,33 @@ END
 
 GO 
 
+<<<<<<< HEAD
+--#FIX
+--ROMPE PORQUE LE SACAMOS EL idVendedor a la factura
+--OJO que habría que usar el id de factura en lugar del numero de factura
+--CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
+--AS
+--BEGIN
+--
+--	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
+--	
+=======
 --CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
 --AS
 --BEGIN
 
 --	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
 	
+>>>>>>> 72ae5fd77dfc947f6dd73dbee86fb2f963b67648
 --	WITH TablaP as (select TOP (@cant) factura.numero ,  usr.usuario, factura.importeTotal, factura.fecha, forma.nombre from ADIOS_TERCER_ANIO.Factura factura
 --	inner join ADIOS_TERCER_ANIO.FormaDePago forma on factura.idFormaDePago = forma.id
 --	inner join ADIOS_TERCER_ANIO.Usuario usr on factura.idVendedor = usr.id
 --	where factura.idVendedor = @idUsuario)
+<<<<<<< HEAD
+--
+=======
 
+>>>>>>> 72ae5fd77dfc947f6dd73dbee86fb2f963b67648
 --	SELECT top 5 * FROM TablaP ORDER by TablaP.numero desc, TablaP.importeTotal desc
 --END
 --GO 
@@ -415,6 +431,34 @@ BEGIN
 		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
 	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = @visibilidad), @idPublicador, 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, NULL)
+END
+GO
+
+--PARA VER EL HISTORICO DE COMPRAS DE UN USUARIO X
+--EJ de ejecucion: EXEC [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario] @userId = 14
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT)
+AS
+BEGIN
+SELECT	pub.id, pub.descripcion, pub.precio, com.fecha, com.cantidad, cal.puntaje, cal.pendiente
+	 FROM ADIOS_TERCER_ANIO.Usuario usu
+		LEFT JOIN ADIOS_TERCER_ANIO.Persona per ON usu.id = per.idUsuario
+		LEFT JOIN ADIOS_TERCER_ANIO.Compra com ON usu.id = com.idComprador
+		LEFT JOIN ADIOS_TERCER_ANIO.Publicacion pub ON com.idPublicacion = pub.id
+		LEFT JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
+	WHERE usu.id = @userId AND pub.id IS NOT NULL
+END
+GO
+
+--PARA VER EL HISTORICO DE OFERTAS DE UN USUARIO X
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoOfertasUsuario](@userId INT)
+AS
+BEGIN
+	SELECT	pub.id, pub.descripcion, ofe.fecha, ofe.monto
+	 FROM ADIOS_TERCER_ANIO.Usuario usu
+		LEFT JOIN ADIOS_TERCER_ANIO.Persona per ON usu.id = per.idUsuario
+		LEFT JOIN ADIOS_TERCER_ANIO.Oferta ofe ON usu.id = ofe.idUsuario
+		LEFT JOIN ADIOS_TERCER_ANIO.Publicacion pub ON ofe.idPublicacion = pub.id
+	WHERE usu.id = @userId AND pub.id IS NOT NULL
 END
 GO
 

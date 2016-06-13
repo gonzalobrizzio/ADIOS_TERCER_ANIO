@@ -147,9 +147,9 @@ CREATE  TABLE Calificacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   idCompra INT REFERENCES Compra(id) ,
   fecha DATETIME NULL ,
-  puntaje INT NULL ,
+  puntaje INT DEFAULT 0 ,
   detalle NVARCHAR(45) NULL ,
-  pendiente INT NULL ,
+  pendiente INT DEFAULT 1,
   )
 
 CREATE  TABLE FormaDePago (
