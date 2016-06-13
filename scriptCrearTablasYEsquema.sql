@@ -79,13 +79,8 @@ CREATE  TABLE Estado (
 
 CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-<<<<<<< HEAD
-  codigo INT NULL ,
   nombre NVARCHAR(255) NOT NULL ,
-=======
   duracionDias INT NULL ,
-  descripcion NVARCHAR(255) NOT NULL ,
->>>>>>> f01d10f39e5e8dac22c5a32cd000ea400fe23de0
   precio DECIMAL(18,2) NULL ,
   porcentaje DECIMAL(18,2) NULL ,
   deleted INT DEFAULT 0,

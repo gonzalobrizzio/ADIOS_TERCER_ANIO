@@ -91,7 +91,7 @@ BEGIN
 		END CATCH
 		COMMIT TRANSACTION
 	end
-	if (@idFXR is not null and @borrar = 1)
+	if (@idFXR is not null)
 	begin
 		BEGIN TRANSACTION
 		BEGIN TRY
@@ -420,7 +420,7 @@ BEGIN
 												  stock, 
 												  idEnvio)
 		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
-	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = @visibilidad), @idPublicador, 
+	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad), @idPublicador, 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, NULL)
 END
 GO
