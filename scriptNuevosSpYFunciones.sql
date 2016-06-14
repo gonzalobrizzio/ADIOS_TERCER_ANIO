@@ -376,16 +376,6 @@ BEGIN
 	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
-<<<<<<< HEAD
-	if ((SELECT top 20 Count(*) FROM TablaP)<20)
-	begin
-	THROW 53435, 'no se trajeron lo suficiente', 1; 
-	end
-	ELSE 
-	begin
-	SELECT top 20 Count(*) FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
-	end 
-=======
 	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
 	END
 	ELSE
@@ -409,7 +399,6 @@ BEGIN
 	END
 	ELSE
 		THROW 50004, 'No hay más paginas para ver!', 1; 
->>>>>>> af4bacade2cc13f6dd397b8e2f6d2eb3bbd62d77
 END
 GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
