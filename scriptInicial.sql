@@ -231,16 +231,17 @@ AS BEGIN
 
 	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(
 							duracionDias, 
-							descripcion, 
+							nombre, 
 							precio, 
 							porcentaje
 							)
 	SELECT DISTINCT
-		7,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
+		7 as duracionDias,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
 		Publicacion_Visibilidad_Desc, 
 		Publicacion_Visibilidad_Precio,
 		Publicacion_Visibilidad_Porcentaje
-	FROM gd_esquema.Maestra	
+	FROM gd_esquema.Maestra
+	ORDER BY Publicacion_Visibilidad_Porcentaje
 
 END
 GO
@@ -438,7 +439,7 @@ AS BEGIN
 		Publicacion_Tipo																				AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )							AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
 		CASE 
 			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
 			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)

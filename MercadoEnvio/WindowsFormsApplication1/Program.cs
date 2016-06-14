@@ -18,7 +18,7 @@ namespace MercadoEnvios
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Sesion sesion = Sesion.Instance;
-            Application.Run(ingresar = new frmIngresar());
+            Application.Run(ingresar = new Login_y_Seguridad.frmIngresar());
         }
     }
 }

@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-
 using System.Windows.Forms;
 using MercadoEnvios.ABM_Usuario;
 
@@ -29,7 +25,6 @@ namespace MercadoEnvios.ABM_Rol
         private void getData(){
             String queryHabilitados = "SELECT id,nombre, iif(deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Rol";
             conn = Conexion.Instance;
-            SqlCommand buscarRoles = new SqlCommand(queryHabilitados, conn.getConexion);
             da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
             DataTable tablaDeRoles = new DataTable("Roles");
             da.Fill(tablaDeRoles);

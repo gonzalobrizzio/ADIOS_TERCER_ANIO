@@ -39,7 +39,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             dabuscarRubrosDisponibles.Close();
 
-            string queryVisibilidad = "SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad";
+            string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad where deleted = 0";
             SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
             SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
             while (dataReader.Read())

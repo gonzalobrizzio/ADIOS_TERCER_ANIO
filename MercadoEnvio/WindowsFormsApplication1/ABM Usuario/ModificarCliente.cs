@@ -37,9 +37,9 @@ namespace MercadoEnvios.ABM_Usuario
             campoUsuario.MaxLength = 20;
             Contraseña.MaxLength = 20;
             campoDni.MaxLength = 8;
-            campoDireccion.MaxLength = 5;
+            campoDireccion.MaxLength = 50;
             campoCódigoPostal.MaxLength = 4;
-            campoNroDeDireccion.MaxLength = 20;
+            campoNroDeDireccion.MaxLength = 5;
             campoDepto.MaxLength = 3;
             campoTeléfono.MaxLength = 11;
             campoPiso.MaxLength = 3;
@@ -295,16 +295,6 @@ namespace MercadoEnvios.ABM_Usuario
         {
             campoFechaDeNacimiento.Clear();
             campoFechaDeNacimiento.AppendText(calendarioNac.SelectionStart.ToShortDateString());
-        }
-
-        private void frmModificarCliente_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            
-        }
-
-        private void frmModificarCliente_Shown(object sender, EventArgs e)
-        {
-
         }
     }
 }

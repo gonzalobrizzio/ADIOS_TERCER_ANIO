@@ -44,7 +44,6 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarRol] (@nombre NVARCHAR(255), @id int)
 AS
 BEGIN
-	
 	if (@nombre <> '')
 	begin
 		BEGIN TRANSACTIOn
@@ -74,7 +73,6 @@ BEGIN
 	SET @ID = @@IDENTITY
 	RETURN @ID
 END
-
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[modificarFuncionalidadesRol] (@idRol int, @idFunc int, @borrar int)
 AS
@@ -93,7 +91,7 @@ BEGIN
 		END CATCH
 		COMMIT TRANSACTION
 	end
-	if (@idFXR is not null and @borrar = 1)
+	if (@idFXR is not null)
 	begin
 		BEGIN TRANSACTION
 		BEGIN TRY
@@ -425,7 +423,7 @@ BEGIN
 												  stock, 
 												  idEnvio)
 		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, @tipo, (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
-	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = @visibilidad), @idPublicador, 
+	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad), @idPublicador, 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, NULL)
 END
 GO
@@ -493,6 +491,53 @@ AS
 BEGIN
 		UPDATE	ADIOS_TERCER_ANIO.Publicacion
 		 SET idEstado = 3 WHERE id = @idPublicacion
+END
+GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarVisibilidad] (@nombre NVARCHAR(255),
+														   @duracion int output,
+														   @precio Decimal(18,2),
+														   @porcentaje Decimal(18,2))
+AS
+BEGIN
+	if(@nombre is null or @nombre like '')
+	begin
+		THROW 50004, 'Debe ingresar un nombre', 1; 
+	end
+	BEGIN TRANSACTION
+	BEGIN TRY
+	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(nombre, duracionDias, precio, porcentaje, deleted) 
+	VALUES (@nombre, @duracion, @precio, @porcentaje, 0)
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se pudo crear la visibilidad', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
+
+
+--Vendedores con mayor cantidad de productos no vendidos, dicho listado debe
+--filtrarse por grado de visibilidad de la publicación y por mes-año. Primero se deberá
+--ordenar por fecha y luego por visibilidad.
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@fechaInicio DATETIME, @fechaFin DATETIME, @idVisibilidad INT)
+AS
+BEGIN
+SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario, usu.usuario, per.nombre, pub.descripcion, pub.fechaFin, idVisibilidad 
+					FROM ADIOS_TERCER_ANIO.Publicacion pub
+					LEFT JOIN (	SELECT idUsuario, nombre FROM ADIOS_TERCER_ANIO.Persona
+								UNION
+								SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) as per ON per.idUsuario = pub.idPublicador
+					LEFT JOIN ADIOS_TERCER_ANIO.Usuario usu ON per.idUsuario = usu.id
+				WHERE	pub.id NOT IN(SELECT com.idPublicacion FROM ADIOS_TERCER_ANIO.Compra com) 
+						AND 
+						pub.idEstado = (select id from ADIOS_TERCER_ANIO.Estado e where e.nombre LIKE 'Finalizada')
+						AND
+						pub.fechaFin BETWEEN @fechaInicio AND @fechaFin 
+						AND
+						pub.idVisibilidad = @idVisibilidad) publSinCompra
+GROUP BY idUsuario, nombre
+ORDER BY cantidad DESC
 END
 GO
 

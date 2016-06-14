@@ -523,8 +523,6 @@
             this.Name = "frmModificarCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarCliente";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmModificarCliente_FormClosed);
-            this.Shown += new System.EventHandler(this.frmModificarCliente_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

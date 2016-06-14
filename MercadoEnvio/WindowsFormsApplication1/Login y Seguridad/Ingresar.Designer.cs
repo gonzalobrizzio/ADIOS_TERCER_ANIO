@@ -1,4 +1,4 @@
-﻿namespace MercadoEnvios
+﻿namespace MercadoEnvios.Login_y_Seguridad
 {
     partial class frmIngresar
     {
@@ -39,7 +39,7 @@
             // txtUsr
             // 
             this.txtUsr.Location = new System.Drawing.Point(213, 120);
-            this.txtUsr.MaxLength = 11;
+            this.txtUsr.MaxLength = 20;
             this.txtUsr.Name = "txtUsr";
             this.txtUsr.Size = new System.Drawing.Size(100, 20);
             this.txtUsr.TabIndex = 0;
