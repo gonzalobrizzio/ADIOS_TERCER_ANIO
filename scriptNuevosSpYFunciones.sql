@@ -776,17 +776,16 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion(@idPublicacion INT)
 AS
 BEGIN
-	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin, publicacion.precio, publicacion.stock, 
-	visib.nombre from ADIOS_TERCER_ANIO.Publicacion publicacion
+	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre, estado.nombre, publicacion.precio, 
+	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	inner join ADIOS_TERCER_ANIO.Estado estado on publicacion.idEstado = estado.id
-	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id
-	where publicacion.id != @idPublicacion 
+	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id 
+	inner join ADIOS_TERCER_ANIO.Usuario usr on publicacion.idPublicador = usr.id 
+	inner join ADIOS_TERCER_ANIO.Rubro rubro on publicacion.idRubro = rubro.id
+	where publicacion.id = @idPublicacion 
 END
 GO 
-
-
-SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
@@ -807,6 +806,3 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
-
-SELECT * FROM ADIOS_TERCER_ANIO.Usuario
-SELECT * FROM ADIOS_TERCER_ANIO.Persona

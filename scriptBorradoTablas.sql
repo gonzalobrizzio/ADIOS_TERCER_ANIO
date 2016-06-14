@@ -78,6 +78,7 @@ DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMasFacturasPorTrimestreAnio;
 DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMayorMontoFacturadoPorTrimestreAnio;
 DROP PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorFechaYRubro];
 DROP PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos];
+DROP PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeDNI;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo;
