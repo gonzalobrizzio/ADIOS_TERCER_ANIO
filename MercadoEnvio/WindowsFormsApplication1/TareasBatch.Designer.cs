@@ -1,6 +1,6 @@
-﻿namespace MercadoEnvios.ABM_Visibilidad
+﻿namespace MercadoEnvios
 {
-    partial class Form1
+    partial class TareasBatch
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // TareasBatch
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "TareasBatch";
+            this.Text = "TareasBatch";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

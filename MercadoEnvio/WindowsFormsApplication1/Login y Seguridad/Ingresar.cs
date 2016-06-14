@@ -10,17 +10,17 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using MercadoEnvios.Entidades;
 
-namespace MercadoEnvios
+namespace MercadoEnvios.Login_y_Seguridad
 {
     public partial class frmIngresar : Form
     {
         Conexion conn = Conexion.Instance;
         Sesion sesion;
-        Form anterior;
 
         public frmIngresar()
         {
             InitializeComponent();
+            //new TareasBatch().correr(); ToDo
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace MercadoEnvios
 
                 cmd.ExecuteNonQuery();
 
-                sesion = new Sesion(Int32.Parse(cmd.Parameters["@idUsuario"].Value.ToString()), 0, null);
+                sesion = new Sesion(Convert.ToInt32(cmd.Parameters["@idUsuario"].Value), 0, null);
 
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "

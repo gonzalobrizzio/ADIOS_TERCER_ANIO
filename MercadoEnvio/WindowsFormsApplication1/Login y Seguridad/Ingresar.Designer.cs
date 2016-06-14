@@ -1,4 +1,4 @@
-﻿namespace MercadoEnvios
+﻿namespace MercadoEnvios.Login_y_Seguridad
 {
     partial class frmIngresar
     {
@@ -39,7 +39,7 @@
             // txtUsr
             // 
             this.txtUsr.Location = new System.Drawing.Point(213, 120);
-            this.txtUsr.MaxLength = 11;
+            this.txtUsr.MaxLength = 20;
             this.txtUsr.Name = "txtUsr";
             this.txtUsr.Size = new System.Drawing.Size(100, 20);
             this.txtUsr.TabIndex = 0;
@@ -76,7 +76,7 @@
             // 
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.btnIngresar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnIngresar.Location = new System.Drawing.Point(213, 226);
+            this.btnIngresar.Location = new System.Drawing.Point(86, 223);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(100, 29);
             this.btnIngresar.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSalir.Location = new System.Drawing.Point(86, 226);
+            this.btnSalir.Location = new System.Drawing.Point(246, 223);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(67, 29);
             this.btnSalir.TabIndex = 7;

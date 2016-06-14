@@ -62,6 +62,7 @@
             this.Name = "frmHistorialCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistorialCliente";
+            this.Load += new System.EventHandler(this.frmHistorialCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grillaDeCompras)).EndInit();
             this.ResumeLayout(false);
 

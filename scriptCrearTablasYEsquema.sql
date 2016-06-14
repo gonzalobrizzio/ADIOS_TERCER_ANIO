@@ -79,15 +79,19 @@ CREATE  TABLE Estado (
 
 CREATE  TABLE Visibilidad (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
+  nombre NVARCHAR(255) NOT NULL ,
   duracionDias INT NULL ,
-  descripcion NVARCHAR(255) NOT NULL ,
   precio DECIMAL(18,2) NULL ,
   porcentaje DECIMAL(18,2) NULL ,
+  deleted INT DEFAULT 0,
   )
 
-CREATE  TABLE Envio (
+CREATE  TABLE TipoPublicacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  precio DECIMAL(18,2) NULL ,
+  nombre NVARCHAR(255) NOT NULL,
+  envioDisponible INT DEFAULT 0,
+  precioEnvio DECIMAL(18,2) NULL DEFAULT NULL ,
+  deleted INT DEFAULT 0,
    )
 
 CREATE  TABLE Publicacion (
@@ -96,15 +100,14 @@ CREATE  TABLE Publicacion (
   fechaInicio DATETIME NULL ,
   fechaFin DATETIME NULL ,
   tienePreguntas INT NULL ,
-  tipo NVARCHAR(255) ,
+  idTipoPublicacion INT REFERENCES TipoPublicacion(id),
   idEstado INT REFERENCES Estado(id) ,
   precio DECIMAL(18,2),
   idVisibilidad INT REFERENCES Visibilidad(id) ,
   idPublicador INT REFERENCES Usuario(id) ,
   idRubro INT REFERENCES Rubro(id) ,
   stock INT NULL ,
-  idEnvio INT REFERENCES Envio(id) ,
---#FIX NO VA MAS  codAnterior NUMERIC(18,0) NULL,
+  tieneEnvio INT DEFAULT 1,
   )
 
 CREATE  TABLE Rubro (
@@ -152,18 +155,11 @@ CREATE  TABLE Calificacion (
   pendiente INT DEFAULT 1,
   )
 
-CREATE  TABLE FormaDePago (
-  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  nombre NVARCHAR(50) NULL ,
-   )
-
 CREATE  TABLE Factura (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   numero INT NULL ,
   importeTotal DECIMAL(18,2) NULL ,
   fecha DATETIME NULL ,
-  --LO SACO #REDUNDANTE idVendedor INT REFERENCES Usuario(id) ,
-  idFormaDePago INT REFERENCES FormaDePago(id),
   idPublicacion INT REFERENCES Publicacion(id) ,
   )
 
@@ -191,7 +187,6 @@ CREATE  TABLE Respuesta (
   respuesta NVARCHAR(255) NULL ,
   )
 GO
-
 BEGIN
 	set nocount on;
 	set xact_abort on;
@@ -209,14 +204,6 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Activa')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
-
-	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago (
-					nombre)
-	SELECT DISTINCT Forma_Pago_Desc	
-	FROM gd_esquema.Maestra
-	WHERE Forma_Pago_Desc is not null
-
-	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No especificado')
 
 	--password es "gd" encriptado a SHA256
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd@mailinator.com')
@@ -237,7 +224,7 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Roles'); --Only admin / Tengo duda en este. Puede deshabilitar y eliminar?... calculo
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Rubros'); --Only admin
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar Rubros'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Rubros'); --Only admin
+		INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Rubros'); --Only admin
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Visibilidad'); --Only admin
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar Visibilidad'); --Only admin
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Visibilidad'); --Only admin
@@ -246,6 +233,9 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar contraseña'); --Solo la tendría el usuario ya logeado y un admin.
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Calificar vendedor');
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Consultar facturas');
+
+	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Subasta');
+	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Compra Inmediata');
 
 	DECLARE @idUsuario int;
 	DECLARE @idRol int;
@@ -265,7 +255,3 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
 	VALUES(@idRol,@idUsuario)
 END
-
-
-
-SELECT id, monto FROM ADIOS_TERCER_ANIO.Oferta where idUsuario = 10 UNION SELECT id, monto FROM ADIOS_TERCER_ANIO.Compra WHERE idComprador = 10 

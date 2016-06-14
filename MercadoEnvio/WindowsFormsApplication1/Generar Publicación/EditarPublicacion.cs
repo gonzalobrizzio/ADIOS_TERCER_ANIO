@@ -38,7 +38,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             dabuscarRubrosDisponibles.Close();
 
-            string queryVisibilidad = "SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad";
+            string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad";
             SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
             SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
             while (dataReader.Read())
@@ -48,7 +48,10 @@ namespace MercadoEnvios.Generar_Publicación
 
             dataReader.Close();
 
-            string sacarDatosPublicacion = "SELECT descripcion, precio, stock, (SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id), tipo, (SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id), tienePreguntas, idEnvio FROM ADIOS_TERCER_ANIO.Publicacion WHERE @id = id";
+            string sacarDatosPublicacion = "SELECT descripcion, precio, stock, (SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id), "
+                + "(select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = idTipoPublicacion) as tipo, "
+                + "(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id), tienePreguntas, "
+                + "tieneEnvio FROM ADIOS_TERCER_ANIO.Publicacion WHERE @id = id";
             SqlCommand obtenerPublicacion = new SqlCommand(sacarDatosPublicacion, conn.getConexion);
             SqlParameter idPu = new SqlParameter("@id", SqlDbType.Int);
             idPu.SqlValue = id;
@@ -89,6 +92,10 @@ namespace MercadoEnvios.Generar_Publicación
             funcion.validarComboVacio(rubros, mensajeValidacion);
             funcion.validarNoVacio(descripcion, mensajeValidacion);
             funcion.validarNoVacio(precio, mensajeValidacion);
+            funcion.validarDecimal(precio, mensajeValidacion);
+            funcion.validarNumerico(stock, mensajeValidacion);
+            funcion.validarNoVacio(stock, mensajeValidacion);
+
 
             bool validaciones;
 

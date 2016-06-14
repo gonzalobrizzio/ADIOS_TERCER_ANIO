@@ -12,7 +12,6 @@ namespace MercadoEnvios.Generar_Publicación
 {
     public partial class frmElegirAccion : Form
     {
-        Sesion sesion;
         public frmElegirAccion()
         {
             InitializeComponent();

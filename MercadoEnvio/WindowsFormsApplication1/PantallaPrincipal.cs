@@ -1,4 +1,5 @@
-﻿using MercadoEnvios.Historial_Cliente;
+﻿using MercadoEnvios.ABM_Visibilidad;
+using MercadoEnvios.Historial_Cliente;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,18 +8,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MercadoEnvios.Login_y_Seguridad;
+using System.Data.SqlClient;
 
 namespace MercadoEnvios.ABM_Usuario
 {
     public partial class frmPantallaPrincipal : Form
     {
         Sesion sesion = Sesion.Instance;
-        Form anterior;
+        Conexion conn;
 
         public frmPantallaPrincipal()
         {
             InitializeComponent();
-            anterior = sesion.anterior;
+            conn = Conexion.Instance;
 
             if (sesion.idRol == 1) {
                 btnCalificarVendedor.Visible = false;
@@ -68,7 +71,9 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnABMVisibilidad_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
+            new ABM_Visibilidad.frmABMVisibilidad().Show();
+            this.Hide();
         }
 
         private void btnConsultarFacturas_Click(object sender, EventArgs e)
@@ -94,7 +99,8 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            new Login_y_Seguridad.frmIngresar().Show();
+            this.Close();
         }
 
         private void btnCalificarVendedor_Click(object sender, EventArgs e)
@@ -106,12 +112,12 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            sesion.anterior.Show();
+            
         }
 
-        private void frmPantallaPrincipal_Shown(object sender, EventArgs e)
+        private void frmPantallaPrincipal_Load(object sender, EventArgs e)
         {
-            sesion.anterior = anterior;
+
         }
     }
 }
