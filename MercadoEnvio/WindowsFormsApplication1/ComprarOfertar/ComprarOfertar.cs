@@ -15,12 +15,17 @@ namespace MercadoEnvios.ComprarOfertar
         Conexion conn = Conexion.Instance;
         SqlDataAdapter da;
         Sesion sesion = Sesion.Instance;
-
+        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+        
         int nroPagina = 0;
 
         public ComprarOfertar()
         {
             InitializeComponent();
+
+            idUsuario.SqlValue = 17; //MOCK
+            idUsuario.Direction = ParameterDirection.Input;
+
             this.getData();
         }
 
@@ -30,10 +35,6 @@ namespace MercadoEnvios.ComprarOfertar
             // ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
             String cmd = "ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN";
 
-            SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-            idUsuario.SqlValue = 17; //MOCK
-            idUsuario.Direction = ParameterDirection.Input;
-
             SqlParameter pagina = new SqlParameter("@pagina", SqlDbType.Int);
             pagina.SqlValue = nroPagina;
             pagina.Direction = ParameterDirection.Input;
@@ -42,6 +43,7 @@ namespace MercadoEnvios.ComprarOfertar
             da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
             da.SelectCommand.Parameters.Add(idUsuario);
             da.SelectCommand.Parameters.Add(pagina);
+
             try
             {
                 da.SelectCommand.ExecuteNonQuery();
@@ -49,20 +51,23 @@ namespace MercadoEnvios.ComprarOfertar
             catch (SqlException error)
             {
                 MessageBox.Show(error.Message);
-                DataTable tablaDeCompras = new DataTable("Publicaciones para comprar / ofertar");
-                da.Fill(tablaDeCompras);
-                dgvPublicaciones.DataSource = tablaDeCompras;
-                // publicacion.descripcion, publicacion.fechaFin, publicacion.tipo, publicacion.precio, publicacion.id 
-                dgvPublicaciones.Columns[0].Width = 200;
-                dgvPublicaciones.Columns[1].Width = 100;
-                dgvPublicaciones.Columns[2].Width = 100;
-                dgvPublicaciones.Columns[3].Width = 50;
-                dgvPublicaciones.Columns[4].Visible = false;
-                dgvPublicaciones.Columns[5].Visible = false;
-                dgvPublicaciones.AllowUserToAddRows = false;
-                dgvPublicaciones.AllowUserToDeleteRows = false;
-                dgvPublicaciones.ReadOnly = true;
             }
+
+            DataTable tablaDeCompras = new DataTable("Publicaciones para comprar / ofertar");
+            da.Fill(tablaDeCompras);
+            dgvPublicaciones.DataSource = tablaDeCompras;
+            // publicacion.descripcion, publicacion.fechaFin, publicacion.tipo, publicacion.precio, publicacion.id 
+            dgvPublicaciones.Columns[0].Width = 200;
+            dgvPublicaciones.Columns[1].Width = 100;
+            dgvPublicaciones.Columns[2].Width = 100;
+            dgvPublicaciones.Columns[3].Width = 50;
+            dgvPublicaciones.Columns[4].Visible = false;
+            dgvPublicaciones.Columns[5].Visible = false;
+            dgvPublicaciones.AllowUserToAddRows = false;
+            dgvPublicaciones.AllowUserToDeleteRows = false;
+            dgvPublicaciones.ReadOnly = true;
+
+            da.SelectCommand.Parameters.Clear();
 
         }
 

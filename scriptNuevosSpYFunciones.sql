@@ -710,6 +710,16 @@ ORDER BY cantidadCompras DESC
 END
 GO
 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.puedeComprar(@idUsuario INT, @puede INT OUTPUT)
+AS
+BEGIN
+	declare @cantNoCalif int = (SELECT COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
+	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
+	WHERE compra.idComprador = @idUsuario and pendiente = 1 )
+	SET @puede = iif((@cantNoCalif>3),0,1);
+END
+GO
+
 --Vendedores con mayor cantidad de facturas dentro de un mes y año particular
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasFacturasPorTrimestreAnio] (@trimestre INT, @anio INT)
 AS
@@ -817,6 +827,7 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
