@@ -120,7 +120,6 @@ namespace MercadoEnvios.Login_y_Seguridad
                                 break;
                             case 3:
                                 dataReader.Close();
-                                sesion.anterior = this;
                                 new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;

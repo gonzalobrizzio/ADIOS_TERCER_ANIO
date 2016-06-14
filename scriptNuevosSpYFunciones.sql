@@ -208,7 +208,7 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(20), 
 													   @direccion DECIMAL(18,0), @calle NVARCHAR(255), @piso DECIMAL(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
-													   @rubro NVARCHAR(255))
+													   @rubro NVARCHAR(255), @fechaCreacion DATETIME)
 AS
 BEGIN
 
@@ -232,7 +232,7 @@ BEGIN
 										  calificacionPromedio,
 										  fechaCreacion) 
 	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro),
-		    @id, (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+		    @id, (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), @calificacionPromedio, @fechaCreacion)
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -266,7 +266,7 @@ GO
 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
 													   @direccion decimal(18,0), @calle NVARCHAR(255), @piso decimal(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
-													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
+													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME, @fechaCreacion DATETIME)
 AS
 BEGIN
 
@@ -288,7 +288,7 @@ BEGIN
 										  idLocalidad,
 										  calificacionPromedio) 
 	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion like @tipoDeDocumento),
-			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre like @localidad), 0)
+			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac , @fechaCreacion, @id, (SELECT id FROM Localidad WHERE nombre like @localidad), 0)
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -368,6 +368,8 @@ BEGIN
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
 			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
+	IF (@cant > 0)
+	BEGIN
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
@@ -375,6 +377,9 @@ BEGIN
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
 	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
+	END
+	ELSE
+		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
 GO 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
@@ -383,13 +388,17 @@ BEGIN
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 			where p.idPublicador = @idUsuario) - @pagina * 10;
-	WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
-	inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-	inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
-	WHERE @idUsuario = P.idPublicador
-	ORDER BY f.fecha ASC)
-
-	SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+	IF (@cant > 0)
+	BEGIN
+		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
+		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+		inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
+		WHERE @idUsuario = P.idPublicador
+		ORDER BY f.fecha ASC)
+		SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+	END
+	ELSE
+		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
 GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
@@ -492,7 +501,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT, @fecha DATETIME)
 AS
 BEGIN
 	Declare @idTipoPublicacion int,
@@ -526,7 +535,7 @@ BEGIN
 	VALUES (
 		(select MAX(numero) from ADIOS_TERCER_ANIO.Factura),
 		@importeTotalFactura,
-		GETDATE(),
+		@fecha,
 		@idPublicacion
 	)
 	set @idFactura = @@IDENTITY;
@@ -550,7 +559,7 @@ BEGIN
 	end
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT, @fecha DATETIME)
 AS
 BEGIN
 	BEGIN TRANSACTION
@@ -563,8 +572,8 @@ BEGIN
 		set @maxMonto = (select MAX(monto) from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion);
 		update ADIOS_TERCER_ANIO.Publicacion set precio = @maxMonto where id = @idPublicacion
 		Insert into ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
-		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, GETDATE(), @cantidad)
-		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad
+		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, @fecha, @cantidad)
+		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad, @fecha
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -701,6 +710,16 @@ ORDER BY cantidadCompras DESC
 END
 GO
 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.puedeComprar(@idUsuario INT, @puede INT OUTPUT)
+AS
+BEGIN
+	declare @cantNoCalif int = (SELECT COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
+	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
+	WHERE compra.idComprador = @idUsuario and pendiente = 1 )
+	SET @puede = iif((@cantNoCalif>3),0,1);
+END
+GO
+
 --Vendedores con mayor cantidad de facturas dentro de un mes y año particular
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasFacturasPorTrimestreAnio] (@trimestre INT, @anio INT)
 AS
@@ -808,6 +827,7 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 
 --select * from ADIOS_TERCER_ANIO.Funcionalidad

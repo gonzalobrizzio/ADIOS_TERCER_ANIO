@@ -32,7 +32,7 @@ namespace MercadoEnvios.Facturas
             String cmd = "ADIOS_TERCER_ANIO.obtenerFacturasPaginaN";
 
             SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-            idUsuario.SqlValue = sesion.idUsuario;
+            idUsuario.SqlValue = 17;
             idUsuario.Direction = ParameterDirection.Input;
 
             SqlParameter pagina = new SqlParameter("@pagina", SqlDbType.Int);
@@ -43,31 +43,40 @@ namespace MercadoEnvios.Facturas
             da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
             da.SelectCommand.Parameters.Add(idUsuario);
             da.SelectCommand.Parameters.Add(pagina);
-            da.SelectCommand.ExecuteNonQuery();
+            try
+            {
+                da.SelectCommand.ExecuteNonQuery();
+                DataTable tablaDeFacturas = new DataTable("Facturas");
+                da.Fill(tablaDeFacturas);
+                dgvFacturas.DataSource = tablaDeFacturas;
+                dgvFacturas.Columns[0].Width = 50;
+                dgvFacturas.Columns[1].Width = 100;
+                dgvFacturas.Columns[2].Width = 100;
+                dgvFacturas.Columns[3].Width = 150;
+                dgvFacturas.AllowUserToDeleteRows = false;
+                dgvFacturas.ReadOnly = true;
+            }
+            catch (SqlException error)
+            {
+                btnSgte.Enabled = false;
+                MessageBox.Show(error.Message);
+            }
 
-            DataTable tablaDeFacturas = new DataTable("Facturas");
-            da.Fill(tablaDeFacturas);
-            dgvFacturas.DataSource = tablaDeFacturas;
-            dgvFacturas.Columns[0].Width = 50;
-            dgvFacturas.Columns[1].Width = 100;
-            dgvFacturas.Columns[2].Width = 100;
-            dgvFacturas.Columns[3].Width = 150;
-            dgvFacturas.AllowUserToDeleteRows = false;
-            dgvFacturas.ReadOnly = true;
 
         }
 
         private void btnAnt_Click(object sender, EventArgs e)
         {
-            nroPagina++;
-            btnAnt.Enabled = true;
+            nroPagina--;
+            if (nroPagina == 0) btnAnt.Enabled = false;
+            btnSgte.Enabled = true;
             this.getData();
         }
 
         private void btnSgte_Click(object sender, EventArgs e)
         {
-            nroPagina--;
-            if (nroPagina == 0) btnAnt.Enabled = false;
+            nroPagina++;
+            btnAnt.Enabled = true;
             this.getData();
         }
 

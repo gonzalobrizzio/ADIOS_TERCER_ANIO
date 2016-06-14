@@ -223,7 +223,12 @@ namespace MercadoEnvios.ABM_Usuario
                 otroId.Direction = ParameterDirection.Input;
                 otroId.SqlValue = Convert.ToInt32(agregarUsuario.Parameters["@ultimoID"].Value);
 
-                
+
+                SqlParameter fechaCreacion = new SqlParameter("@fechaCreacion", SqlDbType.DateTime);
+                fechaCreacion.SqlValue = DateTime.Today;
+                fechaCreacion.Direction = ParameterDirection.Input;
+
+                agregarEmpresa.Parameters.Add(fechaCreacion);
                 agregarEmpresa.Parameters.Add(razonSocial);
                 agregarEmpresa.Parameters.Add(otroId);
                 agregarEmpresa.Parameters.Add(telefono);
@@ -237,7 +242,8 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarEmpresa.Parameters.Add(cuit);
                 agregarEmpresa.Parameters.Add(contacto);
                 agregarEmpresa.Parameters.Add(rubro);
-                
+                agregarEmpresa.Parameters.Add(fechaCreacion);
+
                 try{
                 agregarEmpresa.ExecuteNonQuery();
                 }
