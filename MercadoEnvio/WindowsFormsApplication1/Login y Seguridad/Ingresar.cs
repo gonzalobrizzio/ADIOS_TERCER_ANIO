@@ -119,10 +119,10 @@ namespace MercadoEnvios.Login_y_Seguridad
                                 this.Hide();
                                 break;
                             case 3:
-                                //sesion.anterior = this;
-                                //new ABM_Usuario.frmPantallaPrincipal().Show();
-                                //dataReader.Close();
-                                //this.Hide();
+                                sesion.anterior = this;
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
+                                dataReader.Close();
+                                this.Hide();
                                 break;
                         }
                     }

@@ -110,7 +110,6 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            sesion.anterior.Show();
             this.Close();
         }
 

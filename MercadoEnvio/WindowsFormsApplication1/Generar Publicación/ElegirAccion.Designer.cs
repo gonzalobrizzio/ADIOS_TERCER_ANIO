@@ -31,11 +31,12 @@
             this.btnModificarPublicacion = new System.Windows.Forms.Button();
             this.btnNuevaPublicacion = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnContestar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnModificarPublicacion
             // 
-            this.btnModificarPublicacion.Location = new System.Drawing.Point(54, 127);
+            this.btnModificarPublicacion.Location = new System.Drawing.Point(54, 126);
             this.btnModificarPublicacion.Name = "btnModificarPublicacion";
             this.btnModificarPublicacion.Size = new System.Drawing.Size(193, 48);
             this.btnModificarPublicacion.TabIndex = 2;
@@ -55,19 +56,30 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(222, 198);
+            this.btnCancelar.Location = new System.Drawing.Point(222, 288);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(93, 34);
-            this.btnCancelar.TabIndex = 3;
-            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.TabIndex = 4;
+            this.btnCancelar.Text = "Volver";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // btnContestar
+            // 
+            this.btnContestar.Location = new System.Drawing.Point(54, 208);
+            this.btnContestar.Name = "btnContestar";
+            this.btnContestar.Size = new System.Drawing.Size(193, 48);
+            this.btnContestar.TabIndex = 3;
+            this.btnContestar.Text = "Contestar Preguntas";
+            this.btnContestar.UseVisualStyleBackColor = true;
+            this.btnContestar.Click += new System.EventHandler(this.btnContestar_Click);
             // 
             // frmElegirAccion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(327, 244);
+            this.ClientSize = new System.Drawing.Size(327, 334);
+            this.Controls.Add(this.btnContestar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnNuevaPublicacion);
             this.Controls.Add(this.btnModificarPublicacion);
@@ -83,5 +95,6 @@
         private System.Windows.Forms.Button btnModificarPublicacion;
         private System.Windows.Forms.Button btnNuevaPublicacion;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnContestar;
     }
 }

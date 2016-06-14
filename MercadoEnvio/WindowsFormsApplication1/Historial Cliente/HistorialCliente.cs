@@ -14,15 +14,16 @@ namespace MercadoEnvios.Historial_Cliente
     public partial class frmHistorialCliente : Form
     {
         Conexion conn;
+        Sesion sesion;
         public frmHistorialCliente()
         {
             //CORREGIR ESTO, IRÍA UN INNER JOIN CON COMPRA, OFERTA!
             InitializeComponent();
-            String query = "SELECT * FROM ADIOS_TERCER_ANIO.Compra WHERE idComprador=26";
             conn = Conexion.Instance;
-            SqlCommand buscarCompras = new SqlCommand(query, conn.getConexion);
-            SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
+            sesion = Sesion.Instance;
+            string query = "exec ADIOS_TERCER_ANIO.verHistoricoComprasUsuario " + Convert.ToString(sesion.idUsuario);
             DataTable tablaDeCompras = new DataTable("Compras/Subastas");
+            SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
             da.Fill(tablaDeCompras);
             grillaDeCompras.DataSource = tablaDeCompras.DefaultView;
         }

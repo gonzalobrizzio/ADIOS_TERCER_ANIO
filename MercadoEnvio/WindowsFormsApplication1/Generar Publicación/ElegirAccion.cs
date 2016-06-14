@@ -35,5 +35,11 @@ namespace MercadoEnvios.Generar_Publicación
             new Generar_Publicación.frmModificarPublicacion().Show();
             this.Close();
         }
+
+        private void btnContestar_Click(object sender, EventArgs e)
+        {
+            new Generar_Publicación.frmContestarPreguntas().Show();
+            this.Close();
+        }
     }
 }

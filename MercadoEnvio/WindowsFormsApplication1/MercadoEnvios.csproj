@@ -149,6 +149,12 @@
       <DependentUpon>Historial.cs</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Utilidades.cs" />
+    <Compile Include="Generar Publicación\Contestar Preguntas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\Contestar Preguntas.Designer.cs">
+      <DependentUpon>Contestar Preguntas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Publicación\EditarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,12 @@
     </Compile>
     <Compile Include="Generar Publicación\ModificarPublicacion.Designer.cs">
       <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\Ver Pregunta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\Ver Pregunta.Designer.cs">
+      <DependentUpon>Ver Pregunta.cs</DependentUpon>
     </Compile>
     <Compile Include="Login y Seguridad\CambiarContraseña.cs">
       <SubType>Form</SubType>
@@ -278,6 +290,9 @@
     <EmbeddedResource Include="Facturas\HistorialDeFacturas.resx">
       <DependentUpon>HistorialDeFacturas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\Contestar Preguntas.resx">
+      <DependentUpon>Contestar Preguntas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -289,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\ModificarPublicacion.resx">
       <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\Ver Pregunta.resx">
+      <DependentUpon>Ver Pregunta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>

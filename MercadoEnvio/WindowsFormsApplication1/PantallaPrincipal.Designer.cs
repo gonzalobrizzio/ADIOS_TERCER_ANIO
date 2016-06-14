@@ -37,26 +37,29 @@
             this.btnABMUsuario = new System.Windows.Forms.Button();
             this.btnABMVisibilidad = new System.Windows.Forms.Button();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
+            this.btnListado = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnGenerarPublicacion
             // 
-            this.btnGenerarPublicacion.Location = new System.Drawing.Point(100, 154);
+            this.btnGenerarPublicacion.Location = new System.Drawing.Point(100, 152);
             this.btnGenerarPublicacion.Name = "btnGenerarPublicacion";
             this.btnGenerarPublicacion.Size = new System.Drawing.Size(289, 58);
             this.btnGenerarPublicacion.TabIndex = 0;
             this.btnGenerarPublicacion.Text = "Generar Publicación";
             this.btnGenerarPublicacion.UseVisualStyleBackColor = true;
+            this.btnGenerarPublicacion.Visible = false;
             this.btnGenerarPublicacion.Click += new System.EventHandler(this.btnGenerarPublicacion_Click);
             // 
             // btnComprarOfertar
             // 
-            this.btnComprarOfertar.Location = new System.Drawing.Point(100, 26);
+            this.btnComprarOfertar.Location = new System.Drawing.Point(100, 24);
             this.btnComprarOfertar.Name = "btnComprarOfertar";
             this.btnComprarOfertar.Size = new System.Drawing.Size(289, 58);
             this.btnComprarOfertar.TabIndex = 1;
             this.btnComprarOfertar.Text = "Comprar / Ofertar";
             this.btnComprarOfertar.UseVisualStyleBackColor = true;
+            this.btnComprarOfertar.Visible = false;
             this.btnComprarOfertar.Click += new System.EventHandler(this.btnComprarOfertar_Click);
             // 
             // btnHistorial
@@ -71,57 +74,62 @@
             // 
             // btnCalificarVendedor
             // 
-            this.btnCalificarVendedor.Location = new System.Drawing.Point(100, 219);
+            this.btnCalificarVendedor.Location = new System.Drawing.Point(100, 185);
             this.btnCalificarVendedor.Name = "btnCalificarVendedor";
             this.btnCalificarVendedor.Size = new System.Drawing.Size(289, 58);
             this.btnCalificarVendedor.TabIndex = 3;
             this.btnCalificarVendedor.Text = "Calificar Vendedor";
             this.btnCalificarVendedor.UseVisualStyleBackColor = true;
+            this.btnCalificarVendedor.Visible = false;
             this.btnCalificarVendedor.Click += new System.EventHandler(this.btnCalificarVendedor_Click);
             // 
             // btnConsultarFacturas
             // 
-            this.btnConsultarFacturas.Location = new System.Drawing.Point(100, 90);
+            this.btnConsultarFacturas.Location = new System.Drawing.Point(100, 88);
             this.btnConsultarFacturas.Name = "btnConsultarFacturas";
             this.btnConsultarFacturas.Size = new System.Drawing.Size(289, 58);
             this.btnConsultarFacturas.TabIndex = 4;
             this.btnConsultarFacturas.Text = "Consultar Facturas";
             this.btnConsultarFacturas.UseVisualStyleBackColor = true;
+            this.btnConsultarFacturas.Visible = false;
             this.btnConsultarFacturas.Click += new System.EventHandler(this.btnConsultarFacturas_Click);
             // 
             // btnABMRol
             // 
-            this.btnABMRol.Location = new System.Drawing.Point(100, 187);
+            this.btnABMRol.Location = new System.Drawing.Point(100, 185);
             this.btnABMRol.Name = "btnABMRol";
             this.btnABMRol.Size = new System.Drawing.Size(289, 58);
             this.btnABMRol.TabIndex = 5;
             this.btnABMRol.Text = "ABM Rol";
             this.btnABMRol.UseVisualStyleBackColor = true;
+            this.btnABMRol.Visible = false;
             this.btnABMRol.Click += new System.EventHandler(this.btnABMRol_Click);
             // 
             // btnABMUsuario
             // 
-            this.btnABMUsuario.Location = new System.Drawing.Point(100, 123);
+            this.btnABMUsuario.Location = new System.Drawing.Point(100, 121);
             this.btnABMUsuario.Name = "btnABMUsuario";
             this.btnABMUsuario.Size = new System.Drawing.Size(289, 58);
             this.btnABMUsuario.TabIndex = 6;
             this.btnABMUsuario.Text = "ABM Usuario";
             this.btnABMUsuario.UseVisualStyleBackColor = true;
+            this.btnABMUsuario.Visible = false;
             this.btnABMUsuario.Click += new System.EventHandler(this.btnABMUsuario_Click);
             // 
             // btnABMVisibilidad
             // 
-            this.btnABMVisibilidad.Location = new System.Drawing.Point(100, 59);
+            this.btnABMVisibilidad.Location = new System.Drawing.Point(100, 57);
             this.btnABMVisibilidad.Name = "btnABMVisibilidad";
             this.btnABMVisibilidad.Size = new System.Drawing.Size(289, 58);
             this.btnABMVisibilidad.TabIndex = 7;
             this.btnABMVisibilidad.Text = "ABM Visibilidad";
             this.btnABMVisibilidad.UseVisualStyleBackColor = true;
+            this.btnABMVisibilidad.Visible = false;
             this.btnABMVisibilidad.Click += new System.EventHandler(this.btnABMVisibilidad_Click);
             // 
             // btnCerrarSesion
             // 
-            this.btnCerrarSesion.Location = new System.Drawing.Point(297, 301);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(298, 343);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
             this.btnCerrarSesion.Size = new System.Drawing.Size(206, 53);
             this.btnCerrarSesion.TabIndex = 8;
@@ -129,11 +137,22 @@
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
             this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             // 
+            // btnListado
+            // 
+            this.btnListado.Location = new System.Drawing.Point(100, 249);
+            this.btnListado.Name = "btnListado";
+            this.btnListado.Size = new System.Drawing.Size(289, 58);
+            this.btnListado.TabIndex = 9;
+            this.btnListado.Text = "Listado Estadístico";
+            this.btnListado.UseVisualStyleBackColor = true;
+            this.btnListado.Visible = false;
+            // 
             // frmPantallaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 361);
+            this.ClientSize = new System.Drawing.Size(516, 408);
+            this.Controls.Add(this.btnListado);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.btnABMVisibilidad);
             this.Controls.Add(this.btnABMUsuario);
@@ -147,6 +166,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PantallaPrincipal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPantallaPrincipal_FormClosed);
+            this.Load += new System.EventHandler(this.frmPantallaPrincipal_Load);
             this.ResumeLayout(false);
 
         }
@@ -162,5 +182,6 @@
         private System.Windows.Forms.Button btnABMUsuario;
         private System.Windows.Forms.Button btnABMVisibilidad;
         private System.Windows.Forms.Button btnCerrarSesion;
+        private System.Windows.Forms.Button btnListado;
     }
 }
