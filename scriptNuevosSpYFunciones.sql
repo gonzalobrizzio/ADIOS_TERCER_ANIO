@@ -682,6 +682,29 @@ ORDER BY cantidadDeFacturas DESC
 END
 GO
 
+--Vendedores con mayor monto facturado dentro de un mes y año particular.r
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMayorMontoFacturado] (@mes INT, @anio INT)
+AS
+BEGIN
+SELECT TOP 5	per.idUsuario			AS idUsuario,
+				usu.usuario				AS usuario,
+				per.apellido			AS nombre,
+				SUM(fac.importeTotal)	AS montoFacturado
+FROM				ADIOS_TERCER_ANIO.Factura fac
+		LEFT JOIN	ADIOS_TERCER_ANIO.Publicacion pub ON fac.idPublicacion = pub.id
+		LEFT JOIN  (SELECT idUsuario, apellido FROM ADIOS_TERCER_ANIO.Persona
+					UNION
+					SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) AS per ON per.idUsuario = pub.idPublicador
+		LEFT JOIN	ADIOS_TERCER_ANIO.Usuario usu ON pub.idPublicador = usu.id
+WHERE	MONTH(fac.fecha) = @mes
+		AND
+		YEAR(fac.fecha) = @anio
+GROUP BY per.idUsuario, per.apellido, usuario
+ORDER BY montoFacturado DESC
+END
+GO
+
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
 
