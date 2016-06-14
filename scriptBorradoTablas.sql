@@ -71,9 +71,16 @@ DROP PROCEDURE ADIOS_TERCER_ANIO.ModificarVisibilidad;
 DROP PROCEDURE ADIOS_TERCER_ANIO.FacturarEmpresa;
 DROP PROCEDURE ADIOS_TERCER_ANIO.FinalizarSubasta;
 DROP PROCEDURE ADIOS_TERCER_ANIO.FinalizarComprasInmediatas;
+<<<<<<< HEAD
 DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMasProductosNoVendidos;
 DROP PROCEDURE ADIOS_TERCER_ANIO.clientesConMasComprasPorFechaYRubro;
 DROP PROCEDURE ADIOS_TERCER_ANIO.puedeComprar;
+=======
+DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMasProductosNoVendidosPorTrimestre;
+DROP PROCEDURE ADIOS_TERCER_ANIO.clientesConMasComprasPorTrimestreYRubro;
+DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMasFacturasPorTrimestreAnio;
+DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMayorMontoFacturadoPorTrimestreAnio;
+>>>>>>> cfbdeb04401c1b55b04f00792f0f5885bd79f01c
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeDNI;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo;
