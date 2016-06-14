@@ -13,6 +13,7 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmNuevoUsuario : Form
     {
         Conexion conn = Conexion.Instance;
+        Sesion sesion;
 
         public frmNuevoUsuario()
         {
@@ -62,10 +63,6 @@ namespace MercadoEnvios.ABM_Usuario
 
         }
 
-        private void label22_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
     }
 }

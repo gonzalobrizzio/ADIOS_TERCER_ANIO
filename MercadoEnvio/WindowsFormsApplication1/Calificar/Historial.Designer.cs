@@ -52,6 +52,7 @@
             this.lblSubastasCon2Estrellas = new System.Windows.Forms.Label();
             this.lblSubastasCon1Estrella = new System.Windows.Forms.Label();
             this.lblSubastasTitulo = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).BeginInit();
             this.SuspendLayout();
             // 
@@ -261,11 +262,22 @@
             this.lblSubastasTitulo.TabIndex = 13;
             this.lblSubastasTitulo.Text = "Subastas:";
             // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(567, 355);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(123, 28);
+            this.btnVolver.TabIndex = 1;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
             // frmHistorial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 349);
+            this.ClientSize = new System.Drawing.Size(702, 395);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.lblSubastas5);
             this.Controls.Add(this.lblSubastas4);
             this.Controls.Add(this.lblSubastas3);
@@ -291,6 +303,7 @@
             this.Controls.Add(this.lblSuHistorial);
             this.Controls.Add(this.dgvHistorial);
             this.Name = "frmHistorial";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Historial";
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).EndInit();
             this.ResumeLayout(false);
@@ -324,5 +337,6 @@
         private System.Windows.Forms.Label lblSubastasCon2Estrellas;
         private System.Windows.Forms.Label lblSubastasCon1Estrella;
         private System.Windows.Forms.Label lblSubastasTitulo;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

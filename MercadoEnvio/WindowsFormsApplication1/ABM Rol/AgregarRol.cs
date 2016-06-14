@@ -63,7 +63,6 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            //Habría que agregar a la base de datos y modificar el listado del abm
             if (txtNombre.Text == "")
             {
                 MessageBox.Show("Está intentando agregar un rol sin nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

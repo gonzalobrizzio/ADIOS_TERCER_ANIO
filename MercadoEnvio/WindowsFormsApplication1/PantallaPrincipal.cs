@@ -19,6 +19,7 @@ namespace MercadoEnvios.ABM_Usuario
         {
             InitializeComponent();
             anterior = sesion.anterior;
+            MessageBox.Show(sesion.anterior.ToString());
 
             if (sesion.idRol == 1) {
                 btnCalificarVendedor.Visible = false;
@@ -32,7 +33,7 @@ namespace MercadoEnvios.ABM_Usuario
                 btnABMRol.Visible = false;
                 btnABMUsuario.Visible = false;
                 btnABMVisibilidad.Visible = false;
-                btnGenerarPublicacion.Visible = false;
+                btnConsultarFacturas.Visible = false;
             }
             else if (sesion.idRol == 3)
             {
@@ -41,7 +42,6 @@ namespace MercadoEnvios.ABM_Usuario
                 btnABMVisibilidad.Visible = false;
                 btnCalificarVendedor.Visible = false;
                 btnComprarOfertar.Visible = false;
-                btnConsultarFacturas.Visible = false;
                 btnHistorial.Visible = false;
             }
         }
@@ -74,7 +74,9 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnConsultarFacturas_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
+            new Facturas.HistorialDeFacturas().Show();
+            this.Hide();
         }
 
         private void btnHistorial_Click(object sender, EventArgs e)
@@ -86,12 +88,16 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnGenerarPublicacion_Click(object sender, EventArgs e)
         {
-
+            sesion.anterior = this;
+            new Generar_Publicación.frmElegirAccion().Show();
+            this.Hide();
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            sesion.anterior.Show();
+            MessageBox.Show(sesion.anterior.ToString());
+            this.Close();
         }
 
         private void btnCalificarVendedor_Click(object sender, EventArgs e)
@@ -108,7 +114,10 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void frmPantallaPrincipal_Shown(object sender, EventArgs e)
         {
+            MessageBox.Show(sesion.anterior.ToString());
             sesion.anterior = anterior;
+            MessageBox.Show(sesion.anterior.ToString());
+
         }
     }
 }

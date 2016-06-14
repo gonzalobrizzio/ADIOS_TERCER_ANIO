@@ -16,7 +16,6 @@ namespace MercadoEnvios
     {
         Conexion conn = Conexion.Instance;
         Sesion sesion;
-        Form anterior;
 
         public frmIngresar()
         {
