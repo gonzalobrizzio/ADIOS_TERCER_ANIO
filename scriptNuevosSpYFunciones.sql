@@ -612,7 +612,7 @@ GO
 --Vendedores con mayor cantidad de productos no vendidos, dicho listado debe
 --filtrarse por grado de visibilidad de la publicación y por mes-año. Primero se deberá
 --ordenar por fecha y luego por visibilidad.
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@fechaInicio DATETIME, @fechaFin DATETIME, @idVisibilidad INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@mes INT, @anio INT, @idVisibilidad INT)
 AS
 BEGIN
 SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario, usu.usuario, per.nombre, pub.descripcion, pub.fechaFin, idVisibilidad 
@@ -625,7 +625,9 @@ SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario,
 						AND 
 						pub.idEstado = (select id from ADIOS_TERCER_ANIO.Estado e where e.nombre LIKE 'Finalizada')
 						AND
-						pub.fechaFin BETWEEN @fechaInicio AND @fechaFin 
+						MONTH(pub.fechaFin) = @mes
+						AND
+						YEAR(pub.fechaFin) = @anio
 						AND
 						pub.idVisibilidad = @idVisibilidad) publSinCompra
 GROUP BY idUsuario, nombre
@@ -635,7 +637,7 @@ GO
 
 --Clientes con mayor cantidad de productos comprados, por mes y por año, dentro de
 --un rubro particular
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorFechaYRubro] (@fechaInicio DATETIME, @fechaFin DATETIME, @idRubro INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorFechaYRubro] (@mes INT, @anio INT, @idRubro INT)
 AS
 BEGIN
 SELECT TOP 5 
@@ -650,12 +652,35 @@ FROM 			ADIOS_TERCER_ANIO.Compra com
 WHERE 
 	pub.idRubro = @idRubro
 	AND
-	pub.fechaFin BETWEEN @fechaInicio AND @fechaFin
+	YEAR(pub.fechaFin) = @anio
+	AND
+	MONTH(pub.fechaFin) = @mes
 GROUP BY com.idComprador, nombre, documento, apellido
 ORDER BY cantidadCompras DESC
 END
 GO
 
+--Vendedores con mayor cantidad de facturas dentro de un mes y año particular
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasFacturasPorMesAnio] (@mes INT, @anio INT)
+AS
+BEGIN
+SELECT TOP 5	per.idUsuario	AS idUsuario,
+				usu.usuario		AS usuario,
+				per.apellido	AS nombre,
+				count (*)		AS cantidadDeFacturas
+FROM				ADIOS_TERCER_ANIO.Factura fac
+		LEFT JOIN	ADIOS_TERCER_ANIO.Publicacion pub ON fac.idPublicacion = pub.id
+		LEFT JOIN  (SELECT idUsuario, apellido FROM ADIOS_TERCER_ANIO.Persona
+					UNION
+					SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) AS per ON per.idUsuario = pub.idPublicador
+		LEFT JOIN	ADIOS_TERCER_ANIO.Usuario usu ON pub.idPublicador = usu.id
+WHERE	MONTH(fac.fecha) = @mes
+		AND
+		YEAR(fac.fecha) = @anio
+GROUP BY per.idUsuario, per.apellido, usuario
+ORDER BY cantidadDeFacturas DESC
+END
+GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
