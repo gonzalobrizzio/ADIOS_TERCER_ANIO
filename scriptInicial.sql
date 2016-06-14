@@ -231,17 +231,16 @@ AS BEGIN
 
 	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(
 							duracionDias, 
-							nombre, 
+							descripcion, 
 							precio, 
 							porcentaje
 							)
 	SELECT DISTINCT
-		7 as duracionDias,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
+		7,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
 		Publicacion_Visibilidad_Desc, 
 		Publicacion_Visibilidad_Precio,
 		Publicacion_Visibilidad_Porcentaje
-	FROM gd_esquema.Maestra
-	ORDER BY Publicacion_Visibilidad_Porcentaje
+	FROM gd_esquema.Maestra	
 
 END
 GO
@@ -273,11 +272,16 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idPublicacion)
+	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idFormaDePago, idPublicacion)
 	SELECT DISTINCT
 		Factura_Nro																				AS numero,
 		Factura_Total																			AS importeTotal,
 		Factura_Fecha																			AS fecha,
+		--LO SACO #REDUNDANTE CASE 
+		--LO SACO #REDUNDANTE 	WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
+		--LO SACO #REDUNDANTE 	ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
+		--LO SACO #REDUNDANTE END																						AS idVendedor,
+		(SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre LIKE Forma_Pago_Desc)		AS idFormaDePago,
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
 	FROM 
 		gd_esquema.Maestra
@@ -416,14 +420,14 @@ AS BEGIN
 										fechaInicio,
 										fechaFin,
 										tienePreguntas,
-										idTipoPublicacion,
+										tipo,
 										idEstado,
 										precio,
 										idVisibilidad,
 										idPublicador,
 										idRubro,
 										stock,
-										tieneEnvio
+										idEnvio
 									)
 	SELECT DISTINCT
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)						AS id,
@@ -431,17 +435,17 @@ AS BEGIN
 		Publicacion_Fecha																				AS fechaIni,
 		Publicacion_Fecha_Venc																			AS fechaFin,
 		0																								AS tienePreguntas, --NO VIENEN CON PREGUNTAS, por eso el cero
-		(select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like Publicacion_Tipo)			AS tipo,
+		Publicacion_Tipo																				AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )							AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
-		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
+		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE descripcion = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
 		CASE 
 			WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
 			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
 		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock																				AS stock,
-		1
+		NULL																							AS idEnvio
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
