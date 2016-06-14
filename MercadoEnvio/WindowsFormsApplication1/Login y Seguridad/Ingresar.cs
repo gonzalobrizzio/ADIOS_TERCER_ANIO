@@ -16,11 +16,11 @@ namespace MercadoEnvios.Login_y_Seguridad
     {
         Conexion conn = Conexion.Instance;
         Sesion sesion;
-        Form anterior;
 
         public frmIngresar()
         {
             InitializeComponent();
+            //new TareasBatch().correr(); ToDo
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)

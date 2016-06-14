@@ -36,6 +36,20 @@ namespace MercadoEnvios.Entidades
             return true;
         }
 
+        public bool validarDecimal(Control control, StringBuilder mensajeValidacion)
+        {
+            try
+            {
+                decimal esNumero = Convert.ToDecimal(control.Text);
+                return true;
+            }
+            catch
+            {
+                mensajeValidacion.AppendLine(string.Format(" El campo {0} debe ser numerico.", control.Name));
+                return false;
+            }
+        }
+
         public bool validarComboVacio(ComboBox combo, StringBuilder mensajeValidacion)
         {
             if (combo.SelectedIndex > -1)

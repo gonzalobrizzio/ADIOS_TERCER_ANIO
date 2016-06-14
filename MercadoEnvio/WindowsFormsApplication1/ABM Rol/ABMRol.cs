@@ -110,9 +110,8 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            sesion.anterior = this;
-            new ABM_Usuario.frmPantallaPrincipal().Show();
-            this.Hide();
+            sesion.anterior.Show();
+            this.Close();
         }
 
         private void btnFuncRol_Click(object sender, EventArgs e)

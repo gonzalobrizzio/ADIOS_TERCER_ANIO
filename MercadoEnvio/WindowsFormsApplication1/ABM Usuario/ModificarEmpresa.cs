@@ -15,13 +15,17 @@ namespace MercadoEnvios.ABM_Usuario
     {
         Conexion conn;
         int idUsuario;
-        Sesion sesion;
+        Sesion sesion = Sesion.Instance;
+        Form anterior;
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
 
         public frmModificarEmpresa(int id)
         {
             InitializeComponent();
+
+            anterior = sesion.anterior;
+
             idUsuario = id;
             campoMail.MaxLength = 30;
             campoUsuario.MaxLength = 20;
@@ -101,8 +105,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-
-            new frmABMUsuario().Show();
+            sesion.anterior.Show();
             this.Close();
         }
 
@@ -258,7 +261,7 @@ namespace MercadoEnvios.ABM_Usuario
                     MessageBox.Show(error.Message);
                 }
 
-                new frmABMUsuario().Show();
+                sesion.anterior.Show();
                 this.Close();
             }
         }

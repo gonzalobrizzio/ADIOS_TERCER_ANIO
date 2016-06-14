@@ -9,18 +9,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MercadoEnvios.Login_y_Seguridad;
+using System.Data.SqlClient;
 
 namespace MercadoEnvios.ABM_Usuario
 {
     public partial class frmPantallaPrincipal : Form
     {
         Sesion sesion = Sesion.Instance;
-        Form anterior;
+        Conexion conn;
 
         public frmPantallaPrincipal()
         {
             InitializeComponent();
-            anterior = sesion.anterior;
+
+            conn = Conexion.Instance;
 
             if (sesion.idRol == 1) {
                 btnCalificarVendedor.Visible = false;
@@ -112,11 +114,6 @@ namespace MercadoEnvios.ABM_Usuario
         private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
             
-        }
-
-        private void frmPantallaPrincipal_Shown(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
         }
     }
 }
