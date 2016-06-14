@@ -368,6 +368,8 @@ BEGIN
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
 			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
+	IF (@cant > 0)
+	BEGIN
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
@@ -375,6 +377,9 @@ BEGIN
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
 	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
+	END
+	ELSE
+		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
 GO 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
@@ -383,13 +388,17 @@ BEGIN
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 			where p.idPublicador = @idUsuario) - @pagina * 10;
-	WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
-	inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-	inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
-	WHERE @idUsuario = P.idPublicador
-	ORDER BY f.fecha ASC)
-
-	SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+	IF (@cant > 0)
+	BEGIN
+		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
+		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+		inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
+		WHERE @idUsuario = P.idPublicador
+		ORDER BY f.fecha ASC)
+		SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+	END
+	ELSE
+		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
 GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
