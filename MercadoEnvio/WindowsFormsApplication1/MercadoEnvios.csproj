@@ -148,6 +148,12 @@
     <Compile Include="Calificar\Historial.Designer.cs">
       <DependentUpon>Historial.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOfertar\Detalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Detalle.Designer.cs">
+      <DependentUpon>Detalle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Utilidades.cs" />
     <Compile Include="Generar Publicación\EditarPublicacion.cs">
       <SubType>Form</SubType>
@@ -274,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar\Historial.resx">
       <DependentUpon>Historial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Detalle.resx">
+      <DependentUpon>Detalle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Facturas\HistorialDeFacturas.resx">
       <DependentUpon>HistorialDeFacturas.cs</DependentUpon>

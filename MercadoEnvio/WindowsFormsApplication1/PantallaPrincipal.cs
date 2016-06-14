@@ -17,6 +17,7 @@ namespace MercadoEnvios.ABM_Usuario
     {
         Sesion sesion = Sesion.Instance;
         Conexion conn;
+        SqlDataAdapter da;
 
         public frmPantallaPrincipal()
         {
@@ -51,9 +52,34 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnComprarOfertar_Click(object sender, EventArgs e)
         {
-            sesion.anterior = this;
-            new ComprarOfertar.ComprarOfertar().Show();
-            this.Hide();
+
+            SqlCommand puedeComprar = new SqlCommand("ADIOS_TERCER_ANIO.puedeComprar", conn.getConexion);
+            puedeComprar.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter usr = new SqlParameter("@idUsuario", SqlDbType.Int);
+            usr.SqlValue = sesion.idUsuario;
+            usr.Direction = ParameterDirection.Input;
+
+            SqlParameter puede = new SqlParameter("@puede", null);
+            puede.Direction = ParameterDirection.Output;
+            puede.SqlDbType = SqlDbType.Int;
+
+            puedeComprar.Parameters.Add(usr);
+            puedeComprar.Parameters.Add(puede);
+
+            try { puedeComprar.ExecuteNonQuery(); }
+            catch (SqlException error) { MessageBox.Show(error.Message); }
+
+            if (Convert.ToInt32(puedeComprar.Parameters["@puede"].Value) == 1)
+            {
+                sesion.anterior = this;
+                new ComprarOfertar.ComprarOfertar().Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Tiene compras sin calificar, debe calificar las compras antes de realizar otra accion");
+            }
         }
 
         private void btnABMUsuario_Click(object sender, EventArgs e)

@@ -374,7 +374,14 @@ BEGIN
 	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
-	SELECT top 200000000 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
+	if ((SELECT top 20 Count(*) FROM TablaP)<20)
+	begin
+	THROW 53435, 'no se trajeron lo suficiente', 1; 
+	end
+	ELSE 
+	begin
+	SELECT top 20 Count(*) FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
+	end 
 END
 
 GO 
@@ -656,8 +663,15 @@ ORDER BY cantidadCompras DESC
 END
 GO
 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.puedeComprar(@idUsuario INT, @puede INT OUTPUT)
+AS
+BEGIN
+	declare @cantNoCalif int = (SELECT COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
+	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
+	WHERE compra.idComprador = @idUsuario and pendiente = 1 )
+	SET @puede = iif((@cantNoCalif>3),0,1);
+END
 
+GO 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
-
-

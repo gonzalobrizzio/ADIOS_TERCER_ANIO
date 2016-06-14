@@ -15,12 +15,17 @@ namespace MercadoEnvios.ComprarOfertar
         Conexion conn = Conexion.Instance;
         SqlDataAdapter da;
         Sesion sesion = Sesion.Instance;
-
+        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+        
         int nroPagina = 0;
 
         public ComprarOfertar()
         {
             InitializeComponent();
+
+            idUsuario.SqlValue = 17; //MOCK
+            idUsuario.Direction = ParameterDirection.Input;
+
             this.getData();
         }
 
@@ -30,10 +35,6 @@ namespace MercadoEnvios.ComprarOfertar
             // ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
             String cmd = "ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN";
 
-            SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-            idUsuario.SqlValue = 17; //MOCK
-            idUsuario.Direction = ParameterDirection.Input;
-
             SqlParameter pagina = new SqlParameter("@pagina", SqlDbType.Int);
             pagina.SqlValue = nroPagina;
             pagina.Direction = ParameterDirection.Input;
@@ -41,8 +42,9 @@ namespace MercadoEnvios.ComprarOfertar
             da = new SqlDataAdapter(cmd, conn.getConexion);
             da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
             da.SelectCommand.Parameters.Add(idUsuario);
-            da.SelectCommand.Parameters.Add(pagina); 
-            da.SelectCommand.ExecuteNonQuery();
+            da.SelectCommand.Parameters.Add(pagina);
+            try { da.SelectCommand.ExecuteNonQuery(); }
+            catch (SqlException error) { MessageBox.Show(error.Message); }
 
             DataTable tablaDeCompras = new DataTable("Publicaciones para comprar / ofertar");
             da.Fill(tablaDeCompras);
@@ -57,6 +59,8 @@ namespace MercadoEnvios.ComprarOfertar
             dgvPublicaciones.AllowUserToAddRows = false;
             dgvPublicaciones.AllowUserToDeleteRows = false;
             dgvPublicaciones.ReadOnly = true;
+
+            da.SelectCommand.Parameters.Clear();
 
         }
 
