@@ -363,19 +363,13 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
 AS
 BEGIN
-	declare @idUsuario int = 17;
-	declare @pagina INT = 2;
+	--declare @idUsuario int = 17;
+	--declare @pagina INT = 2;
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
 			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
-	
-<<<<<<< HEAD
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
-=======
-	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, publicacion.tipo, 
-	publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
->>>>>>> b6d0790a3b5af909843c4f1858c2d1ba48345d50
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
