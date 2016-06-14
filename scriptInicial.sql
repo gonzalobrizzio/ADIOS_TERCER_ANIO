@@ -236,11 +236,12 @@ AS BEGIN
 							porcentaje
 							)
 	SELECT DISTINCT
-		7,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
+		7 as duracionDias,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
 		Publicacion_Visibilidad_Desc, 
 		Publicacion_Visibilidad_Precio,
 		Publicacion_Visibilidad_Porcentaje
-	FROM gd_esquema.Maestra	
+	FROM gd_esquema.Maestra
+	ORDER BY Publicacion_Visibilidad_Porcentaje
 
 END
 GO

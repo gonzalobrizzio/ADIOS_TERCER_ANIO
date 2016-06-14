@@ -14,9 +14,13 @@ namespace MercadoEnvios.ABM_Rol
     public partial class frmVerFuncRol : Form
     {
         Conexion conn;
+        Form anterior;
+        Sesion sesion = Sesion.Instance;
+
         public frmVerFuncRol(int idRolBuscado, string nombreRol)
         {
             InitializeComponent();
+            anterior = sesion.anterior;
 
             txtNombre.Text = nombreRol;
            
@@ -56,13 +60,19 @@ namespace MercadoEnvios.ABM_Rol
 
         public void salir()
         {
+            sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Close();
         }
 
-        private void frmVerFuncRol_Load(object sender, EventArgs e)
+        private void frmVerFuncRol_Shown(object sender, EventArgs e)
         {
+            sesion.anterior = anterior;
+        }
 
+        private void frmVerFuncRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
         }
     }
 }

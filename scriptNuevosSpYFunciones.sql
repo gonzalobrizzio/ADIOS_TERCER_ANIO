@@ -363,17 +363,24 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
 AS
 BEGIN
-	--declare @idUsuario int = 17;
-	--declare @pagina INT = 235;
+	declare @idUsuario int = 17;
+	declare @pagina INT = 2;
 
-	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion where publicacion.idPublicador != @idUsuario) - @pagina * 20;
+	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
+			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
 	
+<<<<<<< HEAD
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
+=======
+	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, publicacion.tipo, 
+	publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
+>>>>>>> b6d0790a3b5af909843c4f1858c2d1ba48345d50
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
+	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
+	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
-	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
+	SELECT top 200000000 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
 END
 
 GO 
@@ -607,27 +614,30 @@ BEGIN
 END
 GO
 
---#FIX
---ME FALTA AGREGAR LOS CAMPOS PARA DARLE VARIAVILIDAD
+
 --Vendedores con mayor cantidad de productos no vendidos, dicho listado debe
 --filtrarse por grado de visibilidad de la publicación y por mes-año. Primero se deberá
 --ordenar por fecha y luego por visibilidad.
---CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@nombre NVARCHAR(255),)
---AS
---BEGIN
---SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario, usu.usuario, per.nombre, pub.descripcion, pub.fechaFin, idVisibilidad 
---					FROM ADIOS_TERCER_ANIO.Publicacion pub
---					LEFT JOIN (	SELECT idUsuario, nombre FROM ADIOS_TERCER_ANIO.Persona
---								UNION
---								SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) as per ON per.idUsuario = pub.idPublicador
---					LEFT JOIN ADIOS_TERCER_ANIO.Usuario usu ON per.idUsuario = usu.id
---				WHERE	pub.id NOT IN(SELECT com.idPublicacion FROM ADIOS_TERCER_ANIO.Compra com) 
---						AND 
---						pub.idEstado = (select id from ADIOS_TERCER_ANIO.Estado e where e.nombre LIKE 'Finalizada')) publSinCompra
---GROUP BY idUsuario, nombre
---ORDER BY cantidad DESC
---END
---GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@fechaInicio DATETIME, @fechaFin DATETIME, @idVisibilidad INT)
+AS
+BEGIN
+SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario, usu.usuario, per.nombre, pub.descripcion, pub.fechaFin, idVisibilidad 
+					FROM ADIOS_TERCER_ANIO.Publicacion pub
+					LEFT JOIN (	SELECT idUsuario, nombre FROM ADIOS_TERCER_ANIO.Persona
+								UNION
+								SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) as per ON per.idUsuario = pub.idPublicador
+					LEFT JOIN ADIOS_TERCER_ANIO.Usuario usu ON per.idUsuario = usu.id
+				WHERE	pub.id NOT IN(SELECT com.idPublicacion FROM ADIOS_TERCER_ANIO.Compra com) 
+						AND 
+						pub.idEstado = (select id from ADIOS_TERCER_ANIO.Estado e where e.nombre LIKE 'Finalizada')
+						AND
+						pub.fechaFin BETWEEN @fechaInicio AND @fechaFin 
+						AND
+						pub.idVisibilidad = @idVisibilidad) publSinCompra
+GROUP BY idUsuario, nombre
+ORDER BY cantidad DESC
+END
+GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;

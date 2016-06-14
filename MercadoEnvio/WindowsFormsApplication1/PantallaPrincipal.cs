@@ -21,6 +21,7 @@ namespace MercadoEnvios.ABM_Usuario
         public frmPantallaPrincipal()
         {
             InitializeComponent();
+
             conn = Conexion.Instance;
 
             if (sesion.idRol == 1) {
@@ -113,11 +114,6 @@ namespace MercadoEnvios.ABM_Usuario
         private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
             
-        }
-
-        private void frmPantallaPrincipal_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
