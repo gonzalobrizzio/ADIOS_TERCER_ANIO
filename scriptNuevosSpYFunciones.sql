@@ -538,5 +538,29 @@ ORDER BY cantidad DESC
 END
 GO
 
+--Clientes con mayor cantidad de productos comprados, por mes y por año, dentro de
+--un rubro particular
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorFechaYRubro] (@fechaInicio DATETIME, @fechaFin DATETIME, @idRubro INT)
+AS
+BEGIN
+SELECT TOP 5 
+		com.idComprador		AS idUsuario,
+		per.documento		AS documento,
+		per.nombre			AS nombre,
+		per.apellido		AS apellido,
+		count(*)			AS cantidadCompras
+FROM 			ADIOS_TERCER_ANIO.Compra com
+	LEFT JOIN	ADIOS_TERCER_ANIO.Publicacion pub ON com.idPublicacion = pub.id
+	LEFT JOIN	ADIOS_TERCER_ANIO.Persona per on per.idUsuario = com.idComprador
+WHERE 
+	pub.idRubro = @idRubro
+	AND
+	pub.fechaFin BETWEEN @fechaInicio AND @fechaFin
+GROUP BY com.idComprador, nombre, documento, apellido
+ORDER BY cantidadCompras DESC
+END
+GO
+
+
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
