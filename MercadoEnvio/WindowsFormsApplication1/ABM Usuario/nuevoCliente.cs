@@ -79,8 +79,6 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(campoDireccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(campoCodigoPostal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(campoFechaDeNacimiento, mensajeDeAviso);
-            this.funcionesValidacion.validarNumerico(campoNroDeDireccion, mensajeDeAviso);
-            this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
             
             bool validaciones;
 
@@ -97,6 +95,16 @@ namespace MercadoEnvios.ABM_Usuario
             if (mailB)
             {
                 this.funcionesValidacion.validarEmail(campoMail, mensajeDeAviso);
+            }
+
+            if (!(string.IsNullOrEmpty(campoNroDeDireccion.Text)))
+            {
+                this.funcionesValidacion.validarNumerico(campoNroDeDireccion, mensajeDeAviso);
+            }
+
+            if (!(string.IsNullOrEmpty(campoPiso.Text)))
+            {
+                this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
             }
 
             if (mensajeDeAviso.Length > 0)

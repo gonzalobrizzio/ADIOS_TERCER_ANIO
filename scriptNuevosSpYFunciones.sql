@@ -146,16 +146,8 @@ AS BEGIN
 	IF(@usuario IS NULL)
 		THROW 50004, 'Necesita ingresar un usuario', 1;
 
-	BEGIN TRANSACTION
-	BEGIN TRY
 		INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
 		SET @ultimoID = @@IDENTITY;
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'El usuario que intenta agregar no es valido', 1; 
-	END CATCH
-	COMMIT TRANSACTION	
 END
 GO
 
@@ -164,23 +156,13 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	IF(@rol IS NULL)
-		THROW 50004, 'Necesita seleccionar un rol', 1;
-
-	BEGIN TRANSACTION
-	BEGIN TRY
 		DECLARE @idRol INT;
 		Select @idRol = id from ADIOS_TERCER_ANIO.Rol r where r.nombre = @rol;
 		IF(@idRol IS not NULL)
 		bEGIN
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idUsuario, idRol, deleted) VALUES(@id, @idRol,0)
 		End 
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se ha podido asignar un rol al usuario', 1; 
-	END CATCH
-	COMMIT TRANSACTION
+
 END
 GO
 
@@ -211,9 +193,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255
 													   @rubro NVARCHAR(255), @fechaCreacion DATETIME)
 AS
 BEGIN
-
-	BEGIN TRANSACTION
-	BEGIN TRY
 	DECLARE @calificacionPromedio INT
 	SET @calificacionPromedio = 0
 
@@ -233,12 +212,6 @@ BEGIN
 										  fechaCreacion) 
 	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro),
 		    @id, (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), @calificacionPromedio, @fechaCreacion)
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se puede agregar al usuario de tipo Empresa', 1; 
-	END CATCH
-	COMMIT TRANSACTION
 END
 GO
 
@@ -248,18 +221,10 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarEmpresa] (@razonSocial NVARCHAR(2
 														 @rubro NVARCHAR(255))
 AS
 BEGIN
-	BEGIN TRANSACTION
-			BEGIN TRY
 		UPDATE ADIOS_TERCER_ANIO.Empresa
 		SET razonSocial = @razonSocial, telefono = @telefono, direccion = @calle, direccion_numero = @direccion, piso = @piso, dpto = @depto,
 			idLocalidad= (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), codigoPostal = @codigoPostal, cuit = @cuit, contacto = @contacto,
-			idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro) WHERE id = @id
-			END TRY
-		BEGIN CATCH
-			ROLLBACK TRANSACTION;
-			THROW 50004, 'No se puede agregar el cliente', 1; 
-		END CATCH
-	COMMIT TRANSACTION
+			idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro) WHERE @id = idUsuario
 	
 END
 GO
@@ -270,8 +235,6 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  
 AS
 BEGIN
 
-	BEGIN TRANSACTION
-	BEGIN TRY
 	INSERT INTO ADIOS_TERCER_ANIO.Persona(nombre,
 										  apellido,
 										  documento,
@@ -289,12 +252,6 @@ BEGIN
 										  calificacionPromedio) 
 	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion like @tipoDeDocumento),
 			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac , @fechaCreacion, @id, (SELECT id FROM Localidad WHERE nombre like @localidad), 0)
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se puede agregar el cliente', 1; 
-	END CATCH
-	COMMIT TRANSACTION
 END
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
@@ -303,19 +260,10 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarPersona] (@nombre NVARCHAR(255) ,
 AS
 BEGIN
 
-	BEGIN TRANSACTION
-	BEGIN TRY
 	UPDATE ADIOS_TERCER_ANIO.Persona
 	SET nombre = @nombre, apellido = @apellido, idTipoDocumento = (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
 				 telefono = @telefono,direccion_numero = @direccion, direccion = @calle, piso = @piso, dpto = @depto, codigoPostal = @codigoPostal, 
 				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE @id = idUsuario
-	 
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se puede modificar a la persona', 1; 
-	END CATCH
-	COMMIT TRANSACTION
 END
 GO
 
@@ -844,3 +792,6 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
+
+SELECT * FROM ADIOS_TERCER_ANIO.Usuario
+SELECT * FROM ADIOS_TERCER_ANIO.Persona

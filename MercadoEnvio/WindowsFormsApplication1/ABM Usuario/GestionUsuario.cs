@@ -71,6 +71,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            new frmNuevoUsuario().Show();
             sesion.anterior = this;
             this.Hide();
         }
@@ -139,10 +140,6 @@ namespace MercadoEnvios.ABM_Usuario
 
         }
 
-        private void frmABMUsuario_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            sesion.anterior.Show();
-        }
 
         private void btnModificarCliente_Click(object sender, EventArgs e)
         {

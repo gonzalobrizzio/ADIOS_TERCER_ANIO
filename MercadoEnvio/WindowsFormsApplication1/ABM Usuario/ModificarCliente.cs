@@ -28,7 +28,6 @@ namespace MercadoEnvios.ABM_Usuario
 
             sesion.idUsuario = id;
 
-            calendarioNac.Visible = false;
 
             sesion.idUsuario = id;
             conn = Conexion.Instance;

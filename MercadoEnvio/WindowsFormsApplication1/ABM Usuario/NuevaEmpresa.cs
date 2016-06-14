@@ -69,6 +69,7 @@ namespace MercadoEnvios.ABM_Usuario
             bool razonSocialB = this.funcionesValidacion.validarNoVacio(campoRazonSocial, mensajeDeAviso);
             bool cuitB = this.funcionesValidacion.validarNoVacio(campoCUIT, mensajeDeAviso);
             this.funcionesValidacion.verSiElCuitEsValido(campoCUIT, mensajeDeAviso);
+
             if (!(string.IsNullOrEmpty(campoDireccion.Text)))
             {
                 this.funcionesValidacion.validarNumerico(campoDireccion, mensajeDeAviso);
@@ -228,7 +229,6 @@ namespace MercadoEnvios.ABM_Usuario
                 fechaCreacion.SqlValue = DateTime.Today;
                 fechaCreacion.Direction = ParameterDirection.Input;
 
-                agregarEmpresa.Parameters.Add(fechaCreacion);
                 agregarEmpresa.Parameters.Add(razonSocial);
                 agregarEmpresa.Parameters.Add(otroId);
                 agregarEmpresa.Parameters.Add(telefono);
