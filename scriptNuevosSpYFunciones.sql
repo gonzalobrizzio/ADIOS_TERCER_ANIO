@@ -777,10 +777,10 @@ CREATE PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion(@idPublicacion INT)
 AS
 BEGIN
 	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin, publicacion.precio, publicacion.stock, 
-	visib.descripcion from ADIOS_TERCER_ANIO.Publicacion publicacion
+	visib.nombre from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	inner join ADIOS_TERCER_ANIO.Estado estado on publicacion.idEstado = estado.id
-	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion. = tipo.id
+	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id
 	where publicacion.id != @idPublicacion 
 END
 GO 
