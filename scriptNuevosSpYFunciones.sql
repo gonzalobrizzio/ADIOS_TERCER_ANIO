@@ -612,9 +612,39 @@ GO
 --Vendedores con mayor cantidad de productos no vendidos, dicho listado debe
 --filtrarse por grado de visibilidad de la publicación y por mes-año. Primero se deberá
 --ordenar por fecha y luego por visibilidad.
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidos] (@mes INT, @anio INT, @idVisibilidad INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasProductosNoVendidosPorTrimestre] (@trimestre INT, @anio INT, @idVisibilidad INT)
 AS
 BEGIN
+
+DECLARE @mes1 INT
+DECLARE @mes2 INT
+DECLARE @mes3 INT
+
+IF @trimestre = 1 
+BEGIN
+	SET @mes1 = 1
+	SET @mes2 = 2 
+	SET @mes3 = 3
+END
+IF @trimestre = 2
+BEGIN
+	SET @mes1 = 4
+	SET @mes2 = 5 
+	SET @mes3 = 6
+END
+IF @trimestre = 3
+BEGIN
+	SET @mes1 = 7
+	SET @mes2 = 8 
+	SET @mes3 = 9
+END
+IF @trimestre = 4
+BEGIN
+	SET @mes1 = 10
+	SET @mes2 = 11
+	SET @mes3 = 12
+END
+
 SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario, usu.usuario, per.nombre, pub.descripcion, pub.fechaFin, idVisibilidad 
 					FROM ADIOS_TERCER_ANIO.Publicacion pub
 					LEFT JOIN (	SELECT idUsuario, nombre FROM ADIOS_TERCER_ANIO.Persona
@@ -625,7 +655,7 @@ SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario,
 						AND 
 						pub.idEstado = (select id from ADIOS_TERCER_ANIO.Estado e where e.nombre LIKE 'Finalizada')
 						AND
-						MONTH(pub.fechaFin) = @mes
+						(MONTH(pub.fechaFin) = @mes1 OR MONTH(pub.fechaFin) = @mes2 OR MONTH(pub.fechaFin) = @mes3)
 						AND
 						YEAR(pub.fechaFin) = @anio
 						AND
@@ -637,9 +667,39 @@ GO
 
 --Clientes con mayor cantidad de productos comprados, por mes y por año, dentro de
 --un rubro particular
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorFechaYRubro] (@mes INT, @anio INT, @idRubro INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorTrimestreYRubro] (@trimestre INT, @anio INT, @idRubro INT)
 AS
 BEGIN
+
+DECLARE @mes1 INT
+DECLARE @mes2 INT
+DECLARE @mes3 INT
+
+IF @trimestre = 1 
+BEGIN
+	SET @mes1 = 1
+	SET @mes2 = 2 
+	SET @mes3 = 3
+END
+IF @trimestre = 2
+BEGIN
+	SET @mes1 = 4
+	SET @mes2 = 5 
+	SET @mes3 = 6
+END
+IF @trimestre = 3
+BEGIN
+	SET @mes1 = 7
+	SET @mes2 = 8 
+	SET @mes3 = 9
+END
+IF @trimestre = 4
+BEGIN
+	SET @mes1 = 10
+	SET @mes2 = 11
+	SET @mes3 = 12
+END
+
 SELECT TOP 5 
 		com.idComprador		AS idUsuario,
 		per.documento		AS documento,
@@ -654,16 +714,46 @@ WHERE
 	AND
 	YEAR(pub.fechaFin) = @anio
 	AND
-	MONTH(pub.fechaFin) = @mes
+	(MONTH(pub.fechaFin) = @mes1 OR MONTH(pub.fechaFin) = @mes2 OR MONTH(pub.fechaFin) = @mes3)
 GROUP BY com.idComprador, nombre, documento, apellido
 ORDER BY cantidadCompras DESC
 END
 GO
 
 --Vendedores con mayor cantidad de facturas dentro de un mes y año particular
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasFacturasPorMesAnio] (@mes INT, @anio INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasFacturasPorTrimestreAnio] (@trimestre INT, @anio INT)
 AS
 BEGIN
+
+DECLARE @mes1 INT
+DECLARE @mes2 INT
+DECLARE @mes3 INT
+
+IF @trimestre = 1 
+BEGIN
+	SET @mes1 = 1
+	SET @mes2 = 2 
+	SET @mes3 = 3
+END
+IF @trimestre = 2
+BEGIN
+	SET @mes1 = 4
+	SET @mes2 = 5 
+	SET @mes3 = 6
+END
+IF @trimestre = 3
+BEGIN
+	SET @mes1 = 7
+	SET @mes2 = 8 
+	SET @mes3 = 9
+END
+IF @trimestre = 4
+BEGIN
+	SET @mes1 = 10
+	SET @mes2 = 11
+	SET @mes3 = 12
+END
+
 SELECT TOP 5	per.idUsuario	AS idUsuario,
 				usu.usuario		AS usuario,
 				per.apellido	AS nombre,
@@ -674,7 +764,7 @@ FROM				ADIOS_TERCER_ANIO.Factura fac
 					UNION
 					SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) AS per ON per.idUsuario = pub.idPublicador
 		LEFT JOIN	ADIOS_TERCER_ANIO.Usuario usu ON pub.idPublicador = usu.id
-WHERE	MONTH(fac.fecha) = @mes
+WHERE	(MONTH(fac.fecha) = @mes1 OR MONTH(fac.fecha) = @mes2 OR MONTH(fac.fecha) = @mes3)
 		AND
 		YEAR(fac.fecha) = @anio
 GROUP BY per.idUsuario, per.apellido, usuario
@@ -683,9 +773,38 @@ END
 GO
 
 --Vendedores con mayor monto facturado dentro de un mes y año particular.r
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMayorMontoFacturado] (@mes INT, @anio INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMayorMontoFacturadoPorTrimestreAnio] (@trimestre INT, @anio INT)
 AS
 BEGIN
+DECLARE @mes1 INT
+DECLARE @mes2 INT
+DECLARE @mes3 INT
+
+IF @trimestre = 1 
+BEGIN
+	SET @mes1 = 1
+	SET @mes2 = 2 
+	SET @mes3 = 3
+END
+IF @trimestre = 2
+BEGIN
+	SET @mes1 = 4
+	SET @mes2 = 5 
+	SET @mes3 = 6
+END
+IF @trimestre = 3
+BEGIN
+	SET @mes1 = 7
+	SET @mes2 = 8 
+	SET @mes3 = 9
+END
+IF @trimestre = 4
+BEGIN
+	SET @mes1 = 10
+	SET @mes2 = 11
+	SET @mes3 = 12
+END
+
 SELECT TOP 5	per.idUsuario			AS idUsuario,
 				usu.usuario				AS usuario,
 				per.apellido			AS nombre,
@@ -696,7 +815,8 @@ FROM				ADIOS_TERCER_ANIO.Factura fac
 					UNION
 					SELECT idUsuario, razonSocial FROM ADIOS_TERCER_ANIO.Empresa) AS per ON per.idUsuario = pub.idPublicador
 		LEFT JOIN	ADIOS_TERCER_ANIO.Usuario usu ON pub.idPublicador = usu.id
-WHERE	MONTH(fac.fecha) = @mes
+WHERE	
+		(MONTH(fac.fecha) = @mes1 OR MONTH(fac.fecha) = @mes2 OR MONTH(fac.fecha) = @mes3)	
 		AND
 		YEAR(fac.fecha) = @anio
 GROUP BY per.idUsuario, per.apellido, usuario
