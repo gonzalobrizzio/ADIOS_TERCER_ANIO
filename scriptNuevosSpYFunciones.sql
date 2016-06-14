@@ -368,14 +368,8 @@ BEGIN
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
 			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
-	
-<<<<<<< HEAD
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
-=======
-	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, publicacion.tipo, 
-	publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
->>>>>>> b6d0790a3b5af909843c4f1858c2d1ba48345d50
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
@@ -494,6 +488,35 @@ BEGIN
 		 SET idEstado = 4, fechaFin = @fechaFin WHERE id = @idPublicacion
 END
 GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion INT)
+AS
+BEGIN
+		UPDATE	ADIOS_TERCER_ANIO.Publicacion
+		 SET idEstado = 3 WHERE id = @idPublicacion
+END
+GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarVisibilidad] (@nombre NVARCHAR(255),
+														   @duracion int output,
+														   @precio Decimal(18,2),
+														   @porcentaje Decimal(18,2))
+AS
+BEGIN
+	if(@nombre is null or @nombre like '')
+	begin
+		THROW 50004, 'Debe ingresar un nombre', 1; 
+	end
+	BEGIN TRANSACTION
+	BEGIN TRY
+	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(nombre, duracionDias, precio, porcentaje, deleted) 
+	VALUES (@nombre, @duracion, @precio, @porcentaje, 0)
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se pudo crear la visibilidad', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT)
 AS
 BEGIN
@@ -552,35 +575,6 @@ BEGIN
 	end
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion INT)
-AS
-BEGIN
-		UPDATE	ADIOS_TERCER_ANIO.Publicacion
-		 SET idEstado = 3 WHERE id = @idPublicacion
-END
-GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarVisibilidad] (@nombre NVARCHAR(255),
-														   @duracion int output,
-														   @precio Decimal(18,2),
-														   @porcentaje Decimal(18,2))
-AS
-BEGIN
-	if(@nombre is null or @nombre like '')
-	begin
-		THROW 50004, 'Debe ingresar un nombre', 1; 
-	end
-	BEGIN TRANSACTION
-	BEGIN TRY
-	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(nombre, duracionDias, precio, porcentaje, deleted) 
-	VALUES (@nombre, @duracion, @precio, @porcentaje, 0)
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se pudo crear la visibilidad', 1; 
-	END CATCH
-	COMMIT TRANSACTION
-END
-GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT)
 AS
 BEGIN
@@ -589,6 +583,12 @@ BEGIN
 		update ADIOS_TERCER_ANIO.Publicacion set idEstado = (select id from ADIOS_TERCER_ANIO.Estado where nombre like 'Finalizada') where id = @idPublicacion
 		declare @cantidad int;
 		select @cantidad = stock from ADIOS_TERCER_ANIO.Publicacion where id = @idPublicacion
+		------------------Inserto la compra con la mayor oferta
+		Declare @maxMonto numeric(18,2);
+		set @maxMonto = (select MAX(monto) from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion);
+		update ADIOS_TERCER_ANIO.Publicacion set precio = @maxMonto where id = @idPublicacion
+		Insert into ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha)
+		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, GETDATE())
 		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad
 	END TRY
 	BEGIN CATCH
