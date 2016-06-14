@@ -35,7 +35,6 @@ namespace MercadoEnvios
                 while (da.Read())
                 {
                     listaPublis.Add(da.GetInt32(0));
-                    da.Read();
                 }
             }
             da.Close();
@@ -53,6 +52,11 @@ namespace MercadoEnvios
             comprasInmediatas.CommandType = System.Data.CommandType.StoredProcedure;
             comprasInmediatas.ExecuteNonQuery();
             /*******************************************************************************************************************************************/
+        }
+
+        private void TareasBatch_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

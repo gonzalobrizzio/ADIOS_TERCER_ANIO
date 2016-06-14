@@ -22,31 +22,65 @@ namespace MercadoEnvios.ABM_Usuario
         public frmPantallaPrincipal()
         {
             InitializeComponent();
+            
+            btnABMVisibilidad.Visible = false;
+            btnComprarOfertar.Visible = false;
+            btnConsultarFacturas.Visible = false;
+            btnABMUsuario.Visible = false;
+            btnGenerarPublicacion.Visible = false;
+            btnABMRol.Visible = false;
+            btnCalificarVendedor.Visible = false;
+            btnHistorial.Visible = false;
+            btnListado.Visible = false;
 
             conn = Conexion.Instance;
 
-            if (sesion.idRol == 1) {
-                btnCalificarVendedor.Visible = false;
-                btnComprarOfertar.Visible = false;
-                btnConsultarFacturas.Visible = false;
-                btnGenerarPublicacion.Visible = false;
-                btnHistorial.Visible = false;
-            }
-            else if (sesion.idRol == 2)
+            string funcionalidadesQuery = "select f.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol f "
+                                   + "where f.idRol = @idRolActual";
+            SqlCommand subastas = new SqlCommand(funcionalidadesQuery, conn.getConexion);
+            SqlParameter idRolActual = new SqlParameter("@idRolActual", SqlDbType.Int);
+            idRolActual.Direction = ParameterDirection.Input;
+            idRolActual.SqlValue = sesion.idRol;
+            subastas.Parameters.Add(idRolActual);
+            SqlDataReader da = subastas.ExecuteReader();
+            List<Int32> listF = new List<Int32>();
+            if (da.HasRows)
             {
-                btnABMRol.Visible = false;
-                btnABMUsuario.Visible = false;
-                btnABMVisibilidad.Visible = false;
-                btnConsultarFacturas.Visible = false;
+                while (da.Read())
+                {
+                    listF.Add(da.GetInt32(0));
+                }
             }
-            else if (sesion.idRol == 3)
+            da.Close();
+           
+            if(listF.Contains(1)){
+                btnABMVisibilidad.Visible = true;
+            }
+            if(listF.Contains(2)){
+                btnComprarOfertar.Visible = true;
+            }
+            if(listF.Contains(3)){
+                btnConsultarFacturas.Visible = true;
+            }
+            if(listF.Contains(4)){
+                btnABMUsuario.Visible = true;
+            }
+            if(listF.Contains(5)){
+                btnGenerarPublicacion.Visible = true;
+            }
+            if(listF.Contains(6)){
+                btnABMRol.Visible = true;
+            }
+            if(listF.Contains(7)){
+                btnCalificarVendedor.Visible = true;
+            }
+            if (listF.Contains(8))
             {
-                btnABMRol.Visible = false;
-                btnABMUsuario.Visible = false;
-                btnABMVisibilidad.Visible = false;
-                btnCalificarVendedor.Visible = false;
-                btnComprarOfertar.Visible = false;
-                btnHistorial.Visible = false;
+                btnHistorial.Visible = true;
+            }
+            if (listF.Contains(9))
+            {
+                btnListado.Visible = true;
             }
         }
 
@@ -140,6 +174,11 @@ namespace MercadoEnvios.ABM_Usuario
         private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
             
+        }
+
+        private void frmPantallaPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

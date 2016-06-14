@@ -368,12 +368,15 @@ BEGIN
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
 			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
+	IF (@cant > 0)
+	BEGIN
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
+<<<<<<< HEAD
 	if ((SELECT top 20 Count(*) FROM TablaP)<20)
 	begin
 	THROW 53435, 'no se trajeron lo suficiente', 1; 
@@ -382,36 +385,33 @@ BEGIN
 	begin
 	SELECT top 20 Count(*) FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
 	end 
+=======
+	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
+	END
+	ELSE
+		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
-
 GO 
-
---#FIX
---ROMPE PORQUE LE SACAMOS EL idVendedor a la factura
---OJO que habría que usar el id de factura en lugar del numero de factura
---CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
---AS
---BEGIN
---
---	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
---	
---CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
---AS
---BEGIN
-
---	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura where idVendedor = @idUsuario);
-	
---	WITH TablaP as (select TOP (@cant) factura.numero ,  usr.usuario, factura.importeTotal, factura.fecha, forma.nombre from ADIOS_TERCER_ANIO.Factura factura
---	inner join ADIOS_TERCER_ANIO.FormaDePago forma on factura.idFormaDePago = forma.id
---	inner join ADIOS_TERCER_ANIO.Usuario usr on factura.idVendedor = usr.id
---	where factura.idVendedor = @idUsuario)
---
---	SELECT top 5 * FROM TablaP ORDER by TablaP.numero desc, TablaP.importeTotal desc
---END
---GO 
-
-
---HAY QUE VER LO DE LOS ENVIOS Y FECHAS
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
+AS
+BEGIN
+	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
+			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+			where p.idPublicador = @idUsuario) - @pagina * 10;
+	IF (@cant > 0)
+	BEGIN
+		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
+		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+		inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
+		WHERE @idUsuario = P.idPublicador
+		ORDER BY f.fecha ASC)
+		SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+	END
+	ELSE
+		THROW 50004, 'No hay más paginas para ver!', 1; 
+>>>>>>> af4bacade2cc13f6dd397b8e2f6d2eb3bbd62d77
+END
+GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -435,35 +435,23 @@ BEGIN
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, @envio)
 END
 GO
-
---PARA VER EL HISTORICO DE COMPRAS DE UN USUARIO X
---EJ de ejecucion: EXEC [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario] @userId = 14
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT)
 AS
 BEGIN
-SELECT	pub.id, pub.descripcion, pub.precio, com.fecha, com.cantidad, cal.puntaje, cal.pendiente
+SELECT	pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock) as cantidad, com.fecha,
+		iif(ofe.monto is not null, ofe.monto, pub.precio) as precio, cal.puntaje as calificacion, tp.nombre
 	 FROM ADIOS_TERCER_ANIO.Usuario usu
-		LEFT JOIN ADIOS_TERCER_ANIO.Persona per ON usu.id = per.idUsuario
-		LEFT JOIN ADIOS_TERCER_ANIO.Compra com ON usu.id = com.idComprador
-		LEFT JOIN ADIOS_TERCER_ANIO.Publicacion pub ON com.idPublicacion = pub.id
-		LEFT JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
-	WHERE usu.id = @userId AND pub.id IS NOT NULL
+		inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
+		inner JOIN ADIOS_TERCER_ANIO.Compra com ON com.idPublicacion = pub.id
+		LEFT outer JOIN ADIOS_TERCER_ANIO.Oferta ofe ON ofe.idPublicacion = pub.id and com.id is null
+		inner JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
+		INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
+	where usu.id = com.idComprador or usu.id = ofe.idUsuario
+	group by 
+	pub.id, pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock), com.fecha,
+		iif(ofe.monto is not null, ofe.monto, pub.precio), cal.puntaje, tp.nombre
 END
 GO
-
---PARA VER EL HISTORICO DE OFERTAS DE UN USUARIO X
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoOfertasUsuario](@userId INT)
-AS
-BEGIN
-	SELECT	pub.id, pub.descripcion, ofe.fecha, ofe.monto
-	 FROM ADIOS_TERCER_ANIO.Usuario usu
-		LEFT JOIN ADIOS_TERCER_ANIO.Persona per ON usu.id = per.idUsuario
-		LEFT JOIN ADIOS_TERCER_ANIO.Oferta ofe ON usu.id = ofe.idUsuario
-		LEFT JOIN ADIOS_TERCER_ANIO.Publicacion pub ON ofe.idPublicacion = pub.id
-	WHERE usu.id = @userId AND pub.id IS NOT NULL
-END
-GO
-
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[EditarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicacion INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -493,6 +481,35 @@ BEGIN
 
 		UPDATE	ADIOS_TERCER_ANIO.Publicacion
 		 SET idEstado = 4, fechaFin = @fechaFin WHERE id = @idPublicacion
+END
+GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion INT)
+AS
+BEGIN
+		UPDATE	ADIOS_TERCER_ANIO.Publicacion
+		 SET idEstado = 3 WHERE id = @idPublicacion
+END
+GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarVisibilidad] (@nombre NVARCHAR(255),
+														   @duracion int output,
+														   @precio Decimal(18,2),
+														   @porcentaje Decimal(18,2))
+AS
+BEGIN
+	if(@nombre is null or @nombre like '')
+	begin
+		THROW 50004, 'Debe ingresar un nombre', 1; 
+	end
+	BEGIN TRANSACTION
+	BEGIN TRY
+	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(nombre, duracionDias, precio, porcentaje, deleted) 
+	VALUES (@nombre, @duracion, @precio, @porcentaje, 0)
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se pudo crear la visibilidad', 1; 
+	END CATCH
+	COMMIT TRANSACTION
 END
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT)
@@ -553,35 +570,6 @@ BEGIN
 	end
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[PausarPublicacion] (@idPublicacion INT)
-AS
-BEGIN
-		UPDATE	ADIOS_TERCER_ANIO.Publicacion
-		 SET idEstado = 3 WHERE id = @idPublicacion
-END
-GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarVisibilidad] (@nombre NVARCHAR(255),
-														   @duracion int output,
-														   @precio Decimal(18,2),
-														   @porcentaje Decimal(18,2))
-AS
-BEGIN
-	if(@nombre is null or @nombre like '')
-	begin
-		THROW 50004, 'Debe ingresar un nombre', 1; 
-	end
-	BEGIN TRANSACTION
-	BEGIN TRY
-	INSERT INTO ADIOS_TERCER_ANIO.Visibilidad(nombre, duracionDias, precio, porcentaje, deleted) 
-	VALUES (@nombre, @duracion, @precio, @porcentaje, 0)
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se pudo crear la visibilidad', 1; 
-	END CATCH
-	COMMIT TRANSACTION
-END
-GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT)
 AS
 BEGIN
@@ -590,6 +578,12 @@ BEGIN
 		update ADIOS_TERCER_ANIO.Publicacion set idEstado = (select id from ADIOS_TERCER_ANIO.Estado where nombre like 'Finalizada') where id = @idPublicacion
 		declare @cantidad int;
 		select @cantidad = stock from ADIOS_TERCER_ANIO.Publicacion where id = @idPublicacion
+		------------------Inserto la compra con la mayor oferta
+		Declare @maxMonto numeric(18,2);
+		set @maxMonto = (select MAX(monto) from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion);
+		update ADIOS_TERCER_ANIO.Publicacion set precio = @maxMonto where id = @idPublicacion
+		Insert into ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
+		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, GETDATE(), @cantidad)
 		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad
 	END TRY
 	BEGIN CATCH
@@ -844,3 +838,20 @@ GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
+--UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
+
+--select * from ADIOS_TERCER_ANIO.Funcionalidad
+
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,1)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,4)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,6)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,2)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,8)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,7)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,3)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,5)
+insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,9)
+--select * from ADIOS_TERCER_ANIO.Funcionalidad
+--select * from ADIOS_TERCER_ANIO.Rol
+--select * from ADIOS_TERCER_ANIO.FuncionalidadRol

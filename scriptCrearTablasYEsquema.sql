@@ -178,6 +178,7 @@ CREATE  TABLE Pregunta (
   idPublicacion INT REFERENCES Publicacion(id) ,
   idUsuarioPregunta INT REFERENCES Usuario(id) ,
   fecha DATETIME NULL ,
+  contestada INT Default 1,
   )
 
 CREATE  TABLE Respuesta (
@@ -209,30 +210,15 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd@mailinator.com')
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('gd', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd2@mailinator.com')
 
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Logear');	--Vi en el enunciado que era una funcionalidad especial a la cual todos tienen acceso. Para mi esto no va.
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Publicacion'); 
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar Publicacion');
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Publicacion');
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Comprar'); 
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Ofertar (en subasta)');
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Usuarios'); 
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar datos de un Usuario');
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Borrar usuario');
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Roles'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar Roles'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Deshabilitar Roles'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Roles'); --Only admin / Tengo duda en este. Puede deshabilitar y eliminar?... calculo
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Rubros'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar Rubros'); --Only admin
-		INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Rubros'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Crear Visibilidad'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar Visibilidad'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Eliminar Visibilidad'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Habilitar usuario'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Deshabilitar usuario'); --Only admin
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Modificar contraseña'); --Solo la tendría el usuario ya logeado y un admin.
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Calificar vendedor');
-	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Consultar facturas');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('ABM Visilidad'); --Only admin
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Comprar/Ofertar');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Consultar Facturas');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('ABM Usuario');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Generar Publicacion');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('ABM Rol');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Calificar Vendedor');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Historial de Compras y Subastas');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Listado Estadistico');
 
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Subasta');
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Compra Inmediata');

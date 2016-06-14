@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "TareasBatch";
             this.Text = "TareasBatch";
+            this.Load += new System.EventHandler(this.TareasBatch_Load);
             this.ResumeLayout(false);
 
         }

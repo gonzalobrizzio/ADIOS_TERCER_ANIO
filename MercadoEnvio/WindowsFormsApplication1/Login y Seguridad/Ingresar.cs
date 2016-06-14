@@ -109,20 +109,19 @@ namespace MercadoEnvios.Login_y_Seguridad
                         switch (rolActual)
                         {
                             case 1:
-                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 dataReader.Close();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;
                             case 2:
-                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 dataReader.Close();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;
                             case 3:
-                                //sesion.anterior = this;
-                                //new ABM_Usuario.frmPantallaPrincipal().Show();
-                                //dataReader.Close();
-                                //this.Hide();
+                                dataReader.Close();
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
+                                this.Hide();
                                 break;
                         }
                     }
