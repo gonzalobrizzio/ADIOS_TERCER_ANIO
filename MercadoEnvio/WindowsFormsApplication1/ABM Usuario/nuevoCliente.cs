@@ -236,11 +236,16 @@ namespace MercadoEnvios.ABM_Usuario
 
                 SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
                 fechaNac.SqlValue = DateTime.Parse(campoFechaDeNacimiento.Text);
+                fechaNac.Direction = ParameterDirection.Input;
 
                 SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
                 otroid.SqlValue = ultimoIdRol;
                 otroid.Direction = ParameterDirection.Input;
-                
+
+                SqlParameter fechaCreacion = new SqlParameter("@fechaCreacion", SqlDbType.DateTime);
+                fechaCreacion.SqlValue = DateTime.Today;
+                fechaCreacion.Direction = ParameterDirection.Input;
+
                 agregarCliente.Parameters.Add(otroid);
                 agregarCliente.Parameters.Add(dni);
                 agregarCliente.Parameters.Add(tipoDoc);
@@ -254,6 +259,7 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarCliente.Parameters.Add(localidad);
                 agregarCliente.Parameters.Add(codigoPostal);
                 agregarCliente.Parameters.Add(fechaNac);
+                agregarCliente.Parameters.Add(fechaCreacion);
 
                 try{
                 agregarCliente.ExecuteNonQuery();

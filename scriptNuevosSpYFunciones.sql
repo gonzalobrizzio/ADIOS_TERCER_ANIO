@@ -208,7 +208,7 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarEmpresa] (@razonSocial NVARCHAR(255) ,  @id INT , @telefono NVARCHAR(20), 
 													   @direccion DECIMAL(18,0), @calle NVARCHAR(255), @piso DECIMAL(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
 													   @codigoPostal NVARCHAR(50), @ciudad NVARCHAR(255), @cuit NVARCHAR(50) , @contacto NVARCHAR(45), 
-													   @rubro NVARCHAR(255))
+													   @rubro NVARCHAR(255), @fechaCreacion DATETIME)
 AS
 BEGIN
 
@@ -232,7 +232,7 @@ BEGIN
 										  calificacionPromedio,
 										  fechaCreacion) 
 	VALUES (@razonSocial,@telefono,@calle,@direccion,@piso,@depto,@codigoPostal,@cuit,@contacto,(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro),
-		    @id, (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), @calificacionPromedio, GETDATE())
+		    @id, (SELECT id FROM ADIOS_TERCER_ANIO.Localidad WHERE nombre = @localidad), @calificacionPromedio, @fechaCreacion)
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -266,7 +266,7 @@ GO
 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPersona] (@nombre NVARCHAR(255) ,  @apellido NVARCHAR(255) , @documento decimal(18,0), @tipoDeDocumento NVARCHAR(255),@telefono NVARCHAR(255), 
 													   @direccion decimal(18,0), @calle NVARCHAR(255), @piso decimal(18,0), @depto NVARCHAR(50), @localidad NVARCHAR(255),
-													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME)
+													   @codigoPostal NVARCHAR(50), @id INT , @fechaNac DATETIME, @fechaCreacion DATETIME)
 AS
 BEGIN
 
@@ -288,7 +288,7 @@ BEGIN
 										  idLocalidad,
 										  calificacionPromedio) 
 	VALUES (@nombre,@apellido,@documento, (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion like @tipoDeDocumento),
-			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac ,GETDATE() , @id, (SELECT id FROM Localidad WHERE nombre like @localidad), 0)
+			@telefono, @calle,@direccion,@piso,@depto,@codigoPostal, @fechaNac , @fechaCreacion, @id, (SELECT id FROM Localidad WHERE nombre like @localidad), 0)
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
@@ -501,7 +501,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT, @fecha DATETIME)
 AS
 BEGIN
 	Declare @idTipoPublicacion int,
@@ -535,7 +535,7 @@ BEGIN
 	VALUES (
 		(select MAX(numero) from ADIOS_TERCER_ANIO.Factura),
 		@importeTotalFactura,
-		GETDATE(),
+		@fecha,
 		@idPublicacion
 	)
 	set @idFactura = @@IDENTITY;
@@ -559,7 +559,7 @@ BEGIN
 	end
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT)
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT, @fecha DATETIME)
 AS
 BEGIN
 	BEGIN TRANSACTION
@@ -572,8 +572,8 @@ BEGIN
 		set @maxMonto = (select MAX(monto) from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion);
 		update ADIOS_TERCER_ANIO.Publicacion set precio = @maxMonto where id = @idPublicacion
 		Insert into ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
-		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, GETDATE(), @cantidad)
-		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad
+		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, @fecha, @cantidad)
+		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad, @fecha
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
