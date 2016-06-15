@@ -101,6 +101,11 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnPregunta_Click(object sender, EventArgs e)
         {
+            Entidades.Utilidades util = new Entidades.Utilidades();  
+            StringBuilder validacion = new StringBuilder();
+
+            util.validarNoVacio(txtPregunta, validacion);
+
             SqlCommand nuevaPregunta = new SqlCommand("ADIOS_TERCER_ANIO.NuevaPregunta", conn.getConexion);
             nuevaPregunta.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -151,6 +156,12 @@ namespace MercadoEnvios.ComprarOfertar
         {
             new frmConfirmar(idPublicacion).Show(); 
             this.Hide();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            new ComprarOfertar().Show();
+            this.Close();
         }
 
     }

@@ -75,6 +75,11 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
+            Entidades.Utilidades util = new Entidades.Utilidades();
+            StringBuilder validacion = new StringBuilder();
+
+            util.validarNoVacio(txtNumeric, validacion);
+            util.validarNumerico(txtNumeric, validacion);
 
             if (btnConfirmar.Text.Equals("Comprar"))
             {
