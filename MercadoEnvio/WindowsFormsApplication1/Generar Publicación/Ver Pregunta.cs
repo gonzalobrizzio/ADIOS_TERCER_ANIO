@@ -37,7 +37,7 @@ namespace MercadoEnvios.Generar_Publicación
         {
             string query = "INSERT INTO ADIOS_TERCER_ANIO.Respuesta (idPregunta, fecha, respuesta) VALUES ("
                 + Convert.ToString(idPreguntaContestada) + ", '" + Convert.ToString(DateTime.Today) + "', '" + txtRespuesta.Text + "')";
-            string query2 = "UPDATE ADIOS_TERCER_ANIO.Pregunta set contestada = 0 where id = " + idPreguntaContestada;
+            string query2 = "UPDATE ADIOS_TERCER_ANIO.Pregunta set contestada = 1 where id = " + idPreguntaContestada;
             SqlCommand respuesta = new SqlCommand(query, conn.getConexion);
             SqlCommand pregunta = new SqlCommand(query2, conn.getConexion);
             try

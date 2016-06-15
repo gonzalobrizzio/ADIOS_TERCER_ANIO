@@ -121,6 +121,7 @@
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvVisibilidad);
             this.Name = "frmABMVisibilidad";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMVisibilidad";
             this.Load += new System.EventHandler(this.frmABMVisibilidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisibilidad)).EndInit();

@@ -191,6 +191,30 @@
     <Compile Include="Generar Publicación\Ver Pregunta.Designer.cs">
       <DependentUpon>Ver Pregunta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeCantidadComprada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeCantidadComprada.Designer.cs">
+      <DependentUpon>ListadoDeCantidadComprada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeMayorCantidadDeFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeMayorCantidadDeFactura.Designer.cs">
+      <DependentUpon>ListadoDeMayorCantidadDeFactura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeMayorFacturado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeMayorFacturado.Designer.cs">
+      <DependentUpon>ListadoDeMayorFacturado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeNoVendidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDeNoVendidos.Designer.cs">
+      <DependentUpon>ListadoDeNoVendidos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login y Seguridad\CambiarContraseña.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,11 +258,11 @@
     <Compile Include="Historial Cliente\HistorialCliente.Designer.cs">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listado Estadistico\Listado Estadistico.cs">
+    <Compile Include="Listado Estadistico\ListadoEstadistico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Listado Estadistico\Listado Estadistico.Designer.cs">
-      <DependentUpon>Listado Estadistico.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,8 +353,20 @@
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Listado Estadistico\Listado Estadistico.resx">
-      <DependentUpon>Listado Estadistico.cs</DependentUpon>
+    <EmbeddedResource Include="Listado Estadistico\ListadoDeCantidadComprada.resx">
+      <DependentUpon>ListadoDeCantidadComprada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoDeMayorCantidadDeFactura.resx">
+      <DependentUpon>ListadoDeMayorCantidadDeFactura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoDeMayorFacturado.resx">
+      <DependentUpon>ListadoDeMayorFacturado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoDeNoVendidos.resx">
+      <DependentUpon>ListadoDeNoVendidos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login y Seguridad\CambiarContraseña.resx">
       <DependentUpon>CambiarContraseña.cs</DependentUpon>

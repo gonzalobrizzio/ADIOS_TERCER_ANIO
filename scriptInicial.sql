@@ -71,8 +71,8 @@ AS BEGIN
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f',@mail,@ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol, @idUsuario)
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+			VALUES(@idRol, @idUsuario,0)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Persona(
 				nombre,
@@ -175,8 +175,8 @@ AS BEGIN
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', @mail, @ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol,@idUsuario)
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario, deleted)
+			VALUES(@idRol,@idUsuario,0)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Empresa(
 				razonSocial,
@@ -624,33 +624,85 @@ GO
 
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
+GO
 
 --MIGRO LOS RUBROS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
+GO
 
 --MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
+GO
 
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
+GO
 
 --MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
+GO
 
 --MIGRO LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarCompras];
+GO
 
 --MIGRO LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarOfertas];
-
---MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+GO
+--MIGRO LAS  QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
+GO
 
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
+GO
 
 --MIGRO LOS ITEMS QUE TIENEN LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarItems];
-
+GO
 --CALCULO LOS PROMEDIOS DE LO MIGRADO
 EXEC [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio];
+GO
+
+--TRIGER PARA ACTUALIZAR LA CALIFICACION PROMEDIO
+CREATE TRIGGER [ADIOS_TERCER_ANIO].[tg_actualizarCalificacionPromedio] ON ADIOS_TERCER_ANIO.Calificacion 
+AFTER INSERT
+AS
+BEGIN 
+ EXEC ADIOS_TERCER_ANIO.calcularCalificacionPromedio
+END
+GO
+
+	DECLARE @idUsuario int;
+	DECLARE @idRol int;
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+	
+		SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Empresa')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	--Menor fecha de publicacion
+	SELECT DISTINCT fechaFin FROM ADIOS_TERCER_ANIO.Publicacion WHERE fechaFin=(SELECT MIN(fechaFin) FROM ADIOS_TERCER_ANIO.Publicacion)
+
+	--Menor fecha de facturas
+	SELECT DISTINCT fecha FROM ADIOS_TERCER_ANIO.Factura WHERE fecha =(SELECT MIN(fecha) FROM ADIOS_TERCER_ANIO.Factura)
+
+	--Menor fecha de compras
+	SELECT DISTINCT fecha FROM ADIOS_TERCER_ANIO.Compra WHERE fecha =(SELECT MIN(fecha) FROM ADIOS_TERCER_ANIO.Compra)
+
+

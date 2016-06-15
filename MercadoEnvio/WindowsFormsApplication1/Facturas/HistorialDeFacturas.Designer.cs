@@ -122,6 +122,7 @@
             this.Controls.Add(this.lblListado);
             this.Controls.Add(this.dgvFacturas);
             this.Name = "HistorialDeFacturas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facturas";
             this.Load += new System.EventHandler(this.HistorialDeFacturas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).EndInit();

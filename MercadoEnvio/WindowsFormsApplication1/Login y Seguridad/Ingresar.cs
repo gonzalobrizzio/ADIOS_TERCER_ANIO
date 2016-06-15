@@ -103,23 +103,25 @@ namespace MercadoEnvios.Login_y_Seguridad
                     if (cantRoles == 1)
                     {
                         dataReader.Read();
-                        int rolActual = dataReader.GetInt32(0);
-                        sesion.idRol = rolActual;
+                        string rolActual = dataReader.GetString(1);
                         sesion.anterior = this;
                         switch (rolActual)
                         {
-                            case 1:
+                            case "Administrativo":
                                 dataReader.Close();
+                                sesion.idRol = 1;
                                 new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;
-                            case 2:
+                            case "Cliente":
                                 dataReader.Close();
+                                sesion.idRol = 2;
                                 new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;
-                            case 3:
+                            case "Empresa":
                                 dataReader.Close();
+                                sesion.idRol = 3;
                                 new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;

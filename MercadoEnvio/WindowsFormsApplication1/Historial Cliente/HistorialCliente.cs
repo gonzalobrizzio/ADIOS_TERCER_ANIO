@@ -17,7 +17,6 @@ namespace MercadoEnvios.Historial_Cliente
         Sesion sesion;
         public frmHistorialCliente()
         {
-            //CORREGIR ESTO, IRÍA UN INNER JOIN CON COMPRA, OFERTA!
             InitializeComponent();
             conn = Conexion.Instance;
             sesion = Sesion.Instance;
@@ -26,6 +25,10 @@ namespace MercadoEnvios.Historial_Cliente
             SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
             da.Fill(tablaDeCompras);
             grillaDeCompras.DataSource = tablaDeCompras.DefaultView;
+
+            grillaDeCompras.AllowUserToDeleteRows = false;
+            grillaDeCompras.AllowUserToAddRows = false;
+            grillaDeCompras.ReadOnly = true;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -40,7 +43,6 @@ namespace MercadoEnvios.Historial_Cliente
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            new frmPantallaPrincipal().Show();
             this.Close();
 
         }

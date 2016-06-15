@@ -81,6 +81,7 @@
             this.Controls.Add(this.txtRespuesta);
             this.Controls.Add(this.lblPregunta);
             this.Name = "frmVerPregunta";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pregunta";
             this.Load += new System.EventHandler(this.Ver_Pregunta_Load);
             this.ResumeLayout(false);

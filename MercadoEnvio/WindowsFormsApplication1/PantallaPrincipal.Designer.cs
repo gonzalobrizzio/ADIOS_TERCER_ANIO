@@ -146,6 +146,7 @@
             this.btnListado.Text = "Listado Estadístico";
             this.btnListado.UseVisualStyleBackColor = true;
             this.btnListado.Visible = false;
+            this.btnListado.Click += new System.EventHandler(this.btnListado_Click);
             // 
             // frmPantallaPrincipal
             // 

@@ -122,7 +122,7 @@ namespace MercadoEnvios.ComprarOfertar
                     {
                         comprar.ExecuteNonQuery();
                         MessageBox.Show("Compra exitosa! Contáctese con su vendedor");
-                        new frmDetalle(idPublicacion).Show();
+                        new frmComprarOfertar().Show();
                         this.Close();
                     }
                     catch (SqlException error)
@@ -136,6 +136,7 @@ namespace MercadoEnvios.ComprarOfertar
                     ofertar.CommandType = System.Data.CommandType.StoredProcedure;
 
                     //Ofertar(@idPublicacion INT, @fecha DATETIME, @monto INT, @idUsuario INT)
+                    //Ofertar(@idPublicacion INT, @fecha DATETIME, @monto DECIMAL(18,2), @idUsuario INT)
 
                     SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
                     idPubli.SqlValue = idPublicacion;
@@ -146,7 +147,8 @@ namespace MercadoEnvios.ComprarOfertar
                     fecha.Direction = ParameterDirection.Input;
 
                     SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);
-                    monto.SqlValue = Convert.ToInt32(txtNumeric.Text);
+//                    monto.SqlValue = Convert.ToInt32(txtNumeric.Text);
+                    monto.SqlValue = Convert.ToDecimal(txtNumeric.Text);
                     monto.Direction = ParameterDirection.Input;
 
                     SqlParameter idUsu = new SqlParameter("@idUsuario", SqlDbType.Int);
@@ -162,7 +164,7 @@ namespace MercadoEnvios.ComprarOfertar
                     {
                         ofertar.ExecuteNonQuery();
                         MessageBox.Show("Oferta exitosa! Aguarde a que finalice la publicación para saber si ganó la subasta.");
-                        new frmDetalle(idPublicacion).Show();
+                        new frmComprarOfertar().Show();
                         this.Close();
                     }
                     catch (SqlException error)
