@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using MercadoEnvios.Login_y_Seguridad;
 using System.Data.SqlClient;
+using MercadoEnvios.Listado_Estadistico;
 
 namespace MercadoEnvios.ABM_Usuario
 {
@@ -179,6 +180,12 @@ namespace MercadoEnvios.ABM_Usuario
         private void frmPantallaPrincipal_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnListado_Click(object sender, EventArgs e)
+        {
+            new frmListadoEstadistico().Show();
+            this.Close();
         }
     }
 }

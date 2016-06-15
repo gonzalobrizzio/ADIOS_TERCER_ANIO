@@ -696,4 +696,13 @@ GO
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
 	VALUES(@idRol,@idUsuario,0)
 
-	
+	--Menor fecha de publicacion
+	SELECT DISTINCT fechaFin FROM ADIOS_TERCER_ANIO.Publicacion WHERE fechaFin=(SELECT MIN(fechaFin) FROM ADIOS_TERCER_ANIO.Publicacion)
+
+	--Menor fecha de facturas
+	SELECT DISTINCT fecha FROM ADIOS_TERCER_ANIO.Factura WHERE fecha =(SELECT MIN(fecha) FROM ADIOS_TERCER_ANIO.Factura)
+
+	--Menor fecha de compras
+	SELECT DISTINCT fecha FROM ADIOS_TERCER_ANIO.Compra WHERE fecha =(SELECT MIN(fecha) FROM ADIOS_TERCER_ANIO.Compra)
+
+

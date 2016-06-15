@@ -658,7 +658,7 @@ SELECT TOP 5
 		per.documento		AS documento,
 		per.nombre			AS nombre,
 		per.apellido		AS apellido,
-		count(*)			AS cantidadCompras
+		count(*)			AS cantidad_de_compras
 FROM 			ADIOS_TERCER_ANIO.Compra com
 	LEFT JOIN	ADIOS_TERCER_ANIO.Publicacion pub ON com.idPublicacion = pub.id
 	LEFT JOIN	ADIOS_TERCER_ANIO.Persona per on per.idUsuario = com.idComprador
@@ -720,7 +720,7 @@ END
 SELECT TOP 5	per.idUsuario	AS idUsuario,
 				usu.usuario		AS usuario,
 				per.apellido	AS nombre,
-				count (*)		AS cantidadDeFacturas
+				count (*)		AS cantidad_de_facturas
 FROM				ADIOS_TERCER_ANIO.Factura fac
 		LEFT JOIN	ADIOS_TERCER_ANIO.Publicacion pub ON fac.idPublicacion = pub.id
 		LEFT JOIN  (SELECT idUsuario, apellido FROM ADIOS_TERCER_ANIO.Persona
@@ -911,3 +911,9 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
+
+SELECT * FROM ADIOS_TERCER_ANIO.Visibilidad
+
+
+DELETE FROM ADIOS_TERCER_ANIO.Factura WHERE idPublicacion > 20000
+DELETE FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion > 20000
