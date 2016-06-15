@@ -208,6 +208,7 @@
             this.btnSgte.TabIndex = 18;
             this.btnSgte.Text = "Siguiente pregunta";
             this.btnSgte.UseVisualStyleBackColor = true;
+            this.btnSgte.Click += new System.EventHandler(this.btnSgte_Click);
             // 
             // btnAnt
             // 
@@ -217,6 +218,7 @@
             this.btnAnt.TabIndex = 19;
             this.btnAnt.Text = "Anterior pregunta";
             this.btnAnt.UseVisualStyleBackColor = true;
+            this.btnAnt.Click += new System.EventHandler(this.btnAnt_Click);
             // 
             // btnPregunta
             // 

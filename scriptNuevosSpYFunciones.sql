@@ -330,7 +330,8 @@ BEGIN
 		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
 GO 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT)
+
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT)
 AS
 BEGIN
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
@@ -338,17 +339,30 @@ BEGIN
 			where p.idPublicador = @idUsuario) - @pagina * 10;
 	IF (@cant > 0)
 	BEGIN
+		IF(@idRol = 2)
+		BEGIN 
 		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
 		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 		inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
 		WHERE @idUsuario = P.idPublicador
 		ORDER BY f.fecha ASC)
 		SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+		END
+		
+		ELSE
+		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, pe.apellido + ', ' + pe.nombre as Nombre from ADIOS_TERCER_ANIO.Factura f
+		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+		inner join ADIOS_TERCER_ANIO.Persona pe on pe.id = p.idPublicador
+		WHERE @idUsuario = P.idPublicador
+		ORDER BY f.fecha ASC)
+		SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+
 	END
 	ELSE
 		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
-GO 
+GO
+
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT)

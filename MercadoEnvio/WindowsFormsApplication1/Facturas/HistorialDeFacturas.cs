@@ -32,17 +32,23 @@ namespace MercadoEnvios.Facturas
             String cmd = "ADIOS_TERCER_ANIO.obtenerFacturasPaginaN";
 
             SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-            idUsuario.SqlValue = 17;
+            idUsuario.SqlValue = sesion.idUsuario;
             idUsuario.Direction = ParameterDirection.Input;
 
             SqlParameter pagina = new SqlParameter("@pagina", SqlDbType.Int);
             pagina.SqlValue = nroPagina;
             pagina.Direction = ParameterDirection.Input;
 
+            SqlParameter idRol = new SqlParameter("idRol", SqlDbType.Int);
+            idRol.SqlValue = sesion.idRol;
+            idRol.Direction = ParameterDirection.Input;
+
             da = new SqlDataAdapter(cmd, conn.getConexion);
             da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
             da.SelectCommand.Parameters.Add(idUsuario);
             da.SelectCommand.Parameters.Add(pagina);
+            da.SelectCommand.Parameters.Add(idRol);
+
             try
             {
                 da.SelectCommand.ExecuteNonQuery();

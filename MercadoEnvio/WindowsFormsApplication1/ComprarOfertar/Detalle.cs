@@ -24,6 +24,7 @@ namespace MercadoEnvios.ComprarOfertar
             InitializeComponent();
             idPublicacion = id;
             this.getData();
+            btnAnt.Enabled = false;
         }
 
         void getData()
@@ -42,9 +43,6 @@ namespace MercadoEnvios.ComprarOfertar
 
             if (dataReader.HasRows)
             {
-                //publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre, 
-                //publicacion.precio, visib.nombre, usr.usuario, rubro.descripcionCorta, 
-                //publicacion.stock from ADIOS_TERCER_ANIO.Publicacion publicacion
                 lblIdPublicacion.Text = idPublicacion.ToString();
                 if (!dataReader[0].Equals(DBNull.Value)) { lblDescripcion.Text = dataReader.GetString(0); }
                 if (!dataReader[1].Equals(DBNull.Value)) { lblFechaInicio.Text = Convert.ToString(dataReader.GetDateTime(1)); }
@@ -55,33 +53,42 @@ namespace MercadoEnvios.ComprarOfertar
                 if (!dataReader[6].Equals(DBNull.Value)) { lblUsuario.Text = dataReader.GetString(6); }
                 if (!dataReader[7].Equals(DBNull.Value)) { lblRubro.Text = dataReader.GetString(7); }
                 if (!dataReader[8].Equals(DBNull.Value)) { lblStock.Text = dataReader.GetInt32(8).ToString() + " unidades disponibles."; }
-                if (!dataReader[9].Equals(DBNull.Value)) {
-                    if(dataReader.GetInt32(9) == 1){ lblEnvio.Text = "Con envío";}
+                if (!dataReader[9].Equals(DBNull.Value))
+                {
+                    if (dataReader.GetInt32(9) == 1) { lblEnvio.Text = "Con envío"; }
                     else { lblEnvio.Text = "Sin envío"; }
                 }
             }
-            
+            dataReader.Close();
+
             cmd = "ADIOS_TERCER_ANIO.obtenerPregunta";
             SqlCommand pregunta = new SqlCommand(cmd, conn.getConexion);
             pregunta.CommandType = System.Data.CommandType.StoredProcedure;
 
-            pregunta.Parameters.Add(idP);
+            SqlParameter idPub = new SqlParameter("@idPublicacion", SqlDbType.Int);
+            idPub.SqlValue = idPublicacion;
+            idPub.Direction = ParameterDirection.Input;
 
-            SqlParameter nro = new SqlParameter("@nroPregunta", SqlDbType.Int);
+            SqlParameter nro = new SqlParameter("@nroPreg", SqlDbType.Int);
             nro.SqlValue = idPublicacion;
             nro.Direction = ParameterDirection.Input;
-            detallePublicacion.Parameters.Add(nro);
+
+            pregunta.Parameters.Add(idPub);
+            pregunta.Parameters.Add(nro);
 
             dataReader = pregunta.ExecuteReader();
             dataReader.Read();
 
             if (dataReader.HasRows)
             {
-                //publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre, 
-                //publicacion.precio, visib.nombre, usr.usuario, rubro.descripcionCorta, 
-                //publicacion.stock from ADIOS_TERCER_ANIO.Publicacion publicacion
                 if (!dataReader[0].Equals(DBNull.Value)) { lblPregunta.Text = dataReader.GetString(0); }
                 if (!dataReader[1].Equals(DBNull.Value)) { lblRespuesta.Text = dataReader.GetString(1); }
+            }
+            else
+            {
+                lblPregunta.Text = "No hay preguntas hasta el momento."; 
+                lblRespuesta.Text = "";
+                btnSgte.Enabled = false;
             }
 
             dataReader.Close();
@@ -122,7 +129,19 @@ namespace MercadoEnvios.ComprarOfertar
             txtPregunta.Text = "";
         }
 
+        private void btnSgte_Click(object sender, EventArgs e)
+        {
+            indexPregunta++;
+            getData();
+            btnAnt.Enabled = true;
+        }
 
+        private void btnAnt_Click(object sender, EventArgs e)
+        {
+            indexPregunta--;
+            getData();
+            if (indexPregunta == 0) btnAnt.Enabled = false;
+        }
 
     }
 }
