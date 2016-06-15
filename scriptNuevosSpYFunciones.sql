@@ -535,6 +535,10 @@ BEGIN
 		update ADIOS_TERCER_ANIO.Publicacion set precio = @maxMonto where id = @idPublicacion
 		Insert into ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
 		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, @fecha, @cantidad)
+
+		INSERT INTO ADIOS_TERCER_ANIO.Calificacion(idCompra, pendiente)
+		VALUES ((SELECT SCOPE_IDENTITY()), 1)
+
 		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad, @fecha
 	END TRY
 	BEGIN CATCH

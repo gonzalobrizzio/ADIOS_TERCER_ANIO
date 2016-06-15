@@ -106,36 +106,47 @@ namespace MercadoEnvios.ComprarOfertar
 
             util.validarNoVacio(txtPregunta, validacion);
 
-            SqlCommand nuevaPregunta = new SqlCommand("ADIOS_TERCER_ANIO.NuevaPregunta", conn.getConexion);
-            nuevaPregunta.CommandType = System.Data.CommandType.StoredProcedure;
+            if (validacion.Length > 0)
+            {
+                MessageBox.Show(validacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                validacion = new StringBuilder();
 
-            //ADIOS_TERCER_ANIO.NuevaPregunta (@idPublicacion INT, @fecha DATETIME, @pregunta NVARCHAR(255), @idUsuario INT)
+            }
+            else
+            {
 
-            SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
-            idPubli.SqlValue = idPublicacion;
-            idPubli.Direction = ParameterDirection.Input;
 
-            SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
-            fecha.SqlValue = DateTime.Today;
-            fecha.Direction = ParameterDirection.Input;
+                SqlCommand nuevaPregunta = new SqlCommand("ADIOS_TERCER_ANIO.NuevaPregunta", conn.getConexion);
+                nuevaPregunta.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter preguntaP = new SqlParameter("@pregunta", SqlDbType.NVarChar, 255);
-            preguntaP.SqlValue = txtPregunta.Text;
-            preguntaP.Direction = ParameterDirection.Input;
+                //ADIOS_TERCER_ANIO.NuevaPregunta (@idPublicacion INT, @fecha DATETIME, @pregunta NVARCHAR(255), @idUsuario INT)
 
-            SqlParameter idUsu = new SqlParameter("@idUsuario", SqlDbType.Int);
-            idUsu.SqlValue = sesion.idUsuario;
-            idUsu.Direction = ParameterDirection.Input;
+                SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                idPubli.SqlValue = idPublicacion;
+                idPubli.Direction = ParameterDirection.Input;
 
-            nuevaPregunta.Parameters.Add(idPubli);
-            nuevaPregunta.Parameters.Add(fecha);
-            nuevaPregunta.Parameters.Add(preguntaP);
-            nuevaPregunta.Parameters.Add(idUsu);
+                SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
+                fecha.SqlValue = DateTime.Today;
+                fecha.Direction = ParameterDirection.Input;
 
-            nuevaPregunta.ExecuteNonQuery();
+                SqlParameter preguntaP = new SqlParameter("@pregunta", SqlDbType.NVarChar, 255);
+                preguntaP.SqlValue = txtPregunta.Text;
+                preguntaP.Direction = ParameterDirection.Input;
 
-            nuevaPregunta.Parameters.Clear();
-            txtPregunta.Text = "";
+                SqlParameter idUsu = new SqlParameter("@idUsuario", SqlDbType.Int);
+                idUsu.SqlValue = sesion.idUsuario;
+                idUsu.Direction = ParameterDirection.Input;
+
+                nuevaPregunta.Parameters.Add(idPubli);
+                nuevaPregunta.Parameters.Add(fecha);
+                nuevaPregunta.Parameters.Add(preguntaP);
+                nuevaPregunta.Parameters.Add(idUsu);
+
+                nuevaPregunta.ExecuteNonQuery();
+
+                nuevaPregunta.Parameters.Clear();
+                txtPregunta.Text = "";
+            }
         }
 
         private void btnSgte_Click(object sender, EventArgs e)
