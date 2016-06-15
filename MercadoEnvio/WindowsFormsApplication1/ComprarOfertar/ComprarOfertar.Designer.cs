@@ -120,6 +120,7 @@
             this.btnDetalle.TabIndex = 5;
             this.btnDetalle.Text = "Ver publicación en detalle";
             this.btnDetalle.UseVisualStyleBackColor = true;
+            this.btnDetalle.Click += new System.EventHandler(this.btnDetalle_Click);
             // 
             // ComprarOfertar
             // 

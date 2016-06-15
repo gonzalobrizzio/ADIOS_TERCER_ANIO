@@ -62,7 +62,6 @@ namespace MercadoEnvios.ComprarOfertar
             dgvPublicaciones.Columns[2].Width = 100;
             dgvPublicaciones.Columns[3].Width = 50;
             dgvPublicaciones.Columns[4].Visible = false;
-            dgvPublicaciones.Columns[5].Visible = false;
             dgvPublicaciones.AllowUserToAddRows = false;
             dgvPublicaciones.AllowUserToDeleteRows = false;
             dgvPublicaciones.ReadOnly = true;
@@ -90,6 +89,14 @@ namespace MercadoEnvios.ComprarOfertar
             sesion.anterior.Show();
             btnSgte.Enabled = true;
             this.Close();
+        }
+
+        private void btnDetalle_Click(object sender, EventArgs e)
+        {
+            int idPublicacion = Convert.ToInt32(dgvPublicaciones[4, dgvPublicaciones.CurrentCell.RowIndex].Value);
+            MessageBox.Show(idPublicacion.ToString());
+            new frmDetalle(idPublicacion).Show();
+            this.Hide(); 
         }
     }
 }

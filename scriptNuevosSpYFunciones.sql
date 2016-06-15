@@ -311,8 +311,8 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
 AS
 BEGIN
-	--declare @idUsuario int = 17;
-	--declare @pagina INT = 2;
+--	declare @idUsuario int = 7;
+--	declare @pagina INT = 3;
 
 	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
 			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
@@ -776,16 +776,18 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion(@idPublicacion INT)
 AS
 BEGIN
-	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre, estado.nombre, publicacion.precio, 
-	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock from ADIOS_TERCER_ANIO.Publicacion publicacion
+
+	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre as tipoPublicacion, publicacion.precio, 
+	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock, publicacion.tieneEnvio as tieneEnvio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	inner join ADIOS_TERCER_ANIO.Estado estado on publicacion.idEstado = estado.id
 	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id 
 	inner join ADIOS_TERCER_ANIO.Usuario usr on publicacion.idPublicador = usr.id 
 	inner join ADIOS_TERCER_ANIO.Rubro rubro on publicacion.idRubro = rubro.id
 	where publicacion.id = @idPublicacion 
 END
 GO 
+
+SELECT * FROM ADIOS_TERCER_ANIO.Publicacion;
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
