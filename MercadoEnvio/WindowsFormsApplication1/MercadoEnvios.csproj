@@ -148,7 +148,25 @@
     <Compile Include="Calificar\Historial.Designer.cs">
       <DependentUpon>Historial.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOfertar\Detalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Detalle.Designer.cs">
+      <DependentUpon>Detalle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComprarOfertar\Confirmar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Confirmar.Designer.cs">
+      <DependentUpon>Confirmar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Utilidades.cs" />
+    <Compile Include="Generar Publicación\Contestar Preguntas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\Contestar Preguntas.Designer.cs">
+      <DependentUpon>Contestar Preguntas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Publicación\EditarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +184,12 @@
     </Compile>
     <Compile Include="Generar Publicación\ModificarPublicacion.Designer.cs">
       <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\Ver Pregunta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\Ver Pregunta.Designer.cs">
+      <DependentUpon>Ver Pregunta.cs</DependentUpon>
     </Compile>
     <Compile Include="Login y Seguridad\CambiarContraseña.cs">
       <SubType>Form</SubType>
@@ -220,8 +244,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sesion.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TareasBatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TareasBatch.Designer.cs">
+      <DependentUpon>TareasBatch.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ABM Rol\ABMRol.resx">
       <DependentUpon>ABMRol.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\AgregarRol.resx">
       <DependentUpon>AgregarRol.cs</DependentUpon>
@@ -268,8 +299,17 @@
     <EmbeddedResource Include="Calificar\Historial.resx">
       <DependentUpon>Historial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Confirmar.resx">
+      <DependentUpon>Confirmar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Detalle.resx">
+      <DependentUpon>Detalle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Facturas\HistorialDeFacturas.resx">
       <DependentUpon>HistorialDeFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\Contestar Preguntas.resx">
+      <DependentUpon>Contestar Preguntas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
@@ -282,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\ModificarPublicacion.resx">
       <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\Ver Pregunta.resx">
+      <DependentUpon>Ver Pregunta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Historial Cliente\HistorialCliente.resx">
       <DependentUpon>HistorialCliente.cs</DependentUpon>
@@ -311,6 +354,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TareasBatch.resx">
+      <DependentUpon>TareasBatch.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\WindowsFormsApplication1.ABM_Rol.ABMRol.datasource" />
     <None Include="Properties\Settings.settings">

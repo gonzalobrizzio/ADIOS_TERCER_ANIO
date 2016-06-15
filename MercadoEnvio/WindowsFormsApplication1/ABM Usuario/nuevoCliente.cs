@@ -79,8 +79,6 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(campoDireccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(campoCodigoPostal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(campoFechaDeNacimiento, mensajeDeAviso);
-            this.funcionesValidacion.validarNumerico(campoNroDeDireccion, mensajeDeAviso);
-            this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
             
             bool validaciones;
 
@@ -97,6 +95,16 @@ namespace MercadoEnvios.ABM_Usuario
             if (mailB)
             {
                 this.funcionesValidacion.validarEmail(campoMail, mensajeDeAviso);
+            }
+
+            if (!(string.IsNullOrEmpty(campoNroDeDireccion.Text)))
+            {
+                this.funcionesValidacion.validarNumerico(campoNroDeDireccion, mensajeDeAviso);
+            }
+
+            if (!(string.IsNullOrEmpty(campoPiso.Text)))
+            {
+                this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
             }
 
             if (mensajeDeAviso.Length > 0)
@@ -236,11 +244,16 @@ namespace MercadoEnvios.ABM_Usuario
 
                 SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
                 fechaNac.SqlValue = DateTime.Parse(campoFechaDeNacimiento.Text);
+                fechaNac.Direction = ParameterDirection.Input;
 
                 SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
                 otroid.SqlValue = ultimoIdRol;
                 otroid.Direction = ParameterDirection.Input;
-                
+
+                SqlParameter fechaCreacion = new SqlParameter("@fechaCreacion", SqlDbType.DateTime);
+                fechaCreacion.SqlValue = DateTime.Today;
+                fechaCreacion.Direction = ParameterDirection.Input;
+
                 agregarCliente.Parameters.Add(otroid);
                 agregarCliente.Parameters.Add(dni);
                 agregarCliente.Parameters.Add(tipoDoc);
@@ -254,6 +267,7 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarCliente.Parameters.Add(localidad);
                 agregarCliente.Parameters.Add(codigoPostal);
                 agregarCliente.Parameters.Add(fechaNac);
+                agregarCliente.Parameters.Add(fechaCreacion);
 
                 try{
                 agregarCliente.ExecuteNonQuery();

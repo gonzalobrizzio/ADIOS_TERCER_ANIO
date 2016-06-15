@@ -81,6 +81,7 @@
             this.tipoDePublicacion.Name = "tipoDePublicacion";
             this.tipoDePublicacion.Size = new System.Drawing.Size(180, 21);
             this.tipoDePublicacion.TabIndex = 5;
+            this.tipoDePublicacion.SelectedIndexChanged += new System.EventHandler(this.tipoDePublicacion_SelectedIndexChanged);
             // 
             // btnCancelar
             // 

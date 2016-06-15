@@ -15,9 +15,14 @@ namespace MercadoEnvios.ABM_Rol
         Conexion conn;
         int idRol;
         string nombreRol;
+
+        Form anterior;
+        Sesion sesion = Sesion.Instance;
+
         public frmModificarRoles(int idRolModificar, string nombreRolModificar)
         {
             InitializeComponent();
+            anterior = sesion.anterior;
             this.conn = Conexion.Instance;
             idRol = idRolModificar;
             nombreRol = nombreRolModificar;
@@ -98,6 +103,7 @@ namespace MercadoEnvios.ABM_Rol
 
         private void salir()
         {
+            sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Close();
         }
@@ -138,6 +144,7 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Close();
         }
@@ -251,6 +258,16 @@ namespace MercadoEnvios.ABM_Rol
                     break;
                 }
             }
+        }
+
+        private void frmModificarRoles_FormClosed_1(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
+        }
+
+        private void frmModificarRoles_Shown_1(object sender, EventArgs e)
+        {
+            sesion.anterior = anterior;
         }
 
     }

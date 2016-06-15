@@ -21,6 +21,7 @@ namespace MercadoEnvios.Generar_Publicación
         public frmGenerarPublicacion()
         {
             InitializeComponent();
+            habilitarEnvios.Visible = false;
             sesion = Sesion.Instance;
             this.conn = Conexion.Instance;
             this.loadGrid();
@@ -39,7 +40,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             dabuscarRubrosDisponibles.Close();
 
-            string queryVisibilidad = "SELECT descripcion FROM ADIOS_TERCER_ANIO.Visibilidad";
+            string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad where deleted = 0";
             SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
             SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
             while (dataReader.Read())
@@ -57,6 +58,9 @@ namespace MercadoEnvios.Generar_Publicación
             funcion.validarComboVacio(rubros, mensajeValidacion);
             funcion.validarNoVacio(descripcion, mensajeValidacion);
             funcion.validarNoVacio(precio, mensajeValidacion);
+            funcion.validarDecimal(precio, mensajeValidacion);
+            funcion.validarNumerico(stock, mensajeValidacion);
+            funcion.validarNoVacio(stock, mensajeValidacion);
 
             bool validaciones;
 
@@ -80,7 +84,12 @@ namespace MercadoEnvios.Generar_Publicación
                 descripcionP.Direction = ParameterDirection.Input;
 
                 SqlParameter precioP = new SqlParameter("@precio", SqlDbType.Decimal);
-                precioP.SqlValue = Convert.ToDecimal(precio.Text);
+                if(string.IsNullOrEmpty(precio.Text)){
+                    precioP.SqlValue = DBNull.Value;
+                }
+                else{
+                    precioP.SqlValue = Convert.ToDecimal(precio.Text);
+                }
                 precioP.Direction = ParameterDirection.Input;
 
                 SqlParameter stockP = new SqlParameter("@stock", SqlDbType.Int);
@@ -100,7 +109,7 @@ namespace MercadoEnvios.Generar_Publicación
                 rubro.Direction = ParameterDirection.Input;
 
                 SqlParameter habilitaPreguntas = new SqlParameter("@tienePreguntas", SqlDbType.Int);
-                if (habilitarEnvios.Checked)
+                if (habilitarPreguntas.Checked)
                 {
                     habilitaPreguntas.SqlValue = 0;
                 }
@@ -164,6 +173,28 @@ namespace MercadoEnvios.Generar_Publicación
         {
             new frmElegirAccion().Show();
             this.Close();
+        }
+
+        private void tipoDePublicacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string tipoPubli = "SELECT @tieneEnvio = envioDisponible FROM ADIOS_TERCER_ANIO.TipoPublicacion tp where nombre like @nombreTipo";
+            SqlCommand verSitieneEnvio = new SqlCommand(tipoPubli, conn.getConexion);
+            SqlParameter nombreTipo = new SqlParameter("@nombreTipo", SqlDbType.NVarChar, 255);
+            nombreTipo.Direction = ParameterDirection.Input;
+            nombreTipo.SqlValue = tipoDePublicacion.Text;
+            SqlParameter tieneEnvio = new SqlParameter("@tieneEnvio", SqlDbType.Int);
+            tieneEnvio.Direction = ParameterDirection.Output;
+
+            verSitieneEnvio.Parameters.Add(nombreTipo);
+            verSitieneEnvio.Parameters.Add(tieneEnvio);
+            verSitieneEnvio.ExecuteNonQuery();
+            if((Convert.ToInt32(verSitieneEnvio.Parameters["@tieneEnvio"].Value) == 0) && !habilitarEnvios.Visible){
+                habilitarEnvios.Visible = true;
+            }
+            if ((Convert.ToInt32(verSitieneEnvio.Parameters["@tieneEnvio"].Value) == 1) && habilitarEnvios.Visible)
+            {
+                habilitarEnvios.Visible = false;
+            }
         }
     }
 

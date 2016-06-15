@@ -36,6 +36,20 @@ namespace MercadoEnvios.Entidades
             return true;
         }
 
+        public bool validarDecimal(Control control, StringBuilder mensajeValidacion)
+        {
+            try
+            {
+                decimal esNumero = Convert.ToDecimal(control.Text);
+                return true;
+            }
+            catch
+            {
+                mensajeValidacion.AppendLine(string.Format(" El campo {0} debe ser numerico.", control.Name));
+                return false;
+            }
+        }
+
         public bool validarComboVacio(ComboBox combo, StringBuilder mensajeValidacion)
         {
             if (combo.SelectedIndex > -1)
@@ -157,7 +171,7 @@ namespace MercadoEnvios.Entidades
         public int obtenerDuracionDeVisibilidad(string visibilidad)
         {
             int dias = 0;
-            string sacarDuracion = "SELECT duracionDias FROM ADIOS_TERCER_ANIO.Visibilidad WHERE @visibilidad = descripcion";
+            string sacarDuracion = "SELECT duracionDias FROM ADIOS_TERCER_ANIO.Visibilidad WHERE @visibilidad = nombre";
             SqlCommand obtenerDuracion = new SqlCommand(sacarDuracion, conn.getConexion);
             SqlParameter vis = new SqlParameter("@visibilidad", SqlDbType.NVarChar, 255);
             vis.SqlValue = visibilidad;

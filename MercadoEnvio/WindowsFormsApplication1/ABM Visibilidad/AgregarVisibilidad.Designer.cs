@@ -140,6 +140,7 @@
             this.Controls.Add(this.lblPorcentaje);
             this.Controls.Add(this.txtPorcentaje);
             this.Name = "frmAgregarVisibilidad";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AgregarVisibilidad";
             this.ResumeLayout(false);
             this.PerformLayout();

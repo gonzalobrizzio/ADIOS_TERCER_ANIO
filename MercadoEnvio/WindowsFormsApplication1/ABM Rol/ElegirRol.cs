@@ -13,12 +13,10 @@ namespace MercadoEnvios.ABM_Rol
     public partial class frmElegirRol : Form
     {
         Sesion sesion = Sesion.Instance;
-        Form anterior;
 
         public frmElegirRol(string roles)
         {
             InitializeComponent();
-            anterior = sesion.anterior;
             string[] rolesSeparados = roles.Split(',');
             cboRol.Items.AddRange(rolesSeparados);
         }
@@ -50,10 +48,10 @@ namespace MercadoEnvios.ABM_Rol
 
         }
 
-        private void frmElegirRol_FormClosed(object sender, FormClosedEventArgs e)
+        private void btnVolver_Click(object sender, EventArgs e)
         {
-            sesion.anterior.Show();
+            new Login_y_Seguridad.frmIngresar().Show();
+            this.Close();
         }
-
         }
     }

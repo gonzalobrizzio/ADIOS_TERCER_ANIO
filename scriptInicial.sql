@@ -71,8 +71,8 @@ AS BEGIN
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f',@mail,@ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol, @idUsuario)
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+			VALUES(@idRol, @idUsuario,0)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Persona(
 				nombre,
@@ -175,8 +175,8 @@ AS BEGIN
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', @mail, @ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol,@idUsuario)
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario, deleted)
+			VALUES(@idRol,@idUsuario,0)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Empresa(
 				razonSocial,
@@ -236,11 +236,12 @@ AS BEGIN
 							porcentaje
 							)
 	SELECT DISTINCT
-		7,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
+		7 as duracionDias,							--TODAS EN LA MAESTRA SON DE 7 DIAS (CHEQUEADO CON DATEDIFF(dat, Publicacion_Fecha, Publicacion_Fecha_Venc)  
 		Publicacion_Visibilidad_Desc, 
 		Publicacion_Visibilidad_Precio,
 		Publicacion_Visibilidad_Porcentaje
-	FROM gd_esquema.Maestra	
+	FROM gd_esquema.Maestra
+	ORDER BY Publicacion_Visibilidad_Porcentaje
 
 END
 GO
@@ -272,16 +273,11 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idFormaDePago, idPublicacion)
+	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idPublicacion)
 	SELECT DISTINCT
 		Factura_Nro																				AS numero,
 		Factura_Total																			AS importeTotal,
 		Factura_Fecha																			AS fecha,
-		--LO SACO #REDUNDANTE CASE 
-		--LO SACO #REDUNDANTE 	WHEN Publ_Empresa_Cuit IS NULL THEN ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Publ_Cli_Dni)
-		--LO SACO #REDUNDANTE 	ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
-		--LO SACO #REDUNDANTE END																						AS idVendedor,
-		(SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre LIKE Forma_Pago_Desc)		AS idFormaDePago,
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
 	FROM 
 		gd_esquema.Maestra
@@ -420,14 +416,14 @@ AS BEGIN
 										fechaInicio,
 										fechaFin,
 										tienePreguntas,
-										tipo,
+										idTipoPublicacion,
 										idEstado,
 										precio,
 										idVisibilidad,
 										idPublicador,
 										idRubro,
 										stock,
-										idEnvio
+										tieneEnvio
 									)
 	SELECT DISTINCT
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)						AS id,
@@ -435,7 +431,7 @@ AS BEGIN
 		Publicacion_Fecha																				AS fechaIni,
 		Publicacion_Fecha_Venc																			AS fechaFin,
 		0																								AS tienePreguntas, --NO VIENEN CON PREGUNTAS, por eso el cero
-		Publicacion_Tipo																				AS tipo,
+		(select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like Publicacion_Tipo)			AS tipo,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = 'Finalizada' )							AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
@@ -445,7 +441,7 @@ AS BEGIN
 		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock																				AS stock,
-		NULL																							AS idEnvio
+		1
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
@@ -628,33 +624,76 @@ GO
 
 --MIGRO LAS VISIBILIDADES QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarVisibilidades];
+GO
 
 --MIGRO LOS RUBROS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarRubros];
+GO
 
 --MIGRO TODAS LAS PERSONAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPersonas];
+GO
 
 --MIGRO TODAS LAS EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarEmpresas];
+GO
 
 --MIGRO TODAS LAS PUBLICACIONES DE EMPRESAS DE LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarPublicaciones];
+GO
 
 --MIGRO LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarCompras];
+GO
 
 --MIGRO LAS COMPRAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarOfertas];
-
---MIGRO LAS CALIFICACIONES QUE HAY EN LA TABLA MAESTRA
+GO
+--MIGRO LAS  QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarCalificaciones];
+GO
 
 --MIGRO LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarFacturas];
+GO
 
 --MIGRO LOS ITEMS QUE TIENEN LAS FACTURAS QUE HAY EN LA TABLA MAESTRA
 EXEC [ADIOS_TERCER_ANIO].[migrarItems];
-
+GO
 --CALCULO LOS PROMEDIOS DE LO MIGRADO
 EXEC [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio];
+GO
+
+--TRIGER PARA ACTUALIZAR LA CALIFICACION PROMEDIO
+CREATE TRIGGER [ADIOS_TERCER_ANIO].[tg_actualizarCalificacionPromedio] ON ADIOS_TERCER_ANIO.Calificacion 
+AFTER INSERT
+AS
+BEGIN 
+ EXEC ADIOS_TERCER_ANIO.calcularCalificacionPromedio
+END
+GO
+
+	DECLARE @idUsuario int;
+	DECLARE @idRol int;
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+	
+		SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Empresa')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	

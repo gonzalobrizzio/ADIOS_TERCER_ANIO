@@ -14,6 +14,7 @@ namespace MercadoEnvios.Calificar
     {
         Conexion conn = Conexion.Instance;
         SqlDataAdapter da;
+        Sesion sesion = Sesion.Instance;
 
         public frmHistorial()
         {
@@ -23,7 +24,7 @@ namespace MercadoEnvios.Calificar
 
         private void getData(){
             SqlParameter idCalificador = new SqlParameter("@idCalificador", SqlDbType.Int);
-            idCalificador.SqlValue = 17; //MOCK
+            idCalificador.SqlValue = sesion.idUsuario;
             idCalificador.Direction = ParameterDirection.Input;
 
             String cmd = "ADIOS_TERCER_ANIO.cargarUltimasCalificaciones";

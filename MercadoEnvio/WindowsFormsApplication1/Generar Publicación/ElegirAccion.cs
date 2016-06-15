@@ -12,7 +12,6 @@ namespace MercadoEnvios.Generar_Publicación
 {
     public partial class frmElegirAccion : Form
     {
-        Sesion sesion;
         public frmElegirAccion()
         {
             InitializeComponent();
@@ -34,6 +33,12 @@ namespace MercadoEnvios.Generar_Publicación
         private void btnModificarPublicacion_Click(object sender, EventArgs e)
         {
             new Generar_Publicación.frmModificarPublicacion().Show();
+            this.Close();
+        }
+
+        private void btnContestar_Click(object sender, EventArgs e)
+        {
+            new Generar_Publicación.frmContestarPreguntas().Show();
             this.Close();
         }
     }

@@ -16,11 +16,11 @@ namespace MercadoEnvios.Login_y_Seguridad
     {
         Conexion conn = Conexion.Instance;
         Sesion sesion;
-        Form anterior;
 
         public frmIngresar()
         {
             InitializeComponent();
+            //new TareasBatch().correr(); ToDo
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -103,26 +103,27 @@ namespace MercadoEnvios.Login_y_Seguridad
                     if (cantRoles == 1)
                     {
                         dataReader.Read();
-                        int rolActual = dataReader.GetInt32(0);
-                        sesion.idRol = rolActual;
+                        string rolActual = dataReader.GetString(1);
                         sesion.anterior = this;
                         switch (rolActual)
                         {
-                            case 1:
-                                new ABM_Usuario.frmPantallaPrincipal().Show();
+                            case "Administrativo":
                                 dataReader.Close();
+                                sesion.idRol = 1;
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;
-                            case 2:
-                                new ABM_Usuario.frmPantallaPrincipal().Show();
+                            case "Cliente":
                                 dataReader.Close();
+                                sesion.idRol = 2;
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
                                 this.Hide();
                                 break;
-                            case 3:
-                                //sesion.anterior = this;
-                                //new ABM_Usuario.frmPantallaPrincipal().Show();
-                                //dataReader.Close();
-                                //this.Hide();
+                            case "Empresa":
+                                dataReader.Close();
+                                sesion.idRol = 3;
+                                new ABM_Usuario.frmPantallaPrincipal().Show();
+                                this.Hide();
                                 break;
                         }
                     }

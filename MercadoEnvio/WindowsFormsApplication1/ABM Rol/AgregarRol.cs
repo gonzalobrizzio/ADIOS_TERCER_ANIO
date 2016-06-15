@@ -115,16 +115,6 @@ namespace MercadoEnvios.ABM_Rol
             this.salir();
         }
 
-        private void frmAgregarRol_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            sesion.anterior.Show();
-        }
-
-        private void frmAgregarRol_Shown(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
-        }
-
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow rowPrincipal in dgvFuncionalidades.SelectedRows)
@@ -159,16 +149,21 @@ namespace MercadoEnvios.ABM_Rol
             }
         }
 
-        private void frmAgregarRol_Load(object sender, EventArgs e)
-        {
-
-        }
-
         public void salir()
         {
             sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Hide();
+        }
+
+        private void frmAgregarRol_FormClosed_1(object sender, FormClosedEventArgs e)
+        {
+            sesion.anterior.Show();
+        }
+
+        private void frmAgregarRol_Shown_1(object sender, EventArgs e)
+        {
+            sesion.anterior = anterior;
         }
     }
 }

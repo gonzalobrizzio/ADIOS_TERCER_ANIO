@@ -177,7 +177,7 @@
             this.Name = "frmABMUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM Usuarios";
-            this.Load += new System.EventHandler(this.frmABMUsuario_Load);
+            this.Shown += new System.EventHandler(this.frmABMUsuario_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpresas)).EndInit();
             this.ResumeLayout(false);

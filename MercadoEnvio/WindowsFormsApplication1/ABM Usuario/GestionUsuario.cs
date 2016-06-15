@@ -14,11 +14,13 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmABMUsuario : Form
     {
         Conexion conn;
-        Sesion sesion;
+        Form anterior;
+        Sesion sesion = Sesion.Instance;
+
         public frmABMUsuario()
         {
             InitializeComponent();
-            sesion = Sesion.Instance;
+            anterior = sesion.anterior;
             this.getData();
         }
 
@@ -69,9 +71,9 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-
             new frmNuevoUsuario().Show();
-            this.Close();
+            sesion.anterior = this;
+            this.Hide();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -125,23 +127,14 @@ namespace MercadoEnvios.ABM_Usuario
         private void btnModificar_Click(object sender, EventArgs e)
         {
 
-            if (dgvClientes.SelectedRows == null || dgvClientes.SelectedRows.Count > 1)
-            {
-
-                MessageBox.Show("Debe elegir un usuario de Clientes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else
-            {
+            if (dgvClientes.CurrentRow.Cells[0].Value != null){
+                sesion.anterior = this;
                 new frmModificarCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value)).Show();
-                this.Close();
+                this.Hide();
             }
 
         }
 
-        private void frmABMUsuario_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnModificarCliente_Click(object sender, EventArgs e)
         {
@@ -203,6 +196,11 @@ namespace MercadoEnvios.ABM_Usuario
             }
         }
 
+        private void frmABMUsuario_Shown(object sender, EventArgs e)
+        {
+            sesion.anterior = anterior;
         }
+    
+    }
 
     }

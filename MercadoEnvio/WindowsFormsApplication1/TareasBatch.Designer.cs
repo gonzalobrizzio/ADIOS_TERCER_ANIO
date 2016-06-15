@@ -1,6 +1,6 @@
-﻿namespace MercadoEnvios.Listado_Estadistico
+﻿namespace MercadoEnvios
 {
-    partial class Form1
+    partial class TareasBatch
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // TareasBatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 444);
-            this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Listado Estadistico";
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "TareasBatch";
+            this.Text = "TareasBatch";
+            this.Load += new System.EventHandler(this.TareasBatch_Load);
             this.ResumeLayout(false);
 
         }
