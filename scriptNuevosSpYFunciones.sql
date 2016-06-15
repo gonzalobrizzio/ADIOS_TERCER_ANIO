@@ -849,7 +849,7 @@ BEGIN
 			update ADIOS_TERCER_ANIO.Publicacion set idEstado = 4 where id = @idPublicacion
 		END 
 
-		update ADIOS_TERCER_ANIO.Publicacion set @stock -= @cant where id = @idPublicacion
+		update ADIOS_TERCER_ANIO.Publicacion set stock = @stock - @cant where id = @idPublicacion
 
 		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cant, @fecha
 
@@ -859,20 +859,29 @@ BEGIN
 		THROW 586577, 'No se pudo realizar la compra', 1; 
 	END CATCH
 	COMMIT TRANSACTION
+
 END
 GO
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.Ofertar(@idPublicacion INT, @fecha DATETIME, @monto INT @idUsuario INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.Ofertar(@idPublicacion INT, @fecha DATETIME, @monto INT, @idUsuario INT)
 AS
 BEGIN
 --	declare @idPublicacion int = 52798
 --	declare @fecha DATETIME = GETDATE()
+	declare @precio int = (SELECT precio from ADIOS_TERCER_ANIO.Publicacion WHERE id = @idPublicacion)
+	
+	IF (@monto <= @precio) 
+	BEGIN
+	THROW 4654562, 'La oferta debe ser mayor a las ofertas anteriores', 1; 
+	END 
 
 	BEGIN TRANSACTION
 	BEGIN TRY
 
 		INSERT INTO ADIOS_TERCER_ANIO.Oferta(monto, fecha, idUsuario, idPublicacion)
 		VALUES (@monto, @fecha, @idUsuario, @idPublicacion) 
+
+		update ADIOS_TERCER_ANIO.Publicacion set precio = @monto where id = @idPublicacion
 
 	END TRY
 	BEGIN CATCH

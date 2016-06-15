@@ -49,7 +49,7 @@ namespace MercadoEnvios.ComprarOfertar
                 if (!dataReader[2].Equals(DBNull.Value)) { lblFechaFin.Text = Convert.ToString(dataReader.GetDateTime(2)); }
                 if (!dataReader[3].Equals(DBNull.Value)) {
                     lblTipo.Text = dataReader.GetString(3);
-                    if (lblTipo.Text.Equals("Compra inmediata")) { btnComprar.Text = "Comprar";}
+                    if (lblTipo.Text.Equals("Compra Inmediata")) { btnComprar.Text = "Comprar";}
                     else  { btnComprar.Text = "Ofertar"; }
                 }
                 if (!dataReader[4].Equals(DBNull.Value)) { lblPrecio.Text = Convert.ToString(dataReader.GetDecimal(4)); }
