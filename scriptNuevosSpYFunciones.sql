@@ -787,7 +787,27 @@ BEGIN
 END
 GO 
 
-SELECT * FROM ADIOS_TERCER_ANIO.Publicacion;
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPregunta(@idPublicacion INT, @nroPreg INT)
+AS
+BEGIN
+	select preg.pregunta, rta.respuesta from ADIOS_TERCER_ANIO.Pregunta preg
+	inner join ADIOS_TERCER_ANIO.Publicacion publi on preg.idPublicacion = publi.id
+	inner join ADIOS_TERCER_ANIO.Respuesta rta on preg.id = rta.idPregunta
+	where publi.id = @idPublicacion and preg.id = @nroPreg
+END
+GO 
+
+CREATE PROCEDURE ADIOS_TERCER_ANIO.NuevaPregunta (@idPublicacion INT, @fecha DATETIME, @pregunta NVARCHAR(255), @idUsuario INT)
+AS
+BEGIN
+
+	INSERT INTO ADIOS_TERCER_ANIO.Pregunta(pregunta, idPublicacion, idUsuarioPregunta, fecha, contestada)
+	VALUES (@pregunta,@idPublicacion,@idUsuario,@fecha,0) 
+
+END
+GO
+
+SELECT * FROM ADIOS_TERCER_ANIO.Pregunta;
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;

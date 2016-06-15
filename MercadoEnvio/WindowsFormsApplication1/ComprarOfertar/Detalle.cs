@@ -15,6 +15,7 @@ namespace MercadoEnvios.ComprarOfertar
         SqlDataReader dataReader;
         Conexion conn = Conexion.Instance;
         int idPublicacion;
+        int indexPregunta = 0;
 
         Sesion sesion = Sesion.Instance;
 
@@ -59,6 +60,30 @@ namespace MercadoEnvios.ComprarOfertar
                     else { lblEnvio.Text = "Sin envío"; }
                 }
             }
+            
+            cmd = "ADIOS_TERCER_ANIO.obtenerPregunta";
+            SqlCommand pregunta = new SqlCommand(cmd, conn.getConexion);
+            pregunta.CommandType = System.Data.CommandType.StoredProcedure;
+
+            pregunta.Parameters.Add(idP);
+
+            SqlParameter nro = new SqlParameter("@nroPregunta", SqlDbType.Int);
+            nro.SqlValue = idPublicacion;
+            nro.Direction = ParameterDirection.Input;
+            detallePublicacion.Parameters.Add(nro);
+
+            dataReader = pregunta.ExecuteReader();
+            dataReader.Read();
+
+            if (dataReader.HasRows)
+            {
+                //publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre, 
+                //publicacion.precio, visib.nombre, usr.usuario, rubro.descripcionCorta, 
+                //publicacion.stock from ADIOS_TERCER_ANIO.Publicacion publicacion
+                if (!dataReader[0].Equals(DBNull.Value)) { lblPregunta.Text = dataReader.GetString(0); }
+                if (!dataReader[1].Equals(DBNull.Value)) { lblRespuesta.Text = dataReader.GetString(1); }
+            }
+
             dataReader.Close();
 
         }
@@ -90,6 +115,11 @@ namespace MercadoEnvios.ComprarOfertar
             nuevaPregunta.Parameters.Add(fecha);
             nuevaPregunta.Parameters.Add(preguntaP);
             nuevaPregunta.Parameters.Add(idUsu);
+
+            nuevaPregunta.ExecuteNonQuery();
+
+            nuevaPregunta.Parameters.Clear();
+            txtPregunta.Text = "";
         }
 
 
