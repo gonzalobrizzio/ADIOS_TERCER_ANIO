@@ -701,7 +701,7 @@ WHERE
 	AND
 	(MONTH(pub.fechaFin) = @mes1 OR MONTH(pub.fechaFin) = @mes2 OR MONTH(pub.fechaFin) = @mes3)
 GROUP BY com.idComprador, nombre, documento, apellido
-ORDER BY cantidadCompras DESC
+ORDER BY cantidad_de_compras DESC
 END
 GO
 
@@ -763,7 +763,7 @@ WHERE	(MONTH(fac.fecha) = @mes1 OR MONTH(fac.fecha) = @mes2 OR MONTH(fac.fecha) 
 		AND
 		YEAR(fac.fecha) = @anio
 GROUP BY per.idUsuario, per.apellido, usuario
-ORDER BY cantidadDeFacturas DESC
+ORDER BY cantidad_de_facturas DESC
 END
 GO
 
