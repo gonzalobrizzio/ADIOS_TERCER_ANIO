@@ -512,5 +512,34 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarVisibilidad] (@id int,
+														   @nombre NVARCHAR(255),
+														   @duracion int output,
+														   @precio Decimal(18,2),
+														   @porcentaje Decimal(18,2))
+AS
+BEGIN
+	if(@nombre is null or @nombre like '')
+	begin
+		THROW 50004, 'Debe ingresar un nombre', 1; 
+	end
+	BEGIN TRANSACTION
+	BEGIN TRY
+	UPDATE ADIOS_TERCER_ANIO.Visibilidad
+	SET
+		nombre = @nombre, 
+		duracionDias = @duracion, 
+		precio = @precio, 
+		porcentaje = @porcentaje
+	where id = @id
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se pudo modificar la visibilidad', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
