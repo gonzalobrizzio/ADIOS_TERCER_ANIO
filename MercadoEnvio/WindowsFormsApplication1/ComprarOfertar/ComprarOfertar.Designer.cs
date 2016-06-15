@@ -37,7 +37,13 @@
             this.btnSgte = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnDetalle = new System.Windows.Forms.Button();
+            this.dgvRubros = new System.Windows.Forms.DataGridView();
+            this.dgvFiltros = new System.Windows.Forms.DataGridView();
+            this.btnAgregar = new System.Windows.Forms.Button();
+            this.btnQuitar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRubros)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiltros)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvPublicaciones
@@ -59,7 +65,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPublicaciones.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvPublicaciones.Location = new System.Drawing.Point(46, 46);
+            this.dgvPublicaciones.Location = new System.Drawing.Point(252, 46);
             this.dgvPublicaciones.Name = "dgvPublicaciones";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -69,14 +75,14 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvPublicaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvPublicaciones.Size = new System.Drawing.Size(676, 238);
+            this.dgvPublicaciones.Size = new System.Drawing.Size(579, 284);
             this.dgvPublicaciones.TabIndex = 0;
             // 
             // lblListado
             // 
             this.lblListado.AutoSize = true;
             this.lblListado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblListado.Location = new System.Drawing.Point(46, 16);
+            this.lblListado.Location = new System.Drawing.Point(12, 9);
             this.lblListado.Name = "lblListado";
             this.lblListado.Size = new System.Drawing.Size(162, 20);
             this.lblListado.TabIndex = 1;
@@ -84,7 +90,7 @@
             // 
             // btnAnt
             // 
-            this.btnAnt.Location = new System.Drawing.Point(61, 290);
+            this.btnAnt.Location = new System.Drawing.Point(252, 336);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(41, 33);
             this.btnAnt.TabIndex = 2;
@@ -94,7 +100,7 @@
             // 
             // btnSgte
             // 
-            this.btnSgte.Location = new System.Drawing.Point(670, 290);
+            this.btnSgte.Location = new System.Drawing.Point(790, 336);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(41, 33);
             this.btnSgte.TabIndex = 3;
@@ -104,7 +110,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(494, 290);
+            this.btnVolver.Location = new System.Drawing.Point(614, 336);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(170, 33);
             this.btnVolver.TabIndex = 4;
@@ -114,7 +120,7 @@
             // 
             // btnDetalle
             // 
-            this.btnDetalle.Location = new System.Drawing.Point(108, 290);
+            this.btnDetalle.Location = new System.Drawing.Point(298, 336);
             this.btnDetalle.Name = "btnDetalle";
             this.btnDetalle.Size = new System.Drawing.Size(194, 33);
             this.btnDetalle.TabIndex = 5;
@@ -122,12 +128,50 @@
             this.btnDetalle.UseVisualStyleBackColor = true;
             this.btnDetalle.Click += new System.EventHandler(this.btnDetalle_Click);
             // 
+            // dgvRubros
+            // 
+            this.dgvRubros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRubros.Location = new System.Drawing.Point(13, 46);
+            this.dgvRubros.Name = "dgvRubros";
+            this.dgvRubros.Size = new System.Drawing.Size(221, 156);
+            this.dgvRubros.TabIndex = 6;
+            // 
+            // dgvFiltros
+            // 
+            this.dgvFiltros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFiltros.Location = new System.Drawing.Point(13, 237);
+            this.dgvFiltros.Name = "dgvFiltros";
+            this.dgvFiltros.Size = new System.Drawing.Size(221, 132);
+            this.dgvFiltros.TabIndex = 7;
+            // 
+            // btnAgregar
+            // 
+            this.btnAgregar.Location = new System.Drawing.Point(13, 209);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(104, 23);
+            this.btnAgregar.TabIndex = 8;
+            this.btnAgregar.Text = "Activar filtro ↓";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            // 
+            // btnQuitar
+            // 
+            this.btnQuitar.Location = new System.Drawing.Point(123, 209);
+            this.btnQuitar.Name = "btnQuitar";
+            this.btnQuitar.Size = new System.Drawing.Size(111, 23);
+            this.btnQuitar.TabIndex = 9;
+            this.btnQuitar.Text = "Desactivar filtro ↑";
+            this.btnQuitar.UseVisualStyleBackColor = true;
+            // 
             // frmComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(765, 347);
+            this.ClientSize = new System.Drawing.Size(841, 381);
+            this.Controls.Add(this.btnQuitar);
+            this.Controls.Add(this.btnAgregar);
+            this.Controls.Add(this.dgvFiltros);
+            this.Controls.Add(this.dgvRubros);
             this.Controls.Add(this.btnDetalle);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnSgte);
@@ -138,6 +182,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Publicaciones";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRubros)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiltros)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +197,10 @@
         private System.Windows.Forms.Button btnSgte;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnDetalle;
+        private System.Windows.Forms.DataGridView dgvRubros;
+        private System.Windows.Forms.DataGridView dgvFiltros;
+        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.Button btnQuitar;
 
     }
 }
