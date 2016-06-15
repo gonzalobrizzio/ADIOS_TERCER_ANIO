@@ -464,6 +464,34 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarVisibilidad] (@id int,
+														   @nombre NVARCHAR(255),
+														   @duracion int output,
+														   @precio Decimal(18,2),
+														   @porcentaje Decimal(18,2))
+AS
+BEGIN
+	if(@nombre is null or @nombre like '')
+	begin
+		THROW 50004, 'Debe ingresar un nombre', 1; 
+	end
+	BEGIN TRANSACTION
+	BEGIN TRY
+	UPDATE ADIOS_TERCER_ANIO.Visibilidad
+	SET
+		nombre = @nombre, 
+		duracionDias = @duracion, 
+		precio = @precio, 
+		porcentaje = @porcentaje
+	where id = @id
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se pudo modificar la visibilidad', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FACTURAREMPRESA](@idPublicacion INT, @cantidadCompra INT, @fecha DATETIME)
 AS
 BEGIN
@@ -911,9 +939,3 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
-
-SELECT * FROM ADIOS_TERCER_ANIO.Visibilidad
-
-
-DELETE FROM ADIOS_TERCER_ANIO.Factura WHERE idPublicacion > 20000
-DELETE FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion > 20000
