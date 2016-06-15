@@ -154,6 +154,12 @@
     <Compile Include="ComprarOfertar\Detalle.Designer.cs">
       <DependentUpon>Detalle.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComprarOfertar\Confirmar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Confirmar.Designer.cs">
+      <DependentUpon>Confirmar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Utilidades.cs" />
     <Compile Include="Generar Publicación\Contestar Preguntas.cs">
       <SubType>Form</SubType>
@@ -292,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar\Historial.resx">
       <DependentUpon>Historial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Confirmar.resx">
+      <DependentUpon>Confirmar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComprarOfertar\Detalle.resx">
       <DependentUpon>Detalle.cs</DependentUpon>

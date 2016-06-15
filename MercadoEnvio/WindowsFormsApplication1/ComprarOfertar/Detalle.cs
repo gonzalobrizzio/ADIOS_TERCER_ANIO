@@ -47,7 +47,11 @@ namespace MercadoEnvios.ComprarOfertar
                 if (!dataReader[0].Equals(DBNull.Value)) { lblDescripcion.Text = dataReader.GetString(0); }
                 if (!dataReader[1].Equals(DBNull.Value)) { lblFechaInicio.Text = Convert.ToString(dataReader.GetDateTime(1)); }
                 if (!dataReader[2].Equals(DBNull.Value)) { lblFechaFin.Text = Convert.ToString(dataReader.GetDateTime(2)); }
-                if (!dataReader[3].Equals(DBNull.Value)) { lblTipo.Text = dataReader.GetString(3); }
+                if (!dataReader[3].Equals(DBNull.Value)) {
+                    lblTipo.Text = dataReader.GetString(3);
+                    if (lblTipo.Text.Equals("Compra inmediata")) { btnComprar.Text = "Comprar";}
+                    else  { btnComprar.Text = "Ofertar"; }
+                }
                 if (!dataReader[4].Equals(DBNull.Value)) { lblPrecio.Text = Convert.ToString(dataReader.GetDecimal(4)); }
                 if (!dataReader[5].Equals(DBNull.Value)) { lblVis.Text = dataReader.GetString(5); }
                 if (!dataReader[6].Equals(DBNull.Value)) { lblUsuario.Text = dataReader.GetString(6); }
@@ -141,6 +145,12 @@ namespace MercadoEnvios.ComprarOfertar
             indexPregunta--;
             getData();
             if (indexPregunta == 0) btnAnt.Enabled = false;
+        }
+
+        private void btnComprar_Click(object sender, EventArgs e)
+        {
+            new frmConfirmar(idPublicacion).Show(); 
+            this.Hide();
         }
 
     }

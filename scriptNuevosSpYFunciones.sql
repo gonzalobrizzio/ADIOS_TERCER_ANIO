@@ -821,7 +821,67 @@ BEGIN
 END
 GO
 
-SELECT * FROM ADIOS_TERCER_ANIO.Pregunta;
+CREATE PROCEDURE ADIOS_TERCER_ANIO.Comprar(@idPublicacion INT, @fecha DATETIME, @cant INT, @idComprador INT)
+AS
+BEGIN
+--	declare @idPublicacion int = 52798
+--	declare @fecha DATETIME = GETDATE()
+--	declare @cant int = 1
+--	declare @idComprador int = 7
+
+	declare @stock int = (SELECT stock from ADIOS_TERCER_ANIO.Publicacion where id = @idPublicacion)
+	IF (@stock - @cant < 0) 
+	BEGIN
+	THROW 46545623, 'No hay stock suficiente', 1; 
+	END 
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+
+		INSERT INTO ADIOS_TERCER_ANIO.Compra(cantidad, fecha, idComprador, idPublicacion)
+		VALUES (@cant, @fecha, @idComprador, @idPublicacion) 
+
+		INSERT INTO ADIOS_TERCER_ANIO.Calificacion(idCompra, pendiente)
+		VALUES ((SELECT SCOPE_IDENTITY()), 1)
+
+		IF (@stock - @cant = 0) 
+		BEGIN
+			update ADIOS_TERCER_ANIO.Publicacion set idEstado = 4 where id = @idPublicacion
+		END 
+
+		update ADIOS_TERCER_ANIO.Publicacion set @stock -= @cant where id = @idPublicacion
+
+		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cant, @fecha
+
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 586577, 'No se pudo realizar la compra', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
+
+CREATE PROCEDURE ADIOS_TERCER_ANIO.Ofertar(@idPublicacion INT, @fecha DATETIME, @monto INT @idUsuario INT)
+AS
+BEGIN
+--	declare @idPublicacion int = 52798
+--	declare @fecha DATETIME = GETDATE()
+
+	BEGIN TRANSACTION
+	BEGIN TRY
+
+		INSERT INTO ADIOS_TERCER_ANIO.Oferta(monto, fecha, idUsuario, idPublicacion)
+		VALUES (@monto, @fecha, @idUsuario, @idPublicacion) 
+
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 586577, 'No se pudo realizar la oferta', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 
 UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
 UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
