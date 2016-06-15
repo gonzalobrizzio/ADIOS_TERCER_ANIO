@@ -2846,8 +2846,8 @@ BEGIN
 	inner join ADIOS_TERCER_ANIO.Respuesta r on p.id = r.idPregunta
 	where p.idPublicacion = @idPublicacion ORDER BY p.fecha ASC)
 
-	INSERT INTO ADIOS_TERCER_ANIO.Respuesta(idPregunta, fecha, respuesta)
-	VALUES (1, GETDATE(), 'SI') 
+	--INSERT INTO ADIOS_TERCER_ANIO.Respuesta(idPregunta, fecha, respuesta)
+	--VALUES (1, GETDATE(), 'SI') 
 
 	SELECT top 1 * FROM TablaP ORDER by TablaP.fecha desc
 
