@@ -318,6 +318,7 @@
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblIdPublicacion);
             this.Name = "frmDetalle";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Detalle";
             this.grpPreguntas.ResumeLayout(false);
             this.grpPreguntas.PerformLayout();

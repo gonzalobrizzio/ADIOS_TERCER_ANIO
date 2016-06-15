@@ -107,8 +107,8 @@ namespace MercadoEnvios.ABM_Usuario
             if (Convert.ToInt32(puedeComprar.Parameters["@puede"].Value) == 1)
             {
                 sesion.anterior = this;
-                new ComprarOfertar.ComprarOfertar().Show();
-                this.Hide();
+                new ComprarOfertar.frmComprarOfertar().Show();
+                this.Close();
             }
             else
             {
@@ -120,28 +120,28 @@ namespace MercadoEnvios.ABM_Usuario
         {
             sesion.anterior = this;
             new ABM_Usuario.frmABMUsuario().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnABMRol_Click(object sender, EventArgs e)
         {
             sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnABMVisibilidad_Click(object sender, EventArgs e)
         {
             sesion.anterior = this;
             new ABM_Visibilidad.frmABMVisibilidad().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnConsultarFacturas_Click(object sender, EventArgs e)
         {
             sesion.anterior = this;
             new Facturas.HistorialDeFacturas().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnHistorial_Click(object sender, EventArgs e)
@@ -168,7 +168,7 @@ namespace MercadoEnvios.ABM_Usuario
         {
             sesion.anterior = this;
             new Calificar.frmCalificacion().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)

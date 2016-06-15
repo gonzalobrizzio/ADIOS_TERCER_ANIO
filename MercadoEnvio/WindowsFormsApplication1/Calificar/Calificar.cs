@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.ABM_Usuario;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -48,6 +49,14 @@ namespace MercadoEnvios.Calificar
             dgvCompras.AllowUserToAddRows = false;
             dgvCompras.AllowUserToDeleteRows = false;
             dgvCompras.ReadOnly = true;
+
+            tkbCalificacion.ResetText();
+
+            lblEstrellas.Text = "";
+            lblCompra.Text = "";
+            txtDetalle.Text = "";
+            lblUsuario.Text = "";
+            lblEstrellas.Text = tkbCalificacion.Value + " estrellas.";
         }
 
 
@@ -59,8 +68,15 @@ namespace MercadoEnvios.Calificar
         private void btnCalificar_Click(object sender, EventArgs e)
         {
             StringBuilder mensaje = new StringBuilder();
-            funciones.validarNoVacio(tkbCalificacion, mensaje);
-            funciones.validarNoVacio(lblIdCompra, mensaje);
+
+            if (tkbCalificacion.Value < 0) {
+                mensaje.AppendLine("Debe insertar una calificacion!");
+            }
+
+
+            if (lblCompra.Text == "") {
+                mensaje.AppendLine("Debe seleccionar una compra para calificar!");
+            }
 
             if (mensaje.Length > 0)
             {
@@ -83,9 +99,9 @@ namespace MercadoEnvios.Calificar
                 idCompra.Direction = ParameterDirection.Input;
                 idCompra.SqlValue = Convert.ToInt32(lblIdCompra.Text);
                 
-                SqlParameter fecha = new SqlParameter("@fecha", DateTime.Now);
+                SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
+                fecha.SqlValue = DateTime.Now;
                 fecha.Direction = ParameterDirection.Input;
-                fecha.SqlDbType = SqlDbType.DateTime;
 
                 cargarCalificacion.Parameters.Add(idCompra);
                 cargarCalificacion.Parameters.Add(puntaje);
@@ -119,16 +135,9 @@ namespace MercadoEnvios.Calificar
 
         }
 
-        private void frmCalificacion_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            sesion.anterior.Show();
-        }
-
-         
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            sesion.anterior.Show();
+            new frmPantallaPrincipal().Show();
             this.Close();
         }
     }

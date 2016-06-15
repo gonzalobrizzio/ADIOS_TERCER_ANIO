@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.ABM_Usuario;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace MercadoEnvios.ComprarOfertar
 {
-    public partial class ComprarOfertar : Form
+    public partial class frmComprarOfertar : Form
     {
         Conexion conn = Conexion.Instance;
         SqlDataAdapter da;
@@ -19,11 +20,11 @@ namespace MercadoEnvios.ComprarOfertar
         
         int nroPagina = 0;
 
-        public ComprarOfertar()
+        public frmComprarOfertar()
         {
             InitializeComponent();
 
-            idUsuario.SqlValue = 17; //MOCK
+            idUsuario.SqlValue = sesion.idUsuario;
             idUsuario.Direction = ParameterDirection.Input;
 
             this.getData();
@@ -62,6 +63,8 @@ namespace MercadoEnvios.ComprarOfertar
             dgvPublicaciones.Columns[2].Width = 100;
             dgvPublicaciones.Columns[3].Width = 50;
             dgvPublicaciones.Columns[4].Visible = false;
+            dgvPublicaciones.Columns[5].Visible = false;
+            dgvPublicaciones.Columns[6].Visible = false;
             dgvPublicaciones.AllowUserToAddRows = false;
             dgvPublicaciones.AllowUserToDeleteRows = false;
             dgvPublicaciones.ReadOnly = true;
@@ -86,7 +89,7 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            sesion.anterior.Show();
+            new frmPantallaPrincipal().Show();
             btnSgte.Enabled = true;
             this.Close();
         }
@@ -94,7 +97,6 @@ namespace MercadoEnvios.ComprarOfertar
         private void btnDetalle_Click(object sender, EventArgs e)
         {
             int idPublicacion = Convert.ToInt32(dgvPublicaciones[4, dgvPublicaciones.CurrentCell.RowIndex].Value);
-            MessageBox.Show(idPublicacion.ToString());
             new frmDetalle(idPublicacion).Show();
             this.Hide(); 
         }

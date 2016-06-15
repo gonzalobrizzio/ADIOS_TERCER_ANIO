@@ -222,22 +222,4 @@ BEGIN
 
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Subasta');
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Compra Inmediata');
-
-	DECLARE @idUsuario int;
-	DECLARE @idRol int;
-
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
-	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
-	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-	VALUES(@idRol,@idUsuario)
-
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
-	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
-	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-	VALUES(@idRol,@idUsuario)
-	
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
-	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
-	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-	VALUES(@idRol,@idUsuario)
 END

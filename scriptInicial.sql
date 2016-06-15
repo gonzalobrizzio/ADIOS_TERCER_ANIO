@@ -71,8 +71,8 @@ AS BEGIN
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @documento,'2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f',@mail,@ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Cliente')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol, @idUsuario)
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+			VALUES(@idRol, @idUsuario,0)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Persona(
 				nombre,
@@ -175,8 +175,8 @@ AS BEGIN
 			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', @mail, @ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
-			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario)
-			VALUES(@idRol,@idUsuario)
+			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario, deleted)
+			VALUES(@idRol,@idUsuario,0)
 			
 			INSERT INTO ADIOS_TERCER_ANIO.Empresa(
 				razonSocial,
@@ -654,3 +654,29 @@ EXEC [ADIOS_TERCER_ANIO].[migrarItems];
 
 --CALCULO LOS PROMEDIOS DE LO MIGRADO
 EXEC [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio];
+
+	DECLARE @idUsuario int;
+	DECLARE @idRol int;
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+	
+		SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Empresa')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
+
+	
+	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario

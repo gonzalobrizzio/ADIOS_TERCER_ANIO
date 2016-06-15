@@ -79,86 +79,100 @@ namespace MercadoEnvios.ComprarOfertar
             StringBuilder validacion = new StringBuilder();
 
             util.validarNoVacio(txtNumeric, validacion);
-            util.validarNumerico(txtNumeric, validacion);
+            util.validarDecimal(txtNumeric, validacion);
+            bool validaciones;
 
-            if (btnConfirmar.Text.Equals("Comprar"))
+            if (validacion.Length > 0)
             {
-                SqlCommand comprar = new SqlCommand("ADIOS_TERCER_ANIO.Comprar", conn.getConexion);
-                comprar.CommandType = System.Data.CommandType.StoredProcedure;
+                validaciones = false;
+                MessageBox.Show(validacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                validacion = new StringBuilder();
 
-                //Comprar(@idPublicacion INT, @fecha DATETIME, @cant INT, @idComprador INT)
-
-                SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
-                idPubli.SqlValue = idPublicacion;
-                idPubli.Direction = ParameterDirection.Input;
-
-                SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
-                fecha.SqlValue = DateTime.Today;
-                fecha.Direction = ParameterDirection.Input;
-
-                SqlParameter cant = new SqlParameter("@cant", SqlDbType.Int);
-                cant.SqlValue = Convert.ToInt32(txtNumeric.Text);
-                cant.Direction = ParameterDirection.Input;
-
-                SqlParameter idUsu = new SqlParameter("@idComprador", SqlDbType.Int);
-                idUsu.SqlValue = sesion.idUsuario;
-                idUsu.Direction = ParameterDirection.Input;
-
-                comprar.Parameters.Add(idPubli);
-                comprar.Parameters.Add(fecha);
-                comprar.Parameters.Add(cant);
-                comprar.Parameters.Add(idUsu);
-
-                try
-                {
-                    comprar.ExecuteNonQuery();
-                    MessageBox.Show("Compra exitosa! Contáctese con su vendedor");
-                    new frmDetalle(idPublicacion).Show();
-                    this.Close();
-                }
-                catch (SqlException error)
-                {
-                    MessageBox.Show(error.Message);
-                }
             }
             else
+            { validaciones = true; }
+
+            if (validaciones)
             {
-                SqlCommand ofertar = new SqlCommand("ADIOS_TERCER_ANIO.Ofertar", conn.getConexion);
-                ofertar.CommandType = System.Data.CommandType.StoredProcedure;
-
-                //Ofertar(@idPublicacion INT, @fecha DATETIME, @monto INT, @idUsuario INT)
-
-                SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
-                idPubli.SqlValue = idPublicacion;
-                idPubli.Direction = ParameterDirection.Input;
-
-                SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
-                fecha.SqlValue = DateTime.Today;
-                fecha.Direction = ParameterDirection.Input;
-
-                SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);
-                monto.SqlValue = Convert.ToInt32(txtNumeric.Text);
-                monto.Direction = ParameterDirection.Input;
-
-                SqlParameter idUsu = new SqlParameter("@idUsuario", SqlDbType.Int);
-                idUsu.SqlValue = sesion.idUsuario;
-                idUsu.Direction = ParameterDirection.Input;
-
-                ofertar.Parameters.Add(idPubli);
-                ofertar.Parameters.Add(fecha);
-                ofertar.Parameters.Add(monto);
-                ofertar.Parameters.Add(idUsu);
-
-                try
+                if (btnConfirmar.Text.Equals("Comprar"))
                 {
-                    ofertar.ExecuteNonQuery();
-                    MessageBox.Show("Oferta exitosa! Aguarde a que finalice la publicación para saber si ganó la subasta.");
-                    new frmDetalle(idPublicacion).Show();
-                    this.Close();
+                    SqlCommand comprar = new SqlCommand("ADIOS_TERCER_ANIO.Comprar", conn.getConexion);
+                    comprar.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    //Comprar(@idPublicacion INT, @fecha DATETIME, @cant INT, @idComprador INT)
+
+                    SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                    idPubli.SqlValue = idPublicacion;
+                    idPubli.Direction = ParameterDirection.Input;
+
+                    SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
+                    fecha.SqlValue = DateTime.Today;
+                    fecha.Direction = ParameterDirection.Input;
+
+                    SqlParameter cant = new SqlParameter("@cant", SqlDbType.Int);
+                    cant.SqlValue = Convert.ToInt32(txtNumeric.Text);
+                    cant.Direction = ParameterDirection.Input;
+
+                    SqlParameter idUsu = new SqlParameter("@idComprador", SqlDbType.Int);
+                    idUsu.SqlValue = sesion.idUsuario;
+                    idUsu.Direction = ParameterDirection.Input;
+
+                    comprar.Parameters.Add(idPubli);
+                    comprar.Parameters.Add(fecha);
+                    comprar.Parameters.Add(cant);
+                    comprar.Parameters.Add(idUsu);
+
+                    try
+                    {
+                        comprar.ExecuteNonQuery();
+                        MessageBox.Show("Compra exitosa! Contáctese con su vendedor");
+                        new frmComprarOfertar().Show();
+                        this.Close();
+                    }
+                    catch (SqlException error)
+                    {
+                        MessageBox.Show(error.Message);
+                    }
                 }
-                catch (SqlException error)
+                else
                 {
-                    MessageBox.Show(error.Message);
+                    SqlCommand ofertar = new SqlCommand("ADIOS_TERCER_ANIO.Ofertar", conn.getConexion);
+                    ofertar.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    //Ofertar(@idPublicacion INT, @fecha DATETIME, @monto DECIMAL(18,2), @idUsuario INT)
+
+                    SqlParameter idPubli = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                    idPubli.SqlValue = idPublicacion;
+                    idPubli.Direction = ParameterDirection.Input;
+
+                    SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
+                    fecha.SqlValue = DateTime.Today;
+                    fecha.Direction = ParameterDirection.Input;
+
+                    SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);
+                    monto.SqlValue = Convert.ToDecimal(txtNumeric.Text);
+                    monto.Direction = ParameterDirection.Input;
+
+                    SqlParameter idUsu = new SqlParameter("@idUsuario", SqlDbType.Int);
+                    idUsu.SqlValue = sesion.idUsuario;
+                    idUsu.Direction = ParameterDirection.Input;
+
+                    ofertar.Parameters.Add(idPubli);
+                    ofertar.Parameters.Add(fecha);
+                    ofertar.Parameters.Add(monto);
+                    ofertar.Parameters.Add(idUsu);
+
+                    try
+                    {
+                        ofertar.ExecuteNonQuery();
+                        MessageBox.Show("Oferta exitosa! Aguarde a que finalice la publicación para saber si ganó la subasta.");
+                        new frmComprarOfertar().Show();
+                        this.Close();
+                    }
+                    catch (SqlException error)
+                    {
+                        MessageBox.Show(error.Message);
+                    }
                 }
             }
         }

@@ -95,6 +95,7 @@
             this.Controls.Add(this.txtNumeric);
             this.Controls.Add(this.btnConfirmar);
             this.Name = "frmConfirmar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Comprar / Ofertar";
             this.ResumeLayout(false);
             this.PerformLayout();

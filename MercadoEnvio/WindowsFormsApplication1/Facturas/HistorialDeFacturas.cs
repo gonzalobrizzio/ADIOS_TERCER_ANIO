@@ -60,6 +60,7 @@ namespace MercadoEnvios.Facturas
                 dgvFacturas.Columns[2].Width = 100;
                 dgvFacturas.Columns[3].Width = 150;
                 dgvFacturas.AllowUserToDeleteRows = false;
+                dgvFacturas.AllowUserToAddRows = false;
                 dgvFacturas.ReadOnly = true;
             }
             catch (SqlException error)

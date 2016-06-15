@@ -72,6 +72,7 @@
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dgvPreguntas);
             this.Name = "frmContestarPreguntas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Contestar Preguntas";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPreguntas)).EndInit();
             this.ResumeLayout(false);

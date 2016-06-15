@@ -16,6 +16,7 @@ namespace MercadoEnvios.ComprarOfertar
         Conexion conn = Conexion.Instance;
         int idPublicacion;
         int indexPregunta = 0;
+        bool preguntas;
 
         Sesion sesion = Sesion.Instance;
 
@@ -59,43 +60,57 @@ namespace MercadoEnvios.ComprarOfertar
                 if (!dataReader[8].Equals(DBNull.Value)) { lblStock.Text = dataReader.GetInt32(8).ToString() + " unidades disponibles."; }
                 if (!dataReader[9].Equals(DBNull.Value))
                 {
-                    if (dataReader.GetInt32(9) == 1) { lblEnvio.Text = "Con envío"; }
+                    if (dataReader.GetInt32(9) == 0) { lblEnvio.Text = "Con envío"; }
                     else { lblEnvio.Text = "Sin envío"; }
+
+                    if (dataReader.GetInt32(10) == 0) { preguntas = true; }
+                    else { preguntas = false; }
                 }
             }
             dataReader.Close();
 
-            cmd = "ADIOS_TERCER_ANIO.obtenerPregunta";
-            SqlCommand pregunta = new SqlCommand(cmd, conn.getConexion);
-            pregunta.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter idPub = new SqlParameter("@idPublicacion", SqlDbType.Int);
-            idPub.SqlValue = idPublicacion;
-            idPub.Direction = ParameterDirection.Input;
-
-            SqlParameter nro = new SqlParameter("@nroPreg", SqlDbType.Int);
-            nro.SqlValue = idPublicacion;
-            nro.Direction = ParameterDirection.Input;
-
-            pregunta.Parameters.Add(idPub);
-            pregunta.Parameters.Add(nro);
-
-            dataReader = pregunta.ExecuteReader();
-            dataReader.Read();
-
-            if (dataReader.HasRows)
+            if (preguntas)
             {
-                if (!dataReader[0].Equals(DBNull.Value)) { lblPregunta.Text = dataReader.GetString(0); }
-                if (!dataReader[1].Equals(DBNull.Value)) { lblRespuesta.Text = dataReader.GetString(1); }
+                cmd = "ADIOS_TERCER_ANIO.obtenerPregunta";
+                SqlCommand pregunta = new SqlCommand(cmd, conn.getConexion);
+                pregunta.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter idPub = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                idPub.SqlValue = idPublicacion;
+                idPub.Direction = ParameterDirection.Input;
+
+                SqlParameter nro = new SqlParameter("@nroPreg", SqlDbType.Int);
+                nro.SqlValue = indexPregunta;
+                nro.Direction = ParameterDirection.Input;
+
+                pregunta.Parameters.Add(idPub);
+                pregunta.Parameters.Add(nro);
+
+                dataReader = pregunta.ExecuteReader();
+                dataReader.Read();
+
+                if (dataReader.HasRows)
+                {
+                    if (!dataReader[0].Equals(DBNull.Value)) { lblPregunta.Text = dataReader.GetString(0); }
+                    if (!dataReader[1].Equals(DBNull.Value)) { lblRespuesta.Text = dataReader.GetString(1); }
+                }
+                else
+                {
+                    lblPregunta.Text = "No hay preguntas hasta el momento.";
+                    lblRespuesta.Text = "";
+                    btnSgte.Enabled = false;
+                }
+
+                dataReader.Close();
             }
-            else
-            {
-                lblPregunta.Text = "No hay preguntas hasta el momento."; 
+            else { 
+                lblPregunta.Text = "Las preguntas no están disponibles!";
                 lblRespuesta.Text = "";
+                txtPregunta.Enabled = false;
+                btnAnt.Enabled = false;
+                btnPregunta.Enabled = false;
                 btnSgte.Enabled = false;
             }
-
-            dataReader.Close();
 
         }
 
@@ -160,7 +175,7 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            new ComprarOfertar().Show();
+            new frmComprarOfertar().Show();
             this.Close();
         }
 

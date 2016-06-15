@@ -25,7 +25,7 @@ namespace MercadoEnvios.Generar_Publicación
         }
 
         private void getData(){
-            String queryHabilitados = "SELECT id, pregunta, fecha FROM ADIOS_TERCER_ANIO.Pregunta";
+            String queryHabilitados = "SELECT id, pregunta, fecha FROM ADIOS_TERCER_ANIO.Pregunta WHERE contestada = 0";
             conn = Conexion.Instance;
             da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
             DataTable tablaDeRoles = new DataTable("Preguntas");

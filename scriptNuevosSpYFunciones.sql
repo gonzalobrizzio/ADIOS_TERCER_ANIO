@@ -110,7 +110,8 @@ AS
 BEGIN
 	Select (SELECT usuario from ADIOS_TERCER_ANIO.Usuario where id = idPublicador) AS Usuario, p.descripcion, c.id, (select nombre as tipo from ADIOS_TERCER_ANIO.TipoPublicacion where id = p.idTipoPublicacion) from ADIOS_TERCER_ANIO.Publicacion p 
 	inner join ADIOS_TERCER_ANIO.Compra c on c.idPublicacion = p.id
-	where c.idComprador = @idCalificador order by c.fecha desc
+	inner join ADIOS_TERCER_ANIO.Calificacion calif on calif.idCompra = c.id 
+	where c.idComprador = @idCalificador AND calif.pendiente = 1 order by c.fecha desc
 END
 
 GO
@@ -284,12 +285,12 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.cargarUltimasCalificaciones(@idCalificador INT)
 AS
 BEGIN
-	--declare @idCalificador int = 17;
+--	declare @idCalificador int = 17;
 	Select TOP 5 calif.fecha, calif.puntaje, calif.detalle from ADIOS_TERCER_ANIO.Calificacion calif 
 	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
 	inner join ADIOS_TERCER_ANIO.Publicacion publicacion on compra.idPublicacion = publicacion.id
 	inner join ADIOS_TERCER_ANIO.Usuario usr on usr.id = publicacion.idPublicador
-	where compra.idComprador = @idCalificador and pendiente = 0 
+	where compra.idComprador = @idCalificador and pendiente = 0 ORDER BY calif.fecha DESC 
 END
 
 GO 
@@ -319,9 +320,9 @@ BEGIN
 	IF (@cant > 0)
 	BEGIN
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
-					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio from ADIOS_TERCER_ANIO.Publicacion publicacion
+					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, iif(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
+	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
 	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
@@ -792,7 +793,7 @@ AS
 BEGIN
 
 	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre as tipoPublicacion, publicacion.precio, 
-	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock, publicacion.tieneEnvio as tieneEnvio from ADIOS_TERCER_ANIO.Publicacion publicacion
+	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock, publicacion.tieneEnvio as tieneEnvio, publicacion.tienePreguntas as tienePreguntas from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id 
 	inner join ADIOS_TERCER_ANIO.Usuario usr on publicacion.idPublicador = usr.id 
@@ -863,7 +864,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.Ofertar(@idPublicacion INT, @fecha DATETIME, @monto INT, @idUsuario INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.Ofertar(@idPublicacion INT, @fecha DATETIME, @monto DECIMAL(18,2), @idUsuario INT)
 AS
 BEGIN
 --	declare @idPublicacion int = 52798
@@ -892,8 +893,7 @@ BEGIN
 END
 GO
 
-UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0;
-UPDATE ADIOS_TERCER_ANIO.RolUsuario SET deleted = 0;
+
 
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 

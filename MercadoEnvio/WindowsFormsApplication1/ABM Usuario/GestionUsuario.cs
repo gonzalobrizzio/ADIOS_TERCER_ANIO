@@ -64,7 +64,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
-            sesion.anterior.Show();
+            new frmPantallaPrincipal().Show();
             this.Close();
 
         }
