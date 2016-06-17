@@ -945,15 +945,4 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
 
-SELECT * FROM ADIOS_TERCER_ANIO.Pregunta
-
-
-
-SELECT pregunta.id, pregunta.pregunta, pregunta.fecha, publicacion.descripcion FROM ADIOS_TERCER_ANIO.Pregunta pregunta
-inner join ADIOS_TERCER_ANIO.Publicacion publicacion on pregunta.idPublicacion = publicacion.id
-inner join ADIOS_TERCER_ANIO.Usuario usr on usr.id = publicacion.idPublicador
-WHERE usr.id = publicacion.idPublicador
-
-SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
-
 
