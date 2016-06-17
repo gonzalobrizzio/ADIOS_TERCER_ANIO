@@ -20,7 +20,7 @@ namespace MercadoEnvios.Login_y_Seguridad
         public frmIngresar()
         {
             InitializeComponent();
-            //new TareasBatch().correr(); ToDo
+            new TareasBatch().correr();
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)

@@ -553,9 +553,7 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarSubasta] (@idPublicacion INT, @fecha DATETIME)
 AS
 BEGIN
-	BEGIN TRANSACTION
-	BEGIN TRY
-		update ADIOS_TERCER_ANIO.Publicacion set idEstado = (select id from ADIOS_TERCER_ANIO.Estado where nombre like 'Finalizada') where id = @idPublicacion
+		update ADIOS_TERCER_ANIO.Publicacion set idEstado = 4 where id = @idPublicacion
 		declare @cantidad int;
 		select @cantidad = stock from ADIOS_TERCER_ANIO.Publicacion where id = @idPublicacion
 		------------------Inserto la compra con la mayor oferta
@@ -569,27 +567,13 @@ BEGIN
 		VALUES ((SELECT SCOPE_IDENTITY()), 1)
 
 		exec [ADIOS_TERCER_ANIO].[FACTURAREMPRESA] @idPublicacion, @cantidad, @fecha
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se pudo actualizar las subastas vencidas', 1; 
-	END CATCH
-	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarComprasInmediatas]
+ALTER PROCEDURE [ADIOS_TERCER_ANIO].[FinalizarComprasInmediatas] (@fechaActual DATETIME)
 AS
 BEGIN
-	BEGIN TRANSACTION
-	BEGIN TRY
 		update ADIOS_TERCER_ANIO.Publicacion set idEstado = (select id from ADIOS_TERCER_ANIO.Estado where nombre like 'Finalizada') 
-		where idTipoPublicacion = (select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like 'Compra Inmediata')
-	END TRY
-	BEGIN CATCH
-		ROLLBACK TRANSACTION;
-		THROW 50004, 'No se pudo actualizar las compas inmediatas vencidas', 1; 
-	END CATCH
-	COMMIT TRANSACTION
+		where idTipoPublicacion = 2 AND @fechaActual > fechaFin
 END
 GO
 
@@ -947,5 +931,3 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
-
-

@@ -26,7 +26,7 @@ namespace MercadoEnvios
             /*******************************************************************************************************************************************/
             string subastasVencidas = "select p.id from ADIOS_TERCER_ANIO.Publicacion p "
                                    + "inner join ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = p.idTipoPublicacion and tp.nombre like 'Subasta' "
-                                   + "where p.fechaFin < @fechaDeHoy";//ToDo
+                                   + "where p.fechaFin < @fechaDeHoy AND idEstado != 4 ";
             SqlCommand subastas = new SqlCommand(subastasVencidas, conn.getConexion);
             
             SqlParameter fechaActual = new SqlParameter("@fechaDeHoy", SqlDbType.DateTime);
@@ -46,22 +46,36 @@ namespace MercadoEnvios
             da.Close();
             SqlCommand publicaciones = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarSubasta", conn.getConexion);
             publicaciones.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter idPublicacion = new SqlParameter("@idPublicacion", SqlDbType.Int);
-            idPublicacion.Direction = ParameterDirection.Input;
-            SqlParameter fechaSubastas = new SqlParameter("@fecha", SqlDbType.DateTime);
-            fechaSubastas.SqlValue = DateTime.Today;
-            fechaSubastas.Direction = ParameterDirection.Input;
+           
+            //ANDA MAL ESTO TODO
 
-            publicaciones.Parameters.Add(idPublicacion);
-            publicaciones.Parameters.Add(fechaSubastas);
+            //SqlParameter idPublicacion = new SqlParameter("@idPublicacion", SqlDbType.Int);
+            //idPublicacion.Direction = ParameterDirection.Input;
+            //SqlParameter fechaSubastas = new SqlParameter("@fecha", SqlDbType.DateTime);
+            //fechaSubastas.SqlValue = DateTime.Today;
+            //fechaSubastas.Direction = ParameterDirection.Input;
 
-            foreach (Int32 idPubli in listaPublis)
-            {
-                idPublicacion.SqlValue = idPubli;
-                publicaciones.ExecuteNonQuery();
-            }
+            //MessageBox.Show(Convert.ToString(listaPublis.Count));
+
+            //    foreach (Int32 idPubli in listaPublis)
+            //    {
+
+            //        idPublicacion.SqlValue = idPubli;
+
+            //        publicaciones.Parameters.Add(idPublicacion);
+            //        publicaciones.Parameters.Add(fechaSubastas);
+            //        publicaciones.ExecuteNonQuery();
+
+            //        publicaciones.Parameters.Clear();
+            //    }
+
             SqlCommand comprasInmediatas = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarComprasInmediatas", conn.getConexion);
             comprasInmediatas.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter fechaDeHoy = new SqlParameter("@fechaActual", SqlDbType.DateTime);
+            fechaDeHoy.SqlValue = DateTime.Today;
+            fechaDeHoy.Direction = ParameterDirection.Input;
+            comprasInmediatas.Parameters.Add(fechaDeHoy);
             comprasInmediatas.ExecuteNonQuery();
             /*******************************************************************************************************************************************/
         }
