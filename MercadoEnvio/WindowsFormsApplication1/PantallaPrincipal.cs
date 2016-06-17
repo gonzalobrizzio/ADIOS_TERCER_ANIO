@@ -18,7 +18,6 @@ namespace MercadoEnvios.ABM_Usuario
     {
         Sesion sesion = Sesion.Instance;
         Conexion conn;
-        SqlDataAdapter da;
 
         public frmPantallaPrincipal()
         {

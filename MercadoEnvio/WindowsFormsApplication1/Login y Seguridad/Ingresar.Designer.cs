@@ -38,7 +38,7 @@
             // 
             // txtUsr
             // 
-            this.txtUsr.Location = new System.Drawing.Point(213, 120);
+            this.txtUsr.Location = new System.Drawing.Point(184, 84);
             this.txtUsr.MaxLength = 20;
             this.txtUsr.Name = "txtUsr";
             this.txtUsr.Size = new System.Drawing.Size(100, 20);
@@ -47,25 +47,25 @@
             // lblUsuario
             // 
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblUsuario.Location = new System.Drawing.Point(82, 118);
+            this.lblUsuario.Location = new System.Drawing.Point(53, 84);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(72, 22);
             this.lblUsuario.TabIndex = 1;
-            this.lblUsuario.Text = "Usuario";
+            this.lblUsuario.Text = "Usuario:";
             // 
             // lblContrasenia
             // 
             this.lblContrasenia.AutoSize = true;
             this.lblContrasenia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblContrasenia.Location = new System.Drawing.Point(82, 174);
+            this.lblContrasenia.Location = new System.Drawing.Point(53, 124);
             this.lblContrasenia.Name = "lblContrasenia";
-            this.lblContrasenia.Size = new System.Drawing.Size(92, 20);
+            this.lblContrasenia.Size = new System.Drawing.Size(96, 20);
             this.lblContrasenia.TabIndex = 2;
-            this.lblContrasenia.Text = "Contraseña";
+            this.lblContrasenia.Text = "Contraseña:";
             // 
             // txtContra
             // 
-            this.txtContra.Location = new System.Drawing.Point(213, 176);
+            this.txtContra.Location = new System.Drawing.Point(184, 124);
             this.txtContra.MaxLength = 8;
             this.txtContra.Name = "txtContra";
             this.txtContra.PasswordChar = '*';
@@ -76,7 +76,7 @@
             // 
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.btnIngresar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnIngresar.Location = new System.Drawing.Point(86, 223);
+            this.btnIngresar.Location = new System.Drawing.Point(92, 171);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(100, 29);
             this.btnIngresar.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSalir.Location = new System.Drawing.Point(246, 223);
+            this.btnSalir.Location = new System.Drawing.Point(210, 171);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(67, 29);
             this.btnSalir.TabIndex = 7;
@@ -100,7 +100,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 334);
+            this.ClientSize = new System.Drawing.Size(349, 249);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.txtContra);
