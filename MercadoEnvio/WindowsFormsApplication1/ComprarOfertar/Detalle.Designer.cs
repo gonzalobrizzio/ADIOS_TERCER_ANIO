@@ -52,6 +52,7 @@
             this.lblStock = new System.Windows.Forms.Label();
             this.grpPreguntas = new System.Windows.Forms.GroupBox();
             this.lblEnvio = new System.Windows.Forms.Label();
+            this.lblCalificacionPromedio = new System.Windows.Forms.Label();
             this.grpPreguntas.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -292,11 +293,22 @@
             this.lblEnvio.TabIndex = 26;
             this.lblEnvio.Text = "[Envio]";
             // 
+            // lblCalificacionPromedio
+            // 
+            this.lblCalificacionPromedio.AutoSize = true;
+            this.lblCalificacionPromedio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCalificacionPromedio.Location = new System.Drawing.Point(219, 100);
+            this.lblCalificacionPromedio.Name = "lblCalificacionPromedio";
+            this.lblCalificacionPromedio.Size = new System.Drawing.Size(191, 20);
+            this.lblCalificacionPromedio.TabIndex = 27;
+            this.lblCalificacionPromedio.Text = "[Calificacion Promedio]";
+            // 
             // frmDetalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 467);
+            this.Controls.Add(this.lblCalificacionPromedio);
             this.Controls.Add(this.lblEnvio);
             this.Controls.Add(this.grpPreguntas);
             this.Controls.Add(this.lblStock);
@@ -353,5 +365,6 @@
         private System.Windows.Forms.Label lblStock;
         private System.Windows.Forms.GroupBox grpPreguntas;
         private System.Windows.Forms.Label lblEnvio;
+        private System.Windows.Forms.Label lblCalificacionPromedio;
     }
 }

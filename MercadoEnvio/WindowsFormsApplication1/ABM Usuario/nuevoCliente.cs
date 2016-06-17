@@ -26,25 +26,25 @@ namespace MercadoEnvios.ABM_Usuario
             conn = Conexion.Instance;
             rolU = rol;
 
-            campoMail.MaxLength = 30;
-            campoUsuario.MaxLength = 20;
-            campoContrasenia.MaxLength = 20;
-            campoNroDeDoc.MaxLength = 8;
-            campoDireccion.MaxLength = 30;
-            campoCodigoPostal.MaxLength = 4;
-            campoNroDeDireccion.MaxLength = 5;
-            campoDepto.MaxLength = 3;
-            campoTelefono.MaxLength = 11;
-            campoPiso.MaxLength = 3;
+            Mail.MaxLength = 30;
+            Usuario.MaxLength = 20;
+            Contrasenia.MaxLength = 20;
+            Nro_de_Documento.MaxLength = 8;
+            Direccion.MaxLength = 30;
+            Codigo_Postal.MaxLength = 4;
+            Nro_de_Direccion.MaxLength = 5;
+            Depto.MaxLength = 3;
+            Telefono.MaxLength = 11;
+            Piso.MaxLength = 3;
 
             string queryTiposDeDoc = "SELECT DISTINCT descripcion FROM ADIOS_TERCER_ANIO.TipoDocumento";
             SqlCommand buscarTiposDeDoc = new SqlCommand(queryTiposDeDoc, conn.getConexion);
             dataReader = buscarTiposDeDoc.ExecuteReader();
             while (dataReader.Read())
             {
-                comboTipoDeDocumento.Items.Add(dataReader.GetString(0));
+                Tipo_de_Documento.Items.Add(dataReader.GetString(0));
             }
-
+            Tipo_de_Documento.SelectedIndex = 0;
             dataReader.Close();
 
             string queryLocalidades = "SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Localidad";
@@ -52,9 +52,10 @@ namespace MercadoEnvios.ABM_Usuario
             dataReader = buscarLocalidades.ExecuteReader();
             while (dataReader.Read())
             {
-                comboLocalidad.Items.Add(dataReader.GetString(0));
+                Localidad.Items.Add(dataReader.GetString(0));
             }
-
+            Localidad.SelectedIndex = 0;
+            Fecha_de_Nacimiento.Enabled = false;
             dataReader.Close();
         }
 
@@ -68,43 +69,43 @@ namespace MercadoEnvios.ABM_Usuario
         {
             
 
-            bool usuarioB = this.funcionesValidacion.validarNoVacio(campoUsuario, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(campoContrasenia, mensajeDeAviso);
-            bool mailB = this.funcionesValidacion.validarNoVacio(campoMail, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(campoNombre, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(campoApellido, mensajeDeAviso);
-            bool dniB = this.funcionesValidacion.validarNoVacio(campoNroDeDoc, mensajeDeAviso);
-            this.funcionesValidacion.validarNumerico(campoNroDeDoc, mensajeDeAviso);
-            bool tipoB = this.funcionesValidacion.validarComboVacio(comboTipoDeDocumento, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(campoDireccion, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(campoCodigoPostal, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(campoFechaDeNacimiento, mensajeDeAviso);
+            bool usuarioB = this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Contrasenia, mensajeDeAviso);
+            bool mailB = this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Nombre, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Apellido, mensajeDeAviso);
+            bool dniB = this.funcionesValidacion.validarNoVacio(Nro_de_Documento, mensajeDeAviso);
+            this.funcionesValidacion.validarNumerico(Nro_de_Documento, mensajeDeAviso);
+            bool tipoB = this.funcionesValidacion.validarComboVacio(Tipo_de_Documento, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Direccion, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Codigo_Postal, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Fecha_de_Nacimiento, mensajeDeAviso);
             
             bool validaciones;
 
             if (usuarioB)
             {
-                this.funcionesValidacion.validarUsuario(campoUsuario, mensajeDeAviso);
+                this.funcionesValidacion.validarUsuario(Usuario, mensajeDeAviso);
             }
 
             if(dniB && tipoB) 
             {
-                this.funcionesValidacion.validarDNI(comboTipoDeDocumento.Text,campoNroDeDoc,mensajeDeAviso);
+                this.funcionesValidacion.validarDNI(Tipo_de_Documento.Text,Nro_de_Documento,mensajeDeAviso);
             }
 
             if (mailB)
             {
-                this.funcionesValidacion.validarEmail(campoMail, mensajeDeAviso);
+                this.funcionesValidacion.validarEmail(Mail, mensajeDeAviso);
             }
 
-            if (!(string.IsNullOrEmpty(campoNroDeDireccion.Text)))
+            if (!(string.IsNullOrEmpty(Nro_de_Direccion.Text)))
             {
-                this.funcionesValidacion.validarNumerico(campoNroDeDireccion, mensajeDeAviso);
+                this.funcionesValidacion.validarNumerico(Nro_de_Direccion, mensajeDeAviso);
             }
 
-            if (!(string.IsNullOrEmpty(campoPiso.Text)))
+            if (!(string.IsNullOrEmpty(Piso.Text)))
             {
-                this.funcionesValidacion.validarNumerico(campoPiso, mensajeDeAviso);
+                this.funcionesValidacion.validarNumerico(Piso, mensajeDeAviso);
             }
 
             if (mensajeDeAviso.Length > 0)
@@ -127,11 +128,11 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarRolUsuario.CommandType = System.Data.CommandType.StoredProcedure;
 
                 SqlParameter usuario = new SqlParameter("@usuario", SqlDbType.NVarChar, 255);
-                usuario.SqlValue = campoUsuario.Text;
+                usuario.SqlValue = Usuario.Text;
                 usuario.Direction = ParameterDirection.Input;
 
                 SqlParameter password = new SqlParameter("@password", SqlDbType.NVarChar, 255);
-                password.SqlValue = Utilidades.encriptarCadenaSHA256(campoContrasenia.Text);
+                password.SqlValue = Utilidades.encriptarCadenaSHA256(Contrasenia.Text);
                 password.Direction = ParameterDirection.Input;
 
                 SqlParameter idUsuario = new SqlParameter("@ultimoID", null);
@@ -139,7 +140,7 @@ namespace MercadoEnvios.ABM_Usuario
                 idUsuario.SqlDbType = SqlDbType.Int;
 
                 SqlParameter mail = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
-                mail.SqlValue = campoMail.Text;
+                mail.SqlValue = Mail.Text;
                 mail.Direction = ParameterDirection.Input;
 
                 agregarUsuario.Parameters.Add(usuario);
@@ -177,73 +178,73 @@ namespace MercadoEnvios.ABM_Usuario
                 }
 
                 SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                nombre.SqlValue = campoNombre.Text;
+                nombre.SqlValue = Nombre.Text;
                 nombre.Direction = ParameterDirection.Input;
 
                 SqlParameter apellido = new SqlParameter("@apellido", SqlDbType.NVarChar, 255);
-                apellido.SqlValue = campoApellido.Text;
+                apellido.SqlValue = Apellido.Text;
                 apellido.Direction = ParameterDirection.Input;
 
                 SqlParameter dni = new SqlParameter("@documento", SqlDbType.Decimal);
-                if (string.IsNullOrEmpty(campoNroDeDoc.Text))
+                if (string.IsNullOrEmpty(Nro_de_Documento.Text))
                 {
                     dni.SqlValue = DBNull.Value;
                 }
                 else
                 {
-                    dni.SqlValue = Convert.ToDecimal(campoNroDeDoc.Text);
+                    dni.SqlValue = Convert.ToDecimal(Nro_de_Documento.Text);
                 }
                 dni.Direction = ParameterDirection.Input;
 
                 SqlParameter tipoDoc = new SqlParameter("@tipoDeDocumento", SqlDbType.NVarChar, 255);
-                tipoDoc.SqlValue = (comboTipoDeDocumento.Text);
+                tipoDoc.SqlValue = (Tipo_de_Documento.Text);
                 tipoDoc.Direction = ParameterDirection.Input;
 
                 SqlParameter telefono = new SqlParameter("@telefono", SqlDbType.NVarChar, 255);
-                telefono.SqlValue = campoTelefono.Text;
+                telefono.SqlValue = Telefono.Text;
                 telefono.Direction = ParameterDirection.Input;
 
                 SqlParameter direccion = new SqlParameter("@direccion", SqlDbType.Decimal);
-                if (string.IsNullOrEmpty(campoNroDeDireccion.Text))
+                if (string.IsNullOrEmpty(Nro_de_Direccion.Text))
                 {
                     direccion.SqlValue = DBNull.Value;
                 }
 
                 else
                 {
-                    direccion.SqlValue = Convert.ToDecimal(campoNroDeDireccion.Text);
+                    direccion.SqlValue = Convert.ToDecimal(Nro_de_Direccion.Text);
                 }
                 direccion.Direction = ParameterDirection.Input;
 
                 SqlParameter calle = new SqlParameter("@calle", SqlDbType.NVarChar, 255);
-                calle.SqlValue = campoDireccion.Text;
+                calle.SqlValue = Direccion.Text;
                 calle.Direction = ParameterDirection.Input;
 
                 SqlParameter piso = new SqlParameter("@piso", SqlDbType.Decimal);
-                if (string.IsNullOrEmpty(campoPiso.Text))
+                if (string.IsNullOrEmpty(Piso.Text))
                 {
                     piso.SqlValue = DBNull.Value;
                 }
                 else
                 {
-                    piso.SqlValue = Convert.ToDecimal(campoPiso.Text);
+                    piso.SqlValue = Convert.ToDecimal(Piso.Text);
                 }
                 piso.Direction = ParameterDirection.Input;
 
                 SqlParameter depto = new SqlParameter("@depto", SqlDbType.NVarChar, 255);
-                depto.SqlValue = campoDepto.Text;
+                depto.SqlValue = Depto.Text;
                 depto.Direction = ParameterDirection.Input;
 
                 SqlParameter localidad = new SqlParameter("@localidad", SqlDbType.NVarChar, 255);
-                localidad.SqlValue = comboLocalidad.SelectedText;
+                localidad.SqlValue = Localidad.SelectedText;
                 localidad.Direction = ParameterDirection.Input;
 
                 SqlParameter codigoPostal = new SqlParameter("@codigoPostal", SqlDbType.NVarChar, 255);
-                codigoPostal.SqlValue = campoCodigoPostal.Text;
+                codigoPostal.SqlValue = Codigo_Postal.Text;
                 codigoPostal.Direction = ParameterDirection.Input;
 
                 SqlParameter fechaNac = new SqlParameter("@fechaNac", SqlDbType.DateTime);
-                fechaNac.SqlValue = DateTime.Parse(campoFechaDeNacimiento.Text);
+                fechaNac.SqlValue = DateTime.Parse(Fecha_de_Nacimiento.Text);
                 fechaNac.Direction = ParameterDirection.Input;
 
                 SqlParameter otroid = new SqlParameter("@id", SqlDbType.Int);
@@ -285,8 +286,8 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
         {
-            campoFechaDeNacimiento.Clear();
-            campoFechaDeNacimiento.AppendText(calendarioNac.SelectionStart.ToShortDateString());
+            Fecha_de_Nacimiento.Clear();
+            Fecha_de_Nacimiento.AppendText(calendarioNac.SelectionStart.ToShortDateString());
 
         }
 

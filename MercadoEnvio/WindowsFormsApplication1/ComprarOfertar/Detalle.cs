@@ -66,6 +66,20 @@ namespace MercadoEnvios.ComprarOfertar
                     if (dataReader.GetInt32(10) == 0) { preguntas = true; }
                     else { preguntas = false; }
                 }
+                if (!dataReader[11].Equals(DBNull.Value))
+                {
+                    if (dataReader.GetInt32(11) != 0)
+                    {
+                        lblCalificacionPromedio.Text = dataReader.GetInt32(11).ToString();
+                    }
+                    else
+                    {
+                        lblCalificacionPromedio.Text = "Usuario sin calificar";
+                    }
+                }
+                else {
+                    lblCalificacionPromedio.Text = "Usuario sin calificar";
+                }
             }
             dataReader.Close();
 

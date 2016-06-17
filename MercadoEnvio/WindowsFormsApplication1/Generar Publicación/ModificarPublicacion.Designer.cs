@@ -40,7 +40,7 @@
             // 
             // btnActivar
             // 
-            this.btnActivar.Location = new System.Drawing.Point(148, 469);
+            this.btnActivar.Location = new System.Drawing.Point(562, 469);
             this.btnActivar.Name = "btnActivar";
             this.btnActivar.Size = new System.Drawing.Size(93, 35);
             this.btnActivar.TabIndex = 2;
@@ -50,7 +50,7 @@
             // 
             // btnFinalizar
             // 
-            this.btnFinalizar.Location = new System.Drawing.Point(346, 469);
+            this.btnFinalizar.Location = new System.Drawing.Point(760, 469);
             this.btnFinalizar.Name = "btnFinalizar";
             this.btnFinalizar.Size = new System.Drawing.Size(93, 35);
             this.btnFinalizar.TabIndex = 4;
@@ -60,7 +60,7 @@
             // 
             // btnPausar
             // 
-            this.btnPausar.Location = new System.Drawing.Point(247, 469);
+            this.btnPausar.Location = new System.Drawing.Point(661, 469);
             this.btnPausar.Name = "btnPausar";
             this.btnPausar.Size = new System.Drawing.Size(93, 35);
             this.btnPausar.TabIndex = 3;
@@ -70,7 +70,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(49, 469);
+            this.btnModificar.Location = new System.Drawing.Point(463, 469);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(93, 35);
             this.btnModificar.TabIndex = 1;
@@ -86,7 +86,6 @@
             this.publicaciones.Name = "publicaciones";
             this.publicaciones.Size = new System.Drawing.Size(1105, 368);
             this.publicaciones.TabIndex = 24;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;

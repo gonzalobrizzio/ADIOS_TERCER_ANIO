@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.rubros = new System.Windows.Forms.ComboBox();
+            this.Rubro = new System.Windows.Forms.ComboBox();
             this.habilitarEnvios = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tipoDePublicacion = new System.Windows.Forms.ComboBox();
+            this.Tipo_de_Publicacion = new System.Windows.Forms.ComboBox();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.visibilidad = new System.Windows.Forms.ComboBox();
+            this.Visibilidad = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.habilitarPreguntas = new System.Windows.Forms.CheckBox();
-            this.precio = new System.Windows.Forms.TextBox();
-            this.stock = new System.Windows.Forms.NumericUpDown();
+            this.Precio = new System.Windows.Forms.TextBox();
+            this.Stock = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.lblnameErr = new System.Windows.Forms.Label();
@@ -47,17 +47,18 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.descripcion = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.stock)).BeginInit();
+            this.Descripcion = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.Stock)).BeginInit();
             this.SuspendLayout();
             // 
-            // rubros
+            // Rubro
             // 
-            this.rubros.FormattingEnabled = true;
-            this.rubros.Location = new System.Drawing.Point(22, 293);
-            this.rubros.Name = "rubros";
-            this.rubros.Size = new System.Drawing.Size(177, 21);
-            this.rubros.TabIndex = 6;
+            this.Rubro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Rubro.FormattingEnabled = true;
+            this.Rubro.Location = new System.Drawing.Point(22, 293);
+            this.Rubro.Name = "Rubro";
+            this.Rubro.Size = new System.Drawing.Size(177, 21);
+            this.Rubro.TabIndex = 6;
             // 
             // habilitarEnvios
             // 
@@ -89,16 +90,14 @@
             this.label6.TabIndex = 819;
             this.label6.Text = "Tipo de Publicación";
             // 
-            // tipoDePublicacion
+            // Tipo_de_Publicacion
             // 
-            this.tipoDePublicacion.FormattingEnabled = true;
-            this.tipoDePublicacion.Items.AddRange(new object[] {
-            "Compra inmediata",
-            "Subasta"});
-            this.tipoDePublicacion.Location = new System.Drawing.Point(266, 244);
-            this.tipoDePublicacion.Name = "tipoDePublicacion";
-            this.tipoDePublicacion.Size = new System.Drawing.Size(180, 21);
-            this.tipoDePublicacion.TabIndex = 5;
+            this.Tipo_de_Publicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Tipo_de_Publicacion.FormattingEnabled = true;
+            this.Tipo_de_Publicacion.Location = new System.Drawing.Point(266, 244);
+            this.Tipo_de_Publicacion.Name = "Tipo_de_Publicacion";
+            this.Tipo_de_Publicacion.Size = new System.Drawing.Size(180, 21);
+            this.Tipo_de_Publicacion.TabIndex = 5;
             // 
             // btnCancelar
             // 
@@ -110,13 +109,14 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // visibilidad
+            // Visibilidad
             // 
-            this.visibilidad.FormattingEnabled = true;
-            this.visibilidad.Location = new System.Drawing.Point(22, 244);
-            this.visibilidad.Name = "visibilidad";
-            this.visibilidad.Size = new System.Drawing.Size(177, 21);
-            this.visibilidad.TabIndex = 4;
+            this.Visibilidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Visibilidad.FormattingEnabled = true;
+            this.Visibilidad.Location = new System.Drawing.Point(22, 244);
+            this.Visibilidad.Name = "Visibilidad";
+            this.Visibilidad.Size = new System.Drawing.Size(177, 21);
+            this.Visibilidad.TabIndex = 4;
             // 
             // label8
             // 
@@ -146,30 +146,30 @@
             this.habilitarPreguntas.Text = "Habilitar preguntas";
             this.habilitarPreguntas.UseVisualStyleBackColor = true;
             // 
-            // precio
+            // Precio
             // 
-            this.precio.Location = new System.Drawing.Point(22, 188);
-            this.precio.Name = "precio";
-            this.precio.Size = new System.Drawing.Size(177, 20);
-            this.precio.TabIndex = 2;
+            this.Precio.Location = new System.Drawing.Point(22, 188);
+            this.Precio.Name = "Precio";
+            this.Precio.Size = new System.Drawing.Size(177, 20);
+            this.Precio.TabIndex = 2;
             // 
-            // stock
+            // Stock
             // 
-            this.stock.Location = new System.Drawing.Point(266, 188);
-            this.stock.Maximum = new decimal(new int[] {
+            this.Stock.Location = new System.Drawing.Point(266, 188);
+            this.Stock.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.stock.Minimum = new decimal(new int[] {
+            this.Stock.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.stock.Name = "stock";
-            this.stock.Size = new System.Drawing.Size(180, 20);
-            this.stock.TabIndex = 3;
-            this.stock.Value = new decimal(new int[] {
+            this.Stock.Name = "Stock";
+            this.Stock.Size = new System.Drawing.Size(180, 20);
+            this.Stock.TabIndex = 3;
+            this.Stock.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -244,31 +244,31 @@
             this.label1.TabIndex = 811;
             this.label1.Text = "Descripción:";
             // 
-            // descripcion
+            // Descripcion
             // 
-            this.descripcion.Location = new System.Drawing.Point(21, 66);
-            this.descripcion.Multiline = true;
-            this.descripcion.Name = "descripcion";
-            this.descripcion.Size = new System.Drawing.Size(472, 79);
-            this.descripcion.TabIndex = 1;
+            this.Descripcion.Location = new System.Drawing.Point(21, 66);
+            this.Descripcion.Multiline = true;
+            this.Descripcion.Name = "Descripcion";
+            this.Descripcion.Size = new System.Drawing.Size(472, 79);
+            this.Descripcion.TabIndex = 1;
             // 
             // EditarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(508, 452);
-            this.Controls.Add(this.rubros);
+            this.Controls.Add(this.Rubro);
             this.Controls.Add(this.habilitarEnvios);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.tipoDePublicacion);
+            this.Controls.Add(this.Tipo_de_Publicacion);
             this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.visibilidad);
+            this.Controls.Add(this.Visibilidad);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.habilitarPreguntas);
-            this.Controls.Add(this.precio);
-            this.Controls.Add(this.stock);
+            this.Controls.Add(this.Precio);
+            this.Controls.Add(this.Stock);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.lblnameErr);
@@ -276,11 +276,11 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.descripcion);
+            this.Controls.Add(this.Descripcion);
             this.Name = "EditarPublicacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditarPublicacion";
-            ((System.ComponentModel.ISupportInitialize)(this.stock)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Stock)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,18 +288,18 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox rubros;
+        private System.Windows.Forms.ComboBox Rubro;
         private System.Windows.Forms.CheckBox habilitarEnvios;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox tipoDePublicacion;
+        private System.Windows.Forms.ComboBox Tipo_de_Publicacion;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.ComboBox visibilidad;
+        private System.Windows.Forms.ComboBox Visibilidad;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox habilitarPreguntas;
-        private System.Windows.Forms.TextBox precio;
-        private System.Windows.Forms.NumericUpDown stock;
+        private System.Windows.Forms.TextBox Precio;
+        private System.Windows.Forms.NumericUpDown Stock;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label lblnameErr;
@@ -307,6 +307,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox descripcion;
+        private System.Windows.Forms.TextBox Descripcion;
     }
 }

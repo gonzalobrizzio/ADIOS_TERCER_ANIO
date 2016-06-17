@@ -75,7 +75,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvPublicaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvPublicaciones.Size = new System.Drawing.Size(579, 284);
+            this.dgvPublicaciones.Size = new System.Drawing.Size(646, 284);
             this.dgvPublicaciones.TabIndex = 0;
             // 
             // lblListado
@@ -100,7 +100,7 @@
             // 
             // btnSgte
             // 
-            this.btnSgte.Location = new System.Drawing.Point(790, 336);
+            this.btnSgte.Location = new System.Drawing.Point(860, 336);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(41, 33);
             this.btnSgte.TabIndex = 3;
@@ -110,7 +110,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(614, 336);
+            this.btnVolver.Location = new System.Drawing.Point(684, 336);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(170, 33);
             this.btnVolver.TabIndex = 4;
@@ -167,7 +167,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(841, 381);
+            this.ClientSize = new System.Drawing.Size(912, 381);
             this.Controls.Add(this.btnQuitar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvFiltros);

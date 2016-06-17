@@ -19,6 +19,7 @@ namespace MercadoEnvios.ABM_Rol
             InitializeComponent();
             string[] rolesSeparados = roles.Split(',');
             cboRol.Items.AddRange(rolesSeparados);
+            cboRol.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)

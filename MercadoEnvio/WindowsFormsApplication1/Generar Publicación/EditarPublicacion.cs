@@ -34,7 +34,7 @@ namespace MercadoEnvios.Generar_Publicación
 
             while (dabuscarRubrosDisponibles.Read())
             {
-                rubros.Items.Add(dabuscarRubrosDisponibles.GetString(0));
+                Rubro.Items.Add(dabuscarRubrosDisponibles.GetString(0));
             }
             dabuscarRubrosDisponibles.Close();
 
@@ -43,9 +43,17 @@ namespace MercadoEnvios.Generar_Publicación
             SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
             while (dataReader.Read())
             {
-                visibilidad.Items.Add(dataReader.GetString(0));
+                Visibilidad.Items.Add(dataReader.GetString(0));
             }
+            dataReader.Close();
 
+            string queryTipoDePublicacion = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad";
+            SqlCommand buscarTiposDePublicaciones = new SqlCommand(queryTipoDePublicacion, conn.getConexion);
+            dataReader = buscarTiposDePublicaciones.ExecuteReader();
+            while (dataReader.Read())
+            {
+                Tipo_de_Publicacion.Items.Add(dataReader.GetString(0));
+            }
             dataReader.Close();
 
             string sacarDatosPublicacion = "SELECT descripcion, precio, stock, (SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id), "
@@ -62,12 +70,12 @@ namespace MercadoEnvios.Generar_Publicación
 
             if (dataReader.HasRows)
             {
-                if (!dataReader[0].Equals(DBNull.Value)) { descripcion.Text = dataReader.GetString(0); }
-                if (!dataReader[1].Equals(DBNull.Value)) { precio.Text = Convert.ToString(dataReader.GetDecimal(1)); }
-                if (!dataReader[2].Equals(DBNull.Value)) { stock.Text = Convert.ToString(dataReader.GetInt32(2)); }
-                if (!dataReader[3].Equals(DBNull.Value)) { visibilidad.Text = dataReader.GetString(3); }
-                if (!dataReader[4].Equals(DBNull.Value)) { tipoDePublicacion.Text = dataReader.GetString(4); }
-                if (!dataReader[5].Equals(DBNull.Value)) { rubros.Text = dataReader.GetString(5); }
+                if (!dataReader[0].Equals(DBNull.Value)) { Descripcion.Text = dataReader.GetString(0); }
+                if (!dataReader[1].Equals(DBNull.Value)) { Precio.Text = Convert.ToString(dataReader.GetDecimal(1)); }
+                if (!dataReader[2].Equals(DBNull.Value)) { Stock.Text = Convert.ToString(dataReader.GetInt32(2)); }
+                if (!dataReader[3].Equals(DBNull.Value)) { Visibilidad.Text = dataReader.GetString(3); }
+                if (!dataReader[4].Equals(DBNull.Value)) { Tipo_de_Publicacion.Text = dataReader.GetString(4); }
+                if (!dataReader[5].Equals(DBNull.Value)) { Rubro.Text = dataReader.GetString(5); }
                 if (!dataReader[6].Equals(DBNull.Value)) { preguntas = dataReader.GetInt32(6); }
                 if (!dataReader[7].Equals(DBNull.Value)) { envio = dataReader.GetInt32(7); }
             }
@@ -82,19 +90,34 @@ namespace MercadoEnvios.Generar_Publicación
                 habilitarEnvios.Checked = true;
             }
 
+            if (Rubro.SelectedIndex.Equals(-1))
+            {
+                Rubro.SelectedIndex = 0;
+            }
+
+            if (Tipo_de_Publicacion.SelectedIndex.Equals(-1))
+            {
+                Tipo_de_Publicacion.SelectedIndex = 0;
+            }
+
+            if (Visibilidad.SelectedIndex.Equals(-1))
+            {
+                Visibilidad.SelectedIndex = 0;
+            }
+
             dataReader.Close();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            funcion.validarComboVacio(visibilidad, mensajeValidacion);
-            funcion.validarComboVacio(tipoDePublicacion, mensajeValidacion);
-            funcion.validarComboVacio(rubros, mensajeValidacion);
-            funcion.validarNoVacio(descripcion, mensajeValidacion);
-            funcion.validarNoVacio(precio, mensajeValidacion);
-            funcion.validarDecimal(precio, mensajeValidacion);
-            funcion.validarNumerico(stock, mensajeValidacion);
-            funcion.validarNoVacio(stock, mensajeValidacion);
+            funcion.validarComboVacio(Visibilidad, mensajeValidacion);
+            funcion.validarComboVacio(Tipo_de_Publicacion, mensajeValidacion);
+            funcion.validarComboVacio(Rubro, mensajeValidacion);
+            funcion.validarNoVacio(Descripcion, mensajeValidacion);
+            funcion.validarNoVacio(Precio, mensajeValidacion);
+            funcion.validarDecimal(Precio, mensajeValidacion);
+            funcion.validarNumerico(Stock, mensajeValidacion);
+            funcion.validarNoVacio(Stock, mensajeValidacion);
 
 
             bool validaciones;
@@ -115,27 +138,27 @@ namespace MercadoEnvios.Generar_Publicación
                 actualizarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
 
                 SqlParameter descripcionP = new SqlParameter("@descripcion", SqlDbType.NVarChar, 255);
-                descripcionP.SqlValue = descripcion.Text;
+                descripcionP.SqlValue = Descripcion.Text;
                 descripcionP.Direction = ParameterDirection.Input;
 
                 SqlParameter precioP = new SqlParameter("@precio", SqlDbType.Decimal);
-                precioP.SqlValue = Convert.ToDecimal(precio.Text);
+                precioP.SqlValue = Convert.ToDecimal(Precio.Text);
                 precioP.Direction = ParameterDirection.Input;
 
                 SqlParameter stockP = new SqlParameter("@stock", SqlDbType.Int);
-                stockP.SqlValue = Convert.ToInt32(stock.Value);
+                stockP.SqlValue = Convert.ToInt32(Stock.Value);
                 stockP.Direction = ParameterDirection.Input;
 
                 SqlParameter visibilidadP = new SqlParameter("@visibilidad", SqlDbType.NVarChar, 255);
-                visibilidadP.SqlValue = visibilidad.Text;
+                visibilidadP.SqlValue = Visibilidad.Text;
                 visibilidadP.Direction = ParameterDirection.Input;
 
                 SqlParameter tipoDePublicacionP = new SqlParameter("@tipo", SqlDbType.NVarChar, 255);
-                tipoDePublicacionP.SqlValue = tipoDePublicacion.Text;
+                tipoDePublicacionP.SqlValue = Tipo_de_Publicacion.Text;
                 tipoDePublicacionP.Direction = ParameterDirection.Input;
 
                 SqlParameter rubro = new SqlParameter("@rubro", SqlDbType.NVarChar, 255);
-                rubro.SqlValue = rubros.Text;
+                rubro.SqlValue = Rubro.Text;
                 rubro.Direction = ParameterDirection.Input;
 
                 SqlParameter habilitaPreguntas = new SqlParameter("@tienePreguntas", SqlDbType.Int);

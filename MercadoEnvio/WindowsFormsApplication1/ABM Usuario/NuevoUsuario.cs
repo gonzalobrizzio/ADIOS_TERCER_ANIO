@@ -26,7 +26,7 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 cmbRolAsignado.Items.Add(dataReader.GetString(0));
             }
-
+            cmbRolAsignado.SelectedIndex = 0;
             dataReader.Close();
         }
 

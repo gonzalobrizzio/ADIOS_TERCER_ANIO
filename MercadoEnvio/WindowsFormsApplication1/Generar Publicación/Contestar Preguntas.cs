@@ -25,9 +25,17 @@ namespace MercadoEnvios.Generar_Publicación
         }
 
         private void getData(){
-            String queryHabilitados = "SELECT id, pregunta, fecha FROM ADIOS_TERCER_ANIO.Pregunta WHERE contestada = 0";
+            
+            String queryHabilitados = "SELECT pregunta.id, pregunta.pregunta, pregunta.fecha, publicacion.descripcion FROM ADIOS_TERCER_ANIO.Pregunta pregunta inner join ADIOS_TERCER_ANIO.Publicacion publicacion on pregunta.idPublicacion = publicacion.id WHERE @idUsuario = publicacion.idPublicador AND pregunta.contestada = 0";
             conn = Conexion.Instance;
             da = new SqlDataAdapter(queryHabilitados, conn.getConexion);
+
+            SqlParameter sesionUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+            sesionUsuario.SqlValue = sesion.idUsuario;
+            sesionUsuario.Direction = ParameterDirection.Input;
+
+            da.SelectCommand.Parameters.Add(sesionUsuario);
+
             DataTable tablaDeRoles = new DataTable("Preguntas");
             da.Fill(tablaDeRoles);
             dgvPreguntas.DataSource = tablaDeRoles;

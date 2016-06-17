@@ -78,6 +78,7 @@
             // 
             // cmbRolAsignado
             // 
+            this.cmbRolAsignado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRolAsignado.FormattingEnabled = true;
             this.cmbRolAsignado.Location = new System.Drawing.Point(140, 78);
             this.cmbRolAsignado.Name = "cmbRolAsignado";

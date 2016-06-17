@@ -112,108 +112,108 @@ namespace MercadoEnvios.ComprarOfertar
             this.Close();
         }
 
-        public DataTable getAllPublicationByFiltro(DateTime fecha, String descripcion, String rubros)
-        {
-            DataTable retorno = null;
+        //public DataTable getAllPublicationByFiltro(DateTime fecha, String descripcion, String rubros)
+        //{
+        //    DataTable retorno = null;
 
-            SqlConnection conexion = null;
-            SqlTransaction trx = null;
-            DataTable tabla = null;
+        //    SqlConnection conexion = null;
+        //    SqlTransaction trx = null;
+        //    DataTable tabla = null;
 
 
 
-            String find = "SELECT " +
-                          "p.number AS number,p.description AS description,m.description AS mode,v.description AS visibility,v.publishPrice AS publishPrice," +
-                          "(p.stock - (SELECT ISNULL(SUM(quantity),0) FROM GRUPO_GDD.purchase WHERE publication_number = p.number)) 	AS stockRemaining " +
-                          " FROM " +
-                          "GRUPO_GDD.publication p,GRUPO_GDD.mode m,GRUPO_GDD.visibility v,GRUPO_GDD.publication_has_category pc " +
-                          " WHERE " +
-                          "p.mode_id = m.id AND p.visibility_code = v.code AND p.number = pc.publication_number AND p.mode_id = 2 " +
-                          "AND (p.state_publication_id = 2 OR p.state_publication_id = 3) AND p.expireDate >=  '" + fecha.ToString("yyyyMMdd") + "' AND " +
-                          "(p.stock - (SELECT ISNULL(SUM(quantity),0) FROM GRUPO_GDD.purchase WHERE publication_number = p.number)) > 0 ";
+            //String find = "SELECT " +
+            //              "p.number AS number,p.description AS description,m.description AS mode,v.description AS visibility,v.publishPrice AS publishPrice," +
+            //              "(p.stock - (SELECT ISNULL(SUM(quantity),0) FROM GRUPO_GDD.purchase WHERE publication_number = p.number)) 	AS stockRemaining " +
+            //              " FROM " +
+            //              "GRUPO_GDD.publication p,GRUPO_GDD.mode m,GRUPO_GDD.visibility v,GRUPO_GDD.publication_has_category pc " +
+            //              " WHERE " +
+            //              "p.mode_id = m.id AND p.visibility_code = v.code AND p.number = pc.publication_number AND p.mode_id = 2 " +
+            //              "AND (p.state_publication_id = 2 OR p.state_publication_id = 3) AND p.expireDate >=  '" + fecha.ToString("yyyyMMdd") + "' AND " +
+            //              "(p.stock - (SELECT ISNULL(SUM(quantity),0) FROM GRUPO_GDD.purchase WHERE publication_number = p.number)) > 0 ";
 
-            if (!String.IsNullOrEmpty(descripcion))
-            {
-                find += "AND p.description LIKE '%" + descripcion + "%' ";
-            }
+            //if (!String.IsNullOrEmpty(descripcion))
+            //{
+            //    find += "AND p.description LIKE '%" + descripcion + "%' ";
+            //}
 
-            if (!String.IsNullOrEmpty(rubros))
-            {
-                String findRubros = "";
+            //if (!String.IsNullOrEmpty(rubros))
+            //{
+            //    String findRubros = "";
 
-                string[] a = rubros.Split(';');
-                foreach (string i in a)
-                {
-                    findRubros += "pc.category_id = " + i + " OR ";
-                }
+            //    string[] a = rubros.Split(';');
+            //    foreach (string i in a)
+            //    {
+            //        findRubros += "pc.category_id = " + i + " OR ";
+            //    }
 
-                findRubros = findRubros.Substring(0, findRubros.Length - 4);
-                find += "AND (" + findRubros + ") ";
-            }
-            /* "AND p.description = '"+ descripcion +"' AND ("+ findRubros +") " + */
-            find += " UNION " +
-              "  SELECT " +
-              "p.number AS number,p.description AS description,m.description AS mode,v.description AS visibility,v.publishPrice AS publishPrice," +
-              "p.stock	AS stockRemaining " +
-              "  FROM " +
-              "GRUPO_GDD.publication p,GRUPO_GDD.mode m,GRUPO_GDD.visibility v,GRUPO_GDD.publication_has_category pc " +
-              " WHERE " +
-              "p.mode_id = m.id AND p.visibility_code = v.code AND p.number = pc.publication_number AND p.mode_id = 3 " +
-              "AND (p.state_publication_id = 2 OR p.state_publication_id = 3) AND p.expireDate >=  '" + fecha.ToString("yyyyMMdd") + "' ";
+            //    findRubros = findRubros.Substring(0, findRubros.Length - 4);
+            //    find += "AND (" + findRubros + ") ";
+            //}
+            ///* "AND p.description = '"+ descripcion +"' AND ("+ findRubros +") " + */
+            //find += " UNION " +
+            //  "  SELECT " +
+            //  "p.number AS number,p.description AS description,m.description AS mode,v.description AS visibility,v.publishPrice AS publishPrice," +
+            //  "p.stock	AS stockRemaining " +
+            //  "  FROM " +
+            //  "GRUPO_GDD.publication p,GRUPO_GDD.mode m,GRUPO_GDD.visibility v,GRUPO_GDD.publication_has_category pc " +
+            //  " WHERE " +
+            //  "p.mode_id = m.id AND p.visibility_code = v.code AND p.number = pc.publication_number AND p.mode_id = 3 " +
+            //  "AND (p.state_publication_id = 2 OR p.state_publication_id = 3) AND p.expireDate >=  '" + fecha.ToString("yyyyMMdd") + "' ";
 
-            if (!String.IsNullOrEmpty(descripcion))
-            {
-                find += "AND p.description LIKE '%" + descripcion + "%' ";
-            }
+            //if (!String.IsNullOrEmpty(descripcion))
+            //{
+            //    find += "AND p.description LIKE '%" + descripcion + "%' ";
+            //}
 
-            if (!String.IsNullOrEmpty(rubros))
-            {
-                String findRubros = "";
+            //if (!String.IsNullOrEmpty(rubros))
+            //{
+            //    String findRubros = "";
 
-                string[] a = rubros.Split(';');
-                foreach (string i in a)
-                {
-                    findRubros += "pc.category_id = " + i + " OR ";
-                }
+            //    string[] a = rubros.Split(';');
+            //    foreach (string i in a)
+            //    {
+            //        findRubros += "pc.category_id = " + i + " OR ";
+            //    }
 
-                findRubros = findRubros.Substring(0, findRubros.Length - 4);
-                find += "AND (" + findRubros + ") ";
-            }
+            //    findRubros = findRubros.Substring(0, findRubros.Length - 4);
+            //    find += "AND (" + findRubros + ") ";
+            //}
 
-            find += "ORDER BY publishPrice DESC";
+            //find += "ORDER BY publishPrice DESC";
 
-            try
-            {
+            //try
+            //{
 
-                conexion = DAOUtils.getConnection();
-                conexion.Open();
+            //    conexion = DAOUtils.getConnection();
+            //    conexion.Open();
 
-                trx = conexion.BeginTransaction();
+            //    trx = conexion.BeginTransaction();
 
-                SqlCommand comando = new SqlCommand(find, conexion);
-                comando.Transaction = trx;
-                SqlDataAdapter adaptador = new SqlDataAdapter(comando);
-                tabla = new DataTable();
-                adaptador.Fill(tabla);
-                conexion.Close();
+            //    SqlCommand comando = new SqlCommand(find, conexion);
+            //    comando.Transaction = trx;
+            //    SqlDataAdapter adaptador = new SqlDataAdapter(comando);
+            //    tabla = new DataTable();
+            //    adaptador.Fill(tabla);
+            //    conexion.Close();
 
-                retorno = tabla;
-                return retorno;
+            //    retorno = tabla;
+            //    return retorno;
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al intentar listar datos.\n" + ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Error al intentar listar datos.\n" + ex.Message);
+            //}
 
-            finally
-            {
-                if (conexion != null)
-                {
-                    conexion.Close();
-                }
-            }
-        }
+            //finally
+            //{
+            //    if (conexion != null)
+            //    {
+            //        conexion.Close();
+            //    }
+            //}
+        
 
         private void btnDetalle_Click(object sender, EventArgs e)
         {

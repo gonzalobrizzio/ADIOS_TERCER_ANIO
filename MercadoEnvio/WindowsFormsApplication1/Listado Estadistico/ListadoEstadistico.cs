@@ -27,11 +27,13 @@ namespace MercadoEnvios.Listado_Estadistico
             tipo_de_listado.Items.Add("Clientes con mayor cantidad de productos comprados");
             tipo_de_listado.Items.Add("Vendedores con mayor cantidad de facturas");
             tipo_de_listado.Items.Add("Vendedores con mayor monto facturado");
+            tipo_de_listado.SelectedIndex = 0;
 
             trimestre.Items.Add("Enero - Marzo");
             trimestre.Items.Add("Abril - Junio");
             trimestre.Items.Add("Julio - Septiembre");
             trimestre.Items.Add("Octubre - Diciembre");
+            trimestre.SelectedIndex = 0;
 
             lblRubro.Visible = false;
             rubro.Visible = false;
@@ -187,6 +189,8 @@ namespace MercadoEnvios.Listado_Estadistico
                 this.anio.Items.Add(i);
                 i--;
             }
+
+            anio.SelectedIndex = 0;
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

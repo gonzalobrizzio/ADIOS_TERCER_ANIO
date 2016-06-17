@@ -56,6 +56,7 @@
             // 
             // cboRol
             // 
+            this.cboRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRol.FormattingEnabled = true;
             this.cboRol.Location = new System.Drawing.Point(122, 136);
             this.cboRol.Name = "cboRol";

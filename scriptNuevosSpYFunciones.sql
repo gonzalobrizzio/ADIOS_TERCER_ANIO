@@ -322,7 +322,7 @@ BEGIN
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, iif(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
+	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
 	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
@@ -823,17 +823,18 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion(@idPublicacion INT)
 AS
 BEGIN
-
 	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre as tipoPublicacion, publicacion.precio, 
-	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock, publicacion.tieneEnvio as tieneEnvio, publicacion.tienePreguntas as tienePreguntas from ADIOS_TERCER_ANIO.Publicacion publicacion
+	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock, publicacion.tieneEnvio as tieneEnvio, publicacion.tienePreguntas as tienePreguntas,
+	iif(rol.idRol = 2,(SELECT calificacionPromedio FROM ADIOS_TERCER_ANIO.Persona WHERE idUsuario = usr.id),(SELECT calificacionPromedio FROM ADIOS_TERCER_ANIO.Empresa WHERE idUsuario = usr.id))
+	as calificacionPromedio	from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id 
 	inner join ADIOS_TERCER_ANIO.Usuario usr on publicacion.idPublicador = usr.id 
 	inner join ADIOS_TERCER_ANIO.Rubro rubro on publicacion.idRubro = rubro.id
+	inner join ADIOS_TERCER_ANIO.RolUsuario rol on usr.id = rol.idUsuario
 	where publicacion.id = @idPublicacion 
 END
 GO 
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPregunta(@idPublicacion INT, @nroPreg INT)
 AS
 BEGIN
@@ -943,3 +944,16 @@ insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
+
+SELECT * FROM ADIOS_TERCER_ANIO.Pregunta
+
+
+
+SELECT pregunta.id, pregunta.pregunta, pregunta.fecha, publicacion.descripcion FROM ADIOS_TERCER_ANIO.Pregunta pregunta
+inner join ADIOS_TERCER_ANIO.Publicacion publicacion on pregunta.idPublicacion = publicacion.id
+inner join ADIOS_TERCER_ANIO.Usuario usr on usr.id = publicacion.idPublicador
+WHERE usr.id = publicacion.idPublicador
+
+SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
+
+

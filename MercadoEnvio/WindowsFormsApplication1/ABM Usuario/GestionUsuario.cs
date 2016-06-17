@@ -26,7 +26,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         public void getData() 
         {
-            String query = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, r.id as idrol FROM ADIOS_TERCER_ANIO.Usuario u "
+            String query = "SELECT u.id, u.usuario as Nombre_de_Usuario, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado FROM ADIOS_TERCER_ANIO.Usuario u "
                               + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol WHERE ru.idRol = 2";
 
             conn = Conexion.Instance;
@@ -56,7 +56,7 @@ namespace MercadoEnvios.ABM_Usuario
             dgvEmpresas.AllowUserToAddRows = false;
             dgvEmpresas.AllowUserToDeleteRows = false;
             dgvEmpresas.ReadOnly = true;
-            dgvEmpresas.Columns[0].Visible = true;
+            dgvEmpresas.Columns[0].Visible = false;
             dgvEmpresas.Columns[1].Width = 150;
             dgvEmpresas.Columns[2].Width = 150;
 

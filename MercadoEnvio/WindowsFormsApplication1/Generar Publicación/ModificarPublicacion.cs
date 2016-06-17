@@ -23,7 +23,6 @@ namespace MercadoEnvios.Generar_Publicación
             conn = Conexion.Instance;
             sesion = Sesion.Instance;
             this.getData();
-           
         }
 
         public void getData()
