@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MercadoEnvios.Listado_Estadistico
 {
@@ -100,7 +101,7 @@ namespace MercadoEnvios.Listado_Estadistico
         private void tipo_de_listado_SelectedIndexChanged(object sender, EventArgs e)
         {
             int anioComienzo = 1900;
-            int anioFinal = DateTime.Today.Year;
+            int anioFinal = (Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"])).Year;
             //int añoFinal = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]).Year;
             int i = anioFinal;
             anio.Items.Clear();

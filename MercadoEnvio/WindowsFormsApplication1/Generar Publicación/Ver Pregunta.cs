@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -36,7 +37,7 @@ namespace MercadoEnvios.Generar_Publicación
         private void btnContestar_Click(object sender, EventArgs e)
         {
             string query = "INSERT INTO ADIOS_TERCER_ANIO.Respuesta (idPregunta, fecha, respuesta) VALUES ("
-                + Convert.ToString(idPreguntaContestada) + ", '" + Convert.ToString(DateTime.Today) + "', '" + txtRespuesta.Text + "')";
+                + Convert.ToString(idPreguntaContestada) + ", '" + Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]) + "', '" + txtRespuesta.Text + "')";
             string query2 = "UPDATE ADIOS_TERCER_ANIO.Pregunta set contestada = 1 where id = " + idPreguntaContestada;
             SqlCommand respuesta = new SqlCommand(query, conn.getConexion);
             SqlCommand pregunta = new SqlCommand(query2, conn.getConexion);

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MercadoEnvios.Generar_Publicación
 {
@@ -64,13 +65,13 @@ namespace MercadoEnvios.Generar_Publicación
                 id.Direction = ParameterDirection.Input;
                 
                 SqlParameter fechaInicio = new SqlParameter("@fechaInicio", SqlDbType.DateTime);
-                fechaInicio.SqlValue = DateTime.Today;
+                fechaInicio.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
                 fechaInicio.Direction = ParameterDirection.Input;
 
                 int dias = funcion.obtenerDuracionDeVisibilidad(Convert.ToString(this.publicaciones.CurrentRow.Cells[4].Value));
 
                 SqlParameter fechaFin = new SqlParameter("@fechaFin", SqlDbType.DateTime);
-                fechaFin.SqlValue = DateTime.Today.AddDays(dias);
+                fechaFin.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]).AddDays(dias);
                 fechaFin.Direction = ParameterDirection.Input;
 
                 actualizarPublicacion.Parameters.Add(id);
@@ -120,7 +121,7 @@ namespace MercadoEnvios.Generar_Publicación
                 id.Direction = ParameterDirection.Input;
 
                 SqlParameter fechaFin = new SqlParameter("@fechaFin", SqlDbType.DateTime);
-                fechaFin.SqlValue = DateTime.Today;
+                fechaFin.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
                 fechaFin.Direction = ParameterDirection.Input;
 
                 actualizarPublicacion.Parameters.Add(id);

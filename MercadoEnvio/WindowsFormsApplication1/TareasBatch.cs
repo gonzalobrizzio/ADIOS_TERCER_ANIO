@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace MercadoEnvios
@@ -30,7 +31,7 @@ namespace MercadoEnvios
             SqlCommand subastas = new SqlCommand(subastasVencidas, conn.getConexion);
             
             SqlParameter fechaActual = new SqlParameter("@fechaDeHoy", SqlDbType.DateTime);
-            fechaActual.SqlValue = DateTime.Today;
+            fechaActual.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
             fechaActual.Direction = ParameterDirection.Input;
 
             subastas.Parameters.Add(fechaActual);
@@ -52,7 +53,7 @@ namespace MercadoEnvios
             //SqlParameter idPublicacion = new SqlParameter("@idPublicacion", SqlDbType.Int);
             //idPublicacion.Direction = ParameterDirection.Input;
             //SqlParameter fechaSubastas = new SqlParameter("@fecha", SqlDbType.DateTime);
-            //fechaSubastas.SqlValue = DateTime.Today;
+            //fechaSubastas.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
             //fechaSubastas.Direction = ParameterDirection.Input;
 
             //MessageBox.Show(Convert.ToString(listaPublis.Count));
@@ -73,7 +74,7 @@ namespace MercadoEnvios
             comprasInmediatas.CommandType = System.Data.CommandType.StoredProcedure;
 
             SqlParameter fechaDeHoy = new SqlParameter("@fechaActual", SqlDbType.DateTime);
-            fechaDeHoy.SqlValue = DateTime.Today;
+            fechaDeHoy.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
             fechaDeHoy.Direction = ParameterDirection.Input;
             comprasInmediatas.Parameters.Add(fechaDeHoy);
             comprasInmediatas.ExecuteNonQuery();

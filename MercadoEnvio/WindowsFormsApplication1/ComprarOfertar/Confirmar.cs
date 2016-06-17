@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace MercadoEnvios.ComprarOfertar
@@ -102,7 +103,7 @@ namespace MercadoEnvios.ComprarOfertar
                     idPubli.Direction = ParameterDirection.Input;
 
                     SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
-                    fecha.SqlValue = DateTime.Today;
+                    fecha.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
                     fecha.Direction = ParameterDirection.Input;
 
                     SqlParameter cant = new SqlParameter("@cant", SqlDbType.Int);
@@ -143,7 +144,7 @@ namespace MercadoEnvios.ComprarOfertar
                     idPubli.Direction = ParameterDirection.Input;
 
                     SqlParameter fecha = new SqlParameter("@fecha", SqlDbType.DateTime);
-                    fecha.SqlValue = DateTime.Today;
+                    fecha.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
                     fecha.Direction = ParameterDirection.Input;
 
                     SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);

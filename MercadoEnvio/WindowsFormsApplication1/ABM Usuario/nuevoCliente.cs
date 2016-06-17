@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MercadoEnvios.ABM_Usuario
 {
@@ -252,7 +253,7 @@ namespace MercadoEnvios.ABM_Usuario
                 otroid.Direction = ParameterDirection.Input;
 
                 SqlParameter fechaCreacion = new SqlParameter("@fechaCreacion", SqlDbType.DateTime);
-                fechaCreacion.SqlValue = DateTime.Today;
+                fechaCreacion.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
                 fechaCreacion.Direction = ParameterDirection.Input;
 
                 agregarCliente.Parameters.Add(otroid);
