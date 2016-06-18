@@ -16,6 +16,7 @@ namespace MercadoEnvios.ComprarOfertar
         SqlDataReader dataReader;
         Conexion conn = Conexion.Instance;
         int idPublicacion;
+        int envioP;
         int indexPregunta = 0;
         bool preguntas;
 
@@ -195,7 +196,16 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnComprar_Click(object sender, EventArgs e)
         {
-            new frmConfirmar(idPublicacion).Show(); 
+            if(Envio.Checked)
+            {
+                envioP = 0;
+            }
+            else
+            {
+                envioP = 1;
+            }
+
+            new frmConfirmar(idPublicacion,envioP).Show(); 
             this.Hide();
         }
 

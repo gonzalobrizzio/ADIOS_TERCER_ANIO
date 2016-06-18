@@ -90,7 +90,7 @@ CREATE  TABLE TipoPublicacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
   nombre NVARCHAR(255) NOT NULL,
   envioDisponible INT DEFAULT 0,
-  precioEnvio DECIMAL(18,2) NULL DEFAULT NULL ,
+  precioEnvio DECIMAL(18,2) NULL DEFAULT 50,
   deleted INT DEFAULT 0,
    )
 
@@ -136,6 +136,7 @@ CREATE  TABLE Compra (
   idPublicacion INT REFERENCES Publicacion(id) ,
   fecha DATETIME NULL ,
   cantidad INT NULL,
+  envio INT NULL
   )
 
 CREATE  TABLE Oferta (
@@ -144,6 +145,7 @@ CREATE  TABLE Oferta (
   fecha DATETIME NULL ,
   idUsuario INT REFERENCES Usuario(id) ,
   idPublicacion INT REFERENCES Publicacion(id) ,
+  envio INT NULL
   )
 
 CREATE  TABLE Calificacion (
@@ -157,7 +159,7 @@ CREATE  TABLE Calificacion (
 
 CREATE  TABLE Factura (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
-  numero INT NULL ,
+  numero INT NULL,
   importeTotal DECIMAL(18,2) NULL ,
   fecha DATETIME NULL ,
   idPublicacion INT REFERENCES Publicacion(id) ,
@@ -219,6 +221,19 @@ BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Calificar Vendedor');
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Historial de Compras y Subastas');
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Listado Estadistico');
+
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,1)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,4)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,6)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,2)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,5)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,3)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,8)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,7)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,3)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,5)
+	insert into ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,9)
+
 
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Subasta');
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Compra Inmediata');

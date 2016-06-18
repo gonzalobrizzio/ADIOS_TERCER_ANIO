@@ -16,14 +16,16 @@ namespace MercadoEnvios.ComprarOfertar
         SqlDataReader dataReader;
         Conexion conn = Conexion.Instance;
         int idPublicacion;
+        int envio;
         String tipoCompra;
 
         Sesion sesion = Sesion.Instance;
 
-        public frmConfirmar(int id)
+        public frmConfirmar(int id, int tieneEnvio)
         {
             InitializeComponent();
             idPublicacion = id;
+            envio = tieneEnvio;
             this.getData();
         }
 
@@ -114,10 +116,15 @@ namespace MercadoEnvios.ComprarOfertar
                     idUsu.SqlValue = sesion.idUsuario;
                     idUsu.Direction = ParameterDirection.Input;
 
+                    SqlParameter envioP = new SqlParameter("@envio", SqlDbType.Int);
+                    envioP.SqlValue = envio;
+                    envioP.Direction = ParameterDirection.Input;
+
                     comprar.Parameters.Add(idPubli);
                     comprar.Parameters.Add(fecha);
                     comprar.Parameters.Add(cant);
                     comprar.Parameters.Add(idUsu);
+                    comprar.Parameters.Add(envioP);
 
                     try
                     {
@@ -147,6 +154,10 @@ namespace MercadoEnvios.ComprarOfertar
                     fecha.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
                     fecha.Direction = ParameterDirection.Input;
 
+                    SqlParameter envioP = new SqlParameter("@envio", SqlDbType.Int);
+                    envioP.SqlValue = envio;
+                    envioP.Direction = ParameterDirection.Input;
+
                     SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);
 //                    monto.SqlValue = Convert.ToInt32(txtNumeric.Text);
                     monto.SqlValue = Convert.ToDecimal(txtNumeric.Text);
@@ -160,6 +171,7 @@ namespace MercadoEnvios.ComprarOfertar
                     ofertar.Parameters.Add(fecha);
                     ofertar.Parameters.Add(monto);
                     ofertar.Parameters.Add(idUsu);
+                    ofertar.Parameters.Add(envioP);
 
                     try
                     {

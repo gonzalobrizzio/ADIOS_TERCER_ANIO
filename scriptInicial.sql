@@ -292,12 +292,13 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarCompras]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad)
+	INSERT INTO ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad, envio)
 	SELECT DISTINCT -- EL DISTINCT ES PORQUE HAY COMPRAS REPETIDAS DE MISMA CANTDAD AL MISMO INSTANTE EN LA MISMA FECHA, LAS ASUMO COMO DUPLICADA POR ERROR
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador,
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion,
 		Compra_Fecha																			AS fecha,
-		Compra_Cantidad																			AS cantidad
+		Compra_Cantidad																			AS cantidad,
+		1																						AS envio
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Compra_Cantidad IS NOT NULL
@@ -318,12 +319,13 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[migrarOfertas]
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-	INSERT INTO ADIOS_TERCER_ANIO.Oferta (monto, fecha, idUsuario, idPublicacion)
+	INSERT INTO ADIOS_TERCER_ANIO.Oferta (monto, fecha, idUsuario, idPublicacion, envio)
 	SELECT 
 		Oferta_Monto																			AS monto,
 		Oferta_Fecha																			AS fecha,
 		ADIOS_TERCER_ANIO.funcObtenerIdDeDNI(Cli_Dni)											AS idComprador, 
-		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion
+		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)				AS idPublicacion,
+		1																						AS envio
 	FROM gd_esquema.MAESTRA
 	WHERE 
 		Oferta_Monto IS NOT NULL
@@ -432,7 +434,7 @@ AS BEGIN
 		Publicacion_Fecha_Venc																			AS fechaFin,
 		0																								AS tienePreguntas, --NO VIENEN CON PREGUNTAS, por eso el cero
 		(select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like Publicacion_Tipo)			AS tipo,
-		2																								AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
+		4																								AS idEstado, --TODAS ESTAN FINALIZADAS PORQUE SON DEL 2015
 		Publicacion_Precio																				AS precio,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = Publicacion_Visibilidad_Desc)		AS idVisibilidad,
 		CASE 
@@ -695,12 +697,3 @@ GO
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
 	VALUES(@idRol,@idUsuario,0)
-
-	--Menor fecha de publicacion
-	SELECT DISTINCT fechaFin FROM ADIOS_TERCER_ANIO.Publicacion WHERE fechaFin=(SELECT MIN(fechaFin) FROM ADIOS_TERCER_ANIO.Publicacion)
-
-	--Menor fecha de facturas
-	SELECT DISTINCT fecha FROM ADIOS_TERCER_ANIO.Factura WHERE fecha =(SELECT MIN(fecha) FROM ADIOS_TERCER_ANIO.Factura)
-
-	--Menor fecha de compras
-	SELECT DISTINCT fecha FROM ADIOS_TERCER_ANIO.Compra WHERE fecha =(SELECT MIN(fecha) FROM ADIOS_TERCER_ANIO.Compra)

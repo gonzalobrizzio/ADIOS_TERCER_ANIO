@@ -53,6 +53,7 @@
             this.grpPreguntas = new System.Windows.Forms.GroupBox();
             this.lblEnvio = new System.Windows.Forms.Label();
             this.lblCalificacionPromedio = new System.Windows.Forms.Label();
+            this.Envio = new System.Windows.Forms.CheckBox();
             this.grpPreguntas.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -303,11 +304,21 @@
             this.lblCalificacionPromedio.TabIndex = 27;
             this.lblCalificacionPromedio.Text = "[Calificacion Promedio]";
             // 
+            // Envio
+            // 
+            this.Envio.AutoSize = true;
+            this.Envio.Location = new System.Drawing.Point(430, 206);
+            this.Envio.Name = "Envio";
+            this.Envio.Size = new System.Drawing.Size(15, 14);
+            this.Envio.TabIndex = 28;
+            this.Envio.UseVisualStyleBackColor = true;
+            // 
             // frmDetalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 467);
+            this.Controls.Add(this.Envio);
             this.Controls.Add(this.lblCalificacionPromedio);
             this.Controls.Add(this.lblEnvio);
             this.Controls.Add(this.grpPreguntas);
@@ -366,5 +377,6 @@
         private System.Windows.Forms.GroupBox grpPreguntas;
         private System.Windows.Forms.Label lblEnvio;
         private System.Windows.Forms.Label lblCalificacionPromedio;
+        private System.Windows.Forms.CheckBox Envio;
     }
 }

@@ -30,18 +30,13 @@
         {
             this.txtBuscado = new System.Windows.Forms.TextBox();
             this.btnModificarEmpresa = new System.Windows.Forms.Button();
-            this.btnEliminar = new System.Windows.Forms.Button();
+            this.btnDeshabilitar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.dgvClientes = new System.Windows.Forms.DataGridView();
+            this.dgvUsuario = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnHabilitar = new System.Windows.Forms.Button();
-            this.dgvEmpresas = new System.Windows.Forms.DataGridView();
-            this.btnModificarCliente = new System.Windows.Forms.Button();
-            this.btnHabilitarEmpresa = new System.Windows.Forms.Button();
-            this.btnDeshabilitarEmpresa = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEmpresas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
             // txtBuscado
@@ -58,19 +53,19 @@
             this.btnModificarEmpresa.Name = "btnModificarEmpresa";
             this.btnModificarEmpresa.Size = new System.Drawing.Size(129, 25);
             this.btnModificarEmpresa.TabIndex = 4;
-            this.btnModificarEmpresa.Text = "Modificar Cliente";
+            this.btnModificarEmpresa.Text = "Modificar";
             this.btnModificarEmpresa.UseVisualStyleBackColor = true;
             this.btnModificarEmpresa.Click += new System.EventHandler(this.btnModificar_Click);
             // 
-            // btnEliminar
+            // btnDeshabilitar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(321, 515);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(129, 25);
-            this.btnEliminar.TabIndex = 6;
-            this.btnEliminar.Text = "Deshabilitar Cliente";
-            this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            this.btnDeshabilitar.Location = new System.Drawing.Point(321, 515);
+            this.btnDeshabilitar.Name = "btnDeshabilitar";
+            this.btnDeshabilitar.Size = new System.Drawing.Size(129, 25);
+            this.btnDeshabilitar.TabIndex = 6;
+            this.btnDeshabilitar.Text = "Deshabilitar";
+            this.btnDeshabilitar.UseVisualStyleBackColor = true;
+            this.btnDeshabilitar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnBuscar
             // 
@@ -81,17 +76,17 @@
             this.btnBuscar.Text = "Buscar Usuario";
             this.btnBuscar.UseVisualStyleBackColor = true;
             // 
-            // dgvClientes
+            // dgvUsuario
             // 
-            this.dgvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvClientes.Location = new System.Drawing.Point(33, 89);
-            this.dgvClientes.Name = "dgvClientes";
-            this.dgvClientes.Size = new System.Drawing.Size(455, 420);
-            this.dgvClientes.TabIndex = 11;
+            this.dgvUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsuario.Location = new System.Drawing.Point(33, 89);
+            this.dgvUsuario.Name = "dgvUsuario";
+            this.dgvUsuario.Size = new System.Drawing.Size(809, 420);
+            this.dgvUsuario.TabIndex = 11;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(928, 564);
+            this.btnVolver.Location = new System.Drawing.Point(723, 515);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(119, 25);
             this.btnVolver.TabIndex = 10;
@@ -105,7 +100,7 @@
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(129, 25);
             this.btnAgregar.TabIndex = 3;
-            this.btnAgregar.Text = "Agregar Usuario";
+            this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
@@ -115,71 +110,28 @@
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(129, 25);
             this.btnHabilitar.TabIndex = 5;
-            this.btnHabilitar.Text = "Habilitar Cliente";
+            this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
             this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
-            // 
-            // dgvEmpresas
-            // 
-            this.dgvEmpresas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmpresas.Location = new System.Drawing.Point(555, 89);
-            this.dgvEmpresas.Name = "dgvEmpresas";
-            this.dgvEmpresas.Size = new System.Drawing.Size(455, 420);
-            this.dgvEmpresas.TabIndex = 12;
-            // 
-            // btnModificarCliente
-            // 
-            this.btnModificarCliente.Location = new System.Drawing.Point(591, 515);
-            this.btnModificarCliente.Name = "btnModificarCliente";
-            this.btnModificarCliente.Size = new System.Drawing.Size(129, 25);
-            this.btnModificarCliente.TabIndex = 7;
-            this.btnModificarCliente.Text = "Modificar Empresa";
-            this.btnModificarCliente.UseVisualStyleBackColor = true;
-            this.btnModificarCliente.Click += new System.EventHandler(this.btnModificarCliente_Click);
-            // 
-            // btnHabilitarEmpresa
-            // 
-            this.btnHabilitarEmpresa.Location = new System.Drawing.Point(726, 515);
-            this.btnHabilitarEmpresa.Name = "btnHabilitarEmpresa";
-            this.btnHabilitarEmpresa.Size = new System.Drawing.Size(129, 25);
-            this.btnHabilitarEmpresa.TabIndex = 8;
-            this.btnHabilitarEmpresa.Text = "Habilitar Empresa";
-            this.btnHabilitarEmpresa.UseVisualStyleBackColor = true;
-            this.btnHabilitarEmpresa.Click += new System.EventHandler(this.btnHabilitarEmpresa_Click);
-            // 
-            // btnDeshabilitarEmpresa
-            // 
-            this.btnDeshabilitarEmpresa.Location = new System.Drawing.Point(861, 515);
-            this.btnDeshabilitarEmpresa.Name = "btnDeshabilitarEmpresa";
-            this.btnDeshabilitarEmpresa.Size = new System.Drawing.Size(129, 25);
-            this.btnDeshabilitarEmpresa.TabIndex = 9;
-            this.btnDeshabilitarEmpresa.Text = "Deshabilitar Empresa";
-            this.btnDeshabilitarEmpresa.UseVisualStyleBackColor = true;
-            this.btnDeshabilitarEmpresa.Click += new System.EventHandler(this.btnDeshabilitarEmpresa_Click);
             // 
             // frmABMUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1061, 603);
-            this.Controls.Add(this.btnDeshabilitarEmpresa);
-            this.Controls.Add(this.btnHabilitarEmpresa);
-            this.Controls.Add(this.btnModificarCliente);
-            this.Controls.Add(this.dgvEmpresas);
+            this.ClientSize = new System.Drawing.Size(878, 560);
             this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.dgvClientes);
+            this.Controls.Add(this.dgvUsuario);
             this.Controls.Add(this.btnBuscar);
-            this.Controls.Add(this.btnEliminar);
+            this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.btnModificarEmpresa);
             this.Controls.Add(this.txtBuscado);
             this.Name = "frmABMUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABM Usuarios";
             this.Shown += new System.EventHandler(this.frmABMUsuario_Shown);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEmpresas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,16 +141,12 @@
 
         private System.Windows.Forms.TextBox txtBuscado;
         private System.Windows.Forms.Button btnModificarEmpresa;
-        private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.DataGridView dgvClientes;
+        private System.Windows.Forms.DataGridView dgvUsuario;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnHabilitar;
-        private System.Windows.Forms.DataGridView dgvEmpresas;
-        private System.Windows.Forms.Button btnModificarCliente;
-        private System.Windows.Forms.Button btnHabilitarEmpresa;
-        private System.Windows.Forms.Button btnDeshabilitarEmpresa;
 
     }
 }

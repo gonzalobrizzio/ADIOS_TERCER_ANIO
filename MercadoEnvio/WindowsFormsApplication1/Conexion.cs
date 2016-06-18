@@ -5,6 +5,7 @@ using System.Text;
 
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MercadoEnvios
 {
@@ -16,11 +17,12 @@ namespace MercadoEnvios
         private string user;
         private string password;
         private SqlConnection conn;
-        private static readonly Conexion instance = new Conexion("localhost",
-                                                                  "SQLSERVER2012",
-                                                                  "GD1C2016",
-                                                                  "gd",
-                                                                  "gd2016");
+        private static readonly Conexion instance = new Conexion(ConfigurationManager.AppSettings["local"],
+                                                                 ConfigurationManager.AppSettings["tipo"],
+                                                                 ConfigurationManager.AppSettings["base"],
+                                                                 ConfigurationManager.AppSettings["user"],
+                                                                 ConfigurationManager.AppSettings["password"]);
+
 
         public Conexion(String _source, String _nombreInstancia, String _nombreBD, String _user, String _password)
         {

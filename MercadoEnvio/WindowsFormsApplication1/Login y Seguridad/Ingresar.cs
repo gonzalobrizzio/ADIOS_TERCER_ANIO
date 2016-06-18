@@ -21,6 +21,7 @@ namespace MercadoEnvios.Login_y_Seguridad
         {
             InitializeComponent();
             new TareasBatch().correr();
+            txtContra.MaxLength = 30;
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)

@@ -25,28 +25,28 @@ namespace MercadoEnvios
             /*******************************************************************************************************************************************/
             /**********************************Actualizacion Diaria De Subastas Finalizadas Y La Correspondiente Facturacion****************************/
             /*******************************************************************************************************************************************/
-            string subastasVencidas = "select p.id from ADIOS_TERCER_ANIO.Publicacion p "
-                                   + "inner join ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = p.idTipoPublicacion and tp.nombre like 'Subasta' "
-                                   + "where p.fechaFin < @fechaDeHoy AND idEstado != 4 ";
-            SqlCommand subastas = new SqlCommand(subastasVencidas, conn.getConexion);
+            //string subastasVencidas = "select p.id from ADIOS_TERCER_ANIO.Publicacion p "
+            //                       + "inner join ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = p.idTipoPublicacion and tp.nombre like 'Subasta' "
+            //                       + "where p.fechaFin < @fechaDeHoy AND idEstado != 4 ";
+            //SqlCommand subastas = new SqlCommand(subastasVencidas, conn.getConexion);
             
-            SqlParameter fechaActual = new SqlParameter("@fechaDeHoy", SqlDbType.DateTime);
-            fechaActual.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
-            fechaActual.Direction = ParameterDirection.Input;
+            //SqlParameter fechaActual = new SqlParameter("@fechaDeHoy", SqlDbType.DateTime);
+            //fechaActual.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
+            //fechaActual.Direction = ParameterDirection.Input;
 
-            subastas.Parameters.Add(fechaActual);
-            SqlDataReader da = subastas.ExecuteReader();
-            List<Int32> listaPublis = new List<Int32>();
-            if (da.HasRows)
-            {
-                while (da.Read())
-                {
-                    listaPublis.Add(da.GetInt32(0));
-                }
-            }
-            da.Close();
-            SqlCommand publicaciones = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarSubasta", conn.getConexion);
-            publicaciones.CommandType = System.Data.CommandType.StoredProcedure;
+            //subastas.Parameters.Add(fechaActual);
+            //SqlDataReader da = subastas.ExecuteReader();
+            //List<Int32> listaPublis = new List<Int32>();
+            //if (da.HasRows)
+            //{
+            //    while (da.Read())
+            //    {
+            //        listaPublis.Add(da.GetInt32(0));
+            //    }
+            //}
+            //da.Close();
+            //SqlCommand publicaciones = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarSubasta", conn.getConexion);
+            //publicaciones.CommandType = System.Data.CommandType.StoredProcedure;
            
             //ANDA MAL ESTO TODO
 
@@ -70,14 +70,14 @@ namespace MercadoEnvios
             //        publicaciones.Parameters.Clear();
             //    }
 
-            SqlCommand comprasInmediatas = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarComprasInmediatas", conn.getConexion);
-            comprasInmediatas.CommandType = System.Data.CommandType.StoredProcedure;
+            //SqlCommand comprasInmediatas = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarComprasInmediatas", conn.getConexion);
+            //comprasInmediatas.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter fechaDeHoy = new SqlParameter("@fechaActual", SqlDbType.DateTime);
-            fechaDeHoy.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
-            fechaDeHoy.Direction = ParameterDirection.Input;
-            comprasInmediatas.Parameters.Add(fechaDeHoy);
-            comprasInmediatas.ExecuteNonQuery();
+            //SqlParameter fechaDeHoy = new SqlParameter("@fechaActual", SqlDbType.DateTime);
+            //fechaDeHoy.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
+            //fechaDeHoy.Direction = ParameterDirection.Input;
+            //comprasInmediatas.Parameters.Add(fechaDeHoy);
+            //comprasInmediatas.ExecuteNonQuery();
             /*******************************************************************************************************************************************/
         }
 
