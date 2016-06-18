@@ -19,6 +19,7 @@ namespace MercadoEnvios.ComprarOfertar
         int envioP;
         int indexPregunta = 0;
         bool preguntas;
+        int idEstado;
 
         Sesion sesion = Sesion.Instance;
 
@@ -35,7 +36,7 @@ namespace MercadoEnvios.ComprarOfertar
             String cmd = "ADIOS_TERCER_ANIO.detallePublicacion";
             SqlCommand detallePublicacion = new SqlCommand(cmd, conn.getConexion);
             detallePublicacion.CommandType = System.Data.CommandType.StoredProcedure;
-
+            lblPausa.Visible = false;
             SqlParameter idP = new SqlParameter("@idPublicacion", SqlDbType.Int);
             idP.SqlValue = idPublicacion;
             idP.Direction = ParameterDirection.Input;
@@ -63,7 +64,10 @@ namespace MercadoEnvios.ComprarOfertar
                 if (!dataReader[9].Equals(DBNull.Value))
                 {
                     if (dataReader.GetInt32(9) == 0) { lblEnvio.Text = "Con envío"; }
-                    else { lblEnvio.Text = "Sin envío"; }
+                    else { 
+                           lblEnvio.Text = "Sin envío";
+                           Envio.Visible = false;
+                    }
 
                     if (dataReader.GetInt32(10) == 0) { preguntas = true; }
                     else { preguntas = false; }
@@ -81,6 +85,11 @@ namespace MercadoEnvios.ComprarOfertar
                 }
                 else {
                     lblCalificacionPromedio.Text = "Usuario sin calificar";
+                }
+
+                if (!dataReader[12].Equals(DBNull.Value))
+                {
+                    idEstado = dataReader.GetInt32(12);
                 }
             }
             dataReader.Close();
@@ -112,20 +121,33 @@ namespace MercadoEnvios.ComprarOfertar
                 }
                 else
                 {
-                    lblPregunta.Text = "No hay preguntas hasta el momento.";
+                    lblPregunta.Text = "¡No hay más preguntas hasta el momento!";
                     lblRespuesta.Text = "";
                     btnSgte.Enabled = false;
                 }
 
                 dataReader.Close();
             }
-            else { 
-                lblPregunta.Text = "Las preguntas no están disponibles!";
+            else if(preguntas == false && idEstado !=3) { 
+                lblPregunta.Text = "¡Las preguntas no están disponibles!";
                 lblRespuesta.Text = "";
                 txtPregunta.Enabled = false;
                 btnAnt.Enabled = false;
                 btnPregunta.Enabled = false;
                 btnSgte.Enabled = false;
+            }
+            else if(idEstado == 3)
+            {
+                txtPregunta.Visible = false;
+                Envio.Enabled = false;
+                lblPausa.Visible = true;
+                grpPreguntas.Visible = false;
+                lblRespuesta.Text = "";
+                txtPregunta.Enabled = false;
+                btnAnt.Enabled = false;
+                btnPregunta.Enabled = false;
+                btnSgte.Enabled = false;
+                btnComprar.Enabled = false;
             }
 
         }
@@ -177,6 +199,8 @@ namespace MercadoEnvios.ComprarOfertar
 
                 nuevaPregunta.Parameters.Clear();
                 txtPregunta.Text = "";
+
+                MessageBox.Show("Su pregunta ha sido realizada correctamente!", "Bien Hecho!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -191,6 +215,7 @@ namespace MercadoEnvios.ComprarOfertar
         {
             indexPregunta--;
             getData();
+            btnSgte.Enabled = true;
             if (indexPregunta == 0) btnAnt.Enabled = false;
         }
 

@@ -175,7 +175,7 @@ namespace MercadoEnvios.Generar_Publicación
                 generarPublicacion.Parameters.Add(idP);
                 generarPublicacion.Parameters.Add(envio);
                 generarPublicacion.ExecuteNonQuery();
-
+                MessageBox.Show("Recuerde entrar a Modificar Publicacion para Activar su publicación!", "Bien Hecho!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 new frmElegirAccion().Show();
                 this.Close();
             }

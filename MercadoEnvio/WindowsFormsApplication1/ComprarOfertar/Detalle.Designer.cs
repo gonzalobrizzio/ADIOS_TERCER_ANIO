@@ -54,6 +54,7 @@
             this.lblEnvio = new System.Windows.Forms.Label();
             this.lblCalificacionPromedio = new System.Windows.Forms.Label();
             this.Envio = new System.Windows.Forms.CheckBox();
+            this.lblPausa = new System.Windows.Forms.Label();
             this.grpPreguntas.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -313,11 +314,22 @@
             this.Envio.TabIndex = 28;
             this.Envio.UseVisualStyleBackColor = true;
             // 
+            // lblPausa
+            // 
+            this.lblPausa.AutoSize = true;
+            this.lblPausa.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.lblPausa.Location = new System.Drawing.Point(32, 343);
+            this.lblPausa.Name = "lblPausa";
+            this.lblPausa.Size = new System.Drawing.Size(288, 18);
+            this.lblPausa.TabIndex = 20;
+            this.lblPausa.Text = "La publicación se encuentra Pausada";
+            // 
             // frmDetalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 467);
+            this.Controls.Add(this.lblPausa);
             this.Controls.Add(this.Envio);
             this.Controls.Add(this.lblCalificacionPromedio);
             this.Controls.Add(this.lblEnvio);
@@ -378,5 +390,6 @@
         private System.Windows.Forms.Label lblEnvio;
         private System.Windows.Forms.Label lblCalificacionPromedio;
         private System.Windows.Forms.CheckBox Envio;
+        private System.Windows.Forms.Label lblPausa;
     }
 }

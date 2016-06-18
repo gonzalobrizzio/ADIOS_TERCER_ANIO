@@ -322,7 +322,7 @@ BEGIN
 	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
 					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, iif(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio from ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2
+	where publicacion.idPublicador != @idUsuario and stock > 0 and (publicacion.idEstado = 2 OR publicacion.idEstado = 3)
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
 	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
@@ -460,10 +460,20 @@ BEGIN
 	FROM ADIOS_TERCER_ANIO.Publicacion p
 	WHERE @idPublicacion = p.id
 
-	UPDATE ADIOS_TERCER_ANIO.Publicacion set idEstado = 4 
+	UPDATE ADIOS_TERCER_ANIO.Publicacion set idEstado = 4, fechaFin = @fecha
 	WHERE id = @idPublicacion
 
 	SELECT @cantidadTotal = SUM(cantidad), @cantidadDeComprasConEnvio = SUM(iif(envio = 0, 1, 0)) FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion = @idPublicacion
+
+	IF(@cantidadTotal IS NULL)
+	BEGIN
+		SET @cantidadTotal = 0
+	END
+
+	IF(@cantidadDeComprasConEnvio IS NULL)
+	BEGIN
+		SET @cantidadDeComprasConEnvio = 0
+	END
 
 	Declare @costoEnvio numeric(18,2);
 	Select @costoEnvio = iif(@tieneEnvio = 0, precioEnvio * @cantidadDeComprasConEnvio, 0) from ADIOS_TERCER_ANIO.TipoPublicacion where id = @idTipoPublicacion
@@ -474,8 +484,8 @@ BEGIN
 
 ----Calculo costo
 	Declare @comision numeric(18,2);
-	Select @comision = (@precioPubli * @cantidadTotal * porcentaje) from ADIOS_TERCER_ANIO.Visibilidad where id = 2
-	
+	Select @comision = ((@precioPubli * @cantidadTotal) * porcentaje) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
+						
 -----creo factura
 	Declare @idFactura INT;
 	Declare @importeTotalFactura numeric(18,2);
@@ -521,6 +531,8 @@ BEGIN
 	From ADIOS_TERCER_ANIO.Publicacion
 	Where id = @idPublicacion
 
+	UPDATE ADIOS_TERCER_ANIO.Publicacion SET fechaFin = @fecha WHERE @idPublicacion = id
+
 -----Calculo costo envio
 	Declare @costoEnvio numeric(18,2);
 	Select @costoEnvio = iif((@envio = 0), precioEnvio, 0) from ADIOS_TERCER_ANIO.TipoPublicacion where id = @idTipoPublicacion
@@ -531,7 +543,7 @@ BEGIN
 
 ----Calculo costo
 	Declare @comision numeric(18,2);
-	Select @comision = ((@precioPubli * @cantidadCompra)* porcentaje) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
+	Select @comision = ((@precioPubli * @cantidadCompra)* v.porcentaje) from ADIOS_TERCER_ANIO.Visibilidad v where id = @idVisibilidad
 	
 -----creo factura
 	Declare @idFactura INT;
@@ -575,17 +587,28 @@ BEGIN
 		------------------Inserto la compra con la mayor oferta
 		Declare @maxMonto numeric(18,2);
 		(select @maxMonto = monto,@envio=envio from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion AND monto = (SELECT MAX(monto) from ADIOS_TERCER_ANIO.Oferta));
+		
+
+		if(@maxMonto IS NOT NULL)
+		BEGIN
 		update ADIOS_TERCER_ANIO.Publicacion set precio = @maxMonto where id = @idPublicacion
 		Insert into ADIOS_TERCER_ANIO.Compra (idComprador, idPublicacion, fecha, cantidad, envio)
 		values ((select idUsuario from ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion and monto = @maxMonto), @idPublicacion, @fecha, @cantidad, @envio)
 
 		INSERT INTO ADIOS_TERCER_ANIO.Calificacion(idCompra, pendiente)
 		VALUES ((SELECT SCOPE_IDENTITY()), 1)
+		END
+		ELSE
+			SET @cantidad = 0
+		
+		IF(@envio IS NULL)
+		BEGIN
+			SET @envio = 1
+		END
 
 		exec [ADIOS_TERCER_ANIO].[FacturarSubasta] @idPublicacion, @cantidad, @fecha, @envio 
 END
 GO
-
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[EditarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicacion INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -866,7 +889,7 @@ BEGIN
 	select publicacion.descripcion, publicacion.fechaInicio, publicacion.fechaFin,  tipo.nombre as tipoPublicacion, publicacion.precio, 
 	visib.nombre, usr.usuario, rubro.descripcionCorta, publicacion.stock, publicacion.tieneEnvio as tieneEnvio, publicacion.tienePreguntas as tienePreguntas,
 	iif(rol.idRol = 2,(SELECT calificacionPromedio FROM ADIOS_TERCER_ANIO.Persona WHERE idUsuario = usr.id),(SELECT calificacionPromedio FROM ADIOS_TERCER_ANIO.Empresa WHERE idUsuario = usr.id))
-	as calificacionPromedio	from ADIOS_TERCER_ANIO.Publicacion publicacion
+	as calificacionPromedio, publicacion.idEstado FROM ADIOS_TERCER_ANIO.Publicacion publicacion
 	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
 	inner join ADIOS_TERCER_ANIO.TipoPublicacion tipo on publicacion.idTipoPublicacion = tipo.id 
 	inner join ADIOS_TERCER_ANIO.Usuario usr on publicacion.idPublicador = usr.id 
@@ -881,16 +904,22 @@ BEGIN
 	select preg.pregunta, rta.respuesta from ADIOS_TERCER_ANIO.Pregunta preg
 	inner join ADIOS_TERCER_ANIO.Publicacion publi on preg.idPublicacion = publi.id
 	inner join ADIOS_TERCER_ANIO.Respuesta rta on preg.id = rta.idPregunta
-	where publi.id = @idPublicacion and preg.id = @nroPreg
+	where publi.id = @idPublicacion AND preg.nroDePregunta = @nroPreg
 END
 GO 
 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.NuevaPregunta (@idPublicacion INT, @fecha DATETIME, @pregunta NVARCHAR(255), @idUsuario INT)
 AS
 BEGIN
+	DECLARE @nroDePregunta INT
+	SET @nroDePregunta = (SELECT COUNT (*) FROM ADIOS_TERCER_ANIO.Pregunta p inner join ADIOS_TERCER_ANIO.Publicacion pu on p.idPublicacion = pu.id WHERE pu.id = @idPublicacion) 
 
-	INSERT INTO ADIOS_TERCER_ANIO.Pregunta(pregunta, idPublicacion, idUsuarioPregunta, fecha, contestada)
-	VALUES (@pregunta,@idPublicacion,@idUsuario,@fecha,0) 
+	IF(@nroDePregunta IS NULL)
+	BEGIN
+		SET @nroDePregunta = 0
+	END
+	INSERT INTO ADIOS_TERCER_ANIO.Pregunta(pregunta, idPublicacion, idUsuarioPregunta, fecha, contestada, nroDePregunta)
+	VALUES (@pregunta,@idPublicacion,@idUsuario,@fecha,0, @nroDePregunta) 
 
 END
 GO
@@ -973,3 +1002,6 @@ GO
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 --select * from ADIOS_TERCER_ANIO.Rol
 --select * from ADIOS_TERCER_ANIO.FuncionalidadRol
+
+
+SELECT * FROM ADIOS_TERCER_ANIO.Publicacion

@@ -181,6 +181,7 @@ CREATE  TABLE Pregunta (
   idUsuarioPregunta INT REFERENCES Usuario(id) ,
   fecha DATETIME NULL ,
   contestada INT Default 1,
+  nroDePregunta INT NULL
   )
 
 CREATE  TABLE Respuesta (
