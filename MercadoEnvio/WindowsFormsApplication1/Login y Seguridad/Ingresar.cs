@@ -53,8 +53,7 @@ namespace MercadoEnvios.Login_y_Seguridad
 
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "
-                                + "from ADIOS_TERCER_ANIO.RolUsuario ru "
-                                + "where ru.idUsuario = @idUsuario";
+                                + "from ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on ru.idRol = r.id where ru.idUsuario = @idUsuario AND r.deleted = 0";
                 SqlCommand cantidadRoles = new SqlCommand(queryCantidadRoles, conn.getConexion);
                 SqlParameter cantidad = new SqlParameter("@cantidad", SqlDbType.Int);
                 cantidad.Direction = ParameterDirection.Output;
@@ -70,7 +69,7 @@ namespace MercadoEnvios.Login_y_Seguridad
                     //"Select @idRol = r.id, @nombreRol = r.nombre "
                                 + "from ADIOS_TERCER_ANIO.RolUsuario ru "
                                 + "inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol "
-                                + "where ru.idUsuario = @idUsuarioABuscarRoles and ru.deleted = 0";
+                                + "where ru.idUsuario = @idUsuarioABuscarRoles and r.deleted = 0";
                 SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
                 //SqlParameter idRol = new SqlParameter("@idRol", null);
                 //idRol.Direction = ParameterDirection.Output;
@@ -132,7 +131,7 @@ namespace MercadoEnvios.Login_y_Seguridad
                 }
                 else
                 {
-                    MessageBox.Show("No se pudieron cargar los roles");
+                    MessageBox.Show("Los roles que usted posee se encuentran deshabilitados actualmente", "Rol Deshabilitado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     dataReader.Close();
                     this.Show();
                 }

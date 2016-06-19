@@ -132,15 +132,9 @@ namespace MercadoEnvios.ABM_Rol
             }
         }
 
-        private void frmABMRol_FormClosed(object sender, FormClosedEventArgs e)
+        private void dgvRoles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sesion.anterior.Show();
+            dgvRoles.CurrentRow.Selected = true;
         }
-
-        private void frmABMRol_Shown(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
-        }
-
     }
 }

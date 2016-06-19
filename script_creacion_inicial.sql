@@ -2150,7 +2150,7 @@ GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[obtenerCompras] (@idCalificador int)
 AS
 BEGIN
-	Select (SELECT usuario from ADIOS_TERCER_ANIO.Usuario where id = idPublicador) AS Usuario, p.descripcion, c.id, (select nombre as tipo from ADIOS_TERCER_ANIO.TipoPublicacion where id = p.idTipoPublicacion) from ADIOS_TERCER_ANIO.Publicacion p 
+	Select (SELECT usuario from ADIOS_TERCER_ANIO.Usuario where id = idPublicador) AS Usuario, p.descripcion, c.id, (select nombre as tipo from ADIOS_TERCER_ANIO.TipoPublicacion where id = p.idTipoPublicacion) AS Tipo_de_Publicacion from ADIOS_TERCER_ANIO.Publicacion p 
 	inner join ADIOS_TERCER_ANIO.Compra c on c.idPublicacion = p.id
 	inner join ADIOS_TERCER_ANIO.Calificacion calif on calif.idCompra = c.id 
 	where c.idComprador = @idCalificador AND calif.pendiente = 1 order by c.fecha desc
@@ -3032,3 +3032,11 @@ DECLARE @idTipoPublicacion int,
 
 	SELECT * FROM ADIOS_TERCER_ANIO.publicacion
 	58728
+
+	SELECT * FROM ADIOS_TERCER_ANIO.Rol
+	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario
+
+	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on ru.id = r.id WHERE 
+
+
+	Select @cantidad = count(*) from ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on ru.idRol = r.id where ru.idUsuario = 1 AND r.deleted = 0
