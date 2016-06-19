@@ -103,7 +103,7 @@
             this.tipo_de_listado.FormattingEnabled = true;
             this.tipo_de_listado.Location = new System.Drawing.Point(111, 101);
             this.tipo_de_listado.Name = "tipo_de_listado";
-            this.tipo_de_listado.Size = new System.Drawing.Size(309, 21);
+            this.tipo_de_listado.Size = new System.Drawing.Size(378, 21);
             this.tipo_de_listado.TabIndex = 9;
             this.tipo_de_listado.SelectedIndexChanged += new System.EventHandler(this.tipo_de_listado_SelectedIndexChanged);
             // 
@@ -124,7 +124,7 @@
             this.visibilidad.FormattingEnabled = true;
             this.visibilidad.Location = new System.Drawing.Point(266, 161);
             this.visibilidad.Name = "visibilidad";
-            this.visibilidad.Size = new System.Drawing.Size(154, 21);
+            this.visibilidad.Size = new System.Drawing.Size(223, 21);
             this.visibilidad.TabIndex = 17;
             // 
             // rubro
@@ -134,7 +134,7 @@
             this.rubro.FormattingEnabled = true;
             this.rubro.Location = new System.Drawing.Point(266, 161);
             this.rubro.Name = "rubro";
-            this.rubro.Size = new System.Drawing.Size(154, 21);
+            this.rubro.Size = new System.Drawing.Size(223, 21);
             this.rubro.TabIndex = 18;
             // 
             // lblRubro

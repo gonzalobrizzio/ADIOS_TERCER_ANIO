@@ -134,7 +134,7 @@ namespace MercadoEnvios.Listado_Estadistico
                 {
                     visibilidad.Items.Add(dataReader.GetString(0));
                 }
-
+                visibilidad.SelectedIndex = 0;
                 dataReader.Close();
 
                 lblVisibilidad.Visible = true;
@@ -157,7 +157,7 @@ namespace MercadoEnvios.Listado_Estadistico
                 {
                     rubro.Items.Add(dataReader.GetString(0));
                 }
-
+                rubro.SelectedIndex = 0;
                 dataReader.Close();
 
                 lblRubro.Visible = true;
