@@ -201,6 +201,16 @@ namespace MercadoEnvios.ABM_Usuario
                 this.getData();
             }
         }
+
+        private void btnBuscarClientes_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBuscarEmpresas_Click(object sender, EventArgs e)
+        {
+
+        }
     
     }
 

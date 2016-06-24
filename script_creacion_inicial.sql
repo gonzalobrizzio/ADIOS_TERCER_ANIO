@@ -2373,29 +2373,6 @@ BEGIN
 		THROW 50004, 'No hay más paginas para ver!', 1; 
 END
 GO 
-
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT)
-AS
-BEGIN
-
-	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
-			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-			where p.idPublicador = @idUsuario) - @pagina * 10;
-	IF (@cant > 0)
-	BEGIN
-		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, u.usuario as Nombre from ADIOS_TERCER_ANIO.Factura f
-		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
-		WHERE @idUsuario = P.idPublicador
-		ORDER BY f.fecha ASC)
-		SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
-
-	END
-	ELSE
-		THROW 50004, 'No hay más paginas para ver!', 1; 
-END
-GO
-
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -3007,36 +2984,63 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+-- NO ME FUNCAN LOS IF Y NO SE PORQUE
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @usa_fecha INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255))
+AS
+BEGIN
+
+	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
+			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+			where p.idPublicador = @idUsuario) - @pagina * 5;
+	IF (@cant > 0)
+	BEGIN
+		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, u.usuario, p.descripcion as Nombre from ADIOS_TERCER_ANIO.Factura f
+		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
+		WHERE @idUsuario = P.idPublicador
+		ORDER BY f.fecha ASC)
+
+		IF(@usa_fecha = 1)
+		BEGIN
+			DELETE FROM TablaP WHERE fecha < @fechaDesde OR fecha > @fechaHasta 
+		END
+
+		IF(@desdePrecio <> -1)
+		BEGIN
+			DELETE FROM TablaP WHERE importeTotal < @desdePrecio OR importeTotal > @hastaPrecio
+		END
+
+		IF(@descripcion <> '')
+		BEGIN
+			DELETE FROM TablaP WHERE descripcion <> @descripcion
+		END
+
+		IF(@destinatario <> '')
+		BEGIN
+			DELETE FROM TablaP WHERE usuario <> @destinatario	
+		END
+
+	SELECT top 5 * FROM TablaP ORDER by TablaP.fecha desc
+
+	END
+	ELSE
+		THROW 50004, 'No hay facturas para ver!', 1; 
+END
+GO
+
+--CREATE PROCEDURE obtenerUsuariosClientes
+--AS BEGIN
+--END
+--GO
+
+--CREATE PROCEDURE obtenerUsuariosEmpresa
+--AS BEGIN
+--END
+--GO
 
 
 
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
-
-SELECT * FROM ADIOS_TERCER_ANIO.Item
-
-DECLARE @idTipoPublicacion int,
-			@idVisibilidad int,
-			@precioPubli numeric(18,2),
-			@tieneEnvio int,
-			@cantidadTotal int,
-			@cantidadDeComprasConEnvio int
-	SELECT	p.idTipoPublicacion,
-			p.idVisibilidad,
-			p.precio,
-			p.tieneEnvio
-	FROM ADIOS_TERCER_ANIO.Publicacion p
-	WHERE 58728 = p.id
-
-
-	SELECT * FROM ADIOS_TERCER_ANIO.publicacion
-	58728
-
-	SELECT * FROM ADIOS_TERCER_ANIO.Rol
-	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario
-
-	SELECT * FROM ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on ru.id = r.id WHERE 
-
-
-	Select @cantidad = count(*) from ADIOS_TERCER_ANIO.RolUsuario ru inner join ADIOS_TERCER_ANIO.Rol r on ru.idRol = r.id where ru.idUsuario = 1 AND r.deleted = 0
