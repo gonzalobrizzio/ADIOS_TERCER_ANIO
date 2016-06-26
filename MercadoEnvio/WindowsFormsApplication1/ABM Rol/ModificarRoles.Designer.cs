@@ -57,6 +57,7 @@
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(158, 7);
+            this.txtNombre.MaxLength = 255;
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(156, 20);
             this.txtNombre.TabIndex = 1;
@@ -72,6 +73,7 @@
             this.dgvFuncionalidadesDisponibles.ReadOnly = true;
             this.dgvFuncionalidadesDisponibles.Size = new System.Drawing.Size(355, 395);
             this.dgvFuncionalidadesDisponibles.TabIndex = 2;
+            this.dgvFuncionalidadesDisponibles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFuncionalidadesDisponibles_CellClick);
             // 
             // NombreDeFuncionalidad
             // 
@@ -90,6 +92,7 @@
             this.dgvFuncionalidadesActuales.ReadOnly = true;
             this.dgvFuncionalidadesActuales.Size = new System.Drawing.Size(366, 395);
             this.dgvFuncionalidadesActuales.TabIndex = 3;
+            this.dgvFuncionalidadesActuales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFuncionalidadesActuales_CellClick);
             // 
             // dataGridViewTextBoxColumn1
             // 

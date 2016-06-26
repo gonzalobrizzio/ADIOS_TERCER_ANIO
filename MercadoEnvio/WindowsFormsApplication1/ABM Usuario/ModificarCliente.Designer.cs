@@ -77,6 +77,7 @@
             // Fecha_De_Nacimiento
             // 
             this.Fecha_De_Nacimiento.Location = new System.Drawing.Point(485, 243);
+            this.Fecha_De_Nacimiento.MaxLength = 25;
             this.Fecha_De_Nacimiento.Name = "Fecha_De_Nacimiento";
             this.Fecha_De_Nacimiento.Size = new System.Drawing.Size(133, 20);
             this.Fecha_De_Nacimiento.TabIndex = 14;
@@ -93,6 +94,7 @@
             // Mail
             // 
             this.Mail.Location = new System.Drawing.Point(153, 83);
+            this.Mail.MaxLength = 75;
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(159, 20);
             this.Mail.TabIndex = 3;
@@ -147,6 +149,7 @@
             // CodigoPostal
             // 
             this.CodigoPostal.Location = new System.Drawing.Point(153, 381);
+            this.CodigoPostal.MaxLength = 5;
             this.CodigoPostal.Name = "CodigoPostal";
             this.CodigoPostal.Size = new System.Drawing.Size(100, 20);
             this.CodigoPostal.TabIndex = 13;
@@ -154,6 +157,7 @@
             // Piso
             // 
             this.Piso.Location = new System.Drawing.Point(153, 328);
+            this.Piso.MaxLength = 4;
             this.Piso.Name = "Piso";
             this.Piso.Size = new System.Drawing.Size(57, 20);
             this.Piso.TabIndex = 11;
@@ -161,6 +165,7 @@
             // Depto
             // 
             this.Depto.Location = new System.Drawing.Point(153, 302);
+            this.Depto.MaxLength = 4;
             this.Depto.Name = "Depto";
             this.Depto.Size = new System.Drawing.Size(49, 20);
             this.Depto.TabIndex = 10;
@@ -168,6 +173,7 @@
             // Nro_de_Direccion
             // 
             this.Nro_de_Direccion.Location = new System.Drawing.Point(153, 273);
+            this.Nro_de_Direccion.MaxLength = 10;
             this.Nro_de_Direccion.Name = "Nro_de_Direccion";
             this.Nro_de_Direccion.Size = new System.Drawing.Size(81, 20);
             this.Nro_de_Direccion.TabIndex = 9;
@@ -175,6 +181,7 @@
             // Direccion
             // 
             this.Direccion.Location = new System.Drawing.Point(153, 240);
+            this.Direccion.MaxLength = 40;
             this.Direccion.Name = "Direccion";
             this.Direccion.Size = new System.Drawing.Size(100, 20);
             this.Direccion.TabIndex = 8;
@@ -182,6 +189,7 @@
             // Telefono
             // 
             this.Telefono.Location = new System.Drawing.Point(153, 214);
+            this.Telefono.MaxLength = 20;
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
             this.Telefono.TabIndex = 7;
@@ -189,6 +197,7 @@
             // Nro_de_Documento
             // 
             this.Nro_de_Documento.Location = new System.Drawing.Point(153, 188);
+            this.Nro_de_Documento.MaxLength = 12;
             this.Nro_de_Documento.Name = "Nro_de_Documento";
             this.Nro_de_Documento.Size = new System.Drawing.Size(100, 20);
             this.Nro_de_Documento.TabIndex = 60;
@@ -203,6 +212,7 @@
             // Nombre
             // 
             this.Nombre.Location = new System.Drawing.Point(153, 109);
+            this.Nombre.MaxLength = 25;
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(100, 20);
             this.Nombre.TabIndex = 4;

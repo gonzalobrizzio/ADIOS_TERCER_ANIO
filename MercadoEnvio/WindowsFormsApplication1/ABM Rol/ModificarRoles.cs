@@ -270,5 +270,15 @@ namespace MercadoEnvios.ABM_Rol
             sesion.anterior = anterior;
         }
 
+        private void dgvFuncionalidadesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvFuncionalidadesDisponibles.CurrentRow.Selected = true;
+        }
+
+        private void dgvFuncionalidadesActuales_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvFuncionalidadesActuales.CurrentRow.Selected = true;
+        }
+
     }
 }

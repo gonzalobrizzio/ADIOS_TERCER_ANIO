@@ -110,7 +110,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            sesion.anterior.Show();
+            new frmABMUsuario().Show();
             this.Close();
         }
 
@@ -288,7 +288,7 @@ namespace MercadoEnvios.ABM_Usuario
                     MessageBox.Show(error.Message);
                 }
 
-                sesion.anterior.Show();
+                new frmABMUsuario().Show();
                 this.Close();
             }
         }

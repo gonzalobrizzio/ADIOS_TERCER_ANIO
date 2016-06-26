@@ -17,7 +17,7 @@ namespace MercadoEnvios.Facturas
         SqlDataAdapter da;
         Utilidades fun = new Utilidades();
         StringBuilder mensajeValidacion = new StringBuilder();
-
+        int cantidad;
         int nroPagina = 0;
         Sesion sesion;
         public HistorialDeFacturas()
@@ -38,13 +38,11 @@ namespace MercadoEnvios.Facturas
             decimal hastaPrecioD = -1;
             string descripcionD = "";
             string destinatarioD = "";
-            int usaFechaD = 0;
            
            if (checkBox1.Checked)
            {
                fechaDesdeD = fechaDesdeDtp.Value;
                fechaHastaD = fechaHastaDtp.Value;
-               usaFechaD = 1;
            }
 
            if (checkBox2.Checked)
@@ -75,12 +73,16 @@ namespace MercadoEnvios.Facturas
                }
            }
 
-           if (mensajeValidacion.Length > 0)
+           if (mensajeValidacion.Length == 0)
            {
-               //ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @usa_fecha INT, @fechaDesde DATETIME,
+               //ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME,
                //@fechaHasta DATETIME, @desdePrecio DECIMAL(18,2), @hastaPrecio DECIMAL (18,2),
                //@descripcion NVARCHAR(255), @destinatario NVARCHAR(255))
                String cmd = "ADIOS_TERCER_ANIO.obtenerFacturasPaginaN";
+
+               SqlParameter cant = new SqlParameter("@cant", SqlDbType.Int);
+               cant.SqlValue = DBNull.Value;
+               cant.Direction = ParameterDirection.Output;
 
                SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
                idUsuario.SqlValue = sesion.idUsuario;
@@ -94,17 +96,29 @@ namespace MercadoEnvios.Facturas
                idRol.SqlValue = sesion.idRol;
                idRol.Direction = ParameterDirection.Input;
 
-               SqlParameter usa_fecha = new SqlParameter("@usa_fecha", SqlDbType.Int);
-               usa_fecha.SqlValue = usaFechaD;
-               usa_fecha.Direction = ParameterDirection.Input;
-
                SqlParameter fechaDesde = new SqlParameter("@fechaDesde", SqlDbType.DateTime);
-               fechaDesde.SqlValue = Convert.ToDateTime(fechaDesdeD);
-               fechaDesde.Direction = ParameterDirection.Input;
+               if (Convert.ToString(fechaDesdeD) == "" || Convert.ToString(fechaDesdeD) == null)
+               {
+                   fechaDesde.SqlValue = fechaDesdeD;
+                   fechaDesde.Direction = ParameterDirection.Input;
+               }
+               else
+               {
+                   fechaDesde.SqlValue = DBNull.Value;
+                   fechaDesde.Direction = ParameterDirection.Input;
+               }
 
                SqlParameter fechaHasta = new SqlParameter("@fechaHasta", SqlDbType.DateTime);
-               fechaHasta.SqlValue = Convert.ToDateTime(fechaHasta);
-               fechaHasta.Direction = ParameterDirection.Input;
+               if (Convert.ToString(fechaHastaD) == "" || Convert.ToString(fechaHastaD) == null)
+               {
+                   fechaHasta.SqlValue = fechaHastaD;
+                   fechaHasta.Direction = ParameterDirection.Input;
+               }
+               else
+               {
+                   fechaHasta.SqlValue = DBNull.Value;
+                   fechaHasta.Direction = ParameterDirection.Input;
+               }
 
                SqlParameter desdePrecio = new SqlParameter("@desdePrecio", SqlDbType.Decimal);
                desdePrecio.SqlValue = desdePrecioD;
@@ -127,13 +141,13 @@ namespace MercadoEnvios.Facturas
                da.SelectCommand.Parameters.Add(idUsuario);
                da.SelectCommand.Parameters.Add(pagina);
                da.SelectCommand.Parameters.Add(idRol);
-               da.SelectCommand.Parameters.Add(usa_fecha);
                da.SelectCommand.Parameters.Add(destinatario);
                da.SelectCommand.Parameters.Add(descripcion);
                da.SelectCommand.Parameters.Add(fechaHasta);
                da.SelectCommand.Parameters.Add(fechaDesde);
                da.SelectCommand.Parameters.Add(desdePrecio);
                da.SelectCommand.Parameters.Add(hastaPrecio);
+               da.SelectCommand.Parameters.Add(cant);
 
                try
                {
@@ -141,13 +155,23 @@ namespace MercadoEnvios.Facturas
                    DataTable tablaDeFacturas = new DataTable("Facturas");
                    da.Fill(tablaDeFacturas);
                    dgvFacturas.DataSource = tablaDeFacturas;
-                   dgvFacturas.Columns[0].Width = 50;
+                   dgvFacturas.Columns[0].Width = 150;
                    dgvFacturas.Columns[1].Width = 100;
                    dgvFacturas.Columns[2].Width = 100;
-                   dgvFacturas.Columns[3].Width = 150;
+                   dgvFacturas.Columns[3].Width = 100;
+                   dgvFacturas.Columns[4].Width = 255;
                    dgvFacturas.AllowUserToDeleteRows = false;
                    dgvFacturas.AllowUserToAddRows = false;
                    dgvFacturas.ReadOnly = true;
+                   if (nroPagina == 0)
+                   {
+                       cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 5;
+                   }
+
+                   if (nroPagina >= cantidad)
+                   {
+                       btnSgte.Enabled = false;
+                   }
                }
                catch (SqlException error)
                {
@@ -157,7 +181,13 @@ namespace MercadoEnvios.Facturas
            }
            else 
            {
+               MessageBox.Show(Convert.ToString(mensajeValidacion));
                mensajeValidacion = new StringBuilder();
+           }
+
+           if (nroPagina == 0)
+           {
+               btnAnt.Enabled = false;
            }
 
         }
@@ -172,9 +202,16 @@ namespace MercadoEnvios.Facturas
 
         private void btnSgte_Click(object sender, EventArgs e)
         {
-            nroPagina++;
-            btnAnt.Enabled = true;
-            this.getData();
+            if (nroPagina < cantidad)
+            {
+                nroPagina++;
+                btnAnt.Enabled = true;
+                this.getData();
+            }
+            else
+            {
+                btnSgte.Enabled = false;
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -190,6 +227,7 @@ namespace MercadoEnvios.Facturas
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
+            nroPagina = 0;
             this.getData();
         }
 

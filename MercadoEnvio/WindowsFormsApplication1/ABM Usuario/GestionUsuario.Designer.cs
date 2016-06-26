@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnBuscarClientes = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.buscarClienteEmailTxt = new System.Windows.Forms.TextBox();
@@ -39,24 +39,26 @@
             this.label4 = new System.Windows.Forms.Label();
             this.E = new System.Windows.Forms.TabControl();
             this.busquedaClienteTp = new System.Windows.Forms.TabPage();
+            this.btnRestaurar = new System.Windows.Forms.Button();
             this.dgvClientes = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.mailC = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.dni = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.apellido = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.nombre = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.Empresa = new System.Windows.Forms.TabPage();
+            this.btnRes = new System.Windows.Forms.Button();
             this.btnBuscarEmpresa = new System.Windows.Forms.Button();
             this.dgvEmpresas = new System.Windows.Forms.DataGridView();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.mailE = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.cuit = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.razonSocial = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.btnDeshabilitar = new System.Windows.Forms.Button();
@@ -138,15 +140,16 @@
             // 
             // busquedaClienteTp
             // 
+            this.busquedaClienteTp.Controls.Add(this.btnRestaurar);
             this.busquedaClienteTp.Controls.Add(this.dgvClientes);
-            this.busquedaClienteTp.Controls.Add(this.textBox1);
+            this.busquedaClienteTp.Controls.Add(this.mailC);
             this.busquedaClienteTp.Controls.Add(this.label2);
             this.busquedaClienteTp.Controls.Add(this.btnBuscarCliente);
-            this.busquedaClienteTp.Controls.Add(this.textBox2);
+            this.busquedaClienteTp.Controls.Add(this.dni);
             this.busquedaClienteTp.Controls.Add(this.label8);
-            this.busquedaClienteTp.Controls.Add(this.textBox3);
+            this.busquedaClienteTp.Controls.Add(this.apellido);
             this.busquedaClienteTp.Controls.Add(this.label10);
-            this.busquedaClienteTp.Controls.Add(this.textBox4);
+            this.busquedaClienteTp.Controls.Add(this.nombre);
             this.busquedaClienteTp.Controls.Add(this.label11);
             this.busquedaClienteTp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.busquedaClienteTp.Location = new System.Drawing.Point(4, 29);
@@ -157,50 +160,62 @@
             this.busquedaClienteTp.Text = "Cliente";
             this.busquedaClienteTp.UseVisualStyleBackColor = true;
             // 
+            // btnRestaurar
+            // 
+            this.btnRestaurar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRestaurar.Location = new System.Drawing.Point(627, 14);
+            this.btnRestaurar.Name = "btnRestaurar";
+            this.btnRestaurar.Size = new System.Drawing.Size(75, 30);
+            this.btnRestaurar.TabIndex = 100;
+            this.btnRestaurar.Text = "Restaurar";
+            this.btnRestaurar.UseVisualStyleBackColor = true;
+            this.btnRestaurar.Click += new System.EventHandler(this.btnRestaurar_Click);
+            // 
             // dgvClientes
             // 
             this.dgvClientes.AllowUserToAddRows = false;
             this.dgvClientes.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.dgvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvClientes.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvClientes.DefaultCellStyle = dataGridViewCellStyle20;
             this.dgvClientes.Location = new System.Drawing.Point(6, 61);
             this.dgvClientes.MultiSelect = false;
             this.dgvClientes.Name = "dgvClientes";
             this.dgvClientes.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.dgvClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvClientes.Size = new System.Drawing.Size(799, 282);
             this.dgvClientes.TabIndex = 95;
             // 
-            // textBox1
+            // mailC
             // 
-            this.textBox1.Location = new System.Drawing.Point(445, 19);
-            this.textBox1.MaxLength = 75;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(76, 20);
-            this.textBox1.TabIndex = 94;
+            this.mailC.Location = new System.Drawing.Point(445, 19);
+            this.mailC.MaxLength = 75;
+            this.mailC.Name = "mailC";
+            this.mailC.Size = new System.Drawing.Size(76, 20);
+            this.mailC.TabIndex = 94;
+            this.mailC.TextChanged += new System.EventHandler(this.mailC_TextChanged);
             // 
             // label2
             // 
@@ -221,14 +236,16 @@
             this.btnBuscarCliente.TabIndex = 99;
             this.btnBuscarCliente.Text = "Buscar";
             this.btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
             // 
-            // textBox2
+            // dni
             // 
-            this.textBox2.Location = new System.Drawing.Point(324, 19);
-            this.textBox2.MaxLength = 12;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(76, 20);
-            this.textBox2.TabIndex = 92;
+            this.dni.Location = new System.Drawing.Point(324, 19);
+            this.dni.MaxLength = 12;
+            this.dni.Name = "dni";
+            this.dni.Size = new System.Drawing.Size(76, 20);
+            this.dni.TabIndex = 92;
+            this.dni.TextChanged += new System.EventHandler(this.dni_TextChanged);
             // 
             // label8
             // 
@@ -240,13 +257,14 @@
             this.label8.TabIndex = 91;
             this.label8.Text = "DNI:";
             // 
-            // textBox3
+            // apellido
             // 
-            this.textBox3.Location = new System.Drawing.Point(205, 20);
-            this.textBox3.MaxLength = 29;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(76, 20);
-            this.textBox3.TabIndex = 90;
+            this.apellido.Location = new System.Drawing.Point(205, 20);
+            this.apellido.MaxLength = 29;
+            this.apellido.Name = "apellido";
+            this.apellido.Size = new System.Drawing.Size(76, 20);
+            this.apellido.TabIndex = 90;
+            this.apellido.TextChanged += new System.EventHandler(this.apellido_TextChanged);
             // 
             // label10
             // 
@@ -258,13 +276,14 @@
             this.label10.TabIndex = 89;
             this.label10.Text = "Apellido:";
             // 
-            // textBox4
+            // nombre
             // 
-            this.textBox4.Location = new System.Drawing.Point(63, 19);
-            this.textBox4.MaxLength = 29;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(76, 20);
-            this.textBox4.TabIndex = 88;
+            this.nombre.Location = new System.Drawing.Point(63, 19);
+            this.nombre.MaxLength = 29;
+            this.nombre.Name = "nombre";
+            this.nombre.Size = new System.Drawing.Size(76, 20);
+            this.nombre.TabIndex = 88;
+            this.nombre.TextChanged += new System.EventHandler(this.nombre_TextChanged);
             // 
             // label11
             // 
@@ -278,13 +297,14 @@
             // 
             // Empresa
             // 
+            this.Empresa.Controls.Add(this.btnRes);
             this.Empresa.Controls.Add(this.btnBuscarEmpresa);
             this.Empresa.Controls.Add(this.dgvEmpresas);
-            this.Empresa.Controls.Add(this.textBox5);
+            this.Empresa.Controls.Add(this.mailE);
             this.Empresa.Controls.Add(this.label12);
-            this.Empresa.Controls.Add(this.textBox6);
+            this.Empresa.Controls.Add(this.cuit);
             this.Empresa.Controls.Add(this.label13);
-            this.Empresa.Controls.Add(this.textBox7);
+            this.Empresa.Controls.Add(this.razonSocial);
             this.Empresa.Controls.Add(this.label14);
             this.Empresa.Location = new System.Drawing.Point(4, 29);
             this.Empresa.Name = "Empresa";
@@ -293,6 +313,17 @@
             this.Empresa.TabIndex = 1;
             this.Empresa.Text = "Empresa";
             this.Empresa.UseVisualStyleBackColor = true;
+            // 
+            // btnRes
+            // 
+            this.btnRes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRes.Location = new System.Drawing.Point(609, 12);
+            this.btnRes.Name = "btnRes";
+            this.btnRes.Size = new System.Drawing.Size(75, 30);
+            this.btnRes.TabIndex = 105;
+            this.btnRes.Text = "Restaurar";
+            this.btnRes.UseVisualStyleBackColor = true;
+            this.btnRes.Click += new System.EventHandler(this.btnRes_Click);
             // 
             // btnBuscarEmpresa
             // 
@@ -303,6 +334,7 @@
             this.btnBuscarEmpresa.TabIndex = 104;
             this.btnBuscarEmpresa.Text = "Buscar";
             this.btnBuscarEmpresa.UseVisualStyleBackColor = true;
+            this.btnBuscarEmpresa.Click += new System.EventHandler(this.btnBuscarEmpresa_Click);
             // 
             // dgvEmpresas
             // 
@@ -317,13 +349,14 @@
             this.dgvEmpresas.Size = new System.Drawing.Size(799, 282);
             this.dgvEmpresas.TabIndex = 103;
             // 
-            // textBox5
+            // mailE
             // 
-            this.textBox5.Location = new System.Drawing.Point(385, 18);
-            this.textBox5.MaxLength = 75;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(103, 20);
-            this.textBox5.TabIndex = 102;
+            this.mailE.Location = new System.Drawing.Point(385, 18);
+            this.mailE.MaxLength = 75;
+            this.mailE.Name = "mailE";
+            this.mailE.Size = new System.Drawing.Size(103, 20);
+            this.mailE.TabIndex = 102;
+            this.mailE.TextChanged += new System.EventHandler(this.mailE_TextChanged);
             // 
             // label12
             // 
@@ -335,13 +368,14 @@
             this.label12.TabIndex = 101;
             this.label12.Text = "Email:";
             // 
-            // textBox6
+            // cuit
             // 
-            this.textBox6.Location = new System.Drawing.Point(233, 18);
-            this.textBox6.MaxLength = 20;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(98, 20);
-            this.textBox6.TabIndex = 100;
+            this.cuit.Location = new System.Drawing.Point(233, 18);
+            this.cuit.MaxLength = 20;
+            this.cuit.Name = "cuit";
+            this.cuit.Size = new System.Drawing.Size(98, 20);
+            this.cuit.TabIndex = 100;
+            this.cuit.TextChanged += new System.EventHandler(this.cuit_TextChanged);
             // 
             // label13
             // 
@@ -353,13 +387,14 @@
             this.label13.TabIndex = 99;
             this.label13.Text = "CUIT:";
             // 
-            // textBox7
+            // razonSocial
             // 
-            this.textBox7.Location = new System.Drawing.Point(97, 18);
-            this.textBox7.MaxLength = 75;
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(87, 20);
-            this.textBox7.TabIndex = 98;
+            this.razonSocial.Location = new System.Drawing.Point(97, 18);
+            this.razonSocial.MaxLength = 75;
+            this.razonSocial.Name = "razonSocial";
+            this.razonSocial.Size = new System.Drawing.Size(87, 20);
+            this.razonSocial.TabIndex = 98;
+            this.razonSocial.TextChanged += new System.EventHandler(this.razonSocial_TextChanged);
             // 
             // label14
             // 
@@ -454,28 +489,30 @@
         private System.Windows.Forms.TabControl E;
         private System.Windows.Forms.TabPage busquedaClienteTp;
         private System.Windows.Forms.DataGridView dgvClientes;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox mailC;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnBuscarCliente;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox dni;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox apellido;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox nombre;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TabPage Empresa;
         private System.Windows.Forms.Button btnBuscarEmpresa;
         private System.Windows.Forms.DataGridView dgvEmpresas;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox mailE;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox cuit;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox razonSocial;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnHabilitar;
         private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.Button btnAgregarUsuario;
         private System.Windows.Forms.Button btnModificar;
+        private System.Windows.Forms.Button btnRestaurar;
+        private System.Windows.Forms.Button btnRes;
 
     }
 }

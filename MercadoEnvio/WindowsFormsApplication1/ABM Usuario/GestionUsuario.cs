@@ -21,19 +21,49 @@ namespace MercadoEnvios.ABM_Usuario
         public frmABMUsuario()
         {
             InitializeComponent();
+            btnRes.Enabled = false;
+            btnRestaurar.Enabled = false;
             anterior = sesion.anterior;
-            this.getData();
+            this.getDataClientes();
+            this.getDataEmpresas();
         }
 
-        public void getData() 
+        public void getDataClientes() 
         {
-            String query = "SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, e.nombre AS Nombre, e.apellido AS Apellido, e.documento AS Documento FROM ADIOS_TERCER_ANIO.Usuario u "
-                              + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol inner join ADIOS_TERCER_ANIO.Persona e on u.id = e.idUsuario WHERE ru.idRol != 1";
-
             conn = Conexion.Instance;
+            decimal documentoP = -1;
+            string nombreP = nombre.Text;
+            string apellidoP = apellido.Text;
+            string mailP = mailC.Text;
 
-            SqlCommand buscarClientes = new SqlCommand(query, conn.getConexion);
-            SqlDataAdapter da = new SqlDataAdapter(query, conn.getConexion);
+            if (dni.Text != "")
+            {
+                documentoP = Convert.ToDecimal(dni.Text);
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter("ADIOS_TERCER_ANIO.ObtenerUsuariosCliente", conn.getConexion);
+            da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter documentoK = new SqlParameter("@doc", SqlDbType.NVarChar, 255);
+            documentoK.SqlValue = documentoP;
+            documentoK.Direction = ParameterDirection.Input;
+
+            SqlParameter nombreK = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+            nombreK.SqlValue = nombreP;
+            nombreK.Direction = ParameterDirection.Input;
+
+            SqlParameter apellidoK = new SqlParameter("@apellido", SqlDbType.NVarChar, 255);
+            apellidoK.SqlValue = apellidoP;
+            apellidoK.Direction = ParameterDirection.Input;
+
+            SqlParameter mailK = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
+            mailK.SqlValue = mailP;
+            mailK.Direction = ParameterDirection.Input;
+
+            da.SelectCommand.Parameters.Add(documentoK);
+            da.SelectCommand.Parameters.Add(nombreK);
+            da.SelectCommand.Parameters.Add(apellidoK);
+            da.SelectCommand.Parameters.Add(mailK);
             DataTable tablaDeClientes = new DataTable("Clientes");
             da.Fill(tablaDeClientes);
             dgvClientes.DataSource = tablaDeClientes.DefaultView;
@@ -45,14 +75,38 @@ namespace MercadoEnvios.ABM_Usuario
             dgvClientes.Columns[2].Width = 150;
             dgvClientes.Columns[3].Width = 150;
 
-            String queryE = "SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, e.razonSocial AS Razon_Social, e.cuit AS CUIT FROM ADIOS_TERCER_ANIO.Usuario u "
-                              + "inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol inner join ADIOS_TERCER_ANIO.Empresa e on u.id = e.idUsuario  WHERE ru.idRol != 1";
+            dni.Text = "";
+            nombre.Text = "";
+            apellido.Text = "";
+            mailC.Text = "";
+        }
 
+        public void getDataEmpresas()
+        {
             conn = Conexion.Instance;
+            string cuitP = cuit.Text;
+            string razonSocialP = razonSocial.Text;
+            string mailP = mailE.Text;
 
-            SqlCommand buscarEmpresas = new SqlCommand(queryE, conn.getConexion);
-            SqlDataAdapter data = new SqlDataAdapter(queryE, conn.getConexion);
+            SqlDataAdapter data = new SqlDataAdapter("ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa", conn.getConexion);
             DataTable tablaDeEmpresas = new DataTable("Empresas");
+            data.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter cuitK = new SqlParameter("@cuit", SqlDbType.NVarChar, 255);
+            cuitK.SqlValue = cuitP;
+            cuitK.Direction = ParameterDirection.Input;
+
+            SqlParameter razonSocialK = new SqlParameter("@razonSocial", SqlDbType.NVarChar, 255);
+            razonSocialK.SqlValue = razonSocialP;
+            razonSocialK.Direction = ParameterDirection.Input;
+
+            SqlParameter mailK = new SqlParameter("@mail", SqlDbType.NVarChar, 255);
+            mailK.SqlValue = mailP;
+            mailK.Direction = ParameterDirection.Input;
+
+            data.SelectCommand.Parameters.Add(cuitK);
+            data.SelectCommand.Parameters.Add(razonSocialK);
+            data.SelectCommand.Parameters.Add(mailK);
             data.Fill(tablaDeEmpresas);
             dgvEmpresas.DataSource = tablaDeEmpresas.DefaultView;
 
@@ -61,8 +115,11 @@ namespace MercadoEnvios.ABM_Usuario
             dgvEmpresas.ReadOnly = true;
             dgvEmpresas.Columns[1].Width = 150;
             dgvEmpresas.Columns[2].Width = 150;
-            dgvEmpresas.Columns[3].Width = 150; 
+            dgvEmpresas.Columns[3].Width = 150;
 
+            razonSocial.Text = "";
+            cuit.Text = "";
+            mailE.Text = "";
         }
 
         private void btnVolver_Click_1(object sender, EventArgs e)
@@ -131,7 +188,7 @@ namespace MercadoEnvios.ABM_Usuario
                     actualizacion.Parameters.Add(idUsuario);
                     idUsuario.SqlValue = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
                     actualizacion.ExecuteNonQuery();
-                    this.getData();
+                    this.getDataClientes();
                 }
             }
             else{
@@ -149,7 +206,7 @@ namespace MercadoEnvios.ABM_Usuario
                     actualizacion.Parameters.Add(idUsuario);
                     idUsuario.SqlValue = Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value);
                     actualizacion.ExecuteNonQuery();
-                    this.getData();
+                    this.getDataEmpresas();
                 }
             }
 
@@ -173,8 +230,7 @@ namespace MercadoEnvios.ABM_Usuario
                     actualizacion.Parameters.Add(idUsuario);
                     idUsuario.SqlValue = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
                     actualizacion.ExecuteNonQuery();
-
-                    this.getData();
+                    this.getDataClientes();
                 }
             }
             else
@@ -192,7 +248,7 @@ namespace MercadoEnvios.ABM_Usuario
                     actualizacion.Parameters.Add(idUsuario);
                     idUsuario.SqlValue = Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value);
                     actualizacion.ExecuteNonQuery();
-                    this.getData();
+                    this.getDataEmpresas();
                 }
             }
         }
@@ -213,6 +269,84 @@ namespace MercadoEnvios.ABM_Usuario
             else
             {
                 clienteOEmpresa = 1;
+            }
+        }
+
+        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        {
+            this.getDataClientes();
+            btnRestaurar.Enabled = true;
+        }
+
+        private void btnBuscarEmpresa_Click(object sender, EventArgs e)
+        {
+            this.getDataEmpresas();
+            btnRes.Enabled = true;
+        }
+
+        private void btnRestaurar_Click(object sender, EventArgs e)
+        {
+            this.getDataClientes();
+        }
+
+        private void btnRes_Click(object sender, EventArgs e)
+        {
+            this.getDataEmpresas();
+        }
+
+        private void nombre_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRestaurar.Enabled == true)
+            {
+                btnRestaurar.Enabled = false;
+            }
+        }
+
+        private void apellido_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRestaurar.Enabled == true)
+            {
+                btnRestaurar.Enabled = false;
+            }
+        }
+
+        private void dni_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRestaurar.Enabled == true)
+            {
+                btnRestaurar.Enabled = false;
+            }
+        }
+
+        private void mailC_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRestaurar.Enabled == true)
+            {
+                btnRestaurar.Enabled = false;
+            }
+        }
+
+        private void cuit_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRes.Enabled == true)
+            {
+                btnRes.Enabled = false;
+            }
+        }
+
+        private void razonSocial_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRes.Enabled == true)
+            {
+                btnRes.Enabled = false;
+            }
+        }
+
+        private void mailE_TextChanged(object sender, EventArgs e)
+        {
+            if (btnRes.Enabled == true)
+            {
+                btnRes.Enabled = false;
             }
         }
     

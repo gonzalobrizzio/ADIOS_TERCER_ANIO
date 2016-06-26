@@ -17,7 +17,7 @@ namespace MercadoEnvios.ComprarOfertar
         SqlDataAdapter da;
         Sesion sesion = Sesion.Instance;
         SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-        
+        int cantidad;
         int nroPagina = 0;
 
         public frmComprarOfertar()
@@ -32,7 +32,13 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void getData()
         {
+            dgvRubros.ColumnCount = 1;
+            dgvRubros.ColumnHeadersVisible = true;
+            dgvRubros.Columns[0].Name = "Rubros";
 
+            dgvFiltros.ColumnCount = 1;
+            dgvFiltros.ColumnHeadersVisible = true;
+            dgvFiltros.Columns[0].Name = "Rubros";
             //--	declare @idUsuario int = 7;
             //--	declare @pagina INT = 3;
 
@@ -58,14 +64,34 @@ namespace MercadoEnvios.ComprarOfertar
             pagina.SqlValue = nroPagina;
             pagina.Direction = ParameterDirection.Input;
 
+            SqlParameter cant = new SqlParameter("@cant", SqlDbType.Int);
+            cant.SqlValue = DBNull.Value;
+            cant.Direction = ParameterDirection.Output;
+
             da = new SqlDataAdapter(cmd, conn.getConexion);
             da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
             da.SelectCommand.Parameters.Add(idUsuario);
             da.SelectCommand.Parameters.Add(pagina);
+            da.SelectCommand.Parameters.Add(cant);
 
+            if (da.SelectCommand.Parameters["@cant"].Value != DBNull.Value)
+            {
+                if (nroPagina == 0)
+                {
+                    cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 20;
+                }
+            }
+            else
+            {
+                cantidad = 0;
+            }
             try
             {
                 da.SelectCommand.ExecuteNonQuery();
+                if (nroPagina >= cantidad)
+                {
+                    btnSgte.Enabled = false;
+                }
             }
             catch (SqlException error)
             {
@@ -89,13 +115,59 @@ namespace MercadoEnvios.ComprarOfertar
 
             da.SelectCommand.Parameters.Clear();
 
+            string rubrosDisponibles = "SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro";
+            SqlCommand buscarRubrosDisponibles = new SqlCommand(rubrosDisponibles, conn.getConexion);
+            SqlDataReader daBuscarRubrosDisponibles = buscarRubrosDisponibles.ExecuteReader();
+
+            if (daBuscarRubrosDisponibles.HasRows)
+            {
+                while (daBuscarRubrosDisponibles.Read())
+                {
+                    DataGridViewRow rowdgvFuncionalidadesDisponibles = (DataGridViewRow)dgvRubros.Rows[0].Clone();
+                    rowdgvFuncionalidadesDisponibles.Cells[0].Value = daBuscarRubrosDisponibles.GetString(0).ToString();
+                    dgvRubros.Rows.Add(rowdgvFuncionalidadesDisponibles);
+                }
+            }
+            daBuscarRubrosDisponibles.Close();
+            dgvRubros.Columns[0].Width = 160;
+            dgvRubros.AllowUserToAddRows = false;
+            dgvRubros.AllowUserToDeleteRows = false;
+            dgvRubros.ReadOnly = true;
+
+            dgvFiltros.Columns[0].Width = 160;
+            dgvFiltros.AllowUserToAddRows = false;
+            dgvFiltros.AllowUserToDeleteRows = false;
+            dgvFiltros.ReadOnly = true;
+
+
+            if (dgvPublicaciones.RowCount == 0)
+            {
+                btnSgte.Enabled = false;
+                btnAnt.Enabled = false;
+                btnDetalle.Enabled = false;
+            }
+
+            if (dgvRubros.RowCount == 0)
+            {
+
+                btnQuitar.Enabled = false;
+                btnAgregar.Enabled = false;
+            }
+
         }
 
         private void btnSgte_Click(object sender, EventArgs e)
         {
-            nroPagina++;
-            btnAnt.Enabled = true;
-            this.getData();
+            if (nroPagina < cantidad)
+            {
+                nroPagina++;
+                btnAnt.Enabled = true;
+                this.getData();
+            }
+            else
+            {
+                btnSgte.Enabled = false;
+            }
         }
 
         private void btnAnt_Click(object sender, EventArgs e)
@@ -220,6 +292,45 @@ namespace MercadoEnvios.ComprarOfertar
             int idPublicacion = Convert.ToInt32(dgvPublicaciones[4, dgvPublicaciones.CurrentCell.RowIndex].Value);
             new frmDetalle(idPublicacion).Show();
             this.Hide(); 
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow rowPrincipal in dgvRubros.SelectedRows)
+            {
+                object[] values = {
+                                          rowPrincipal.Cells["Rubros"].Value
+                                  };
+                DataGridViewRow row = (DataGridViewRow)dgvRubros.Rows[0].Clone();
+                row.Cells[0].Value = values[0];
+                dgvFiltros.Rows.Add(row);
+                dgvRubros.Rows.Remove(rowPrincipal);
+            }
+        }
+
+        private void btnQuitar_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow rowPrincipal in dgvFiltros.SelectedRows)
+            {
+                object[] values = {
+                                          rowPrincipal.Cells["Rubros"].Value
+                                  };
+                DataGridViewRow row = (DataGridViewRow)dgvFiltros.Rows[0].Clone();
+                row.Cells[0].Value = values[0];
+                dgvRubros.Rows.Add(row);
+                dgvFiltros.Rows.Remove(rowPrincipal);
+
+            }
+        }
+
+        private void dgvRubros_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvRubros.CurrentRow.Selected = true;
+        }
+
+        private void dgvFiltros_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvFiltros.CurrentRow.Selected = true;
         }
     }
 }

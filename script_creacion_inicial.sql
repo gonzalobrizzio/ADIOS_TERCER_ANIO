@@ -2351,26 +2351,20 @@ BEGIN
 END
 
 GO 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT, @cant INT OUTPUT)
 AS
 BEGIN
 --	declare @idUsuario int = 7;
 --	declare @pagina INT = 3;
 
-	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
-			where publicacion.idPublicador != @idUsuario) - @pagina * 20;
-	IF (@cant > 0)
-	BEGIN
-	WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
-					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, iif(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio from ADIOS_TERCER_ANIO.Publicacion publicacion
-	inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-	where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
+	SET @cant = (SELECT COUNT(*) FROM ADIOS_TERCER_ANIO.Publicacion WHERE publicacion.idPublicador != @idUsuario) - @pagina * 20;
+	WITH TablaP AS (SELECT TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (SELECT nombre FROM ADIOS_TERCER_ANIO.TipoPublicacion WHERE id = publicacion.idTipoPublicacion) AS tipo,
+					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio FROM ADIOS_TERCER_ANIO.Publicacion publicacion
+	inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id
+	WHERE publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
 	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
-	SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
-	END
-	ELSE
-		THROW 50004, 'No hay más paginas para ver!', 1; 
+	SELECT TOP 20 * FROM TablaP ORDER by TablaP.porcentaje DESC, TablaP.fechaInicio DESC
 END
 GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
@@ -2984,62 +2978,58 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
--- NO ME FUNCAN LOS IF Y NO SE PORQUE
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @usa_fecha INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
-														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255))
+ALTER PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant INT OUTPUT)
 AS
 BEGIN
 
-	DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Factura f
+	--DECLARE @idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+	--		@hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255)
+	--SET @idUsuario = 3
+	--SET @pagina = 0
+	SET @cant = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 			where p.idPublicador = @idUsuario) - @pagina * 5;
-	IF (@cant > 0)
-	BEGIN
-		WITH TablaP as (select TOP (@cant) f.numero, f.importeTotal, f.fecha, u.usuario, p.descripcion as Nombre from ADIOS_TERCER_ANIO.Factura f
+		
+		WITH TablaP as (select TOP (@cant) f.numero AS Numero_de_Factura, f.importeTotal AS Importe, f.fecha AS Fecha, u.usuario AS Destinatario, p.descripcion as Descripcion from ADIOS_TERCER_ANIO.Factura f
 		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
-		WHERE @idUsuario = P.idPublicador
+		WHERE @idUsuario = P.idPublicador 
+		AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
+		AND ((importeTotal < @desdePrecio OR importeTotal > @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
+		AND ((p.descripcion LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
+		AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 		ORDER BY f.fecha ASC)
-
-		IF(@usa_fecha = 1)
-		BEGIN
-			DELETE FROM TablaP WHERE fecha < @fechaDesde OR fecha > @fechaHasta 
-		END
-
-		IF(@desdePrecio <> -1)
-		BEGIN
-			DELETE FROM TablaP WHERE importeTotal < @desdePrecio OR importeTotal > @hastaPrecio
-		END
-
-		IF(@descripcion <> '')
-		BEGIN
-			DELETE FROM TablaP WHERE descripcion <> @descripcion
-		END
-
-		IF(@destinatario <> '')
-		BEGIN
-			DELETE FROM TablaP WHERE usuario <> @destinatario	
-		END
-
 	SELECT top 5 * FROM TablaP ORDER by TablaP.fecha desc
-
-	END
-	ELSE
-		THROW 50004, 'No hay facturas para ver!', 1; 
 END
 GO
-
---CREATE PROCEDURE obtenerUsuariosClientes
---AS BEGIN
---END
---GO
-
---CREATE PROCEDURE obtenerUsuariosEmpresa
---AS BEGIN
---END
---GO
-
-
+ALTER PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 
+AS BEGIN
+	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
+	e.nombre AS Nombre, e.apellido AS Apellido, e.documento AS Documento FROM ADIOS_TERCER_ANIO.Usuario u
+	inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario
+	inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol
+	inner join ADIOS_TERCER_ANIO.Persona e on u.id = e.idUsuario
+	WHERE ru.idRol != 1
+	AND ((e.nombre COLLATE Latin1_General_CI_AI LIKE '%' + @nombre + '%' COLLATE Latin1_General_CI_AI) OR (@nombre IS NULL OR @nombre = ''))
+	AND ((e.apellido COLLATE Latin1_General_CI_AI LIKE '%' + @apellido + '%' COLLATE Latin1_General_CI_AI) OR (@apellido IS NULL OR @apellido = ''))
+	AND ((e.documento LIKE @doc) OR (@doc IS NULL OR @doc = -1))
+	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
+END
+GO
+ALTER PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa(@cuit NVARCHAR(255), @razonSocial NVARCHAR(255), @mail NVARCHAR(255))
+AS BEGIN
+	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
+	e.razonSocial AS Razon_Social, e.cuit AS CUIT FROM ADIOS_TERCER_ANIO.Usuario u 
+	inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario 
+	inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol 
+	inner join ADIOS_TERCER_ANIO.Empresa e on u.id = e.idUsuario 
+	WHERE ru.idRol != 1
+	AND ((e.cuit COLLATE Latin1_General_CI_AI LIKE '%' + @cuit + '%' COLLATE Latin1_General_CI_AI) OR (@cuit IS NULL OR @cuit = ''))
+	AND ((e.razonSocial COLLATE Latin1_General_CI_AI LIKE '%' + @razonSocial + '%' COLLATE Latin1_General_CI_AI) OR (@razonSocial IS NULL OR @razonSocial = ''))
+	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
+END
+GO
 
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 

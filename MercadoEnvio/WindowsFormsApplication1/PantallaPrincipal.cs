@@ -36,7 +36,7 @@ namespace MercadoEnvios.ABM_Usuario
             conn = Conexion.Instance;
 
             string funcionalidadesQuery = "select f.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol f "
-                                   + "where f.idRol = @idRolActual";
+                                   + "where f.idRol = @idRolActual AND f.deleted = 0";
             SqlCommand subastas = new SqlCommand(funcionalidadesQuery, conn.getConexion);
             SqlParameter idRolActual = new SqlParameter("@idRolActual", SqlDbType.Int);
             idRolActual.Direction = ParameterDirection.Input;
