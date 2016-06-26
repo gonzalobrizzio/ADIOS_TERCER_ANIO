@@ -2978,7 +2978,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-ALTER PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
 														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant INT OUTPUT)
 AS
 BEGIN
@@ -3003,7 +3003,7 @@ BEGIN
 	SELECT top 5 * FROM TablaP ORDER by TablaP.fecha desc
 END
 GO
-ALTER PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 
 AS BEGIN
 	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
 	e.nombre AS Nombre, e.apellido AS Apellido, e.documento AS Documento FROM ADIOS_TERCER_ANIO.Usuario u
@@ -3017,7 +3017,7 @@ AS BEGIN
 	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
 END
 GO
-ALTER PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa(@cuit NVARCHAR(255), @razonSocial NVARCHAR(255), @mail NVARCHAR(255))
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa(@cuit NVARCHAR(255), @razonSocial NVARCHAR(255), @mail NVARCHAR(255))
 AS BEGIN
 	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
 	e.razonSocial AS Razon_Social, e.cuit AS CUIT FROM ADIOS_TERCER_ANIO.Usuario u 
