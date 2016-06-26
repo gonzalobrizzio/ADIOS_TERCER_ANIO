@@ -2980,7 +2980,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+ALTER PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
 														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant INT OUTPUT)
 AS
 BEGIN
@@ -2991,18 +2991,18 @@ BEGIN
 	--SET @pagina = 0
 	SET @cant = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-			where p.idPublicador = @idUsuario) - @pagina * 5;
+			where p.idPublicador = @idUsuario) - @pagina * 10;
 		
 		WITH TablaP as (select TOP (@cant) f.numero AS Numero_de_Factura, f.importeTotal AS Importe, f.fecha AS Fecha, u.usuario AS Destinatario, p.descripcion as Descripcion from ADIOS_TERCER_ANIO.Factura f
 		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
 		WHERE @idUsuario = P.idPublicador 
 		AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
-		AND ((importeTotal < @desdePrecio OR importeTotal > @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
+		AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
 		AND ((p.descripcion LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 		AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 		ORDER BY f.fecha ASC)
-	SELECT top 5 * FROM TablaP ORDER by TablaP.fecha desc
+	SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
 END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 

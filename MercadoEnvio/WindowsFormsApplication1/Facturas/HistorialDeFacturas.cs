@@ -97,7 +97,7 @@ namespace MercadoEnvios.Facturas
                idRol.Direction = ParameterDirection.Input;
 
                SqlParameter fechaDesde = new SqlParameter("@fechaDesde", SqlDbType.DateTime);
-               if (Convert.ToString(fechaDesdeD) == "" || Convert.ToString(fechaDesdeD) == null)
+               if (Convert.ToString(fechaDesdeD) != "" || Convert.ToString(fechaDesdeD) != null)
                {
                    fechaDesde.SqlValue = fechaDesdeD;
                    fechaDesde.Direction = ParameterDirection.Input;
@@ -109,7 +109,7 @@ namespace MercadoEnvios.Facturas
                }
 
                SqlParameter fechaHasta = new SqlParameter("@fechaHasta", SqlDbType.DateTime);
-               if (Convert.ToString(fechaHastaD) == "" || Convert.ToString(fechaHastaD) == null)
+               if (Convert.ToString(fechaHastaD) != "" || Convert.ToString(fechaHastaD) != null)
                {
                    fechaHasta.SqlValue = fechaHastaD;
                    fechaHasta.Direction = ParameterDirection.Input;
@@ -165,7 +165,7 @@ namespace MercadoEnvios.Facturas
                    dgvFacturas.ReadOnly = true;
                    if (nroPagina == 0)
                    {
-                       cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 5;
+                       cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 10;
                    }
 
                    if (nroPagina >= cantidad)
@@ -229,6 +229,7 @@ namespace MercadoEnvios.Facturas
         {
             nroPagina = 0;
             this.getData();
+            btnSgte.Enabled = true;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
