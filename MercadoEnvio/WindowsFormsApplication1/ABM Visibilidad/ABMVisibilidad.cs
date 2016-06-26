@@ -118,5 +118,10 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         }
 
+        private void dgvVisibilidad_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvVisibilidad.CurrentRow.Selected = true;
+        }
+
     }
 }

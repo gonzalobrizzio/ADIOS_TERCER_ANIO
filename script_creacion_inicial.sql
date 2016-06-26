@@ -2459,6 +2459,34 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarVisibilidad] (@id int,
+														   @nombre NVARCHAR(255),
+														   @duracion int output,
+														   @precio Decimal(18,2),
+														   @porcentaje Decimal(18,2))
+AS
+BEGIN
+	if(@nombre is null or @nombre like '')
+	begin
+		THROW 50004, 'Debe ingresar un nombre', 1; 
+	end
+	BEGIN TRANSACTION
+	BEGIN TRY
+	UPDATE ADIOS_TERCER_ANIO.Visibilidad
+	SET
+		nombre = @nombre, 
+		duracionDias = @duracion, 
+		precio = @precio, 
+		porcentaje = @porcentaje
+	where id = @id
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW 50004, 'No se pudo modificar la visibilidad', 1; 
+	END CATCH
+	COMMIT TRANSACTION
+END
+GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[FacturarCompraInmediata] (@idPublicacion INT, @fecha DATETIME)
 AS
 BEGIN
@@ -2980,7 +3008,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-ALTER PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
 														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant INT OUTPUT)
 AS
 BEGIN

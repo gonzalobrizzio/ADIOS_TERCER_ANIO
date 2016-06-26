@@ -38,7 +38,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             dabuscarRubrosDisponibles.Close();
 
-            string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad";
+            string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad where deleted = 0";
             SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
             SqlDataReader dataReader = buscarVisibilidades.ExecuteReader();
             while (dataReader.Read())
@@ -47,7 +47,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             dataReader.Close();
 
-            string queryTipoDePublicacion = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad";
+            string queryTipoDePublicacion = "SELECT nombre FROM ADIOS_TERCER_ANIO.TipoPublicacion";
             SqlCommand buscarTiposDePublicaciones = new SqlCommand(queryTipoDePublicacion, conn.getConexion);
             dataReader = buscarTiposDePublicaciones.ExecuteReader();
             while (dataReader.Read())

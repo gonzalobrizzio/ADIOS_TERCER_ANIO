@@ -37,25 +37,29 @@
             // lblPregunta
             // 
             this.lblPregunta.AutoSize = true;
-            this.lblPregunta.Location = new System.Drawing.Point(45, 40);
+            this.lblPregunta.Location = new System.Drawing.Point(60, 49);
+            this.lblPregunta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPregunta.Name = "lblPregunta";
-            this.lblPregunta.Size = new System.Drawing.Size(35, 13);
+            this.lblPregunta.Size = new System.Drawing.Size(46, 17);
             this.lblPregunta.TabIndex = 0;
             this.lblPregunta.Text = "label1";
             // 
             // txtRespuesta
             // 
-            this.txtRespuesta.Location = new System.Drawing.Point(48, 159);
+            this.txtRespuesta.Location = new System.Drawing.Point(64, 196);
+            this.txtRespuesta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRespuesta.MaxLength = 255;
             this.txtRespuesta.Name = "txtRespuesta";
-            this.txtRespuesta.Size = new System.Drawing.Size(451, 155);
+            this.txtRespuesta.Size = new System.Drawing.Size(600, 190);
             this.txtRespuesta.TabIndex = 3;
             this.txtRespuesta.Text = "";
             // 
             // btnContestar
             // 
-            this.btnContestar.Location = new System.Drawing.Point(281, 375);
+            this.btnContestar.Location = new System.Drawing.Point(375, 462);
+            this.btnContestar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnContestar.Name = "btnContestar";
-            this.btnContestar.Size = new System.Drawing.Size(111, 35);
+            this.btnContestar.Size = new System.Drawing.Size(148, 43);
             this.btnContestar.TabIndex = 15;
             this.btnContestar.Text = "Contestar";
             this.btnContestar.UseVisualStyleBackColor = true;
@@ -63,9 +67,10 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(398, 375);
+            this.btnVolver.Location = new System.Drawing.Point(531, 462);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(101, 34);
+            this.btnVolver.Size = new System.Drawing.Size(135, 42);
             this.btnVolver.TabIndex = 14;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -73,13 +78,14 @@
             // 
             // frmVerPregunta
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 433);
+            this.ClientSize = new System.Drawing.Size(737, 533);
             this.Controls.Add(this.btnContestar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.txtRespuesta);
             this.Controls.Add(this.lblPregunta);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmVerPregunta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pregunta";

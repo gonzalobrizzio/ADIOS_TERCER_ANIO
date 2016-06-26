@@ -38,9 +38,10 @@
             // btnConfirmar
             // 
             this.btnConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmar.Location = new System.Drawing.Point(42, 127);
+            this.btnConfirmar.Location = new System.Drawing.Point(56, 156);
+            this.btnConfirmar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConfirmar.Name = "btnConfirmar";
-            this.btnConfirmar.Size = new System.Drawing.Size(96, 42);
+            this.btnConfirmar.Size = new System.Drawing.Size(128, 52);
             this.btnConfirmar.TabIndex = 0;
             this.btnConfirmar.Text = "Confirmar";
             this.btnConfirmar.UseVisualStyleBackColor = true;
@@ -49,17 +50,20 @@
             // txtNumeric
             // 
             this.txtNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumeric.Location = new System.Drawing.Point(42, 95);
+            this.txtNumeric.Location = new System.Drawing.Point(56, 117);
+            this.txtNumeric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNumeric.MaxLength = 15;
             this.txtNumeric.Name = "txtNumeric";
-            this.txtNumeric.Size = new System.Drawing.Size(96, 26);
+            this.txtNumeric.Size = new System.Drawing.Size(127, 30);
             this.txtNumeric.TabIndex = 1;
             // 
             // btnCancelar
             // 
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(42, 175);
+            this.btnCancelar.Location = new System.Drawing.Point(56, 215);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(96, 42);
+            this.btnCancelar.Size = new System.Drawing.Size(128, 52);
             this.btnCancelar.TabIndex = 2;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -69,31 +73,34 @@
             // 
             this.lblNumeric.AutoSize = true;
             this.lblNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeric.Location = new System.Drawing.Point(38, 20);
+            this.lblNumeric.Location = new System.Drawing.Point(51, 25);
+            this.lblNumeric.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNumeric.Name = "lblNumeric";
-            this.lblNumeric.Size = new System.Drawing.Size(129, 20);
+            this.lblNumeric.Size = new System.Drawing.Size(162, 25);
             this.lblNumeric.TabIndex = 3;
             this.lblNumeric.Text = "Precio / Cantidad";
             // 
             // lblCantPrecio
             // 
             this.lblCantPrecio.AutoSize = true;
-            this.lblCantPrecio.Location = new System.Drawing.Point(42, 56);
+            this.lblCantPrecio.Location = new System.Drawing.Point(56, 69);
+            this.lblCantPrecio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCantPrecio.Name = "lblCantPrecio";
-            this.lblCantPrecio.Size = new System.Drawing.Size(68, 13);
+            this.lblCantPrecio.Size = new System.Drawing.Size(86, 17);
             this.lblCantPrecio.TabIndex = 4;
             this.lblCantPrecio.Text = "[cant/precio]";
             // 
             // frmConfirmar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(194, 261);
+            this.ClientSize = new System.Drawing.Size(259, 321);
             this.Controls.Add(this.lblCantPrecio);
             this.Controls.Add(this.lblNumeric);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtNumeric);
             this.Controls.Add(this.btnConfirmar);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmConfirmar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Comprar / Ofertar";

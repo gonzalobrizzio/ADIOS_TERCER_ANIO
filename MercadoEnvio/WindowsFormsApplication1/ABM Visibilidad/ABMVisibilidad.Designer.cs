@@ -40,9 +40,10 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(638, 351);
+            this.btnVolver.Location = new System.Drawing.Point(851, 432);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(101, 34);
+            this.btnVolver.Size = new System.Drawing.Size(135, 42);
             this.btnVolver.TabIndex = 20;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -50,9 +51,10 @@
             // 
             // btnDeshabilitar
             // 
-            this.btnDeshabilitar.Location = new System.Drawing.Point(146, 349);
+            this.btnDeshabilitar.Location = new System.Drawing.Point(195, 430);
+            this.btnDeshabilitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDeshabilitar.Name = "btnDeshabilitar";
-            this.btnDeshabilitar.Size = new System.Drawing.Size(119, 36);
+            this.btnDeshabilitar.Size = new System.Drawing.Size(159, 44);
             this.btnDeshabilitar.TabIndex = 19;
             this.btnDeshabilitar.Text = "Deshabilitar";
             this.btnDeshabilitar.UseVisualStyleBackColor = true;
@@ -60,9 +62,10 @@
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(21, 349);
+            this.btnHabilitar.Location = new System.Drawing.Point(28, 430);
+            this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnHabilitar.Name = "btnHabilitar";
-            this.btnHabilitar.Size = new System.Drawing.Size(119, 36);
+            this.btnHabilitar.Size = new System.Drawing.Size(159, 44);
             this.btnHabilitar.TabIndex = 18;
             this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
@@ -73,17 +76,19 @@
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblTitulo.Location = new System.Drawing.Point(18, 10);
+            this.lblTitulo.Location = new System.Drawing.Point(24, 12);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(161, 18);
+            this.lblTitulo.Size = new System.Drawing.Size(211, 24);
             this.lblTitulo.TabIndex = 17;
             this.lblTitulo.Text = "Edición de Visibilidades";
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(396, 351);
+            this.btnModificar.Location = new System.Drawing.Point(528, 432);
+            this.btnModificar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(119, 35);
+            this.btnModificar.Size = new System.Drawing.Size(159, 43);
             this.btnModificar.TabIndex = 16;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -91,9 +96,10 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(271, 349);
+            this.btnAgregar.Location = new System.Drawing.Point(361, 430);
+            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(119, 36);
+            this.btnAgregar.Size = new System.Drawing.Size(159, 44);
             this.btnAgregar.TabIndex = 15;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -103,16 +109,18 @@
             // 
             this.dgvVisibilidad.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvVisibilidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVisibilidad.Location = new System.Drawing.Point(21, 41);
+            this.dgvVisibilidad.Location = new System.Drawing.Point(28, 50);
+            this.dgvVisibilidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvVisibilidad.Name = "dgvVisibilidad";
-            this.dgvVisibilidad.Size = new System.Drawing.Size(718, 292);
+            this.dgvVisibilidad.Size = new System.Drawing.Size(957, 359);
             this.dgvVisibilidad.TabIndex = 14;
+            this.dgvVisibilidad.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisibilidad_CellClick);
             // 
             // frmABMVisibilidad
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 396);
+            this.ClientSize = new System.Drawing.Size(1003, 487);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.btnHabilitar);
@@ -120,6 +128,7 @@
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvVisibilidad);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmABMVisibilidad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMVisibilidad";
