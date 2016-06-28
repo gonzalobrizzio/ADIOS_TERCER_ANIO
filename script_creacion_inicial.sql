@@ -3069,3 +3069,8 @@ GO
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
+
+--UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2
+
+
+--SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
