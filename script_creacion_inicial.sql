@@ -3072,3 +3072,9 @@ GO
 --END
 --GO 
 
+--select * from ADIOS_TERCER_ANIO.Funcionalidad
+
+--UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2
+
+
+--SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
