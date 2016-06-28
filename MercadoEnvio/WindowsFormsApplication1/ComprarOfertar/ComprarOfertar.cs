@@ -39,81 +39,6 @@ namespace MercadoEnvios.ComprarOfertar
             dgvFiltros.ColumnCount = 1;
             dgvFiltros.ColumnHeadersVisible = true;
             dgvFiltros.Columns[0].Name = "Rubros";
-            //--	declare @idUsuario int = 7;
-            //--	declare @pagina INT = 3;
-
-                //    DECLARE @cant int = (select count(*) from ADIOS_TERCER_ANIO.Publicacion 
-                //            where publicacion.idPublicador != @idUsuario) - @pagina * 20;
-                //    IF (@cant > 0)
-                //    BEGIN
-                //    WITH TablaP as (select TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = publicacion.idTipoPublicacion) as tipo,
-                //                    publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, iif(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio from ADIOS_TERCER_ANIO.Publicacion publicacion
-                //    inner join ADIOS_TERCER_ANIO.Visibilidad visib on publicacion.idVisibilidad = visib.id
-                //    where publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 4 
-                //    ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
-
-                //    SELECT top 20 * FROM TablaP ORDER by TablaP.porcentaje desc, TablaP.fechaInicio desc
-                //    END
-                //    ELSE
-                //        THROW 50004, 'No hay más paginas para ver!', 1; 
-            
-            // ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT)
-            String cmd = "ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN";
-
-            SqlParameter pagina = new SqlParameter("@pagina", SqlDbType.Int);
-            pagina.SqlValue = nroPagina;
-            pagina.Direction = ParameterDirection.Input;
-
-            SqlParameter cant = new SqlParameter("@cant", SqlDbType.Int);
-            cant.SqlValue = DBNull.Value;
-            cant.Direction = ParameterDirection.Output;
-
-            da = new SqlDataAdapter(cmd, conn.getConexion);
-            da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
-            da.SelectCommand.Parameters.Add(idUsuario);
-            da.SelectCommand.Parameters.Add(pagina);
-            da.SelectCommand.Parameters.Add(cant);
-
-            if (da.SelectCommand.Parameters["@cant"].Value != DBNull.Value)
-            {
-                if (nroPagina == 0)
-                {
-                    cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 20;
-                }
-            }
-            else
-            {
-                cantidad = 0;
-            }
-            try
-            {
-                da.SelectCommand.ExecuteNonQuery();
-                if (nroPagina >= cantidad)
-                {
-                    btnSgte.Enabled = false;
-                }
-            }
-            catch (SqlException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-
-            DataTable tablaDeCompras = new DataTable("Publicaciones para comprar / ofertar");
-            da.Fill(tablaDeCompras);
-            dgvPublicaciones.DataSource = tablaDeCompras;
-
-            dgvPublicaciones.Columns[0].Width = 200;
-            dgvPublicaciones.Columns[1].Width = 70;
-            dgvPublicaciones.Columns[2].Width = 100;
-            dgvPublicaciones.Columns[3].Width = 50;
-            dgvPublicaciones.Columns[4].Visible = false;
-            dgvPublicaciones.Columns[5].Visible = false;
-            dgvPublicaciones.Columns[6].Visible = false;
-            dgvPublicaciones.AllowUserToAddRows = false;
-            dgvPublicaciones.AllowUserToDeleteRows = false;
-            dgvPublicaciones.ReadOnly = true;
-
-            da.SelectCommand.Parameters.Clear();
 
             string rubrosDisponibles = "SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro";
             SqlCommand buscarRubrosDisponibles = new SqlCommand(rubrosDisponibles, conn.getConexion);
@@ -154,6 +79,10 @@ namespace MercadoEnvios.ComprarOfertar
                 btnAgregar.Enabled = false;
             }
 
+            int paginas = getCantPublicaciones();
+
+            MessageBox.Show(paginas.ToString());
+
         }
 
         private void btnSgte_Click(object sender, EventArgs e)
@@ -184,108 +113,101 @@ namespace MercadoEnvios.ComprarOfertar
             this.Close();
         }
 
-        //public DataTable getAllPublicationByFiltro(DateTime fecha, String descripcion, String rubros)
-        //{
-        //    DataTable retorno = null;
+//        public void getPublicaciones(String descripcion, String rubros)
+//        {
+//            //select top 20 * from ((SELECT TOP (@cant) publicacion.descripcion, publicacion.fechaFin, tipoP.nombre AS tipo,
+////publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio FROM ADIOS_TERCER_ANIO.Publicacion publicacion
+////inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id
+////inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion
+////WHERE publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
+////ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)) 
+//            //ORDER by TablaP.porcentaje DESC, TablaP.fechaInicio DESC
 
-        //    SqlConnection conexion = null;
-        //    SqlTransaction trx = null;
-        //    DataTable tabla = null;
+//            //
 
+//            String queryPublicaciones = "(SELECT COUNT(publicacion.id) FROM ADIOS_TERCER_ANIO.Publicacion publicacion " +
+//            " inner join ADIOS_TERCER_ANIO.Rubro rubro on rubro.id = publicacion.idRubro";
 
+//            //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
 
-            //String find = "SELECT " +
-            //              "p.number AS number,p.description AS description,m.description AS mode,v.description AS visibility,v.publishPrice AS publishPrice," +
-            //              "(p.stock - (SELECT ISNULL(SUM(quantity),0) FROM GRUPO_GDD.purchase WHERE publication_number = p.number)) 	AS stockRemaining " +
-            //              " FROM " +
-            //              "GRUPO_GDD.publication p,GRUPO_GDD.mode m,GRUPO_GDD.visibility v,GRUPO_GDD.publication_has_category pc " +
-            //              " WHERE " +
-            //              "p.mode_id = m.id AND p.visibility_code = v.code AND p.number = pc.publication_number AND p.mode_id = 2 " +
-            //              "AND (p.state_publication_id = 2 OR p.state_publication_id = 3) AND p.expireDate >=  '" + fecha.ToString("yyyyMMdd") + "' AND " +
-            //              "(p.stock - (SELECT ISNULL(SUM(quantity),0) FROM GRUPO_GDD.purchase WHERE publication_number = p.number)) > 0 ";
+//            if (!String.IsNullOrEmpty(descripcion))
+//            {
+//                queryPublicaciones += " AND publicacion.descripcion LIKE '%" + descripcion + "%' ";
+//            }
 
-            //if (!String.IsNullOrEmpty(descripcion))
-            //{
-            //    find += "AND p.description LIKE '%" + descripcion + "%' ";
-            //}
+//            if (!String.IsNullOrEmpty(rubros))
+//            {
+//                String findRubros = "";
 
-            //if (!String.IsNullOrEmpty(rubros))
-            //{
-            //    String findRubros = "";
+//                string[] a = rubros.Split(';');
+//                foreach (string i in a)
+//                {
+//                    findRubros += " rubro.descripcionCorta = " + i + " OR ";
+//                }
 
-            //    string[] a = rubros.Split(';');
-            //    foreach (string i in a)
-            //    {
-            //        findRubros += "pc.category_id = " + i + " OR ";
-            //    }
+//                findRubros = findRubros.Substring(0, findRubros.Length - 4);
+//                queryPublicaciones += "AND (" + findRubros + ") ";
+//            }
 
-            //    findRubros = findRubros.Substring(0, findRubros.Length - 4);
-            //    find += "AND (" + findRubros + ") ";
-            //}
-            ///* "AND p.description = '"+ descripcion +"' AND ("+ findRubros +") " + */
-            //find += " UNION " +
-            //  "  SELECT " +
-            //  "p.number AS number,p.description AS description,m.description AS mode,v.description AS visibility,v.publishPrice AS publishPrice," +
-            //  "p.stock	AS stockRemaining " +
-            //  "  FROM " +
-            //  "GRUPO_GDD.publication p,GRUPO_GDD.mode m,GRUPO_GDD.visibility v,GRUPO_GDD.publication_has_category pc " +
-            //  " WHERE " +
-            //  "p.mode_id = m.id AND p.visibility_code = v.code AND p.number = pc.publication_number AND p.mode_id = 3 " +
-            //  "AND (p.state_publication_id = 2 OR p.state_publication_id = 3) AND p.expireDate >=  '" + fecha.ToString("yyyyMMdd") + "' ";
+//            queryPublicaciones += " WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";
 
-            //if (!String.IsNullOrEmpty(descripcion))
-            //{
-            //    find += "AND p.description LIKE '%" + descripcion + "%' ";
-            //}
+//            try
+//            {
+//                SqlCommand comando = new SqlCommand(queryPublicaciones, conn.getConexion);
+//            }
+//            catch (Exception ex)
+//            {
+//                throw new Exception("Error al intentar obtener publicaciones.\n" + ex.Message);
+//            }
+//        }        
 
-            //if (!String.IsNullOrEmpty(rubros))
-            //{
-            //    String findRubros = "";
+        public int getCantPublicaciones()
+        {
+            int retorno = 0;
 
-            //    string[] a = rubros.Split(';');
-            //    foreach (string i in a)
-            //    {
-            //        findRubros += "pc.category_id = " + i + " OR ";
-            //    }
+            String queryCant = "SELECT COUNT(publicacion.id) FROM ADIOS_TERCER_ANIO.Publicacion publicacion " +
+            " inner join ADIOS_TERCER_ANIO.Rubro rubro on rubro.id = publicacion.idRubro";
 
-            //    findRubros = findRubros.Substring(0, findRubros.Length - 4);
-            //    find += "AND (" + findRubros + ") ";
-            //}
+            //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
 
-            //find += "ORDER BY publishPrice DESC";
+            if (!String.IsNullOrEmpty(txtDescripción.Text))
+            {
+                queryCant += " AND publicacion.descripcion LIKE '%" + txtDescripción.Text + "%' ";
+            }
 
-            //try
-            //{
+            if (dgvFiltros.RowCount != 0)
+            {
+                String findRubros = "";
 
-            //    conexion = DAOUtils.getConnection();
-            //    conexion.Open();
+                foreach (DataGridViewRow rowPrincipal in dgvFiltros.Rows)
+                {
+                    object[] values = {
+                                          rowPrincipal.Cells["Rubros"].Value
+                                  };
 
-            //    trx = conexion.BeginTransaction();
+                    findRubros += " rubro.descripcionCorta = '" + Convert.ToString(values[0]) + "' OR ";
+                }
 
-            //    SqlCommand comando = new SqlCommand(find, conexion);
-            //    comando.Transaction = trx;
-            //    SqlDataAdapter adaptador = new SqlDataAdapter(comando);
-            //    tabla = new DataTable();
-            //    adaptador.Fill(tabla);
-            //    conexion.Close();
+                findRubros = findRubros.Substring(0, findRubros.Length - 4);
+                queryCant += " AND (" + findRubros + ") ";
+            }
 
-            //    retorno = tabla;
-            //    return retorno;
+            queryCant += " WHERE publicacion.idPublicador != " + sesion.idUsuario;
+            //queryCant += " AND publicacion.idEstado = 2";
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception("Error al intentar listar datos.\n" + ex.Message);
-            //}
+            MessageBox.Show(queryCant);
 
-            //finally
-            //{
-            //    if (conexion != null)
-            //    {
-            //        conexion.Close();
-            //    }
-            //}
-        
+            try
+            {
+                SqlCommand comando = new SqlCommand(queryCant, conn.getConexion);
+                retorno = (Int32)comando.ExecuteScalar();
+                return retorno - nroPagina*20;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar obtener publicaciones.\n" + ex.Message);
+            }
+        }
 
         private void btnDetalle_Click(object sender, EventArgs e)
         {
@@ -306,6 +228,10 @@ namespace MercadoEnvios.ComprarOfertar
                 dgvFiltros.Rows.Add(row);
                 dgvRubros.Rows.Remove(rowPrincipal);
             }
+
+            int paginas = getCantPublicaciones();
+
+            MessageBox.Show(paginas.ToString());
         }
 
         private void btnQuitar_Click(object sender, EventArgs e)

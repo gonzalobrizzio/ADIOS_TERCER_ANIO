@@ -2353,22 +2353,6 @@ BEGIN
 END
 
 GO 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT, @cant INT OUTPUT)
-AS
-BEGIN
---	declare @idUsuario int = 7;
---	declare @pagina INT = 3;
-
-	SET @cant = (SELECT COUNT(*) FROM ADIOS_TERCER_ANIO.Publicacion WHERE publicacion.idPublicador != @idUsuario) - @pagina * 20;
-	WITH TablaP AS (SELECT TOP (@cant) publicacion.descripcion, publicacion.fechaFin, (SELECT nombre FROM ADIOS_TERCER_ANIO.TipoPublicacion WHERE id = publicacion.idTipoPublicacion) AS tipo,
-					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio FROM ADIOS_TERCER_ANIO.Publicacion publicacion
-	inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id
-	WHERE publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
-	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
-
-	SELECT TOP 20 * FROM TablaP ORDER by TablaP.porcentaje DESC, TablaP.fechaInicio DESC
-END
-GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -3066,6 +3050,25 @@ AS BEGIN
 END
 GO
 
+-- SELECT * FROM ADIOS_TERCER_ANIO.Rubro
+
 --UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 
---select * from ADIOS_TERCER_ANIO.Funcionalidad
+--CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerPublicacionesPaginaN(@idUsuario INT, @pagina INT, @cant INT OUTPUT)
+--AS
+--BEGIN
+----	declare @idUsuario int = 7;
+----	declare @pagina INT = 3;
+
+--	SET @cant = (SELECT COUNT(*) FROM ADIOS_TERCER_ANIO.Publicacion WHERE publicacion.idPublicador != @idUsuario) - @pagina * 20;
+--	WITH TablaP AS (SELECT TOP (@cant) publicacion.descripcion, publicacion.fechaFin, tipoP.nombre AS tipo,
+--					publicacion.precio, publicacion.id, visib.porcentaje, publicacion.fechaInicio,publicacion.stock, IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio FROM ADIOS_TERCER_ANIO.Publicacion publicacion
+--	inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id
+--  inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion
+--	WHERE publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
+--	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
+
+--	SELECT TOP 20 * FROM TablaP ORDER by TablaP.porcentaje DESC, TablaP.fechaInicio DESC
+--END
+--GO 
+
