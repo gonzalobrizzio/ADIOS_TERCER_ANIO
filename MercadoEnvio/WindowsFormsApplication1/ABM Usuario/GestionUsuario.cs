@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,7 +7,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Usuario
@@ -16,13 +16,12 @@ namespace MercadoEnvios.ABM_Usuario
         Conexion conn;
         Form anterior;
         Sesion sesion = Sesion.Instance;
+        Utilidades fun = new Utilidades();
         int clienteOEmpresa = 0;
 
         public frmABMUsuario()
         {
             InitializeComponent();
-            btnRes.Enabled = false;
-            btnRestaurar.Enabled = false;
             anterior = sesion.anterior;
             this.getDataClientes();
             this.getDataEmpresas();
@@ -74,11 +73,6 @@ namespace MercadoEnvios.ABM_Usuario
             dgvClientes.Columns[1].Width = 150;
             dgvClientes.Columns[2].Width = 150;
             dgvClientes.Columns[3].Width = 150;
-
-            dni.Text = "";
-            nombre.Text = "";
-            apellido.Text = "";
-            mailC.Text = "";
         }
 
         public void getDataEmpresas()
@@ -116,10 +110,6 @@ namespace MercadoEnvios.ABM_Usuario
             dgvEmpresas.Columns[1].Width = 150;
             dgvEmpresas.Columns[2].Width = 150;
             dgvEmpresas.Columns[3].Width = 150;
-
-            razonSocial.Text = "";
-            cuit.Text = "";
-            mailE.Text = "";
         }
 
         private void btnVolver_Click_1(object sender, EventArgs e)
@@ -272,82 +262,70 @@ namespace MercadoEnvios.ABM_Usuario
             }
         }
 
-        private void btnBuscarCliente_Click(object sender, EventArgs e)
-        {
-            this.getDataClientes();
-            btnRestaurar.Enabled = true;
-        }
-
-        private void btnBuscarEmpresa_Click(object sender, EventArgs e)
-        {
-            this.getDataEmpresas();
-            btnRes.Enabled = true;
-        }
-
-        private void btnRestaurar_Click(object sender, EventArgs e)
-        {
-            this.getDataClientes();
-        }
-
-        private void btnRes_Click(object sender, EventArgs e)
-        {
-            this.getDataEmpresas();
-        }
 
         private void nombre_TextChanged(object sender, EventArgs e)
         {
-            if (btnRestaurar.Enabled == true)
-            {
-                btnRestaurar.Enabled = false;
-            }
+            this.getDataClientes();
         }
 
         private void apellido_TextChanged(object sender, EventArgs e)
         {
-            if (btnRestaurar.Enabled == true)
-            {
-                btnRestaurar.Enabled = false;
-            }
+            this.getDataClientes();
         }
 
         private void dni_TextChanged(object sender, EventArgs e)
         {
-            if (btnRestaurar.Enabled == true)
-            {
-                btnRestaurar.Enabled = false;
-            }
+            this.getDataClientes();
         }
 
         private void mailC_TextChanged(object sender, EventArgs e)
         {
-            if (btnRestaurar.Enabled == true)
-            {
-                btnRestaurar.Enabled = false;
-            }
+            this.getDataClientes();
         }
 
         private void cuit_TextChanged(object sender, EventArgs e)
         {
-            if (btnRes.Enabled == true)
-            {
-                btnRes.Enabled = false;
-            }
+            this.getDataEmpresas();
         }
 
         private void razonSocial_TextChanged(object sender, EventArgs e)
         {
-            if (btnRes.Enabled == true)
-            {
-                btnRes.Enabled = false;
-            }
+            this.getDataEmpresas();
         }
 
         private void mailE_TextChanged(object sender, EventArgs e)
         {
-            if (btnRes.Enabled == true)
-            {
-                btnRes.Enabled = false;
-            }
+            this.getDataEmpresas();
+        }
+
+        private void nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNombre(e);
+        }
+
+        private void apellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNombre(e);
+        }
+
+        private void dni_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumero(e);
+        }
+
+        private void mailC_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarMail(e);
+        }
+
+        private void cuit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumeroConRaya(e);
+        }
+
+        private void mailE_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarMail(e);
         }
     
     }

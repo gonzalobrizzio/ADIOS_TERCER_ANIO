@@ -13,7 +13,6 @@ namespace MercadoEnvios.ABM_Usuario
     public partial class frmNuevoUsuario : Form
     {
         Conexion conn = Conexion.Instance;
-        Sesion sesion;
 
         public frmNuevoUsuario()
         {

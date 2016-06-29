@@ -185,5 +185,84 @@ namespace MercadoEnvios.Entidades
 
             return dias;
         }
+
+        public void ingresarNumeroDecimal(System.Windows.Forms.KeyPressEventArgs e)
+        {
+            {
+                String Aceptados = "," + Convert.ToChar(8);
+
+                if (Aceptados.Contains("" + e.KeyChar) || char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        public void ingresarMail(System.Windows.Forms.KeyPressEventArgs e)
+        {
+            {
+                String Aceptados = "_.,@-" + Convert.ToChar(8);
+
+                if (Aceptados.Contains("" + e.KeyChar) || char.IsLetter(e.KeyChar) || char.IsDigit(e.KeyChar) || e.KeyChar == ' ')
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        public void ingresarNumero(System.Windows.Forms.KeyPressEventArgs e)
+        {
+            {
+                if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+
+        public void ingresarNumeroConRaya(System.Windows.Forms.KeyPressEventArgs e)
+        {
+            {
+                String Aceptados = "-" + Convert.ToChar(8);
+
+                if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back || Aceptados.Contains("" + e.KeyChar))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+
+        public void ingresarNombre(System.Windows.Forms.KeyPressEventArgs e)
+        {
+            {
+                if (char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back)
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
     }
 }

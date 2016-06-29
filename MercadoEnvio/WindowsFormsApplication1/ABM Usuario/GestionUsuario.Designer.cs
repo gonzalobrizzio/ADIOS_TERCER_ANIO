@@ -39,11 +39,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.E = new System.Windows.Forms.TabControl();
             this.busquedaClienteTp = new System.Windows.Forms.TabPage();
-            this.btnRestaurar = new System.Windows.Forms.Button();
             this.dgvClientes = new System.Windows.Forms.DataGridView();
             this.mailC = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.dni = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.apellido = new System.Windows.Forms.TextBox();
@@ -51,8 +49,6 @@
             this.nombre = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.Empresa = new System.Windows.Forms.TabPage();
-            this.btnRes = new System.Windows.Forms.Button();
-            this.btnBuscarEmpresa = new System.Windows.Forms.Button();
             this.dgvEmpresas = new System.Windows.Forms.DataGridView();
             this.mailE = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -140,11 +136,9 @@
             // 
             // busquedaClienteTp
             // 
-            this.busquedaClienteTp.Controls.Add(this.btnRestaurar);
             this.busquedaClienteTp.Controls.Add(this.dgvClientes);
             this.busquedaClienteTp.Controls.Add(this.mailC);
             this.busquedaClienteTp.Controls.Add(this.label2);
-            this.busquedaClienteTp.Controls.Add(this.btnBuscarCliente);
             this.busquedaClienteTp.Controls.Add(this.dni);
             this.busquedaClienteTp.Controls.Add(this.label8);
             this.busquedaClienteTp.Controls.Add(this.apellido);
@@ -159,17 +153,6 @@
             this.busquedaClienteTp.TabIndex = 0;
             this.busquedaClienteTp.Text = "Cliente";
             this.busquedaClienteTp.UseVisualStyleBackColor = true;
-            // 
-            // btnRestaurar
-            // 
-            this.btnRestaurar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRestaurar.Location = new System.Drawing.Point(627, 14);
-            this.btnRestaurar.Name = "btnRestaurar";
-            this.btnRestaurar.Size = new System.Drawing.Size(75, 30);
-            this.btnRestaurar.TabIndex = 100;
-            this.btnRestaurar.Text = "Restaurar";
-            this.btnRestaurar.UseVisualStyleBackColor = true;
-            this.btnRestaurar.Click += new System.EventHandler(this.btnRestaurar_Click);
             // 
             // dgvClientes
             // 
@@ -216,6 +199,7 @@
             this.mailC.Size = new System.Drawing.Size(76, 20);
             this.mailC.TabIndex = 94;
             this.mailC.TextChanged += new System.EventHandler(this.mailC_TextChanged);
+            this.mailC.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mailC_KeyPress);
             // 
             // label2
             // 
@@ -227,17 +211,6 @@
             this.label2.TabIndex = 93;
             this.label2.Text = "Email:";
             // 
-            // btnBuscarCliente
-            // 
-            this.btnBuscarCliente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscarCliente.Location = new System.Drawing.Point(533, 14);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(75, 30);
-            this.btnBuscarCliente.TabIndex = 99;
-            this.btnBuscarCliente.Text = "Buscar";
-            this.btnBuscarCliente.UseVisualStyleBackColor = true;
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
-            // 
             // dni
             // 
             this.dni.Location = new System.Drawing.Point(324, 19);
@@ -246,6 +219,7 @@
             this.dni.Size = new System.Drawing.Size(76, 20);
             this.dni.TabIndex = 92;
             this.dni.TextChanged += new System.EventHandler(this.dni_TextChanged);
+            this.dni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dni_KeyPress);
             // 
             // label8
             // 
@@ -265,6 +239,7 @@
             this.apellido.Size = new System.Drawing.Size(76, 20);
             this.apellido.TabIndex = 90;
             this.apellido.TextChanged += new System.EventHandler(this.apellido_TextChanged);
+            this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
             // 
             // label10
             // 
@@ -284,6 +259,7 @@
             this.nombre.Size = new System.Drawing.Size(76, 20);
             this.nombre.TabIndex = 88;
             this.nombre.TextChanged += new System.EventHandler(this.nombre_TextChanged);
+            this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombre_KeyPress);
             // 
             // label11
             // 
@@ -297,8 +273,6 @@
             // 
             // Empresa
             // 
-            this.Empresa.Controls.Add(this.btnRes);
-            this.Empresa.Controls.Add(this.btnBuscarEmpresa);
             this.Empresa.Controls.Add(this.dgvEmpresas);
             this.Empresa.Controls.Add(this.mailE);
             this.Empresa.Controls.Add(this.label12);
@@ -313,28 +287,6 @@
             this.Empresa.TabIndex = 1;
             this.Empresa.Text = "Empresa";
             this.Empresa.UseVisualStyleBackColor = true;
-            // 
-            // btnRes
-            // 
-            this.btnRes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRes.Location = new System.Drawing.Point(609, 12);
-            this.btnRes.Name = "btnRes";
-            this.btnRes.Size = new System.Drawing.Size(75, 30);
-            this.btnRes.TabIndex = 105;
-            this.btnRes.Text = "Restaurar";
-            this.btnRes.UseVisualStyleBackColor = true;
-            this.btnRes.Click += new System.EventHandler(this.btnRes_Click);
-            // 
-            // btnBuscarEmpresa
-            // 
-            this.btnBuscarEmpresa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBuscarEmpresa.Location = new System.Drawing.Point(512, 12);
-            this.btnBuscarEmpresa.Name = "btnBuscarEmpresa";
-            this.btnBuscarEmpresa.Size = new System.Drawing.Size(75, 30);
-            this.btnBuscarEmpresa.TabIndex = 104;
-            this.btnBuscarEmpresa.Text = "Buscar";
-            this.btnBuscarEmpresa.UseVisualStyleBackColor = true;
-            this.btnBuscarEmpresa.Click += new System.EventHandler(this.btnBuscarEmpresa_Click);
             // 
             // dgvEmpresas
             // 
@@ -357,6 +309,7 @@
             this.mailE.Size = new System.Drawing.Size(103, 20);
             this.mailE.TabIndex = 102;
             this.mailE.TextChanged += new System.EventHandler(this.mailE_TextChanged);
+            this.mailE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mailE_KeyPress);
             // 
             // label12
             // 
@@ -376,6 +329,7 @@
             this.cuit.Size = new System.Drawing.Size(98, 20);
             this.cuit.TabIndex = 100;
             this.cuit.TextChanged += new System.EventHandler(this.cuit_TextChanged);
+            this.cuit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cuit_KeyPress);
             // 
             // label13
             // 
@@ -491,7 +445,6 @@
         private System.Windows.Forms.DataGridView dgvClientes;
         private System.Windows.Forms.TextBox mailC;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnBuscarCliente;
         private System.Windows.Forms.TextBox dni;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox apellido;
@@ -499,7 +452,6 @@
         private System.Windows.Forms.TextBox nombre;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TabPage Empresa;
-        private System.Windows.Forms.Button btnBuscarEmpresa;
         private System.Windows.Forms.DataGridView dgvEmpresas;
         private System.Windows.Forms.TextBox mailE;
         private System.Windows.Forms.Label label12;
@@ -511,8 +463,6 @@
         private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.Button btnAgregarUsuario;
         private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Button btnRestaurar;
-        private System.Windows.Forms.Button btnRes;
 
     }
 }

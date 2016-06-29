@@ -19,7 +19,6 @@ namespace MercadoEnvios.ABM_Usuario
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
         bool errorSql = false;
-        Sesion sesion;
 
         public frmNuevaEmpresa(string rol)
         {

@@ -25,7 +25,6 @@ namespace MercadoEnvios.Facturas
             InitializeComponent();
             sesion = Sesion.Instance;
             this.getData();
-
         }
 
         private void getData()
@@ -41,36 +40,49 @@ namespace MercadoEnvios.Facturas
            
            if (checkBox1.Checked)
            {
-               fechaDesdeD = fechaDesdeDtp.Value;
-               fechaHastaD = fechaHastaDtp.Value;
+               if (fechaDesdeDtp.Value < fechaHastaDtp.Value)
+               {
+                   fechaDesdeD = fechaDesdeDtp.Value;
+                   fechaHastaD = fechaHastaDtp.Value;
+               }
+               else
+               {
+                   fechaHastaD = fechaDesdeDtp.Value;
+                   fechaDesdeD = fechaHastaDtp.Value;
+               }
            }
 
            if (checkBox2.Checked)
            {
-               if (fun.validarNoVacio(desdePrecioTxt,mensajeValidacion) && fun.validarNoVacio(hastaPrecioTxt, mensajeValidacion))
+
+               if (fun.validarNoVacio(desdePrecioTxt, mensajeValidacion) && fun.validarNoVacio(hastaPrecioTxt, mensajeValidacion))
                {
-                   if(fun.validarDecimal(hastaPrecioTxt, mensajeValidacion) && fun.validarDecimal(hastaPrecioTxt, mensajeValidacion))
+                   if (fun.validarDecimal(hastaPrecioTxt, mensajeValidacion) && fun.validarDecimal(hastaPrecioTxt, mensajeValidacion))
                    {
-                       desdePrecioD = Convert.ToDecimal(desdePrecioTxt.Text);
-                       hastaPrecioD = Convert.ToDecimal(hastaPrecioTxt.Text);
+                       if (Convert.ToDecimal(desdePrecioTxt.Text) < Convert.ToDecimal(hastaPrecioTxt.Text))
+                       {
+                           desdePrecioD = Convert.ToDecimal(desdePrecioTxt.Text);
+                           hastaPrecioD = Convert.ToDecimal(hastaPrecioTxt.Text);
+                       }
+                       else
+                       {
+                           hastaPrecioD = Convert.ToDecimal(desdePrecioTxt.Text);
+                           desdePrecioD = Convert.ToDecimal(hastaPrecioTxt.Text);
+                       }
+
                    }
                }
+
            }
 
            if (checkBox4.Checked)
            {
-               if(fun.validarNoVacio(descripcionTxt,mensajeValidacion))
-               {
                     descripcionD = descripcionTxt.Text;
-               }
            }
 
            if (checkBox3.Checked)
            {
-               if (fun.validarNoVacio(destinatarioTxt, mensajeValidacion))
-               {
                    destinatarioD = destinatarioTxt.Text;
-               }
            }
 
            if (mensajeValidacion.Length == 0)
@@ -170,6 +182,11 @@ namespace MercadoEnvios.Facturas
 
                    if (nroPagina >= cantidad)
                    {
+                       btnSgte.Enabled=false;
+                   }
+
+                   if (dgvFacturas.Rows.Count < 0)
+                   {
                        btnSgte.Enabled = false;
                    }
                }
@@ -202,7 +219,7 @@ namespace MercadoEnvios.Facturas
 
         private void btnSgte_Click(object sender, EventArgs e)
         {
-            if (nroPagina < cantidad)
+            if (nroPagina <= cantidad)
             {
                 nroPagina++;
                 btnAnt.Enabled = true;
@@ -286,6 +303,44 @@ namespace MercadoEnvios.Facturas
                 descripcionTxt.ReadOnly = true;
                 descripcionTxt.Text = "";
             }
+        }
+
+        private void desdePrecioTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumeroDecimal(e);
+        }
+
+        private void hastaPrecioTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumeroDecimal(e);
+        }
+
+        private void destinatarioTxt_TextChanged(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            this.getData();
+            btnSgte.Enabled = true;
+        }
+
+        private void descripcionTxt_TextChanged(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            this.getData();
+            btnSgte.Enabled = true;
+        }
+
+        private void fechaHastaDtp_ValueChanged(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            this.getData();
+            btnSgte.Enabled = true;
+        }
+
+        private void fechaDesdeDtp_ValueChanged(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            this.getData();
+            btnSgte.Enabled = true;
         }
     }
 }
