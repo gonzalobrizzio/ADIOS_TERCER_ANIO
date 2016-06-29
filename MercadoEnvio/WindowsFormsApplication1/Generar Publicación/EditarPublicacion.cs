@@ -1,4 +1,5 @@
 ﻿using MercadoEnvios.Entidades;
+using MercadoEnvios.Generar_Publicacion;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -225,6 +226,16 @@ namespace MercadoEnvios.Generar_Publicación
         {
             new frmModificarPublicacion().Show();
             this.Close();
+        }
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            new frmDatosVisibilidad(Visibilidad.SelectedIndex + 1).Show();
+        }
+
+        private void Precio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcion.ingresarNumeroDecimal(e);
         }
     }
 }

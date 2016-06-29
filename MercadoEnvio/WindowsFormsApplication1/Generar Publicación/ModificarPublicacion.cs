@@ -29,11 +29,11 @@ namespace MercadoEnvios.Generar_Publicación
         public void getData()
         {
             string sacarDatosPublicacion = "SELECT id, descripcion, precio, stock, (SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE idVisibilidad = id) AS Visibilidad, "
-            + "(select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = idTipoPublicacion), "
+            + "(select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = idTipoPublicacion) AS Tipo_De_Publicacion, "
             + "(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id) AS Rubro, iif(tienePreguntas = 0, 'SI', 'NO') AS Acepta_Preguntas, "
             + "iif(tieneEnvio = 1, 'NO', 'SI') AS Permite_Envios, "
             + "(SELECT nombre FROM ADIOS_TERCER_ANIO.Estado WHERE idEstado = id) AS Estado, fechaFin AS Fecha_Finalización "
-            +"FROM ADIOS_TERCER_ANIO.Publicacion WHERE @idPublic = idPublicador";
+            +"FROM ADIOS_TERCER_ANIO.Publicacion WHERE @idPublic = idPublicador ORDER BY idEstado ASC";
             SqlParameter idPu = new SqlParameter("@idPublic", SqlDbType.Int);
             idPu.SqlValue = sesion.idUsuario;
             idPu.Direction = ParameterDirection.Input;
@@ -49,6 +49,7 @@ namespace MercadoEnvios.Generar_Publicación
             publicaciones.AllowUserToDeleteRows = false;
             publicaciones.ReadOnly = true;
             publicaciones.Columns[0].Visible = false;
+            publicaciones.Columns[5].Width = 130;
             publicaciones.Columns[10].Width = 162;
 
             

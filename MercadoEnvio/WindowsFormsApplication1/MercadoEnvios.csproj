@@ -186,6 +186,12 @@
     <Compile Include="Generar Publicación\ModificarPublicacion.Designer.cs">
       <DependentUpon>ModificarPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generar Publicación\DatosVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\DatosVisibilidad.Designer.cs">
+      <DependentUpon>DatosVisibilidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Publicación\Ver Pregunta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,6 +353,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\ModificarPublicacion.resx">
       <DependentUpon>ModificarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\DatosVisibilidad.resx">
+      <DependentUpon>DatosVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicación\Ver Pregunta.resx">
       <DependentUpon>Ver Pregunta.cs</DependentUpon>

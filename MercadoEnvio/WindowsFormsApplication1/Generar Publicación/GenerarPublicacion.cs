@@ -1,4 +1,5 @@
 ﻿using MercadoEnvios.ABM_Usuario;
+using MercadoEnvios.Generar_Publicacion;
 using MercadoEnvios.Entidades;
 using System;
 using System.Collections.Generic;
@@ -208,6 +209,16 @@ namespace MercadoEnvios.Generar_Publicación
             {
                 habilitarEnvios.Visible = false;
             }
+        }
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            new frmDatosVisibilidad(Visibilidad.SelectedIndex + 1).Show();
+        }
+
+        private void Precio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcion.ingresarNumeroDecimal(e);
         }
     }
 
