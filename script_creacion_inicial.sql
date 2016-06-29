@@ -2376,23 +2376,6 @@ BEGIN
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, @envio)
 END
 GO
-CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT)
-AS
-BEGIN
-SELECT	pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock) as cantidad, com.fecha,
-		iif(ofe.monto is not null, ofe.monto, pub.precio) as precio, cal.puntaje as calificacion, tp.nombre
-	 FROM ADIOS_TERCER_ANIO.Usuario usu
-		inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
-		inner JOIN ADIOS_TERCER_ANIO.Compra com ON com.idPublicacion = pub.id
-		LEFT outer JOIN ADIOS_TERCER_ANIO.Oferta ofe ON ofe.idPublicacion = pub.id and com.id is null
-		inner JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
-		INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
-	where usu.id = com.idComprador or usu.id = ofe.idUsuario
-	group by 
-	pub.id, pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock), com.fecha,
-		iif(ofe.monto is not null, ofe.monto, pub.precio), cal.puntaje, tp.nombre
-END
-GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[EditarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicacion INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
@@ -3020,6 +3003,33 @@ BEGIN
 		AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 		ORDER BY f.fecha ASC)
 	SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+END
+GO
+CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT, @pagina INT, @cant INT OUTPUT)
+AS
+BEGIN
+
+		SET @cant =	(SELECT COUNT (*) FROM ADIOS_TERCER_ANIO.Usuario usu
+						inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
+						inner JOIN ADIOS_TERCER_ANIO.Compra com ON com.idPublicacion = pub.id
+						LEFT outer JOIN ADIOS_TERCER_ANIO.Oferta ofe ON ofe.idPublicacion = pub.id and com.id is null
+						inner JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
+						INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
+						where usu.id = com.idComprador or usu.id = ofe.idUsuario) - (@pagina * 10);
+
+		WITH TablaP AS (SELECT TOP (@cant) pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock) as cantidad, com.fecha,
+						iif(ofe.monto is not null, ofe.monto, pub.precio) as precio, cal.puntaje as calificacion, tp.nombre
+						FROM ADIOS_TERCER_ANIO.Usuario usu
+						inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
+						inner JOIN ADIOS_TERCER_ANIO.Compra com ON com.idPublicacion = pub.id
+						LEFT outer JOIN ADIOS_TERCER_ANIO.Oferta ofe ON ofe.idPublicacion = pub.id and com.id is null
+						inner JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
+						INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
+						where usu.id = com.idComprador or usu.id = ofe.idUsuario
+						ORDER BY com.fecha ASC)
+
+	SELECT TOP 10 * FROM TablaP ORDER BY tablaP.fecha DESC
+	
 END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 

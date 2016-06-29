@@ -30,15 +30,17 @@
         {
             this.grillaDeCompras = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnSgte = new System.Windows.Forms.Button();
+            this.btnAnt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grillaDeCompras)).BeginInit();
             this.SuspendLayout();
             // 
             // grillaDeCompras
             // 
             this.grillaDeCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grillaDeCompras.Location = new System.Drawing.Point(12, 21);
+            this.grillaDeCompras.Location = new System.Drawing.Point(66, 43);
             this.grillaDeCompras.Name = "grillaDeCompras";
-            this.grillaDeCompras.Size = new System.Drawing.Size(742, 288);
+            this.grillaDeCompras.Size = new System.Drawing.Size(688, 260);
             this.grillaDeCompras.TabIndex = 0;
             this.grillaDeCompras.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -52,11 +54,33 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // btnSgte
+            // 
+            this.btnSgte.Location = new System.Drawing.Point(765, 159);
+            this.btnSgte.Name = "btnSgte";
+            this.btnSgte.Size = new System.Drawing.Size(41, 33);
+            this.btnSgte.TabIndex = 8;
+            this.btnSgte.Text = ">>>";
+            this.btnSgte.UseVisualStyleBackColor = true;
+            this.btnSgte.Click += new System.EventHandler(this.btnSgte_Click);
+            // 
+            // btnAnt
+            // 
+            this.btnAnt.Location = new System.Drawing.Point(12, 159);
+            this.btnAnt.Name = "btnAnt";
+            this.btnAnt.Size = new System.Drawing.Size(41, 33);
+            this.btnAnt.TabIndex = 9;
+            this.btnAnt.Text = "<<<";
+            this.btnAnt.UseVisualStyleBackColor = true;
+            this.btnAnt.Click += new System.EventHandler(this.btnAnt_Click);
+            // 
             // frmHistorialCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(766, 360);
+            this.ClientSize = new System.Drawing.Size(818, 367);
+            this.Controls.Add(this.btnAnt);
+            this.Controls.Add(this.btnSgte);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.grillaDeCompras);
             this.Name = "frmHistorialCliente";
@@ -72,5 +96,7 @@
 
         private System.Windows.Forms.DataGridView grillaDeCompras;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnSgte;
+        private System.Windows.Forms.Button btnAnt;
     }
 }
