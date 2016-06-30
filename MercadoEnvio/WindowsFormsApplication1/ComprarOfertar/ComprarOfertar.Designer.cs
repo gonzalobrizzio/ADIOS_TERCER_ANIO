@@ -208,6 +208,7 @@
             this.Name = "frmComprarOfertar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Publicaciones";
+            this.Load += new System.EventHandler(this.frmComprarOfertar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubros)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFiltros)).EndInit();

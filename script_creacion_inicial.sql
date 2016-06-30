@@ -3079,12 +3079,43 @@ GO
 --	ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
 
 --	SELECT TOP 20 * FROM TablaP ORDER by TablaP.porcentaje DESC, TablaP.fechaInicio DESC
+
+
+-- SELECT TOP 20 * FROM (SELECT TOP (@cant) publicacion.descripcion, 
+--											publicacion.fechaFin, 
+--											tipoP.nombre AS tipo,
+--											publicacion.precio, 
+--											publicacion.id, 
+--											visib.porcentaje, 
+--											publicacion.fechaInicio,
+--											publicacion.stock, 
+--											IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio 
+--						FROM ADIOS_TERCER_ANIO.Publicacion publicacion
+--							inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id
+--							inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion
+--							inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro
+--						WHERE publicacion.idPublicador != @idUsuario and stock > 0 and publicacion.idEstado = 2 
+--						ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)
+-- ORDER by porcentaje DESC, fechaInicio DESC
 --END
 --GO 
 
 --select * from ADIOS_TERCER_ANIO.Funcionalidad
 
 --UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2
+
+WITH tabla AS (SELECT TOP 0 publicacion.descripcion, publicacion.fechaFin, 
+tipoP.nombre AS tipo, publicacion.precio, publicacion.id, 
+visib.porcentaje, publicacion.fechaInicio, publicacion.stock, 
+IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio FROM ADIOS_TERCER_ANIO.Publicacion publicacion 
+inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id 
+inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion 
+inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro 
+WHERE publicacion.idPublicador != 7 and stock > 0  ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC) 
+
+SELECT TOP 20 * FROM tabla ORDER by tabla.porcentaje DESC, tabla.fechaInicio DESC
+
+
 
 
 --SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
