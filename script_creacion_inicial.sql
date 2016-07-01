@@ -41,6 +41,7 @@ DROP PROCEDURE ADIOS_TERCER_ANIO.verHistoricoComprasUsuario;
 DROP PROCEDURE ADIOS_TERCER_ANIO.verHistoricoOfertasUsuario;
 DROP PROCEDURE ADIOS_TERCER_ANIO.calcularCalificacionPromedio;
 DROP PROCEDURE ADIOS_TERCER_ANIO.obtenerCompras;
+DROP PROCEDURE ADIOS_TERCER_ANIO.obtenerFuncionalidades;
 DROP PROCEDURE ADIOS_TERCER_ANIO.cargarCalificacion;
 DROP PROCEDURE ADIOS_TERCER_ANIO.login;
 DROP PROCEDURE ADIOS_TERCER_ANIO.AgregarRol;
@@ -2774,9 +2775,9 @@ GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.puedeComprar(@idUsuario INT, @puede INT OUTPUT)
 AS
 BEGIN
-	declare @cantNoCalif int = (SELECT COUNT(*) from ADIOS_TERCER_ANIO.Calificacion calif 
+	declare @cantNoCalif int = (SELECT COUNT(calif.id) from ADIOS_TERCER_ANIO.Calificacion calif 
 	inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calif.idCompra
-	WHERE compra.idComprador = @idUsuario and pendiente = 1 )
+	WHERE compra.idComprador = @idUsuario and calif.pendiente = 1 )
 	SET @puede = iif((@cantNoCalif>3),0,1);
 END
 GO
@@ -3074,7 +3075,7 @@ AS BEGIN
 	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
 END
 GO
-ALTER PROCEDURE ADIOS_TERCER_ANIO.ObtenerFuncionalidades (@idRolActual INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerFuncionalidades (@idRolActual INT)
 AS BEGIN
 			select fu.descripcion from ADIOS_TERCER_ANIO.FuncionalidadRol f
 			INNER JOIN ADIOS_TERCER_ANIO.Funcionalidad fu ON fu.id = f.idFuncionalidad
@@ -3104,3 +3105,6 @@ GO
 --UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2
 
 --SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
+
+
+UPDATE ADIOS_TERCER_ANIO.Calificacion SET pendiente = 1 WHERE id < 500

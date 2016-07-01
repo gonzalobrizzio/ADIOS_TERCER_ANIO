@@ -36,9 +36,9 @@
             // 
             // btnCerrarSesion
             // 
-            this.btnCerrarSesion.Location = new System.Drawing.Point(189, 225);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(156, 225);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(150, 33);
+            this.btnCerrarSesion.Size = new System.Drawing.Size(143, 33);
             this.btnCerrarSesion.TabIndex = 8;
             this.btnCerrarSesion.Text = "Cerrar sesión";
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
@@ -49,7 +49,7 @@
             this.funcionalidadesR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.funcionalidadesR.Location = new System.Drawing.Point(12, 12);
             this.funcionalidadesR.Name = "funcionalidadesR";
-            this.funcionalidadesR.Size = new System.Drawing.Size(330, 200);
+            this.funcionalidadesR.Size = new System.Drawing.Size(287, 200);
             this.funcionalidadesR.TabIndex = 10;
             this.funcionalidadesR.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.funcionalidadesR_CellClick);
             // 
@@ -57,7 +57,7 @@
             // 
             this.btnElegirFuncionalidad.Location = new System.Drawing.Point(12, 225);
             this.btnElegirFuncionalidad.Name = "btnElegirFuncionalidad";
-            this.btnElegirFuncionalidad.Size = new System.Drawing.Size(155, 33);
+            this.btnElegirFuncionalidad.Size = new System.Drawing.Size(138, 33);
             this.btnElegirFuncionalidad.TabIndex = 11;
             this.btnElegirFuncionalidad.Text = "Elegir funcionalidad";
             this.btnElegirFuncionalidad.UseVisualStyleBackColor = true;
@@ -67,7 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 270);
+            this.ClientSize = new System.Drawing.Size(312, 270);
             this.Controls.Add(this.btnElegirFuncionalidad);
             this.Controls.Add(this.funcionalidadesR);
             this.Controls.Add(this.btnCerrarSesion);

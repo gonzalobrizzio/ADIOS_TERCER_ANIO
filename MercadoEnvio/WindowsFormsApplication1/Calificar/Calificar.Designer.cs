@@ -96,6 +96,7 @@
             this.dgvCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCompras.Location = new System.Drawing.Point(12, 37);
             this.dgvCompras.Name = "dgvCompras";
+            this.dgvCompras.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvCompras.Size = new System.Drawing.Size(457, 178);
             this.dgvCompras.TabIndex = 5;
             this.dgvCompras.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompras_CellClick);

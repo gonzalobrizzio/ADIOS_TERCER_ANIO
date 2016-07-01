@@ -53,15 +53,18 @@
             this.lblSubastasCon1Estrella = new System.Windows.Forms.Label();
             this.lblSubastasTitulo = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.lblPendientes = new System.Windows.Forms.Label();
+            this.lblUltimas = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvHistorial
             // 
             this.dgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHistorial.Location = new System.Drawing.Point(18, 239);
+            this.dgvHistorial.Location = new System.Drawing.Point(504, 60);
             this.dgvHistorial.Name = "dgvHistorial";
-            this.dgvHistorial.Size = new System.Drawing.Size(623, 98);
+            this.dgvHistorial.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dgvHistorial.Size = new System.Drawing.Size(317, 135);
             this.dgvHistorial.TabIndex = 0;
             // 
             // lblSuHistorial
@@ -77,7 +80,7 @@
             // lblComprasTitulo
             // 
             this.lblComprasTitulo.AutoSize = true;
-            this.lblComprasTitulo.Location = new System.Drawing.Point(27, 60);
+            this.lblComprasTitulo.Location = new System.Drawing.Point(17, 60);
             this.lblComprasTitulo.Name = "lblComprasTitulo";
             this.lblComprasTitulo.Size = new System.Drawing.Size(51, 13);
             this.lblComprasTitulo.TabIndex = 2;
@@ -86,7 +89,7 @@
             // lblComprasCon1Estrella
             // 
             this.lblComprasCon1Estrella.AutoSize = true;
-            this.lblComprasCon1Estrella.Location = new System.Drawing.Point(30, 88);
+            this.lblComprasCon1Estrella.Location = new System.Drawing.Point(20, 88);
             this.lblComprasCon1Estrella.Name = "lblComprasCon1Estrella";
             this.lblComprasCon1Estrella.Size = new System.Drawing.Size(117, 13);
             this.lblComprasCon1Estrella.TabIndex = 3;
@@ -95,7 +98,7 @@
             // lblComprasCon2Estrellas
             // 
             this.lblComprasCon2Estrellas.AutoSize = true;
-            this.lblComprasCon2Estrellas.Location = new System.Drawing.Point(30, 111);
+            this.lblComprasCon2Estrellas.Location = new System.Drawing.Point(20, 111);
             this.lblComprasCon2Estrellas.Name = "lblComprasCon2Estrellas";
             this.lblComprasCon2Estrellas.Size = new System.Drawing.Size(122, 13);
             this.lblComprasCon2Estrellas.TabIndex = 4;
@@ -104,7 +107,7 @@
             // lblComprasCon3Estrellas
             // 
             this.lblComprasCon3Estrellas.AutoSize = true;
-            this.lblComprasCon3Estrellas.Location = new System.Drawing.Point(30, 134);
+            this.lblComprasCon3Estrellas.Location = new System.Drawing.Point(20, 134);
             this.lblComprasCon3Estrellas.Name = "lblComprasCon3Estrellas";
             this.lblComprasCon3Estrellas.Size = new System.Drawing.Size(122, 13);
             this.lblComprasCon3Estrellas.TabIndex = 5;
@@ -113,7 +116,7 @@
             // lblComprasCon4Estrellas
             // 
             this.lblComprasCon4Estrellas.AutoSize = true;
-            this.lblComprasCon4Estrellas.Location = new System.Drawing.Point(30, 157);
+            this.lblComprasCon4Estrellas.Location = new System.Drawing.Point(20, 157);
             this.lblComprasCon4Estrellas.Name = "lblComprasCon4Estrellas";
             this.lblComprasCon4Estrellas.Size = new System.Drawing.Size(122, 13);
             this.lblComprasCon4Estrellas.TabIndex = 6;
@@ -122,7 +125,7 @@
             // lblComprasCon5Estrellas
             // 
             this.lblComprasCon5Estrellas.AutoSize = true;
-            this.lblComprasCon5Estrellas.Location = new System.Drawing.Point(30, 180);
+            this.lblComprasCon5Estrellas.Location = new System.Drawing.Point(20, 180);
             this.lblComprasCon5Estrellas.Name = "lblComprasCon5Estrellas";
             this.lblComprasCon5Estrellas.Size = new System.Drawing.Size(122, 13);
             this.lblComprasCon5Estrellas.TabIndex = 7;
@@ -131,7 +134,7 @@
             // lblCompras1
             // 
             this.lblCompras1.AutoSize = true;
-            this.lblCompras1.Location = new System.Drawing.Point(233, 88);
+            this.lblCompras1.Location = new System.Drawing.Point(187, 88);
             this.lblCompras1.Name = "lblCompras1";
             this.lblCompras1.Size = new System.Drawing.Size(0, 13);
             this.lblCompras1.TabIndex = 8;
@@ -139,7 +142,7 @@
             // lblCompras2
             // 
             this.lblCompras2.AutoSize = true;
-            this.lblCompras2.Location = new System.Drawing.Point(233, 111);
+            this.lblCompras2.Location = new System.Drawing.Point(187, 111);
             this.lblCompras2.Name = "lblCompras2";
             this.lblCompras2.Size = new System.Drawing.Size(0, 13);
             this.lblCompras2.TabIndex = 9;
@@ -147,7 +150,7 @@
             // lblCompras3
             // 
             this.lblCompras3.AutoSize = true;
-            this.lblCompras3.Location = new System.Drawing.Point(233, 134);
+            this.lblCompras3.Location = new System.Drawing.Point(187, 134);
             this.lblCompras3.Name = "lblCompras3";
             this.lblCompras3.Size = new System.Drawing.Size(0, 13);
             this.lblCompras3.TabIndex = 10;
@@ -155,7 +158,7 @@
             // lblCompras4
             // 
             this.lblCompras4.AutoSize = true;
-            this.lblCompras4.Location = new System.Drawing.Point(233, 159);
+            this.lblCompras4.Location = new System.Drawing.Point(187, 159);
             this.lblCompras4.Name = "lblCompras4";
             this.lblCompras4.Size = new System.Drawing.Size(0, 13);
             this.lblCompras4.TabIndex = 11;
@@ -163,7 +166,7 @@
             // lblCompras5
             // 
             this.lblCompras5.AutoSize = true;
-            this.lblCompras5.Location = new System.Drawing.Point(233, 182);
+            this.lblCompras5.Location = new System.Drawing.Point(187, 182);
             this.lblCompras5.Name = "lblCompras5";
             this.lblCompras5.Size = new System.Drawing.Size(0, 13);
             this.lblCompras5.TabIndex = 12;
@@ -171,7 +174,7 @@
             // lblSubastas5
             // 
             this.lblSubastas5.AutoSize = true;
-            this.lblSubastas5.Location = new System.Drawing.Point(570, 182);
+            this.lblSubastas5.Location = new System.Drawing.Point(414, 182);
             this.lblSubastas5.Name = "lblSubastas5";
             this.lblSubastas5.Size = new System.Drawing.Size(0, 13);
             this.lblSubastas5.TabIndex = 23;
@@ -179,7 +182,7 @@
             // lblSubastas4
             // 
             this.lblSubastas4.AutoSize = true;
-            this.lblSubastas4.Location = new System.Drawing.Point(570, 159);
+            this.lblSubastas4.Location = new System.Drawing.Point(414, 159);
             this.lblSubastas4.Name = "lblSubastas4";
             this.lblSubastas4.Size = new System.Drawing.Size(0, 13);
             this.lblSubastas4.TabIndex = 22;
@@ -187,7 +190,7 @@
             // lblSubastas3
             // 
             this.lblSubastas3.AutoSize = true;
-            this.lblSubastas3.Location = new System.Drawing.Point(570, 134);
+            this.lblSubastas3.Location = new System.Drawing.Point(414, 134);
             this.lblSubastas3.Name = "lblSubastas3";
             this.lblSubastas3.Size = new System.Drawing.Size(0, 13);
             this.lblSubastas3.TabIndex = 21;
@@ -195,7 +198,7 @@
             // lblSubastas2
             // 
             this.lblSubastas2.AutoSize = true;
-            this.lblSubastas2.Location = new System.Drawing.Point(570, 111);
+            this.lblSubastas2.Location = new System.Drawing.Point(414, 111);
             this.lblSubastas2.Name = "lblSubastas2";
             this.lblSubastas2.Size = new System.Drawing.Size(0, 13);
             this.lblSubastas2.TabIndex = 20;
@@ -203,7 +206,7 @@
             // lblSubastas1
             // 
             this.lblSubastas1.AutoSize = true;
-            this.lblSubastas1.Location = new System.Drawing.Point(570, 88);
+            this.lblSubastas1.Location = new System.Drawing.Point(414, 88);
             this.lblSubastas1.Name = "lblSubastas1";
             this.lblSubastas1.Size = new System.Drawing.Size(0, 13);
             this.lblSubastas1.TabIndex = 19;
@@ -211,7 +214,7 @@
             // lblSubastasCon5Estrellas
             // 
             this.lblSubastasCon5Estrellas.AutoSize = true;
-            this.lblSubastasCon5Estrellas.Location = new System.Drawing.Point(367, 180);
+            this.lblSubastasCon5Estrellas.Location = new System.Drawing.Point(239, 180);
             this.lblSubastasCon5Estrellas.Name = "lblSubastasCon5Estrellas";
             this.lblSubastasCon5Estrellas.Size = new System.Drawing.Size(125, 13);
             this.lblSubastasCon5Estrellas.TabIndex = 18;
@@ -220,7 +223,7 @@
             // lblSubastasCon4Estrellas
             // 
             this.lblSubastasCon4Estrellas.AutoSize = true;
-            this.lblSubastasCon4Estrellas.Location = new System.Drawing.Point(367, 157);
+            this.lblSubastasCon4Estrellas.Location = new System.Drawing.Point(239, 157);
             this.lblSubastasCon4Estrellas.Name = "lblSubastasCon4Estrellas";
             this.lblSubastasCon4Estrellas.Size = new System.Drawing.Size(125, 13);
             this.lblSubastasCon4Estrellas.TabIndex = 17;
@@ -229,7 +232,7 @@
             // lblSubastasCon3Estrellas
             // 
             this.lblSubastasCon3Estrellas.AutoSize = true;
-            this.lblSubastasCon3Estrellas.Location = new System.Drawing.Point(367, 134);
+            this.lblSubastasCon3Estrellas.Location = new System.Drawing.Point(239, 134);
             this.lblSubastasCon3Estrellas.Name = "lblSubastasCon3Estrellas";
             this.lblSubastasCon3Estrellas.Size = new System.Drawing.Size(125, 13);
             this.lblSubastasCon3Estrellas.TabIndex = 16;
@@ -238,7 +241,7 @@
             // lblSubastasCon2Estrellas
             // 
             this.lblSubastasCon2Estrellas.AutoSize = true;
-            this.lblSubastasCon2Estrellas.Location = new System.Drawing.Point(367, 111);
+            this.lblSubastasCon2Estrellas.Location = new System.Drawing.Point(239, 111);
             this.lblSubastasCon2Estrellas.Name = "lblSubastasCon2Estrellas";
             this.lblSubastasCon2Estrellas.Size = new System.Drawing.Size(125, 13);
             this.lblSubastasCon2Estrellas.TabIndex = 15;
@@ -247,7 +250,7 @@
             // lblSubastasCon1Estrella
             // 
             this.lblSubastasCon1Estrella.AutoSize = true;
-            this.lblSubastasCon1Estrella.Location = new System.Drawing.Point(367, 88);
+            this.lblSubastasCon1Estrella.Location = new System.Drawing.Point(239, 88);
             this.lblSubastasCon1Estrella.Name = "lblSubastasCon1Estrella";
             this.lblSubastasCon1Estrella.Size = new System.Drawing.Size(120, 13);
             this.lblSubastasCon1Estrella.TabIndex = 14;
@@ -256,7 +259,7 @@
             // lblSubastasTitulo
             // 
             this.lblSubastasTitulo.AutoSize = true;
-            this.lblSubastasTitulo.Location = new System.Drawing.Point(364, 60);
+            this.lblSubastasTitulo.Location = new System.Drawing.Point(236, 60);
             this.lblSubastasTitulo.Name = "lblSubastasTitulo";
             this.lblSubastasTitulo.Size = new System.Drawing.Size(54, 13);
             this.lblSubastasTitulo.TabIndex = 13;
@@ -264,7 +267,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(567, 355);
+            this.btnVolver.Location = new System.Drawing.Point(698, 216);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(123, 28);
             this.btnVolver.TabIndex = 1;
@@ -272,11 +275,32 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // lblPendientes
+            // 
+            this.lblPendientes.AutoSize = true;
+            this.lblPendientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPendientes.Location = new System.Drawing.Point(197, 20);
+            this.lblPendientes.Name = "lblPendientes";
+            this.lblPendientes.Size = new System.Drawing.Size(0, 17);
+            this.lblPendientes.TabIndex = 24;
+            // 
+            // lblUltimas
+            // 
+            this.lblUltimas.AutoSize = true;
+            this.lblUltimas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUltimas.Location = new System.Drawing.Point(504, 24);
+            this.lblUltimas.Name = "lblUltimas";
+            this.lblUltimas.Size = new System.Drawing.Size(154, 17);
+            this.lblUltimas.TabIndex = 25;
+            this.lblUltimas.Text = "Ultimas 5 calificaciones";
+            // 
             // frmHistorial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(702, 395);
+            this.ClientSize = new System.Drawing.Size(833, 255);
+            this.Controls.Add(this.lblUltimas);
+            this.Controls.Add(this.lblPendientes);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.lblSubastas5);
             this.Controls.Add(this.lblSubastas4);
@@ -338,5 +362,7 @@
         private System.Windows.Forms.Label lblSubastasCon1Estrella;
         private System.Windows.Forms.Label lblSubastasTitulo;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Label lblPendientes;
+        private System.Windows.Forms.Label lblUltimas;
     }
 }

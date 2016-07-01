@@ -23,6 +23,23 @@ namespace MercadoEnvios.Calificar
         }
 
         private void getData(){
+
+            String queryCantPendientes = "SELECT COUNT(calificacion.id) FROM ADIOS_TERCER_ANIO.Calificacion calificacion" + 
+            " inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calificacion.idCompra" +
+            " where compra.idComprador = " + sesion.idUsuario + " and pendiente = 1";
+
+            try
+            {
+                SqlCommand comando = new SqlCommand(queryCantPendientes, conn.getConexion);
+                int retorno = (Int32)comando.ExecuteScalar();
+                lblPendientes.Text = "Usted tiene " + retorno.ToString() + " calificaciones pendientes.";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar obtener calificaciones pendientes.\n" + ex.Message);
+            }
+        
+
             SqlParameter idCalificador = new SqlParameter("@idCalificador", SqlDbType.Int);
             idCalificador.SqlValue = sesion.idUsuario;
             idCalificador.Direction = ParameterDirection.Input;
@@ -34,15 +51,24 @@ namespace MercadoEnvios.Calificar
             da.SelectCommand.Parameters.Add(idCalificador);
             da.SelectCommand.ExecuteNonQuery();
 
-            DataTable tablaDeCompras = new DataTable("Calificaciones");
-            da.Fill(tablaDeCompras);
-            dgvHistorial.DataSource = tablaDeCompras;
-            dgvHistorial.Columns[0].Width = 100;
-            dgvHistorial.Columns[1].Width = 200;
-            dgvHistorial.Columns[2].Visible = false;
-            dgvHistorial.AllowUserToAddRows = false;
-            dgvHistorial.AllowUserToDeleteRows = false;
-            dgvHistorial.ReadOnly = true;
+            try
+            {
+                da.SelectCommand.ExecuteNonQuery();
+
+                DataTable tablaDeCompras = new DataTable("Calificaciones");
+                da.Fill(tablaDeCompras);
+                dgvHistorial.DataSource = tablaDeCompras;
+                dgvHistorial.Columns[0].Width = 100;
+                dgvHistorial.Columns[1].Width = 200;
+                dgvHistorial.Columns[2].Visible = false;
+                dgvHistorial.AllowUserToAddRows = false;
+                dgvHistorial.AllowUserToDeleteRows = false;
+                dgvHistorial.ReadOnly = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar obtener ultimas calificaciones.\n" + ex.Message);
+            }
 
             SqlCommand obtenerCantidad = new SqlCommand("ADIOS_TERCER_ANIO.obtenerTipoDeCompraConNPuntaje", conn.getConexion);
             obtenerCantidad.CommandType = System.Data.CommandType.StoredProcedure;
@@ -58,7 +84,6 @@ namespace MercadoEnvios.Calificar
             SqlParameter cantidad = new SqlParameter("@cant", null);
             cantidad.Direction = ParameterDirection.Output;
             cantidad.SqlDbType = SqlDbType.Int;
-
 
             tipo.SqlValue = "Compra Inmediata";
             puntaje.SqlValue = 1;

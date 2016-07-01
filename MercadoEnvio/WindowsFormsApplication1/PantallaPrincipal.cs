@@ -45,38 +45,6 @@ namespace MercadoEnvios.ABM_Usuario
 
         }
 
-        private void btnComprarOfertar_Click(object sender, EventArgs e)
-        {
-
-            SqlCommand puedeComprar = new SqlCommand("ADIOS_TERCER_ANIO.puedeComprar", conn.getConexion);
-            puedeComprar.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter usr = new SqlParameter("@idUsuario", SqlDbType.Int);
-            usr.SqlValue = sesion.idUsuario;
-            usr.Direction = ParameterDirection.Input;
-
-            SqlParameter puede = new SqlParameter("@puede", null);
-            puede.Direction = ParameterDirection.Output;
-            puede.SqlDbType = SqlDbType.Int;
-
-            puedeComprar.Parameters.Add(usr);
-            puedeComprar.Parameters.Add(puede);
-
-            try { puedeComprar.ExecuteNonQuery(); }
-            catch (SqlException error) { MessageBox.Show(error.Message); }
-
-            if (Convert.ToInt32(puedeComprar.Parameters["@puede"].Value) == 1)
-            {
-                sesion.anterior = this;
-                new ComprarOfertar.frmComprarOfertar().Show();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Tiene compras sin calificar, debe calificar las compras antes de realizar otra accion");
-            }
-        }
-
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             new Login_y_Seguridad.frmIngresar().Show();
@@ -98,8 +66,33 @@ namespace MercadoEnvios.ABM_Usuario
             }
             else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Comprar/Ofertar")
             {
-                new ComprarOfertar.frmComprarOfertar().Show();
-                this.Close();
+                SqlCommand puedeComprar = new SqlCommand("ADIOS_TERCER_ANIO.puedeComprar", conn.getConexion);
+                puedeComprar.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter usr = new SqlParameter("@idUsuario", SqlDbType.Int);
+                usr.SqlValue = sesion.idUsuario;
+                usr.Direction = ParameterDirection.Input;
+
+                SqlParameter puede = new SqlParameter("@puede", null);
+                puede.Direction = ParameterDirection.Output;
+                puede.SqlDbType = SqlDbType.Int;
+
+                puedeComprar.Parameters.Add(usr);
+                puedeComprar.Parameters.Add(puede);
+
+                try { puedeComprar.ExecuteNonQuery(); }
+                catch (SqlException error) { MessageBox.Show(error.Message); }
+
+                if (Convert.ToInt32(puedeComprar.Parameters["@puede"].Value) == 1)
+                {
+                    sesion.anterior = this;
+                    new ComprarOfertar.frmComprarOfertar().Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Tiene compras sin calificar, debe calificar las compras antes de realizar otra accion");
+                }
             }
 
             else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Consultar Facturas")
