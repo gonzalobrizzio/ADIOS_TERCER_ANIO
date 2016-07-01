@@ -314,11 +314,6 @@ AS BEGIN
 	DECLARE @idUsuario int;
 	DECLARE @idRol int;
 
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='gd' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
-	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
-	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
-	VALUES(@idRol,@idUsuario,0)
-
 	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
@@ -369,6 +364,7 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Calificar Vendedor');
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Historial de Compras y Subastas');
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Listado Estadistico');
+	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Cambiar Contrasenia');
 
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,1);
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,4);
@@ -381,6 +377,9 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,3);
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,5);
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,9);
+	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,10);
+	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,10);
+	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (3,10);
 
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Subasta');
 	INSERT INTO ADIOS_TERCER_ANIO.TipoPublicacion(nombre) Values('Compra Inmediata');
@@ -3073,6 +3072,13 @@ AS BEGIN
 	AND ((e.apellido COLLATE Latin1_General_CI_AI LIKE '%' + @apellido + '%' COLLATE Latin1_General_CI_AI) OR (@apellido IS NULL OR @apellido = ''))
 	AND ((e.documento LIKE @doc) OR (@doc IS NULL OR @doc = -1))
 	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
+END
+GO
+ALTER PROCEDURE ADIOS_TERCER_ANIO.ObtenerFuncionalidades (@idRolActual INT)
+AS BEGIN
+			select fu.descripcion from ADIOS_TERCER_ANIO.FuncionalidadRol f
+			INNER JOIN ADIOS_TERCER_ANIO.Funcionalidad fu ON fu.id = f.idFuncionalidad
+			where f.idRol = @idRolActual AND f.deleted = 0
 END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa(@cuit NVARCHAR(255), @razonSocial NVARCHAR(255), @mail NVARCHAR(255))

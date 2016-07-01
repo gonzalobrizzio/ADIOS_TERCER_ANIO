@@ -28,161 +28,61 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnGenerarPublicacion = new System.Windows.Forms.Button();
-            this.btnComprarOfertar = new System.Windows.Forms.Button();
-            this.btnHistorial = new System.Windows.Forms.Button();
-            this.btnCalificarVendedor = new System.Windows.Forms.Button();
-            this.btnConsultarFacturas = new System.Windows.Forms.Button();
-            this.btnABMRol = new System.Windows.Forms.Button();
-            this.btnABMUsuario = new System.Windows.Forms.Button();
-            this.btnABMVisibilidad = new System.Windows.Forms.Button();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
-            this.btnListado = new System.Windows.Forms.Button();
+            this.funcionalidadesR = new System.Windows.Forms.DataGridView();
+            this.btnElegirFuncionalidad = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.funcionalidadesR)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnGenerarPublicacion
-            // 
-            this.btnGenerarPublicacion.Location = new System.Drawing.Point(110, 166);
-            this.btnGenerarPublicacion.Name = "btnGenerarPublicacion";
-            this.btnGenerarPublicacion.Size = new System.Drawing.Size(289, 58);
-            this.btnGenerarPublicacion.TabIndex = 0;
-            this.btnGenerarPublicacion.Text = "Generar Publicación";
-            this.btnGenerarPublicacion.UseVisualStyleBackColor = true;
-            this.btnGenerarPublicacion.Visible = false;
-            this.btnGenerarPublicacion.Click += new System.EventHandler(this.btnGenerarPublicacion_Click);
-            // 
-            // btnComprarOfertar
-            // 
-            this.btnComprarOfertar.Location = new System.Drawing.Point(110, 38);
-            this.btnComprarOfertar.Name = "btnComprarOfertar";
-            this.btnComprarOfertar.Size = new System.Drawing.Size(289, 58);
-            this.btnComprarOfertar.TabIndex = 1;
-            this.btnComprarOfertar.Text = "Comprar / Ofertar";
-            this.btnComprarOfertar.UseVisualStyleBackColor = true;
-            this.btnComprarOfertar.Visible = false;
-            this.btnComprarOfertar.Click += new System.EventHandler(this.btnComprarOfertar_Click);
-            // 
-            // btnHistorial
-            // 
-            this.btnHistorial.Location = new System.Drawing.Point(110, 230);
-            this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(289, 58);
-            this.btnHistorial.TabIndex = 2;
-            this.btnHistorial.Text = "Historial de Compras / Subastas";
-            this.btnHistorial.UseVisualStyleBackColor = true;
-            this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
-            // 
-            // btnCalificarVendedor
-            // 
-            this.btnCalificarVendedor.Location = new System.Drawing.Point(110, 294);
-            this.btnCalificarVendedor.Name = "btnCalificarVendedor";
-            this.btnCalificarVendedor.Size = new System.Drawing.Size(289, 58);
-            this.btnCalificarVendedor.TabIndex = 3;
-            this.btnCalificarVendedor.Text = "Calificar Vendedor";
-            this.btnCalificarVendedor.UseVisualStyleBackColor = true;
-            this.btnCalificarVendedor.Visible = false;
-            this.btnCalificarVendedor.Click += new System.EventHandler(this.btnCalificarVendedor_Click);
-            // 
-            // btnConsultarFacturas
-            // 
-            this.btnConsultarFacturas.Location = new System.Drawing.Point(110, 102);
-            this.btnConsultarFacturas.Name = "btnConsultarFacturas";
-            this.btnConsultarFacturas.Size = new System.Drawing.Size(289, 58);
-            this.btnConsultarFacturas.TabIndex = 4;
-            this.btnConsultarFacturas.Text = "Consultar Facturas";
-            this.btnConsultarFacturas.UseVisualStyleBackColor = true;
-            this.btnConsultarFacturas.Visible = false;
-            this.btnConsultarFacturas.Click += new System.EventHandler(this.btnConsultarFacturas_Click);
-            // 
-            // btnABMRol
-            // 
-            this.btnABMRol.Location = new System.Drawing.Point(110, 76);
-            this.btnABMRol.Name = "btnABMRol";
-            this.btnABMRol.Size = new System.Drawing.Size(289, 58);
-            this.btnABMRol.TabIndex = 5;
-            this.btnABMRol.Text = "ABM Rol";
-            this.btnABMRol.UseVisualStyleBackColor = true;
-            this.btnABMRol.Visible = false;
-            this.btnABMRol.Click += new System.EventHandler(this.btnABMRol_Click);
-            // 
-            // btnABMUsuario
-            // 
-            this.btnABMUsuario.Location = new System.Drawing.Point(110, 140);
-            this.btnABMUsuario.Name = "btnABMUsuario";
-            this.btnABMUsuario.Size = new System.Drawing.Size(289, 58);
-            this.btnABMUsuario.TabIndex = 6;
-            this.btnABMUsuario.Text = "ABM Usuario";
-            this.btnABMUsuario.UseVisualStyleBackColor = true;
-            this.btnABMUsuario.Visible = false;
-            this.btnABMUsuario.Click += new System.EventHandler(this.btnABMUsuario_Click);
-            // 
-            // btnABMVisibilidad
-            // 
-            this.btnABMVisibilidad.Location = new System.Drawing.Point(110, 268);
-            this.btnABMVisibilidad.Name = "btnABMVisibilidad";
-            this.btnABMVisibilidad.Size = new System.Drawing.Size(289, 58);
-            this.btnABMVisibilidad.TabIndex = 7;
-            this.btnABMVisibilidad.Text = "ABM Visibilidad";
-            this.btnABMVisibilidad.UseVisualStyleBackColor = true;
-            this.btnABMVisibilidad.Visible = false;
-            this.btnABMVisibilidad.Click += new System.EventHandler(this.btnABMVisibilidad_Click);
             // 
             // btnCerrarSesion
             // 
-            this.btnCerrarSesion.Location = new System.Drawing.Point(361, 370);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(189, 225);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(206, 53);
+            this.btnCerrarSesion.Size = new System.Drawing.Size(150, 33);
             this.btnCerrarSesion.TabIndex = 8;
             this.btnCerrarSesion.Text = "Cerrar sesión";
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
             this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             // 
-            // btnListado
+            // funcionalidadesR
             // 
-            this.btnListado.Location = new System.Drawing.Point(110, 204);
-            this.btnListado.Name = "btnListado";
-            this.btnListado.Size = new System.Drawing.Size(289, 58);
-            this.btnListado.TabIndex = 9;
-            this.btnListado.Text = "Listado Estadístico";
-            this.btnListado.UseVisualStyleBackColor = true;
-            this.btnListado.Visible = false;
-            this.btnListado.Click += new System.EventHandler(this.btnListado_Click);
+            this.funcionalidadesR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.funcionalidadesR.Location = new System.Drawing.Point(12, 12);
+            this.funcionalidadesR.Name = "funcionalidadesR";
+            this.funcionalidadesR.Size = new System.Drawing.Size(330, 200);
+            this.funcionalidadesR.TabIndex = 10;
+            this.funcionalidadesR.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.funcionalidadesR_CellClick);
+            // 
+            // btnElegirFuncionalidad
+            // 
+            this.btnElegirFuncionalidad.Location = new System.Drawing.Point(12, 225);
+            this.btnElegirFuncionalidad.Name = "btnElegirFuncionalidad";
+            this.btnElegirFuncionalidad.Size = new System.Drawing.Size(155, 33);
+            this.btnElegirFuncionalidad.TabIndex = 11;
+            this.btnElegirFuncionalidad.Text = "Elegir funcionalidad";
+            this.btnElegirFuncionalidad.UseVisualStyleBackColor = true;
+            this.btnElegirFuncionalidad.Click += new System.EventHandler(this.btnElegirFuncionalidad_Click);
             // 
             // frmPantallaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 434);
-            this.Controls.Add(this.btnListado);
+            this.ClientSize = new System.Drawing.Size(351, 270);
+            this.Controls.Add(this.btnElegirFuncionalidad);
+            this.Controls.Add(this.funcionalidadesR);
             this.Controls.Add(this.btnCerrarSesion);
-            this.Controls.Add(this.btnABMVisibilidad);
-            this.Controls.Add(this.btnABMUsuario);
-            this.Controls.Add(this.btnABMRol);
-            this.Controls.Add(this.btnConsultarFacturas);
-            this.Controls.Add(this.btnCalificarVendedor);
-            this.Controls.Add(this.btnHistorial);
-            this.Controls.Add(this.btnComprarOfertar);
-            this.Controls.Add(this.btnGenerarPublicacion);
             this.Name = "frmPantallaPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PantallaPrincipal";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPantallaPrincipal_FormClosed);
-            this.Load += new System.EventHandler(this.frmPantallaPrincipal_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.funcionalidadesR)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnGenerarPublicacion;
-        private System.Windows.Forms.Button btnComprarOfertar;
-        private System.Windows.Forms.Button btnHistorial;
-        private System.Windows.Forms.Button btnCalificarVendedor;
-        private System.Windows.Forms.Button btnConsultarFacturas;
-        private System.Windows.Forms.Button btnABMRol;
-        private System.Windows.Forms.Button btnABMUsuario;
-        private System.Windows.Forms.Button btnABMVisibilidad;
         private System.Windows.Forms.Button btnCerrarSesion;
-        private System.Windows.Forms.Button btnListado;
+        private System.Windows.Forms.DataGridView funcionalidadesR;
+        private System.Windows.Forms.Button btnElegirFuncionalidad;
     }
 }

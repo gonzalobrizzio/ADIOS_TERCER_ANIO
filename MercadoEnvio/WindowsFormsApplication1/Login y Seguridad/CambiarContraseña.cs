@@ -1,4 +1,5 @@
-﻿using MercadoEnvios.Entidades;
+﻿using MercadoEnvios.ABM_Usuario;
+using MercadoEnvios.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,29 +35,34 @@ namespace MercadoEnvios.Login_y_Seguridad
 
             if (contraActualOK && contraNuevaOK && contraConfirOK)
             {
-                if (validarPassword(usuarioDeSesion, contraseñaActual.Text))
+                if (contraseñaNueva.Text == contraseñaConfirmada.Text)
                 {
-                    SqlCommand comandoModificarPassword = new SqlCommand("ADIOS_TERCER_ANIO.modificarPassword",conn.getConexion);
-                    comandoModificarPassword.CommandType = CommandType.StoredProcedure;
 
-                    string passHasheada = Utilidades.encriptarCadenaSHA256(contraseñaNueva.Text);
+                    if (validarPassword(usuarioDeSesion, contraseñaActual.Text))
+                    {
+                        SqlCommand comandoModificarPassword = new SqlCommand("ADIOS_TERCER_ANIO.modificarPassword", conn.getConexion);
+                        comandoModificarPassword.CommandType = CommandType.StoredProcedure;
 
-                    comandoModificarPassword.Parameters.Add("@usuario", SqlDbType.NVarChar,255);
-                    comandoModificarPassword.Parameters.Add("@passwordNueva", SqlDbType.NVarChar,255);
+                        string passHasheada = Utilidades.encriptarCadenaSHA256(contraseñaNueva.Text);
+
+                        comandoModificarPassword.Parameters.Add("@usuario", SqlDbType.NVarChar, 255);
+                        comandoModificarPassword.Parameters.Add("@password", SqlDbType.NVarChar, 255);
 
 
-                    comandoModificarPassword.Parameters[0].Value = usuarioDeSesion;
-                    comandoModificarPassword.Parameters[1].Value = passHasheada;
+                        comandoModificarPassword.Parameters[0].Value = usuarioDeSesion;
+                        comandoModificarPassword.Parameters[1].Value = passHasheada;
 
-                    comandoModificarPassword.ExecuteNonQuery();
-                    MessageBox.Show("Contraseña cambiada correctamente");
+                        comandoModificarPassword.ExecuteNonQuery();
+                        MessageBox.Show("Contraseña cambiada correctamente");
+                    }
+                    else
+                    {
+                            MessageBox.Show("Contraseña incorrecta");
+                    }
                 }
                 else
                 {
-                    if (!validarPassword(usuarioDeSesion, contraseñaActual.Text))
-                        MessageBox.Show("Contraseña incorrecta");
-                    else
-                        MessageBox.Show("La contraseña confirmada difiere de la nueva");
+                    MessageBox.Show("La contraseña confirmada difiere de la nueva");
                 }
 
             }
@@ -92,7 +98,7 @@ namespace MercadoEnvios.Login_y_Seguridad
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            new ABM_Usuario.frmABMUsuario().Show();
+            new frmPantallaPrincipal().Show();
             this.Close();
 
         }

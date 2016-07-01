@@ -12,13 +12,15 @@ namespace MercadoEnvios
         public int idRol;
         private static Sesion instance;
         public Form anterior;
+        public string usuario;
 
-        public Sesion(int usr, int rol, Form anterior)
+        public Sesion(int usr, int rol, Form anterior, string usrS)
         {
             instance = this;
             this.idUsuario = usr;
             this.idRol = rol;
             this.anterior = anterior;
+            this.usuario = usrS;
         }
 
         public static Sesion Instance

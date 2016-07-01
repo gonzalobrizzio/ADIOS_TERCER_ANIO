@@ -22,66 +22,27 @@ namespace MercadoEnvios.ABM_Usuario
         public frmPantallaPrincipal()
         {
             InitializeComponent();
-            
-            btnABMVisibilidad.Visible = false;
-            btnComprarOfertar.Visible = false;
-            btnConsultarFacturas.Visible = false;
-            btnABMUsuario.Visible = false;
-            btnGenerarPublicacion.Visible = false;
-            btnABMRol.Visible = false;
-            btnCalificarVendedor.Visible = false;
-            btnHistorial.Visible = false;
-            btnListado.Visible = false;
 
             conn = Conexion.Instance;
+            sesion = Sesion.Instance;
+            string funcionalidadesQuery = "ADIOS_TERCER_ANIO.ObtenerFuncionalidades";
 
-            string funcionalidadesQuery = "select f.idFuncionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol f "
-                                   + "where f.idRol = @idRolActual AND f.deleted = 0";
-            SqlCommand subastas = new SqlCommand(funcionalidadesQuery, conn.getConexion);
+            SqlDataAdapter da = new SqlDataAdapter(funcionalidadesQuery, conn.getConexion);
+            da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
             SqlParameter idRolActual = new SqlParameter("@idRolActual", SqlDbType.Int);
             idRolActual.Direction = ParameterDirection.Input;
             idRolActual.SqlValue = sesion.idRol;
-            subastas.Parameters.Add(idRolActual);
-            SqlDataReader da = subastas.ExecuteReader();
-            List<Int32> listF = new List<Int32>();
-            if (da.HasRows)
-            {
-                while (da.Read())
-                {
-                    listF.Add(da.GetInt32(0));
-                }
-            }
-            da.Close();
-           
-            if(listF.Contains(1)){
-                btnABMVisibilidad.Visible = true;
-            }
-            if(listF.Contains(2)){
-                btnComprarOfertar.Visible = true;
-            }
-            if(listF.Contains(3)){
-                btnConsultarFacturas.Visible = true;
-            }
-            if(listF.Contains(4)){
-                btnABMUsuario.Visible = true;
-            }
-            if(listF.Contains(5)){
-                btnGenerarPublicacion.Visible = true;
-            }
-            if(listF.Contains(6)){
-                btnABMRol.Visible = true;
-            }
-            if(listF.Contains(7)){
-                btnCalificarVendedor.Visible = true;
-            }
-            if (listF.Contains(8))
-            {
-                btnHistorial.Visible = true;
-            }
-            if (listF.Contains(9))
-            {
-                btnListado.Visible = true;
-            }
+            da.SelectCommand.Parameters.Add(idRolActual);
+            da.SelectCommand.ExecuteNonQuery();
+
+            DataTable tablaFun = new DataTable("Funcionalidades");
+            da.Fill(tablaFun);
+            funcionalidadesR.DataSource = tablaFun.DefaultView;
+            funcionalidadesR.Columns[0].Width = 250;
+            funcionalidadesR.AllowUserToDeleteRows = false;
+            funcionalidadesR.AllowUserToAddRows = false;
+            funcionalidadesR.ReadOnly = true;
+
         }
 
         private void btnComprarOfertar_Click(object sender, EventArgs e)
@@ -116,75 +77,79 @@ namespace MercadoEnvios.ABM_Usuario
             }
         }
 
-        private void btnABMUsuario_Click(object sender, EventArgs e)
-        {
-            sesion.anterior = this;
-            new ABM_Usuario.frmABMUsuario().Show();
-            this.Close();
-        }
-
-        private void btnABMRol_Click(object sender, EventArgs e)
-        {
-            sesion.anterior = this;
-            new ABM_Rol.frmABMRol().Show();
-            this.Close();
-        }
-
-        private void btnABMVisibilidad_Click(object sender, EventArgs e)
-        {
-            sesion.anterior = this;
-            new ABM_Visibilidad.frmABMVisibilidad().Show();
-            this.Close();
-        }
-
-        private void btnConsultarFacturas_Click(object sender, EventArgs e)
-        {
-            sesion.anterior = this;
-            new Facturas.HistorialDeFacturas().Show();
-            this.Close();
-        }
-
-        private void btnHistorial_Click(object sender, EventArgs e)
-        {
-            sesion.anterior = this;
-            frmHistorialCliente frm = new frmHistorialCliente();
-            frm.Show(this);
-        }
-
-        private void btnGenerarPublicacion_Click(object sender, EventArgs e)
-        {
-            sesion.anterior = this;
-            new Generar_Publicación.frmElegirAccion().Show();
-            this.Hide();
-        }
-
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             new Login_y_Seguridad.frmIngresar().Show();
             this.Close();
         }
 
-        private void btnCalificarVendedor_Click(object sender, EventArgs e)
+
+        private void funcionalidadesR_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sesion.anterior = this;
-            new Calificar.frmCalificacion().Show();
-            this.Close();
+            funcionalidadesR.CurrentRow.Selected = true;
         }
 
-        private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        private void btnElegirFuncionalidad_Click(object sender, EventArgs e)
         {
-            
-        }
+            if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "ABM Visilidad")
+            {
+                new ABM_Visibilidad.frmABMVisibilidad().Show();
+                this.Close();
+            }
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Comprar/Ofertar")
+            {
+                new ComprarOfertar.frmComprarOfertar().Show();
+                this.Close();
+            }
 
-        private void frmPantallaPrincipal_Load(object sender, EventArgs e)
-        {
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Consultar Facturas")
+            {
+                new Facturas.HistorialDeFacturas().Show();
+                this.Close();
+            }
 
-        }
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "ABM Usuario")
+            {
+                new ABM_Usuario.frmABMUsuario().Show();
+                this.Close();
+            }
 
-        private void btnListado_Click(object sender, EventArgs e)
-        {
-            new frmListadoEstadistico().Show();
-            this.Close();
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Generar Publicacion")
+            {
+                new Generar_Publicación.frmElegirAccion().Show();
+                this.Close();
+            }
+
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "ABM Rol")
+            {
+                new ABM_Rol.frmABMRol().Show();
+                this.Close();
+            }
+
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Calificar Vendedor")
+            {
+                new Calificar.frmCalificacion().Show();
+                this.Close();
+            }
+
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Historial de Compras y Subastas")
+            {
+                frmHistorialCliente frm = new frmHistorialCliente();
+                frm.Show(this);
+            }
+
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Listado Estadistico")
+            {
+                new frmListadoEstadistico().Show();
+                this.Close();
+            }
+
+            else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Cambiar Contrasenia")
+            {
+                new frmCambiarContraseña(sesion.usuario).Show();
+                this.Close();
+            }
+
         }
     }
 }

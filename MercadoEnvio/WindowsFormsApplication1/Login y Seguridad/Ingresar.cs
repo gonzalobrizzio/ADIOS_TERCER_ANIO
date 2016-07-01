@@ -49,7 +49,7 @@ namespace MercadoEnvios.Login_y_Seguridad
 
                 cmd.ExecuteNonQuery();
 
-                sesion = new Sesion(Convert.ToInt32(cmd.Parameters["@idUsuario"].Value), 0, null);
+                sesion = new Sesion(Convert.ToInt32(cmd.Parameters["@idUsuario"].Value), 0, null, txtUsr.Text);
 
                 //Calculo cantidad roles
                 string queryCantidadRoles = "Select @cantidad = count(*) "
