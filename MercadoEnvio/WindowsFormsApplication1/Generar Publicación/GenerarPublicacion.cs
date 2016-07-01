@@ -161,9 +161,28 @@ namespace MercadoEnvios.Generar_Publicación
                 }
                 envio.Direction = ParameterDirection.Input;
 
+                String queryHabilitados = "SELECT * FROM ADIOS_TERCER_ANIO.Publicacion where idPublicador = @idUser";
+                SqlCommand buscarPublicaciones = new SqlCommand(queryHabilitados, conn.getConexion);
+                SqlParameter idUser = new SqlParameter("@idUser", SqlDbType.Int);
+                idUser.SqlValue = sesion.idUsuario;
+                idUser.Direction = ParameterDirection.Input;
+                buscarPublicaciones.Parameters.Add(idUser);
+                SqlParameter primerPublicacion = new SqlParameter("@primerPublicacion", SqlDbType.Int);
+                SqlDataReader da = buscarPublicaciones.ExecuteReader();
+                if (da.HasRows)
+                {
+                    primerPublicacion.SqlValue = 1;
+                }
+                else
+                {
+                    primerPublicacion.SqlValue = 0;
+                }
+                
+                primerPublicacion.Direction = ParameterDirection.Input;
+                da.Close();
 
                 generarPublicacion.Parameters.Add(descripcionP);
-
+                generarPublicacion.Parameters.Add(primerPublicacion);
                 generarPublicacion.Parameters.Add(precioP);
                 generarPublicacion.Parameters.Add(stockP);
                 generarPublicacion.Parameters.Add(visibilidadP);

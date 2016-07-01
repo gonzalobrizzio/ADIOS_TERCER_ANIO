@@ -209,6 +209,7 @@ CREATE  TABLE Publicacion (
   idRubro INT REFERENCES Rubro(id) ,
   stock INT NULL ,
   tieneEnvio INT DEFAULT 1,
+  primerPublicacion INT
   )
 
 CREATE  TABLE Rubro (
@@ -1783,7 +1784,8 @@ AS BEGIN
 										idPublicador,
 										idRubro,
 										stock,
-										tieneEnvio
+										tieneEnvio,
+										primerPublicacion
 									)
 	SELECT DISTINCT
 		ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo(Publicacion_Cod)						AS id,
@@ -1801,7 +1803,8 @@ AS BEGIN
 		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
 		Publicacion_Stock																				AS stock,
-		1
+		1																								AS tienEnvio,
+		1																								AS primerPublicacion
 	FROM 
 		gd_esquema.Maestra
 	WHERE 
@@ -2355,7 +2358,8 @@ END
 GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
-														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
+														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT,
+														   @primerPublicacion INT)
 AS
 BEGIN
 		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(descripcion, 
@@ -2369,11 +2373,12 @@ BEGIN
 												  idPublicador, 
 												  idRubro, 
 												  stock,
-												  tieneEnvio)
+												  tieneEnvio,
+												  primerPublicacion)
 		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, (select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like @tipo), 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
 	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad), @idPublicador, 
-		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, @envio)
+		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, @envio, @primerPublicacion)
 END
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[EditarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
@@ -2462,11 +2467,14 @@ BEGIN
 			@precioPubli numeric(18,2),
 			@tieneEnvio int,
 			@cantidadTotal int,
-			@cantidadDeComprasConEnvio int
+			@cantidadDeComprasConEnvio int,
+			@primerPublicacion int
+
 	SELECT	@idTipoPublicacion = p.idTipoPublicacion,
 			@idVisibilidad = p.idVisibilidad,
 			@precioPubli = p.precio,
-			@tieneEnvio = p.tieneEnvio
+			@tieneEnvio = p.tieneEnvio,
+			@primerPublicacion = p.primerPublicacion
 	FROM ADIOS_TERCER_ANIO.Publicacion p
 	WHERE @idPublicacion = p.id
 
@@ -2490,6 +2498,12 @@ BEGIN
 
 -----Calculo costo vsibilidad
 	Declare @costoVisibilidad numeric(18,2);
+
+	IF(@primerPublicacion = 0)
+	BEGIN
+		SET @costoVisibilidad = 0
+	END
+	ELSE
 	Select @costoVisibilidad = (iif(precio is not null, precio, 0)) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
 
 ----Calculo costo
@@ -2534,10 +2548,12 @@ BEGIN
 	Declare @idTipoPublicacion int,
 			@idVisibilidad int,
 			@precioPubli numeric(18,2),
-			@tieneEnvio int;
+			@tieneEnvio int,
+			@primerPublicacion int
 	Select	@idTipoPublicacion = idTipoPublicacion,
 			@idVisibilidad = idVisibilidad,
-			@precioPubli = precio
+			@precioPubli = precio,
+			@primerPublicacion = primerPublicacion
 	From ADIOS_TERCER_ANIO.Publicacion
 	Where id = @idPublicacion
 
@@ -2549,6 +2565,12 @@ BEGIN
 
 -----Calculo costo vsibilidad
 	Declare @costoVisibilidad numeric(18,2);
+	
+	IF(@primerPublicacion = 0)
+	BEGIN
+		SET @costoVisibilidad = 0
+	END
+	ELSE
 	Select @costoVisibilidad = (iif(precio is not null, precio, 0)) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
 
 ----Calculo costo
