@@ -225,7 +225,7 @@
             // 
             // btnPregunta
             // 
-            this.btnPregunta.Location = new System.Drawing.Point(20, 422);
+            this.btnPregunta.Location = new System.Drawing.Point(20, 428);
             this.btnPregunta.Name = "btnPregunta";
             this.btnPregunta.Size = new System.Drawing.Size(316, 23);
             this.btnPregunta.TabIndex = 20;
@@ -235,7 +235,7 @@
             // 
             // txtPregunta
             // 
-            this.txtPregunta.Location = new System.Drawing.Point(20, 343);
+            this.txtPregunta.Location = new System.Drawing.Point(20, 349);
             this.txtPregunta.MaxLength = 255;
             this.txtPregunta.Multiline = true;
             this.txtPregunta.Name = "txtPregunta";
@@ -244,7 +244,7 @@
             // 
             // btnComprar
             // 
-            this.btnComprar.Location = new System.Drawing.Point(342, 343);
+            this.btnComprar.Location = new System.Drawing.Point(342, 349);
             this.btnComprar.Name = "btnComprar";
             this.btnComprar.Size = new System.Drawing.Size(112, 46);
             this.btnComprar.TabIndex = 22;
@@ -254,7 +254,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(343, 399);
+            this.btnCancelar.Location = new System.Drawing.Point(343, 405);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(112, 46);
             this.btnCancelar.TabIndex = 23;
@@ -278,7 +278,7 @@
             this.grpPreguntas.Controls.Add(this.lblRespuesta);
             this.grpPreguntas.Controls.Add(this.btnAnt);
             this.grpPreguntas.Controls.Add(this.btnSgte);
-            this.grpPreguntas.Location = new System.Drawing.Point(17, 226);
+            this.grpPreguntas.Location = new System.Drawing.Point(17, 232);
             this.grpPreguntas.Name = "grpPreguntas";
             this.grpPreguntas.Size = new System.Drawing.Size(434, 111);
             this.grpPreguntas.TabIndex = 25;
@@ -318,7 +318,7 @@
             // 
             this.lblPausa.AutoSize = true;
             this.lblPausa.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPausa.Location = new System.Drawing.Point(32, 343);
+            this.lblPausa.Location = new System.Drawing.Point(32, 349);
             this.lblPausa.Name = "lblPausa";
             this.lblPausa.Size = new System.Drawing.Size(288, 18);
             this.lblPausa.TabIndex = 20;
@@ -328,7 +328,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 467);
+            this.ClientSize = new System.Drawing.Size(466, 459);
             this.Controls.Add(this.lblPausa);
             this.Controls.Add(this.Envio);
             this.Controls.Add(this.lblCalificacionPromedio);

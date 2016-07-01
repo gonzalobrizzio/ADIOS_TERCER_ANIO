@@ -168,7 +168,6 @@ namespace MercadoEnvios.ComprarOfertar
             else
             {
 
-
                 SqlCommand nuevaPregunta = new SqlCommand("ADIOS_TERCER_ANIO.NuevaPregunta", conn.getConexion);
                 nuevaPregunta.CommandType = System.Data.CommandType.StoredProcedure;
 

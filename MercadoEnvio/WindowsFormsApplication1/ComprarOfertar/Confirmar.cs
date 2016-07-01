@@ -47,6 +47,8 @@ namespace MercadoEnvios.ComprarOfertar
 
             if (dataReader.HasRows)
             {
+                if (!dataReader[0].Equals(DBNull.Value)) { this.Text = btnConfirmar.Text + " " + dataReader.GetString(0); }
+
                 if (!dataReader[3].Equals(DBNull.Value))
                 {
                     tipoCompra = dataReader.GetString(3);
@@ -61,15 +63,35 @@ namespace MercadoEnvios.ComprarOfertar
                         btnConfirmar.Text = "Ofertar";
                         lblNumeric.Text = "Monto: ";
                         if (!dataReader[4].Equals(DBNull.Value)) { lblCantPrecio.Text = "Monto minimo: " + Convert.ToString(dataReader.GetDecimal(4)); }
+
+                        dataReader.Close();
+
+                        String comando = "ADIOS_TERCER_ANIO.ObtenerUsuarioGanador";
+                        SqlCommand ObtenerUsuarioGanador = new SqlCommand(comando, conn.getConexion);
+                        ObtenerUsuarioGanador.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        SqlParameter idPublic = new SqlParameter("@idPublicacion", SqlDbType.Int);
+                        idPublic.SqlValue = idPublicacion;
+                        idPublic.Direction = ParameterDirection.Input;
+                        ObtenerUsuarioGanador.Parameters.Add(idPublic);
+
+                        dataReader = ObtenerUsuarioGanador.ExecuteReader();
+                        dataReader.Read();
+
+                        if (dataReader.HasRows)
+                        {
+                            if (!dataReader[0].Equals(DBNull.Value)) { lblGanador.Text = "El ganador parcial de la subasta \n es el usuario: " + dataReader.GetString(0); }
+                        }
+
                     }
                 }
 
-                if (!dataReader[0].Equals(DBNull.Value)) { this.Text = btnConfirmar.Text + " " + dataReader.GetString(0); }
             }
 
             detallePublicacion.Parameters.Clear();
 
             dataReader.Close();
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

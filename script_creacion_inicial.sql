@@ -84,6 +84,7 @@ DROP PROCEDURE ADIOS_TERCER_ANIO.Comprar;
 DROP PROCEDURE ADIOS_TERCER_ANIO.Ofertar;
 DROP PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente;
 DROP PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa;
+DROP PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuarioGanador;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeDNI;
 DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo;
@@ -3093,6 +3094,15 @@ AS BEGIN
 	AND ((e.cuit COLLATE Latin1_General_CI_AI LIKE '%' + @cuit + '%' COLLATE Latin1_General_CI_AI) OR (@cuit IS NULL OR @cuit = ''))
 	AND ((e.razonSocial COLLATE Latin1_General_CI_AI LIKE '%' + @razonSocial + '%' COLLATE Latin1_General_CI_AI) OR (@razonSocial IS NULL OR @razonSocial = ''))
 	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
+END
+GO
+
+CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuarioGanador(@idPublicacion INT)
+AS BEGIN
+	SELECT usuario.usuario, usuario.id FROM ADIOS_TERCER_ANIO.Usuario usuario 
+	inner join ADIOS_TERCER_ANIO.Oferta oferta on oferta.idUsuario = usuario.id
+	where oferta.monto = (SELECT MAX(monto) FROM ADIOS_TERCER_ANIO.Oferta where idPublicacion = @idPublicacion) 
+	and oferta.idPublicacion = @idPublicacion
 END
 GO
 

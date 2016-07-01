@@ -33,12 +33,13 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblNumeric = new System.Windows.Forms.Label();
             this.lblCantPrecio = new System.Windows.Forms.Label();
+            this.lblGanador = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnConfirmar
             // 
             this.btnConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmar.Location = new System.Drawing.Point(42, 127);
+            this.btnConfirmar.Location = new System.Drawing.Point(28, 154);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(96, 42);
             this.btnConfirmar.TabIndex = 0;
@@ -49,7 +50,7 @@
             // txtNumeric
             // 
             this.txtNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumeric.Location = new System.Drawing.Point(42, 95);
+            this.txtNumeric.Location = new System.Drawing.Point(84, 107);
             this.txtNumeric.MaxLength = 15;
             this.txtNumeric.Name = "txtNumeric";
             this.txtNumeric.Size = new System.Drawing.Size(96, 26);
@@ -59,7 +60,7 @@
             // btnCancelar
             // 
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(42, 175);
+            this.btnCancelar.Location = new System.Drawing.Point(136, 154);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(96, 42);
             this.btnCancelar.TabIndex = 2;
@@ -71,7 +72,7 @@
             // 
             this.lblNumeric.AutoSize = true;
             this.lblNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeric.Location = new System.Drawing.Point(38, 20);
+            this.lblNumeric.Location = new System.Drawing.Point(96, 9);
             this.lblNumeric.Name = "lblNumeric";
             this.lblNumeric.Size = new System.Drawing.Size(129, 20);
             this.lblNumeric.TabIndex = 3;
@@ -80,17 +81,26 @@
             // lblCantPrecio
             // 
             this.lblCantPrecio.AutoSize = true;
-            this.lblCantPrecio.Location = new System.Drawing.Point(42, 56);
+            this.lblCantPrecio.Location = new System.Drawing.Point(81, 81);
             this.lblCantPrecio.Name = "lblCantPrecio";
             this.lblCantPrecio.Size = new System.Drawing.Size(68, 13);
             this.lblCantPrecio.TabIndex = 4;
             this.lblCantPrecio.Text = "[cant/precio]";
             // 
+            // lblGanador
+            // 
+            this.lblGanador.AutoSize = true;
+            this.lblGanador.Location = new System.Drawing.Point(54, 39);
+            this.lblGanador.Name = "lblGanador";
+            this.lblGanador.Size = new System.Drawing.Size(0, 13);
+            this.lblGanador.TabIndex = 30;
+            // 
             // frmConfirmar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(194, 261);
+            this.ClientSize = new System.Drawing.Size(261, 211);
+            this.Controls.Add(this.lblGanador);
             this.Controls.Add(this.lblCantPrecio);
             this.Controls.Add(this.lblNumeric);
             this.Controls.Add(this.btnCancelar);
@@ -111,5 +121,6 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label lblNumeric;
         private System.Windows.Forms.Label lblCantPrecio;
+        private System.Windows.Forms.Label lblGanador;
     }
 }
