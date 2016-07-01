@@ -16,15 +16,15 @@ namespace MercadoEnvios.ComprarOfertar
         Conexion conn = Conexion.Instance;
         SqlDataAdapter da;
         Sesion sesion = Sesion.Instance;
-        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+        SqlParameter idUser = new SqlParameter("@idUsuario", SqlDbType.Int);
         int nroPagina = 0;
 
         public frmComprarOfertar()
         {
             InitializeComponent();
 
-            idUsuario.SqlValue = sesion.idUsuario;
-            idUsuario.Direction = ParameterDirection.Input;
+            idUser.SqlValue = sesion.idUsuario;
+            idUser.Direction = ParameterDirection.Input;
 
             this.getData();
         }
@@ -249,7 +249,7 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnDetalle_Click(object sender, EventArgs e)
         {
-            int idPublicacion = Convert.ToInt32(dgvPublicaciones[4, dgvPublicaciones.CurrentCell.RowIndex].Value);
+            int idPublicacion = Convert.ToInt32(dgvPublicaciones[9, dgvPublicaciones.CurrentCell.RowIndex].Value);
             new frmDetalle(idPublicacion).Show();
             this.Hide(); 
         }

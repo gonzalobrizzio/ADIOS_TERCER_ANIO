@@ -2920,6 +2920,11 @@ BEGIN
 	THROW 46545623, 'No hay stock suficiente', 1; 
 	END 
 
+	IF (@monto <= 0) 
+	BEGIN
+	THROW 4654562, 'La cantidad debe ser positiva', 1; 
+	END 
+
 	BEGIN TRANSACTION
 	BEGIN TRY
 
@@ -2954,7 +2959,7 @@ BEGIN
 --	declare @fecha DATETIME = GETDATE()
 	declare @precio int = (SELECT precio from ADIOS_TERCER_ANIO.Publicacion WHERE id = @idPublicacion)
 	
-	IF (@monto <= @precio) 
+	IF (@monto <= @precio ) 
 	BEGIN
 	THROW 4654562, 'La oferta debe ser mayor a las ofertas anteriores', 1; 
 	END 
@@ -3002,7 +3007,7 @@ BEGIN
 		AND ((p.descripcion LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 		AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 		ORDER BY f.fecha ASC)
-	SELECT top 10 * FROM TablaP ORDER by TablaP.fecha desc
+	SELECT top 10 * FROM TablaP ORDER by TablaP.Fecha desc
 END
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT, @pagina INT, @cant INT OUTPUT)
@@ -3017,7 +3022,7 @@ BEGIN
 						INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
 						where usu.id = com.idComprador or usu.id = ofe.idUsuario) - (@pagina * 10);
 
-		WITH TablaP AS (SELECT TOP (@cant) pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock) as cantidad, com.fecha,
+		WITH TablaP AS (SELECT TOP (@cant) pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock) as cantidad, com.fecha as fecha,
 						iif(ofe.monto is not null, ofe.monto, pub.precio) as precio, cal.puntaje as calificacion, tp.nombre
 						FROM ADIOS_TERCER_ANIO.Usuario usu
 						inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
