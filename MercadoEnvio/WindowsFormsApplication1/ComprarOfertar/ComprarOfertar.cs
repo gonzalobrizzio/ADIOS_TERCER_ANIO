@@ -1,4 +1,5 @@
 ﻿using MercadoEnvios.ABM_Usuario;
+using MercadoEnvios.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,8 @@ namespace MercadoEnvios.ComprarOfertar
         SqlParameter idUser = new SqlParameter("@idUsuario", SqlDbType.Int);
         int nroPagina = 0;
 
+        Utilidades fun = new Utilidades();
+
         public frmComprarOfertar()
         {
             InitializeComponent();
@@ -31,6 +34,8 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void getData()
         {
+            txtPagina.Text = nroPagina.ToString();
+
             dgvRubros.ColumnCount = 1;
             dgvRubros.ColumnHeadersVisible = true;
             dgvRubros.Columns[0].Name = "Rubros";
@@ -65,11 +70,26 @@ namespace MercadoEnvios.ComprarOfertar
 
             getPublicacionesPagina();
 
-            if (dgvPublicaciones.RowCount == 0 | dgvPublicaciones.RowCount < 10)
+            if (dgvPublicaciones.RowCount == 0)
             {
                 btnSgte.Enabled = false;
                 btnAnt.Enabled = false;
                 btnDetalle.Enabled = false;
+            }
+            else
+            {
+                btnSgte.Enabled = true;
+                btnAnt.Enabled = true;
+                btnDetalle.Enabled = true;
+            }
+
+            if (dgvPublicaciones.RowCount < 10)
+            {
+                btnSgte.Enabled = false;
+                if (getCantPublicaciones() < 10)
+                {
+                    btnAnt.Enabled = false;
+                }
             }
 
             if (dgvRubros.RowCount == 0)
@@ -87,6 +107,7 @@ namespace MercadoEnvios.ComprarOfertar
                 nroPagina++;
                 btnAnt.Enabled = true;
                 this.getData();
+                getPublicacionesPagina();
             }
             else
             {
@@ -98,7 +119,8 @@ namespace MercadoEnvios.ComprarOfertar
         {
             nroPagina--;
             if (nroPagina == 0) btnAnt.Enabled = false;
-            this.getData();
+            getData();
+            getPublicacionesPagina();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -141,7 +163,7 @@ namespace MercadoEnvios.ComprarOfertar
                 queryCant += " AND (" + findRubros + ") ";
             }
 
-            queryCant += " WHERE publicacion.idPublicador != " + sesion.idUsuario;
+            queryCant += " WHERE publicacion.idPublicador != " + sesion.idUsuario + "and publicacion.stock > 0";
             //queryCant += " AND publicacion.idEstado = 2";
 
             //MessageBox.Show(queryCant);
@@ -150,6 +172,7 @@ namespace MercadoEnvios.ComprarOfertar
             {
                 SqlCommand comando = new SqlCommand(queryCant, conn.getConexion);
                 retorno = (Int32)comando.ExecuteScalar();
+                lblMax.Text = " de " + retorno.ToString();
                 return retorno;
             }
             catch (Exception ex)
@@ -161,7 +184,10 @@ namespace MercadoEnvios.ComprarOfertar
         public void getPublicacionesPagina()
         {
 
-            String queryPublicaciones = "WITH tabla AS (SELECT TOP " + (getCantPublicaciones() - nroPagina * 10) + 
+            int paginaInicio = getCantPublicaciones() - nroPagina * 10;
+            label1.Text = paginaInicio.ToString();
+
+            String queryPublicaciones = "WITH tabla AS (SELECT TOP " + paginaInicio + 
                                                                     " publicacion.descripcion, " +
                             										"tipoP.nombre AS tipo, " +
                             										"publicacion.precio, " +
@@ -201,7 +227,7 @@ namespace MercadoEnvios.ComprarOfertar
                 queryPublicaciones += " AND (" + findRubros + ") ";
             }
 
-            queryPublicaciones += " WHERE publicacion.idPublicador != " + sesion.idUsuario + " and stock > 0 " + 
+            queryPublicaciones += " WHERE publicacion.idPublicador != " + sesion.idUsuario + " and publicacion.stock > 0 " + 
             //            " AND publicacion.idEstado = 2 " +
                         " ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)" +
                         " SELECT TOP 10 * FROM tabla ORDER by tabla.porcentaje DESC, tabla.fechaInicio DESC";
@@ -305,6 +331,38 @@ namespace MercadoEnvios.ComprarOfertar
         private void txtDescripción_TextChanged(object sender, EventArgs e)
         {
             getData();
+        }
+
+        private void btnPrimeraPag_Click(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            getData();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            nroPagina = getCantPublicaciones() / 10;
+            getData();
+        }
+
+        private void txtPagina_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumero(e);
+        }
+
+        private void txtPagina_TextChanged(object sender, EventArgs e)
+        {
+            if (txtPagina.Text != ""){
+                if(Convert.ToInt32(txtPagina.Text) <= getCantPublicaciones() / 10)
+                {
+                    nroPagina = Convert.ToInt32(txtPagina.Text);
+                    getData();
+                }
+                else
+                {
+                    MessageBox.Show("Número de página excedido del máximo existente.");
+                }
+            }
         }
     }
 }

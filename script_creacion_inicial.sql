@@ -3105,6 +3105,3 @@ GO
 --UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2
 
 --SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
-
-
-UPDATE ADIOS_TERCER_ANIO.Calificacion SET pendiente = 1 WHERE id < 500
