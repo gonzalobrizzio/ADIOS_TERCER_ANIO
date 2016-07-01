@@ -171,7 +171,6 @@ namespace MercadoEnvios.Facturas
                    dgvFacturas.Columns[1].Width = 100;
                    dgvFacturas.Columns[2].Width = 100;
                    dgvFacturas.Columns[3].Width = 100;
-                   dgvFacturas.Columns[4].Width = 255;
                    dgvFacturas.AllowUserToDeleteRows = false;
                    dgvFacturas.AllowUserToAddRows = false;
                    dgvFacturas.ReadOnly = true;

@@ -2906,7 +2906,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE ADIOS_TERCER_ANIO.Comprar(@idPublicacion INT, @fecha DATETIME, @cant INT, @idComprador INT, @envio INT)
+CREATE PROCEDURE ADIOS_TERCER_ANIO.Comprar(@idPublicacion INT, @fecha DATETIME, @cant INT, @idComprador INT, @envio INT, @monto INT)
 AS
 BEGIN
 --	declare @idPublicacion int = 52798
@@ -2991,20 +2991,22 @@ BEGIN
 	--SET @pagina = 0
 	SET @cant = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+			LEFT JOIN item itm ON (f.id = itm.idFactura) 
 			inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
 			AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
 			AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
-			AND ((p.descripcion LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
+			AND ((itm.nombre LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 			AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 			where p.idPublicador = @idUsuario) - @pagina * 10;
 		
-		WITH TablaP as (select TOP (@cant) f.numero AS Numero_de_Factura, f.importeTotal AS Importe, f.fecha AS Fecha, u.usuario AS Destinatario, p.descripcion as Descripcion from ADIOS_TERCER_ANIO.Factura f
+		WITH TablaP as (select TOP (@cant) f.numero AS Numero_de_Factura, f.importeTotal AS Importe, f.fecha AS Fecha, u.usuario AS Destinatario from ADIOS_TERCER_ANIO.Factura f
 		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
+		LEFT JOIN item itm ON (f.id = itm.idFactura)
 		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
 		WHERE @idUsuario = P.idPublicador 
 		AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
 		AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
-		AND ((p.descripcion LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
+		AND ((itm.nombre  LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 		AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 		ORDER BY f.fecha ASC)
 	SELECT top 10 * FROM TablaP ORDER by TablaP.Fecha desc

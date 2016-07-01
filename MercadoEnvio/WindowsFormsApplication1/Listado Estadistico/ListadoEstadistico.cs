@@ -28,13 +28,33 @@ namespace MercadoEnvios.Listado_Estadistico
             tipo_de_listado.Items.Add("Clientes con mayor cantidad de productos comprados");
             tipo_de_listado.Items.Add("Vendedores con mayor cantidad de facturas");
             tipo_de_listado.Items.Add("Vendedores con mayor monto facturado");
-            tipo_de_listado.SelectedIndex = 0;
+            tipo_de_listado.SelectedIndex = 3;
 
             trimestre.Items.Add("Enero - Marzo");
             trimestre.Items.Add("Abril - Junio");
             trimestre.Items.Add("Julio - Septiembre");
             trimestre.Items.Add("Octubre - Diciembre");
             trimestre.SelectedIndex = 0;
+
+            string queryRubros = "SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro";
+            SqlCommand buscarRubros = new SqlCommand(queryRubros, conn.getConexion);
+            dataReader = buscarRubros.ExecuteReader();
+            while (dataReader.Read())
+            {
+                rubro.Items.Add(dataReader.GetString(0));
+            }
+            rubro.SelectedIndex = 0;
+            dataReader.Close();
+
+            string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE deleted = 0";
+            SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
+            dataReader = buscarVisibilidades.ExecuteReader();
+            while (dataReader.Read())
+            {
+                visibilidad.Items.Add(dataReader.GetString(0));
+            }
+            visibilidad.SelectedIndex = 0;
+            dataReader.Close();
 
             lblRubro.Visible = false;
             rubro.Visible = false;
@@ -127,16 +147,6 @@ namespace MercadoEnvios.Listado_Estadistico
                 anioComienzo = dataReader.GetDateTime(0).Year;
                 dataReader.Close();
 
-                string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE deleted = 0";
-                SqlCommand buscarVisibilidades = new SqlCommand(queryVisibilidad, conn.getConexion);
-                dataReader = buscarVisibilidades.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    visibilidad.Items.Add(dataReader.GetString(0));
-                }
-                visibilidad.SelectedIndex = 0;
-                dataReader.Close();
-
                 lblVisibilidad.Visible = true;
                 visibilidad.Visible = true;
             }
@@ -148,16 +158,6 @@ namespace MercadoEnvios.Listado_Estadistico
                 dataReader = buscarLocalidades.ExecuteReader();
                 dataReader.Read();
                 anioComienzo = dataReader.GetDateTime(0).Year;
-                dataReader.Close();
-
-                string queryRubros = "SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro";
-                SqlCommand buscarRubros = new SqlCommand(queryRubros, conn.getConexion);
-                dataReader = buscarRubros.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    rubro.Items.Add(dataReader.GetString(0));
-                }
-                rubro.SelectedIndex = 0;
                 dataReader.Close();
 
                 lblRubro.Visible = true;
@@ -192,6 +192,7 @@ namespace MercadoEnvios.Listado_Estadistico
             }
 
             anio.SelectedIndex = 0;
+
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

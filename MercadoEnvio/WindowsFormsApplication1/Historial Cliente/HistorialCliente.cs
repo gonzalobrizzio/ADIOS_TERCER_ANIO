@@ -57,6 +57,8 @@ namespace MercadoEnvios.Historial_Cliente
             grillaDeCompras.AllowUserToDeleteRows = false;
             grillaDeCompras.AllowUserToAddRows = false;
             grillaDeCompras.ReadOnly = true;
+            grillaDeCompras.Columns[0].Width = 250;
+            grillaDeCompras.Columns[5].Width = 250;
 
             if (nroPagina == 0)
             {

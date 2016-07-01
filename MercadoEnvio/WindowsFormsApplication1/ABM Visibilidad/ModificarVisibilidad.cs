@@ -66,6 +66,8 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            if (Convert.ToDecimal(txtPorcentaje.Text) <= 1)
+            { 
             SqlCommand modificarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.ModificarVisibilidad", conn.getConexion);
             modificarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
             SqlParameter id = new SqlParameter("@id", SqlDbType.NVarChar, 255);
@@ -131,6 +133,11 @@ namespace MercadoEnvios.ABM_Visibilidad
             {
                 modificarVisibilidad.Cancel();
                 MessageBox.Show(error.Message);
+            }
+            }
+            else
+            {
+                MessageBox.Show("El porcentaje ingresado supera el 100 % permitido","Advertencia" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

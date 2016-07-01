@@ -122,11 +122,16 @@ namespace MercadoEnvios.ComprarOfertar
                     envioP.SqlValue = envio;
                     envioP.Direction = ParameterDirection.Input;
 
+                    SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);
+                    monto.SqlValue = Convert.ToDecimal(txtNumeric.Text);
+                    monto.Direction = ParameterDirection.Input;
+
                     comprar.Parameters.Add(idPubli);
                     comprar.Parameters.Add(fecha);
                     comprar.Parameters.Add(cant);
                     comprar.Parameters.Add(idUsu);
                     comprar.Parameters.Add(envioP);
+                    comprar.Parameters.Add(monto);
 
                     try
                     {
