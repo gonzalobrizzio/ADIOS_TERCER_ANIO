@@ -42,10 +42,9 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(259, 143);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelar.Location = new System.Drawing.Point(194, 116);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(156, 38);
+            this.btnCancelar.Size = new System.Drawing.Size(117, 31);
             this.btnCancelar.TabIndex = 19;
             this.btnCancelar.Text = "Volver";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -53,10 +52,9 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(23, 143);
-            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAceptar.Location = new System.Drawing.Point(17, 116);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(157, 38);
+            this.btnAceptar.Size = new System.Drawing.Size(118, 31);
             this.btnAceptar.TabIndex = 18;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
@@ -65,84 +63,79 @@
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
-            this.lblNombre.Location = new System.Drawing.Point(19, 18);
-            this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNombre.Location = new System.Drawing.Point(14, 15);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(66, 17);
+            this.lblNombre.Size = new System.Drawing.Size(50, 13);
             this.lblNombre.TabIndex = 20;
             this.lblNombre.Text = "Nombre: ";
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(124, 15);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Location = new System.Drawing.Point(93, 12);
             this.txtNombre.MaxLength = 20;
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(289, 22);
+            this.txtNombre.Size = new System.Drawing.Size(218, 20);
             this.txtNombre.TabIndex = 14;
             // 
             // lblDuracion
             // 
             this.lblDuracion.AutoSize = true;
-            this.lblDuracion.Location = new System.Drawing.Point(19, 50);
-            this.lblDuracion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDuracion.Location = new System.Drawing.Point(14, 41);
             this.lblDuracion.Name = "lblDuracion";
-            this.lblDuracion.Size = new System.Drawing.Size(69, 17);
+            this.lblDuracion.Size = new System.Drawing.Size(53, 13);
             this.lblDuracion.TabIndex = 21;
             this.lblDuracion.Text = "Duración:";
             // 
             // txtDuracion
             // 
-            this.txtDuracion.Location = new System.Drawing.Point(124, 47);
-            this.txtDuracion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDuracion.Location = new System.Drawing.Point(93, 38);
             this.txtDuracion.MaxLength = 3;
             this.txtDuracion.Name = "txtDuracion";
-            this.txtDuracion.Size = new System.Drawing.Size(289, 22);
+            this.txtDuracion.Size = new System.Drawing.Size(218, 20);
             this.txtDuracion.TabIndex = 15;
+            this.txtDuracion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDuracion_KeyPress);
             // 
             // lblPrecio
             // 
             this.lblPrecio.AutoSize = true;
-            this.lblPrecio.Location = new System.Drawing.Point(19, 82);
-            this.lblPrecio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPrecio.Location = new System.Drawing.Point(14, 67);
             this.lblPrecio.Name = "lblPrecio";
-            this.lblPrecio.Size = new System.Drawing.Size(52, 17);
+            this.lblPrecio.Size = new System.Drawing.Size(40, 13);
             this.lblPrecio.TabIndex = 22;
             this.lblPrecio.Text = "Precio:";
             // 
             // txtPrecio
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(124, 79);
-            this.txtPrecio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPrecio.Location = new System.Drawing.Point(93, 64);
             this.txtPrecio.MaxLength = 14;
             this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(289, 22);
+            this.txtPrecio.Size = new System.Drawing.Size(218, 20);
             this.txtPrecio.TabIndex = 16;
+            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
             // 
             // lblPorcentaje
             // 
             this.lblPorcentaje.AutoSize = true;
-            this.lblPorcentaje.Location = new System.Drawing.Point(19, 114);
-            this.lblPorcentaje.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPorcentaje.Location = new System.Drawing.Point(14, 93);
             this.lblPorcentaje.Name = "lblPorcentaje";
-            this.lblPorcentaje.Size = new System.Drawing.Size(80, 17);
+            this.lblPorcentaje.Size = new System.Drawing.Size(61, 13);
             this.lblPorcentaje.TabIndex = 23;
             this.lblPorcentaje.Text = "Porcentaje:";
             // 
             // txtPorcentaje
             // 
-            this.txtPorcentaje.Location = new System.Drawing.Point(124, 111);
-            this.txtPorcentaje.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPorcentaje.Location = new System.Drawing.Point(93, 90);
             this.txtPorcentaje.MaxLength = 4;
             this.txtPorcentaje.Name = "txtPorcentaje";
-            this.txtPorcentaje.Size = new System.Drawing.Size(289, 22);
+            this.txtPorcentaje.Size = new System.Drawing.Size(218, 20);
             this.txtPorcentaje.TabIndex = 17;
+            this.txtPorcentaje.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorcentaje_KeyPress);
             // 
             // frmModificarVisibilidad
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(439, 194);
+            this.ClientSize = new System.Drawing.Size(329, 158);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.lblNombre);
@@ -153,7 +146,6 @@
             this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.lblPorcentaje);
             this.Controls.Add(this.txtPorcentaje);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmModificarVisibilidad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModificarVisibilidad";

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,9 @@ namespace MercadoEnvios.ABM_Visibilidad
     public partial class frmAgregarVisibilidad : Form
     {
         Conexion conn;
+
+        Utilidades fun = new Utilidades();
+
         public frmAgregarVisibilidad()
         {
             conn = Conexion.Instance;
@@ -92,6 +96,21 @@ namespace MercadoEnvios.ABM_Visibilidad
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
             this.salir();
+        }
+
+        private void txtDuracion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumero(e);
+        }
+
+        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumero(e);
+        }
+
+        private void txtPorcentaje_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumero(e);
         }
     }
 }

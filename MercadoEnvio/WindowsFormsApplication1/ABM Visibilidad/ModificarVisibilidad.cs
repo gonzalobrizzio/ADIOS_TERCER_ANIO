@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,9 @@ namespace MercadoEnvios.ABM_Visibilidad
     {
         Conexion conn;
         int idVisibilidadEntrada;
+
+        Utilidades funcionesValidacion = new Utilidades();
+
         public frmModificarVisibilidad(int idVisibilidadAModificar)
         {
             conn = Conexion.Instance;
@@ -128,6 +132,21 @@ namespace MercadoEnvios.ABM_Visibilidad
                 modificarVisibilidad.Cancel();
                 MessageBox.Show(error.Message);
             }
+        }
+
+        private void txtDuracion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void txtPorcentaje_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
         }
 
     }

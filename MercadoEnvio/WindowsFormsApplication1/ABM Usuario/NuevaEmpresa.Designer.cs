@@ -115,6 +115,7 @@
             this.Piso.Name = "Piso";
             this.Piso.Size = new System.Drawing.Size(100, 20);
             this.Piso.TabIndex = 8;
+            this.Piso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Piso_KeyPress);
             // 
             // Depto
             // 
@@ -129,6 +130,7 @@
             this.Codigo_Postal.Name = "Codigo_Postal";
             this.Codigo_Postal.Size = new System.Drawing.Size(100, 20);
             this.Codigo_Postal.TabIndex = 11;
+            this.Codigo_Postal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Codigo_Postal_KeyPress);
             // 
             // Ciudad
             // 
@@ -143,6 +145,7 @@
             this.CUIT.Name = "CUIT";
             this.CUIT.Size = new System.Drawing.Size(100, 20);
             this.CUIT.TabIndex = 13;
+            this.CUIT.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CUIT_KeyPress);
             // 
             // Nombre_de_Contacto
             // 
@@ -292,6 +295,7 @@
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(159, 20);
             this.Mail.TabIndex = 3;
+            this.Mail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Mail_KeyPress);
             // 
             // Contrasenia
             // 

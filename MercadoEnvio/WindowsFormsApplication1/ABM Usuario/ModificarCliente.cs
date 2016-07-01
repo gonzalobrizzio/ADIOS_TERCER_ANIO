@@ -298,5 +298,20 @@ namespace MercadoEnvios.ABM_Usuario
             Fecha_De_Nacimiento.Clear();
             Fecha_De_Nacimiento.AppendText(calendarioNac.SelectionStart.ToShortDateString());
         }
+
+        private void Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Nro_de_Documento_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void CodigoPostal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
     }
 }

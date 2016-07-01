@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 using System.Windows.Forms;
+using MercadoEnvios.Entidades;
 
 namespace MercadoEnvios.ComprarOfertar
 {
@@ -18,6 +19,7 @@ namespace MercadoEnvios.ComprarOfertar
         int idPublicacion;
         int envio;
         String tipoCompra;
+        Utilidades fun = new Utilidades();
 
         Sesion sesion = Sesion.Instance;
 
@@ -187,5 +189,10 @@ namespace MercadoEnvios.ComprarOfertar
                 }
             }
             }
+
+        private void txtNumeric_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fun.ingresarNumeroDecimal(e);
+        }
     }
 }

@@ -291,5 +291,35 @@ namespace MercadoEnvios.ABM_Usuario
 
         }
 
+        private void Mail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarMail(e);
+        }
+
+        private void Nro_de_Documento_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Nro_de_Direccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Piso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Codigo_Postal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
     }
 }

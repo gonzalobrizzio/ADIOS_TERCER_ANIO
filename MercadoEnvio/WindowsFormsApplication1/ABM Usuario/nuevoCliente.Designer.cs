@@ -239,6 +239,7 @@
             this.Nro_de_Documento.Name = "Nro_de_Documento";
             this.Nro_de_Documento.Size = new System.Drawing.Size(100, 20);
             this.Nro_de_Documento.TabIndex = 7;
+            this.Nro_de_Documento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nro_de_Documento_KeyPress);
             // 
             // Telefono
             // 
@@ -246,6 +247,7 @@
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
             this.Telefono.TabIndex = 8;
+            this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Telefono_KeyPress);
             // 
             // Direccion
             // 
@@ -260,6 +262,7 @@
             this.Nro_de_Direccion.Name = "Nro_de_Direccion";
             this.Nro_de_Direccion.Size = new System.Drawing.Size(100, 20);
             this.Nro_de_Direccion.TabIndex = 10;
+            this.Nro_de_Direccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nro_de_Direccion_KeyPress);
             // 
             // Depto
             // 
@@ -274,6 +277,7 @@
             this.Piso.Name = "Piso";
             this.Piso.Size = new System.Drawing.Size(49, 20);
             this.Piso.TabIndex = 12;
+            this.Piso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Piso_KeyPress);
             // 
             // Codigo_Postal
             // 
@@ -281,6 +285,7 @@
             this.Codigo_Postal.Name = "Codigo_Postal";
             this.Codigo_Postal.Size = new System.Drawing.Size(100, 20);
             this.Codigo_Postal.TabIndex = 14;
+            this.Codigo_Postal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Codigo_Postal_KeyPress);
             // 
             // Localidad
             // 
@@ -306,6 +311,7 @@
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(159, 20);
             this.Mail.TabIndex = 3;
+            this.Mail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Mail_KeyPress);
             // 
             // Contrasenia
             // 

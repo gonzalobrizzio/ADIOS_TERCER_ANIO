@@ -273,5 +273,25 @@ namespace MercadoEnvios.ABM_Usuario
                 this.Close();
             }
         }
+
+        private void Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Codigo_Postal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Piso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void CUIT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumeroConRaya(e);
+        }
     }
 }

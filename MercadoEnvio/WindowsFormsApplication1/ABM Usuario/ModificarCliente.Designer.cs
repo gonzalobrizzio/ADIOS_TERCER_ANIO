@@ -153,6 +153,7 @@
             this.CodigoPostal.Name = "CodigoPostal";
             this.CodigoPostal.Size = new System.Drawing.Size(100, 20);
             this.CodigoPostal.TabIndex = 13;
+            this.CodigoPostal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CodigoPostal_KeyPress);
             // 
             // Piso
             // 
@@ -193,6 +194,7 @@
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
             this.Telefono.TabIndex = 7;
+            this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Telefono_KeyPress);
             // 
             // Nro_de_Documento
             // 
@@ -201,6 +203,7 @@
             this.Nro_de_Documento.Name = "Nro_de_Documento";
             this.Nro_de_Documento.Size = new System.Drawing.Size(100, 20);
             this.Nro_de_Documento.TabIndex = 60;
+            this.Nro_de_Documento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nro_de_Documento_KeyPress);
             // 
             // Apellido
             // 

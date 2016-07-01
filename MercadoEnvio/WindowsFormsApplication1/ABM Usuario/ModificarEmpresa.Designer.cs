@@ -288,6 +288,7 @@
             this.CUIT.Name = "CUIT";
             this.CUIT.Size = new System.Drawing.Size(100, 20);
             this.CUIT.TabIndex = 13;
+            this.CUIT.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CUIT_KeyPress);
             // 
             // Ciudad
             // 
@@ -302,6 +303,7 @@
             this.Codigo_Postal.Name = "Codigo_Postal";
             this.Codigo_Postal.Size = new System.Drawing.Size(100, 20);
             this.Codigo_Postal.TabIndex = 11;
+            this.Codigo_Postal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Codigo_Postal_KeyPress);
             // 
             // Depto
             // 
@@ -316,6 +318,7 @@
             this.Piso.Name = "Piso";
             this.Piso.Size = new System.Drawing.Size(100, 20);
             this.Piso.TabIndex = 8;
+            this.Piso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Piso_KeyPress);
             // 
             // Direccion
             // 
@@ -337,6 +340,7 @@
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
             this.Telefono.TabIndex = 5;
+            this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Telefono_KeyPress);
             // 
             // label28
             // 
