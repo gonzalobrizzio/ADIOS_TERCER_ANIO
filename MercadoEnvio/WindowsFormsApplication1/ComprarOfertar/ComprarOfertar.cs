@@ -17,7 +17,6 @@ namespace MercadoEnvios.ComprarOfertar
         SqlDataAdapter da;
         Sesion sesion = Sesion.Instance;
         SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-        int cantidad;
         int nroPagina = 0;
 
         public frmComprarOfertar()
@@ -66,7 +65,7 @@ namespace MercadoEnvios.ComprarOfertar
 
             getPublicacionesPagina();
 
-            if (dgvPublicaciones.RowCount == 0)
+            if (dgvPublicaciones.RowCount == 0 | dgvPublicaciones.RowCount < 10)
             {
                 btnSgte.Enabled = false;
                 btnAnt.Enabled = false;
@@ -83,7 +82,7 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnSgte_Click(object sender, EventArgs e)
         {
-            if (nroPagina < cantidad)
+            if (nroPagina < getCantPublicaciones()/10)
             {
                 nroPagina++;
                 btnAnt.Enabled = true;
@@ -114,7 +113,9 @@ namespace MercadoEnvios.ComprarOfertar
             int retorno = 0;
 
             String queryCant = "SELECT COUNT(publicacion.id) FROM ADIOS_TERCER_ANIO.Publicacion publicacion " +
-            " inner join ADIOS_TERCER_ANIO.Rubro rubro on rubro.id = publicacion.idRubro";
+            "inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id " +
+            "inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion " +
+            "inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro ";
 
             //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
 
@@ -149,7 +150,7 @@ namespace MercadoEnvios.ComprarOfertar
             {
                 SqlCommand comando = new SqlCommand(queryCant, conn.getConexion);
                 retorno = (Int32)comando.ExecuteScalar();
-                return retorno - nroPagina*20;
+                return retorno;
             }
             catch (Exception ex)
             {
@@ -160,16 +161,16 @@ namespace MercadoEnvios.ComprarOfertar
         public void getPublicacionesPagina()
         {
 
-            String queryPublicaciones = "WITH tabla AS (SELECT TOP " + getCantPublicaciones() + 
+            String queryPublicaciones = "WITH tabla AS (SELECT TOP " + (getCantPublicaciones() - nroPagina * 10) + 
                                                                     " publicacion.descripcion, " +
                             										"tipoP.nombre AS tipo, " +
                             										"publicacion.precio, " +
-                            										"publicacion.fechaInicio, " +
+                            										"publicacion.fechaInicio as fechaInicio, " +
                                                                     "publicacion.fechaFin, " +
                                                                     "publicacion.stock, " +
                                                                     "rubro.descripcionCorta as rubro, " +
                                                                     "IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio, " +
-                                                                    "visib.porcentaje, " +
+                                                                    "visib.porcentaje as porcentaje, " +
                                                                     "publicacion.id " + 
 						                            "FROM ADIOS_TERCER_ANIO.Publicacion publicacion " + 
                             "inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id " +
@@ -203,7 +204,7 @@ namespace MercadoEnvios.ComprarOfertar
             queryPublicaciones += " WHERE publicacion.idPublicador != " + sesion.idUsuario + " and stock > 0 " + 
             //            " AND publicacion.idEstado = 2 " +
                         " ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)" +
-                        " SELECT TOP 20 * FROM tabla ORDER by tabla.porcentaje DESC, tabla.fechaInicio DESC";
+                        " SELECT TOP 10 * FROM tabla ORDER by tabla.porcentaje DESC, tabla.fechaInicio DESC";
 
             //MessageBox.Show(queryPublicaciones);
 
@@ -299,6 +300,11 @@ namespace MercadoEnvios.ComprarOfertar
         private void frmComprarOfertar_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtDescripción_TextChanged(object sender, EventArgs e)
+        {
+            getData();
         }
     }
 }

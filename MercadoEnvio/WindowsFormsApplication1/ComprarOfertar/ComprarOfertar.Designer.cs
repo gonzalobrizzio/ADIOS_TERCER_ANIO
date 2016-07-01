@@ -67,7 +67,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPublicaciones.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvPublicaciones.Location = new System.Drawing.Point(252, 46);
+            this.dgvPublicaciones.Location = new System.Drawing.Point(252, 58);
             this.dgvPublicaciones.Name = "dgvPublicaciones";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -77,7 +77,8 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvPublicaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvPublicaciones.Size = new System.Drawing.Size(646, 284);
+            this.dgvPublicaciones.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dgvPublicaciones.Size = new System.Drawing.Size(743, 245);
             this.dgvPublicaciones.TabIndex = 0;
             // 
             // lblListado
@@ -92,9 +93,9 @@
             // 
             // btnAnt
             // 
-            this.btnAnt.Location = new System.Drawing.Point(252, 336);
+            this.btnAnt.Location = new System.Drawing.Point(252, 309);
             this.btnAnt.Name = "btnAnt";
-            this.btnAnt.Size = new System.Drawing.Size(41, 33);
+            this.btnAnt.Size = new System.Drawing.Size(41, 60);
             this.btnAnt.TabIndex = 2;
             this.btnAnt.Text = "<<<";
             this.btnAnt.UseVisualStyleBackColor = true;
@@ -102,9 +103,9 @@
             // 
             // btnSgte
             // 
-            this.btnSgte.Location = new System.Drawing.Point(860, 336);
+            this.btnSgte.Location = new System.Drawing.Point(954, 309);
             this.btnSgte.Name = "btnSgte";
-            this.btnSgte.Size = new System.Drawing.Size(41, 33);
+            this.btnSgte.Size = new System.Drawing.Size(41, 60);
             this.btnSgte.TabIndex = 3;
             this.btnSgte.Text = ">>>";
             this.btnSgte.UseVisualStyleBackColor = true;
@@ -112,9 +113,9 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(684, 336);
+            this.btnVolver.Location = new System.Drawing.Point(778, 309);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(170, 33);
+            this.btnVolver.Size = new System.Drawing.Size(170, 60);
             this.btnVolver.TabIndex = 4;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -122,9 +123,9 @@
             // 
             // btnDetalle
             // 
-            this.btnDetalle.Location = new System.Drawing.Point(298, 336);
+            this.btnDetalle.Location = new System.Drawing.Point(298, 309);
             this.btnDetalle.Name = "btnDetalle";
-            this.btnDetalle.Size = new System.Drawing.Size(194, 33);
+            this.btnDetalle.Size = new System.Drawing.Size(194, 60);
             this.btnDetalle.TabIndex = 5;
             this.btnDetalle.Text = "Ver publicación en detalle";
             this.btnDetalle.UseVisualStyleBackColor = true;
@@ -133,9 +134,9 @@
             // dgvRubros
             // 
             this.dgvRubros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRubros.Location = new System.Drawing.Point(13, 46);
+            this.dgvRubros.Location = new System.Drawing.Point(13, 32);
             this.dgvRubros.Name = "dgvRubros";
-            this.dgvRubros.Size = new System.Drawing.Size(221, 156);
+            this.dgvRubros.Size = new System.Drawing.Size(221, 170);
             this.dgvRubros.TabIndex = 6;
             this.dgvRubros.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRubros_CellClick);
             // 
@@ -172,7 +173,7 @@
             // 
             this.lblBuscar.AutoSize = true;
             this.lblBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBuscar.Location = new System.Drawing.Point(252, 13);
+            this.lblBuscar.Location = new System.Drawing.Point(248, 32);
             this.lblBuscar.Name = "lblBuscar";
             this.lblBuscar.Size = new System.Drawing.Size(174, 20);
             this.lblBuscar.TabIndex = 10;
@@ -181,18 +182,19 @@
             // txtDescripción
             // 
             this.txtDescripción.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescripción.Location = new System.Drawing.Point(448, 12);
+            this.txtDescripción.Location = new System.Drawing.Point(443, 29);
             this.txtDescripción.MaxLength = 255;
             this.txtDescripción.Name = "txtDescripción";
             this.txtDescripción.Size = new System.Drawing.Size(247, 23);
             this.txtDescripción.TabIndex = 11;
+            this.txtDescripción.TextChanged += new System.EventHandler(this.txtDescripción_TextChanged);
             // 
             // frmComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(912, 381);
+            this.ClientSize = new System.Drawing.Size(1005, 381);
             this.Controls.Add(this.txtDescripción);
             this.Controls.Add(this.lblBuscar);
             this.Controls.Add(this.btnQuitar);
