@@ -1,5 +1,5 @@
 Curso : K3014
-Numero de Grupo: XX
+Numero de Grupo:  17
 Nombre y Legajo de los integrantes:
 	Gonzalo Brizzio		Legajo: 150248-7
 	Demian Dominguez	Legajo: 149943-9

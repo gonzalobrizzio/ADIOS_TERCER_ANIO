@@ -316,17 +316,17 @@ AS BEGIN
 	DECLARE @idUsuario int;
 	DECLARE @idRol int;
 
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='e6b87050bfcb8143fbc8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7')
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Administrativo')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
 	VALUES(@idRol,@idUsuario,0)
 	
-		SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='e6b87050bfcb8143fbc8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7')
+		SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p WHERE p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Empresa')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
 	VALUES(@idRol,@idUsuario,0)
 
-	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='e6b87050bfcb8143fbc8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7')
+	SET @idUsuario = (SELECT p.id FROM ADIOS_TERCER_ANIO.Usuario p where p.usuario ='admin' and p.pass='2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f')
 	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente')
 	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
 	VALUES(@idRol,@idUsuario,0)
@@ -353,8 +353,8 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
 
-	--password es "w23e" encriptado a SHA256
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', 'e6b87050bfcb8143fbc8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 'gd@mailinator.com')
+	--password es "gd" encriptado a SHA256
+	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd@mailinator.com')
 
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('ABM Visilidad'); --Only admin
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Comprar/Ofertar');
@@ -1539,7 +1539,7 @@ AS BEGIN
 	WHILE(@@FETCH_STATUS = 0)
 		BEGIN
 			-- INSERTO TODOS LOS USUARIOS EN LA TABLA DE USUARIOS || el pass es GD
-			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', @mail, @ultimoID = @idUsuario OUTPUT;
+			EXECUTE ADIOS_TERCER_ANIO.generarUsuario @cuit, HASHBYTES('SHA-256', 'w23e'), @mail, @ultimoID = @idUsuario OUTPUT;
 			DECLARE @idRol int;
 			SET @idRol = (select id from ADIOS_TERCER_ANIO.Rol where nombre = 'Empresa')
 			INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario, deleted)
