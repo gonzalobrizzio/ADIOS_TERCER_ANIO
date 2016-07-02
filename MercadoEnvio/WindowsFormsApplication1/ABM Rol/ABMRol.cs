@@ -147,8 +147,13 @@ namespace MercadoEnvios.ABM_Rol
 
         private void frmABMRol_FormClosed(object sender, FormClosedEventArgs e)
         {
-            new frmPantallaPrincipal().Show();
-            this.Close();
+            this.salir();
+        }
+
+        private void salir()
+        {
+            conn.cerrarConexion();
+            Application.Exit();
         }
     }
 }
