@@ -63,7 +63,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListadoDeNoVendidos";
             this.Text = "ListadoDeNoVendidos";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListadoDeNoVendidos_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.listado)).EndInit();
             this.ResumeLayout(false);
 

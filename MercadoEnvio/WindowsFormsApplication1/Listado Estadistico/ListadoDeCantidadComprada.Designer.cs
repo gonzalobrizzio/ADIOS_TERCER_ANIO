@@ -63,7 +63,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmListadoDeCantidadComprada";
             this.Text = "Listado de mayores cantidades de compras";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListadoDeCantidadComprada_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.listado)).EndInit();
             this.ResumeLayout(false);
 

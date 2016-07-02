@@ -321,12 +321,6 @@ namespace MercadoEnvios.ABM_Usuario
         {
             fun.ingresarMail(e);
         }
-
-        private void frmABMUsuario_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmPantallaPrincipal().Show();
-            this.Close();
-        }
     
     }
 

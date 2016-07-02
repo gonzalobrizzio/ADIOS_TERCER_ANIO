@@ -317,7 +317,6 @@
             this.Name = "EditarPublicacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditarPublicacion";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EditarPublicacion_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.Stock)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

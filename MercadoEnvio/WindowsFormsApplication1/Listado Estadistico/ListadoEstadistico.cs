@@ -200,11 +200,5 @@ namespace MercadoEnvios.Listado_Estadistico
             new frmPantallaPrincipal().Show();
             this.Close();
         }
-
-        private void frmListadoEstadistico_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmPantallaPrincipal().Show();
-            this.Close();
-        }
     }
 }

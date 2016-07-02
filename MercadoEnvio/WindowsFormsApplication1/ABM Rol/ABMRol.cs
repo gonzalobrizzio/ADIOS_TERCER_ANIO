@@ -144,16 +144,5 @@ namespace MercadoEnvios.ABM_Rol
         {
             dgvRoles.CurrentRow.Selected = true;
         }
-
-        private void frmABMRol_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.salir();
-        }
-
-        private void salir()
-        {
-            conn.cerrarConexion();
-            Application.Exit();
-        }
     }
 }

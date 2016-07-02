@@ -355,7 +355,6 @@ AS BEGIN
 
 	--password es "gd" encriptado a SHA256
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd@mailinator.com')
-	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('gd', '2b88144311832d59ef138600c90be12a821c7cf01a9dc56a925893325c0af99f', 'gd2@mailinator.com')
 
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('ABM Visilidad'); --Only admin
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Comprar/Ofertar');
@@ -3105,12 +3104,6 @@ AS BEGIN
 END
 GO
 
--- SELECT * FROM ADIOS_TERCER_ANIO.Rubro
 
---UPDATE ADIOS_TERCER_ANIO.Compra set idComprador = 1 where idComprador = 17
 
---select * from ADIOS_TERCER_ANIO.Funcionalidad
-
---UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2
-
---SELECT * FROM ADIOS_TERCER_ANIO.Publicacion
+SELECT * FROM ADIOS_TERCER_ANIO.Usuario

@@ -91,7 +91,6 @@
             this.Name = "frmElegirAccion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Elegir Acción";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmElegirAccion_FormClosed);
             this.ResumeLayout(false);
 
         }

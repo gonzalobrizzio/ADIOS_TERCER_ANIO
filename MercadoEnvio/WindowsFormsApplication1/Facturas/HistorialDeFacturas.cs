@@ -347,11 +347,5 @@ namespace MercadoEnvios.Facturas
             this.getData();
             btnSgte.Enabled = true;
         }
-
-        private void HistorialDeFacturas_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new MercadoEnvios.ABM_Usuario.frmPantallaPrincipal().Show();
-            this.Close();
-        }
     }
 }

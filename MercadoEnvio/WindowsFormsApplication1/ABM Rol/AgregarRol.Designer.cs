@@ -46,20 +46,18 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(128, 43);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Location = new System.Drawing.Point(96, 35);
             this.txtNombre.MaxLength = 255;
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(289, 22);
+            this.txtNombre.Size = new System.Drawing.Size(218, 20);
             this.txtNombre.TabIndex = 0;
             // 
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
-            this.lblNombre.Location = new System.Drawing.Point(23, 47);
-            this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNombre.Location = new System.Drawing.Point(17, 38);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(66, 17);
+            this.lblNombre.Size = new System.Drawing.Size(50, 13);
             this.lblNombre.TabIndex = 1;
             this.lblNombre.Text = "Nombre: ";
             // 
@@ -67,19 +65,17 @@
             // 
             this.dgvFuncionalidades.BackgroundColor = System.Drawing.SystemColors.Info;
             this.dgvFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFuncionalidades.Location = new System.Drawing.Point(27, 117);
-            this.dgvFuncionalidades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvFuncionalidades.Location = new System.Drawing.Point(20, 95);
             this.dgvFuncionalidades.Name = "dgvFuncionalidades";
             this.dgvFuncionalidades.ReadOnly = true;
-            this.dgvFuncionalidades.Size = new System.Drawing.Size(553, 366);
+            this.dgvFuncionalidades.Size = new System.Drawing.Size(415, 297);
             this.dgvFuncionalidades.TabIndex = 5;
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(844, 514);
-            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAceptar.Location = new System.Drawing.Point(633, 418);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(157, 38);
+            this.btnAceptar.Size = new System.Drawing.Size(118, 31);
             this.btnAceptar.TabIndex = 8;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
@@ -87,10 +83,9 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(1055, 514);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelar.Location = new System.Drawing.Point(791, 418);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(156, 38);
+            this.btnCancelar.Size = new System.Drawing.Size(117, 31);
             this.btnCancelar.TabIndex = 9;
             this.btnCancelar.Text = "Volver";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -101,19 +96,17 @@
             this.dgvFuncionalidadesAgregadas.BackgroundColor = System.Drawing.SystemColors.Info;
             this.dgvFuncionalidadesAgregadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFuncionalidadesAgregadas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvFuncionalidadesAgregadas.Location = new System.Drawing.Point(700, 117);
-            this.dgvFuncionalidadesAgregadas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvFuncionalidadesAgregadas.Location = new System.Drawing.Point(525, 95);
             this.dgvFuncionalidadesAgregadas.Name = "dgvFuncionalidadesAgregadas";
             this.dgvFuncionalidadesAgregadas.ReadOnly = true;
-            this.dgvFuncionalidadesAgregadas.Size = new System.Drawing.Size(557, 366);
+            this.dgvFuncionalidadesAgregadas.Size = new System.Drawing.Size(418, 297);
             this.dgvFuncionalidadesAgregadas.TabIndex = 10;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(592, 204);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAgregar.Location = new System.Drawing.Point(444, 166);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(100, 57);
+            this.btnAgregar.Size = new System.Drawing.Size(75, 46);
             this.btnAgregar.TabIndex = 11;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -121,10 +114,9 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(592, 308);
-            this.btnEliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEliminar.Location = new System.Drawing.Point(444, 250);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(100, 57);
+            this.btnEliminar.Size = new System.Drawing.Size(75, 46);
             this.btnEliminar.TabIndex = 12;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
@@ -132,9 +124,9 @@
             // 
             // frmAgregarRol
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1269, 567);
+            this.ClientSize = new System.Drawing.Size(952, 461);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvFuncionalidadesAgregadas);
@@ -143,11 +135,9 @@
             this.Controls.Add(this.dgvFuncionalidades);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.txtNombre);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmAgregarRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AgregarRol";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAgregarRol_FormClosed_1);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aBMRolBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidadesAgregadas)).EndInit();

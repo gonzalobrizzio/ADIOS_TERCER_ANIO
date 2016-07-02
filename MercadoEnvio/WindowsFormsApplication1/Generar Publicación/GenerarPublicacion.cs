@@ -239,13 +239,6 @@ namespace MercadoEnvios.Generar_Publicación
         {
             funcion.ingresarNumeroDecimal(e);
         }
-
-        private void frmGenerarPublicacion_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-            new frmElegirAccion().Show();
-            this.Close();
-        }
     }
 
 

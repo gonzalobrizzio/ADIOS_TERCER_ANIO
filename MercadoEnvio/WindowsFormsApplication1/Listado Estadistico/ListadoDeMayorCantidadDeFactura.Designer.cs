@@ -63,7 +63,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListadoDeMayorCantidadDeFactura";
             this.Text = "Listado de mayores cantidades de facturas";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListadoDeMayorCantidadDeFactura_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.listado)).EndInit();
             this.ResumeLayout(false);
 

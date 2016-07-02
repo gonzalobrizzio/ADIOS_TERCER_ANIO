@@ -318,7 +318,6 @@
             this.Name = "frmGenerarPublicacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Generar Publicación";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGenerarPublicacion_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.Stock)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

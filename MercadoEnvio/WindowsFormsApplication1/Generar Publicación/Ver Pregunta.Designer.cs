@@ -89,7 +89,6 @@
             this.Name = "frmVerPregunta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pregunta";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmVerPregunta_FormClosed);
             this.Load += new System.EventHandler(this.Ver_Pregunta_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

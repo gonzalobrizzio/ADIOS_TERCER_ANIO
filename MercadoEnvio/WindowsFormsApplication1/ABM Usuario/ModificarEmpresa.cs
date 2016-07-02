@@ -293,11 +293,5 @@ namespace MercadoEnvios.ABM_Usuario
         {
             funcionesValidacion.ingresarNumeroConRaya(e);
         }
-
-        private void frmModificarEmpresa_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmABMUsuario().Show();
-            this.Close();
-        }
     }
 }

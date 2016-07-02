@@ -221,12 +221,5 @@ namespace MercadoEnvios.ComprarOfertar
         {
             fun.ingresarNumeroDecimal(e);
         }
-
-        private void frmConfirmar_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-            new frmDetalle(idPublicacion).Show();
-            this.Close();
-        }
     }
 }

@@ -144,11 +144,5 @@ namespace MercadoEnvios.ABM_Usuario
             }
 
         }
-
-        private void frmPantallaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmIngresar().Show();
-            this.Close();
-        }
     }
 }

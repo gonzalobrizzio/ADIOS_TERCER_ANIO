@@ -238,12 +238,5 @@ namespace MercadoEnvios.ComprarOfertar
             new frmComprarOfertar().Show();
             this.Close();
         }
-
-        private void frmDetalle_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmComprarOfertar().Show();
-            this.Close();
-        }
-
     }
 }

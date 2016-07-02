@@ -154,11 +154,5 @@ namespace MercadoEnvios.ABM_Rol
             new ABM_Rol.frmABMRol().Show();
             this.Close();
         }
-
-        private void frmAgregarRol_FormClosed_1(object sender, FormClosedEventArgs e)
-        {
-            new ABM_Rol.frmABMRol().Show();
-            this.Close();
-        }
     }
 }

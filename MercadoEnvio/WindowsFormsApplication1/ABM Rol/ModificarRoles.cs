@@ -254,12 +254,6 @@ namespace MercadoEnvios.ABM_Rol
             }
         }
 
-        private void frmModificarRoles_FormClosed_1(object sender, FormClosedEventArgs e)
-        {
-            new ABM_Rol.frmABMRol().Show();
-            this.Close();
-        }
-
         private void dgvFuncionalidadesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             dgvFuncionalidadesDisponibles.CurrentRow.Selected = true;

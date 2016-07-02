@@ -188,7 +188,6 @@
             this.Name = "frmListadoEstadistico";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Listado Estadistico";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListadoEstadistico_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

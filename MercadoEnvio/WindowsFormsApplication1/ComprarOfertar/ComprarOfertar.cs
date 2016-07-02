@@ -136,9 +136,8 @@ namespace MercadoEnvios.ComprarOfertar
             String queryCant = "SELECT COUNT(publicacion.id) FROM ADIOS_TERCER_ANIO.Publicacion publicacion " +
             "inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id " +
             "inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion " +
-            "inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro ";
-
-            //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
+            "inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro " +
+            "WHERE ((publicacion.idEstado = 2) OR (publicacion.idEstado = 3)) AND publicacion.idPublicador != " + sesion.idUsuario + " - " + nroPagina + " * 20";
 
             if (!String.IsNullOrEmpty(txtDescripción.Text))
             {
@@ -183,7 +182,7 @@ namespace MercadoEnvios.ComprarOfertar
         public void getPublicacionesPagina()
         {
 
-            int paginaInicio = getCantPublicaciones() - nroPagina * 10;
+            int paginaInicio = getCantPublicaciones() - nroPagina * 20;
             label1.Text = paginaInicio.ToString();
 
             String queryPublicaciones = "WITH tabla AS (SELECT TOP " + paginaInicio + 
@@ -200,9 +199,8 @@ namespace MercadoEnvios.ComprarOfertar
 						                            "FROM ADIOS_TERCER_ANIO.Publicacion publicacion " + 
                             "inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id " +
 							"inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion " +
-							"inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro ";
-
-            //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
+							"inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro " +
+                            "WHERE ((publicacion.idEstado = 2) OR (publicacion.idEstado = 3)) AND publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";
 
             if (!String.IsNullOrEmpty(txtDescripción.Text))
             {
@@ -364,10 +362,5 @@ namespace MercadoEnvios.ComprarOfertar
             }
         }
 
-        private void frmComprarOfertar_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmPantallaPrincipal().Show();
-            this.Close();
-        }
     }
 }

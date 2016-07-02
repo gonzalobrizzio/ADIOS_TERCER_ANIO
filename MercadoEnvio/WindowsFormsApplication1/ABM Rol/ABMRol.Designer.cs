@@ -45,19 +45,17 @@
             // 
             this.dgvRoles.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRoles.Location = new System.Drawing.Point(16, 49);
-            this.dgvRoles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvRoles.Location = new System.Drawing.Point(12, 40);
             this.dgvRoles.Name = "dgvRoles";
-            this.dgvRoles.Size = new System.Drawing.Size(957, 359);
+            this.dgvRoles.Size = new System.Drawing.Size(718, 292);
             this.dgvRoles.TabIndex = 0;
             this.dgvRoles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRoles_CellClick);
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(349, 428);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAgregar.Location = new System.Drawing.Point(262, 348);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(159, 44);
+            this.btnAgregar.Size = new System.Drawing.Size(119, 36);
             this.btnAgregar.TabIndex = 2;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -65,10 +63,9 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(516, 431);
-            this.btnModificar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnModificar.Location = new System.Drawing.Point(387, 350);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(159, 43);
+            this.btnModificar.Size = new System.Drawing.Size(119, 35);
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -77,10 +74,9 @@
             // lblHabilitados
             // 
             this.lblHabilitados.AutoSize = true;
-            this.lblHabilitados.Location = new System.Drawing.Point(12, 49);
-            this.lblHabilitados.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHabilitados.Location = new System.Drawing.Point(9, 40);
             this.lblHabilitados.Name = "lblHabilitados";
-            this.lblHabilitados.Size = new System.Drawing.Size(0, 17);
+            this.lblHabilitados.Size = new System.Drawing.Size(0, 13);
             this.lblHabilitados.TabIndex = 6;
             // 
             // lblTitulo
@@ -88,19 +84,17 @@
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblTitulo.Location = new System.Drawing.Point(12, 11);
-            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitulo.Location = new System.Drawing.Point(9, 9);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(301, 24);
+            this.lblTitulo.Size = new System.Drawing.Size(235, 18);
             this.lblTitulo.TabIndex = 8;
             this.lblTitulo.Text = "Habilitación/Inhabilitación de Roles";
             // 
             // btnHabilitar
             // 
-            this.btnHabilitar.Location = new System.Drawing.Point(16, 428);
-            this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnHabilitar.Location = new System.Drawing.Point(12, 348);
             this.btnHabilitar.Name = "btnHabilitar";
-            this.btnHabilitar.Size = new System.Drawing.Size(159, 44);
+            this.btnHabilitar.Size = new System.Drawing.Size(119, 36);
             this.btnHabilitar.TabIndex = 9;
             this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
@@ -108,10 +102,9 @@
             // 
             // btnInhabilitar
             // 
-            this.btnInhabilitar.Location = new System.Drawing.Point(183, 428);
-            this.btnInhabilitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnInhabilitar.Location = new System.Drawing.Point(137, 348);
             this.btnInhabilitar.Name = "btnInhabilitar";
-            this.btnInhabilitar.Size = new System.Drawing.Size(159, 44);
+            this.btnInhabilitar.Size = new System.Drawing.Size(119, 36);
             this.btnInhabilitar.TabIndex = 10;
             this.btnInhabilitar.Text = "Deshabilitar";
             this.btnInhabilitar.UseVisualStyleBackColor = true;
@@ -119,10 +112,9 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(839, 431);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Location = new System.Drawing.Point(629, 350);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(135, 42);
+            this.btnVolver.Size = new System.Drawing.Size(101, 34);
             this.btnVolver.TabIndex = 12;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -130,10 +122,9 @@
             // 
             // btnFuncRol
             // 
-            this.btnFuncRol.Location = new System.Drawing.Point(683, 431);
-            this.btnFuncRol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFuncRol.Location = new System.Drawing.Point(512, 350);
             this.btnFuncRol.Name = "btnFuncRol";
-            this.btnFuncRol.Size = new System.Drawing.Size(148, 43);
+            this.btnFuncRol.Size = new System.Drawing.Size(111, 35);
             this.btnFuncRol.TabIndex = 13;
             this.btnFuncRol.Text = "Ver Funcionalidades";
             this.btnFuncRol.UseVisualStyleBackColor = true;
@@ -141,9 +132,9 @@
             // 
             // frmABMRol
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(989, 485);
+            this.ClientSize = new System.Drawing.Size(742, 394);
             this.Controls.Add(this.btnFuncRol);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnInhabilitar);
@@ -153,11 +144,9 @@
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvRoles);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmABMRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMRol";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmABMRol_FormClosed);
             this.Load += new System.EventHandler(this.ABMRol_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRoles)).EndInit();
             this.ResumeLayout(false);

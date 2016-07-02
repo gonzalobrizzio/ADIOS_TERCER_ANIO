@@ -47,12 +47,11 @@
             // 
             // tkbCalificacion
             // 
-            this.tkbCalificacion.Location = new System.Drawing.Point(643, 134);
-            this.tkbCalificacion.Margin = new System.Windows.Forms.Padding(4);
+            this.tkbCalificacion.Location = new System.Drawing.Point(482, 109);
             this.tkbCalificacion.Maximum = 5;
             this.tkbCalificacion.Minimum = 1;
             this.tkbCalificacion.Name = "tkbCalificacion";
-            this.tkbCalificacion.Size = new System.Drawing.Size(400, 56);
+            this.tkbCalificacion.Size = new System.Drawing.Size(300, 45);
             this.tkbCalificacion.TabIndex = 0;
             this.tkbCalificacion.Value = 1;
             this.tkbCalificacion.Scroll += new System.EventHandler(this.tkbCalificacion_Scroll);
@@ -60,28 +59,25 @@
             // lblCalificar
             // 
             this.lblCalificar.AutoSize = true;
-            this.lblCalificar.Location = new System.Drawing.Point(639, 16);
-            this.lblCalificar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCalificar.Location = new System.Drawing.Point(479, 13);
             this.lblCalificar.Name = "lblCalificar";
-            this.lblCalificar.Size = new System.Drawing.Size(128, 17);
+            this.lblCalificar.Size = new System.Drawing.Size(95, 13);
             this.lblCalificar.TabIndex = 1;
             this.lblCalificar.Text = "Calificar al usuario:";
             // 
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(796, 16);
-            this.lblUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUsuario.Location = new System.Drawing.Point(597, 13);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(0, 17);
+            this.lblUsuario.Size = new System.Drawing.Size(0, 13);
             this.lblUsuario.TabIndex = 2;
             // 
             // btnCalificar
             // 
-            this.btnCalificar.Location = new System.Drawing.Point(643, 272);
-            this.btnCalificar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCalificar.Location = new System.Drawing.Point(482, 221);
             this.btnCalificar.Name = "btnCalificar";
-            this.btnCalificar.Size = new System.Drawing.Size(400, 57);
+            this.btnCalificar.Size = new System.Drawing.Size(300, 46);
             this.btnCalificar.TabIndex = 2;
             this.btnCalificar.Text = "Calificar";
             this.btnCalificar.UseVisualStyleBackColor = true;
@@ -90,68 +86,61 @@
             // lblEstrellas
             // 
             this.lblEstrellas.AutoSize = true;
-            this.lblEstrellas.Location = new System.Drawing.Point(656, 97);
-            this.lblEstrellas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEstrellas.Location = new System.Drawing.Point(492, 79);
             this.lblEstrellas.Name = "lblEstrellas";
-            this.lblEstrellas.Size = new System.Drawing.Size(0, 17);
+            this.lblEstrellas.Size = new System.Drawing.Size(0, 13);
             this.lblEstrellas.TabIndex = 4;
             // 
             // dgvCompras
             // 
             this.dgvCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCompras.Location = new System.Drawing.Point(16, 46);
-            this.dgvCompras.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvCompras.Location = new System.Drawing.Point(12, 37);
             this.dgvCompras.Name = "dgvCompras";
             this.dgvCompras.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvCompras.Size = new System.Drawing.Size(609, 219);
+            this.dgvCompras.Size = new System.Drawing.Size(457, 178);
             this.dgvCompras.TabIndex = 5;
             this.dgvCompras.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompras_CellClick);
             // 
             // lblPorCompra
             // 
             this.lblPorCompra.AutoSize = true;
-            this.lblPorCompra.Location = new System.Drawing.Point(639, 52);
-            this.lblPorCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPorCompra.Location = new System.Drawing.Point(479, 42);
             this.lblPorCompra.Name = "lblPorCompra";
-            this.lblPorCompra.Size = new System.Drawing.Size(99, 17);
+            this.lblPorCompra.Size = new System.Drawing.Size(74, 13);
             this.lblPorCompra.TabIndex = 6;
             this.lblPorCompra.Text = "por la compra:";
             // 
             // lblCompra
             // 
             this.lblCompra.AutoSize = true;
-            this.lblCompra.Location = new System.Drawing.Point(796, 52);
-            this.lblCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCompra.Location = new System.Drawing.Point(597, 42);
             this.lblCompra.Name = "lblCompra";
-            this.lblCompra.Size = new System.Drawing.Size(0, 17);
+            this.lblCompra.Size = new System.Drawing.Size(0, 13);
             this.lblCompra.TabIndex = 7;
             // 
             // txtDetalle
             // 
-            this.txtDetalle.Location = new System.Drawing.Point(643, 198);
-            this.txtDetalle.Margin = new System.Windows.Forms.Padding(4);
+            this.txtDetalle.Location = new System.Drawing.Point(482, 161);
             this.txtDetalle.MaxLength = 255;
             this.txtDetalle.Multiline = true;
             this.txtDetalle.Name = "txtDetalle";
-            this.txtDetalle.Size = new System.Drawing.Size(399, 66);
+            this.txtDetalle.Size = new System.Drawing.Size(300, 54);
             this.txtDetalle.TabIndex = 1;
             // 
             // lblCompras
             // 
             this.lblCompras.AutoSize = true;
-            this.lblCompras.Location = new System.Drawing.Point(17, 16);
-            this.lblCompras.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCompras.Location = new System.Drawing.Point(13, 13);
             this.lblCompras.Name = "lblCompras";
-            this.lblCompras.Size = new System.Drawing.Size(168, 17);
+            this.lblCompras.Size = new System.Drawing.Size(125, 13);
             this.lblCompras.TabIndex = 9;
             this.lblCompras.Text = "Lista de últimas compras:";
             // 
             // btnReputacion
             // 
-            this.btnReputacion.Location = new System.Drawing.Point(16, 272);
-            this.btnReputacion.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReputacion.Location = new System.Drawing.Point(12, 221);
             this.btnReputacion.Name = "btnReputacion";
-            this.btnReputacion.Size = new System.Drawing.Size(611, 57);
+            this.btnReputacion.Size = new System.Drawing.Size(458, 46);
             this.btnReputacion.TabIndex = 3;
             this.btnReputacion.Text = "Reputación e historial";
             this.btnReputacion.UseVisualStyleBackColor = true;
@@ -160,19 +149,17 @@
             // lblIdCompra
             // 
             this.lblIdCompra.AutoSize = true;
-            this.lblIdCompra.Location = new System.Drawing.Point(635, 326);
-            this.lblIdCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblIdCompra.Location = new System.Drawing.Point(476, 265);
             this.lblIdCompra.Name = "lblIdCompra";
-            this.lblIdCompra.Size = new System.Drawing.Size(0, 17);
+            this.lblIdCompra.Size = new System.Drawing.Size(0, 13);
             this.lblIdCompra.TabIndex = 10;
             this.lblIdCompra.Visible = false;
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(1004, 350);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelar.Location = new System.Drawing.Point(753, 284);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(149, 41);
+            this.btnCancelar.Size = new System.Drawing.Size(112, 33);
             this.btnCancelar.TabIndex = 11;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -180,9 +167,9 @@
             // 
             // frmCalificacion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1169, 401);
+            this.ClientSize = new System.Drawing.Size(877, 326);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnReputacion);
             this.Controls.Add(this.lblIdCompra);
@@ -196,11 +183,9 @@
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.lblCalificar);
             this.Controls.Add(this.tkbCalificacion);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmCalificacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calificar un usuario";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCalificacion_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.tkbCalificacion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompras)).EndInit();
             this.ResumeLayout(false);

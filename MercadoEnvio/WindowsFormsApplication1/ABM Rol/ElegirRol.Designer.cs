@@ -38,19 +38,17 @@
             // 
             this.lblElegir.AutoSize = true;
             this.lblElegir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblElegir.Location = new System.Drawing.Point(159, 39);
-            this.lblElegir.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblElegir.Location = new System.Drawing.Point(119, 32);
             this.lblElegir.Name = "lblElegir";
-            this.lblElegir.Size = new System.Drawing.Size(170, 40);
+            this.lblElegir.Size = new System.Drawing.Size(144, 34);
             this.lblElegir.TabIndex = 0;
             this.lblElegir.Text = "Elija el rol que desee \r\npara esta sesión:";
             // 
             // btnElegir
             // 
-            this.btnElegir.Location = new System.Drawing.Point(47, 224);
-            this.btnElegir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnElegir.Location = new System.Drawing.Point(35, 182);
             this.btnElegir.Name = "btnElegir";
-            this.btnElegir.Size = new System.Drawing.Size(188, 39);
+            this.btnElegir.Size = new System.Drawing.Size(141, 32);
             this.btnElegir.TabIndex = 1;
             this.btnElegir.Text = "Seleccionar";
             this.btnElegir.UseVisualStyleBackColor = true;
@@ -60,18 +58,16 @@
             // 
             this.cboRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRol.FormattingEnabled = true;
-            this.cboRol.Location = new System.Drawing.Point(163, 167);
-            this.cboRol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboRol.Location = new System.Drawing.Point(122, 136);
             this.cboRol.Name = "cboRol";
-            this.cboRol.Size = new System.Drawing.Size(187, 24);
+            this.cboRol.Size = new System.Drawing.Size(141, 21);
             this.cboRol.TabIndex = 0;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(269, 224);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Location = new System.Drawing.Point(202, 182);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(188, 39);
+            this.btnVolver.Size = new System.Drawing.Size(141, 32);
             this.btnVolver.TabIndex = 2;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -79,18 +75,16 @@
             // 
             // frmElegirRol
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 411);
+            this.ClientSize = new System.Drawing.Size(409, 334);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.cboRol);
             this.Controls.Add(this.btnElegir);
             this.Controls.Add(this.lblElegir);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmElegirRol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ElegirRol";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmElegirRol_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

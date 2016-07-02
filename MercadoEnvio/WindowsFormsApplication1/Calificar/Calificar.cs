@@ -141,11 +141,6 @@ namespace MercadoEnvios.Calificar
             this.Close();
         }
 
-        private void frmCalificacion_FormClosed(object sender, FormClosedEventArgs e)
-        {
 
-            new frmPantallaPrincipal().Show();
-            this.Close();
-        }
     }
 }

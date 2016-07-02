@@ -78,7 +78,6 @@
             this.Name = "frmContestarPreguntas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Contestar Preguntas";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmContestarPreguntas_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPreguntas)).EndInit();
             this.ResumeLayout(false);
 

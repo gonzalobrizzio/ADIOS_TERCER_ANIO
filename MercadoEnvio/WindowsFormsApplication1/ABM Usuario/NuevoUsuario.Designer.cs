@@ -40,19 +40,18 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label3.Location = new System.Drawing.Point(51, 11);
-            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label3.Location = new System.Drawing.Point(38, 9);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(227, 24);
+            this.label3.Size = new System.Drawing.Size(176, 18);
             this.label3.TabIndex = 2;
             this.label3.Text = "Ingrese el rol del usuario: ";
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(87, 213);
-            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAceptar.Location = new System.Drawing.Point(65, 173);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(100, 28);
+            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 20;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
@@ -60,10 +59,9 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(261, 213);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelar.Location = new System.Drawing.Point(196, 173);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(100, 28);
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 21;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -72,10 +70,9 @@
             // lblRol
             // 
             this.lblRol.AutoSize = true;
-            this.lblRol.Location = new System.Drawing.Point(51, 106);
-            this.lblRol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRol.Location = new System.Drawing.Point(38, 86);
             this.lblRol.Name = "lblRol";
-            this.lblRol.Size = new System.Drawing.Size(108, 17);
+            this.lblRol.Size = new System.Drawing.Size(82, 13);
             this.lblRol.TabIndex = 22;
             this.lblRol.Text = "Rol De Usuario:";
             // 
@@ -83,27 +80,24 @@
             // 
             this.cmbRolAsignado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRolAsignado.FormattingEnabled = true;
-            this.cmbRolAsignado.Location = new System.Drawing.Point(187, 96);
-            this.cmbRolAsignado.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbRolAsignado.Location = new System.Drawing.Point(140, 78);
             this.cmbRolAsignado.Name = "cmbRolAsignado";
-            this.cmbRolAsignado.Size = new System.Drawing.Size(211, 24);
+            this.cmbRolAsignado.Size = new System.Drawing.Size(159, 21);
             this.cmbRolAsignado.TabIndex = 23;
             // 
             // frmNuevoUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 288);
+            this.ClientSize = new System.Drawing.Size(327, 234);
             this.Controls.Add(this.cmbRolAsignado);
             this.Controls.Add(this.lblRol);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label3);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmNuevoUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agregar Nuevo Usuario";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmNuevoUsuario_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

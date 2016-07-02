@@ -131,7 +131,6 @@
             this.Name = "frmModificarPublicacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar Publicación";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmModificarPublicacion_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.publicaciones)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

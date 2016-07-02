@@ -63,7 +63,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListadoDeMayorFacturado";
             this.Text = "ListadoDeMayorFacturado";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListadoDeMayorFacturado_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.listado)).EndInit();
             this.ResumeLayout(false);
 

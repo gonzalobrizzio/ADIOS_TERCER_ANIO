@@ -171,11 +171,5 @@ namespace MercadoEnvios.Generar_Publicación
             this.Close();
         }
 
-        private void frmModificarPublicacion_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            new frmElegirAccion().Show();
-            this.Close();
-        }
-
     }
 }
