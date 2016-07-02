@@ -41,7 +41,7 @@
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(851, 432);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(135, 42);
             this.btnVolver.TabIndex = 20;
@@ -52,7 +52,7 @@
             // btnDeshabilitar
             // 
             this.btnDeshabilitar.Location = new System.Drawing.Point(195, 430);
-            this.btnDeshabilitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeshabilitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeshabilitar.Name = "btnDeshabilitar";
             this.btnDeshabilitar.Size = new System.Drawing.Size(159, 44);
             this.btnDeshabilitar.TabIndex = 19;
@@ -63,7 +63,7 @@
             // btnHabilitar
             // 
             this.btnHabilitar.Location = new System.Drawing.Point(28, 430);
-            this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnHabilitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(159, 44);
             this.btnHabilitar.TabIndex = 18;
@@ -86,7 +86,7 @@
             // btnModificar
             // 
             this.btnModificar.Location = new System.Drawing.Point(528, 432);
-            this.btnModificar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnModificar.Margin = new System.Windows.Forms.Padding(4);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(159, 43);
             this.btnModificar.TabIndex = 16;
@@ -97,7 +97,7 @@
             // btnAgregar
             // 
             this.btnAgregar.Location = new System.Drawing.Point(361, 430);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(159, 44);
             this.btnAgregar.TabIndex = 15;
@@ -110,7 +110,7 @@
             this.dgvVisibilidad.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvVisibilidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVisibilidad.Location = new System.Drawing.Point(28, 50);
-            this.dgvVisibilidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvVisibilidad.Margin = new System.Windows.Forms.Padding(4);
             this.dgvVisibilidad.Name = "dgvVisibilidad";
             this.dgvVisibilidad.Size = new System.Drawing.Size(957, 359);
             this.dgvVisibilidad.TabIndex = 14;
@@ -128,10 +128,11 @@
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvVisibilidad);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmABMVisibilidad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ABMVisibilidad";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmABMVisibilidad_FormClosed);
             this.Load += new System.EventHandler(this.frmABMVisibilidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisibilidad)).EndInit();
             this.ResumeLayout(false);

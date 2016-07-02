@@ -122,13 +122,7 @@ namespace MercadoEnvios.ABM_Usuario
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             new frmNuevoUsuario().Show();
-            sesion.anterior = this;
-            this.Hide();
-        }
-
-        private void frmABMUsuario_Shown(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
+            this.Close();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -326,6 +320,12 @@ namespace MercadoEnvios.ABM_Usuario
         private void mailE_KeyPress(object sender, KeyPressEventArgs e)
         {
             fun.ingresarMail(e);
+        }
+
+        private void frmABMUsuario_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new frmPantallaPrincipal().Show();
+            this.Close();
         }
     
     }

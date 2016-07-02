@@ -56,5 +56,12 @@ namespace MercadoEnvios.Listado_Estadistico
             new frmListadoEstadistico().Show();
             this.Close();
         }
+
+        private void frmListadoDeMayorFacturado_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new frmListadoEstadistico().Show();
+            this.Close();
+        }
     }
 }

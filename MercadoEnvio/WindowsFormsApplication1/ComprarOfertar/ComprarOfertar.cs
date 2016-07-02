@@ -126,7 +126,6 @@ namespace MercadoEnvios.ComprarOfertar
         private void btnVolver_Click(object sender, EventArgs e)
         {
             new frmPantallaPrincipal().Show();
-            btnSgte.Enabled = true;
             this.Close();
         }
         
@@ -363,6 +362,12 @@ namespace MercadoEnvios.ComprarOfertar
                     MessageBox.Show("Número de página excedido del máximo existente.");
                 }
             }
+        }
+
+        private void frmComprarOfertar_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new frmPantallaPrincipal().Show();
+            this.Close();
         }
     }
 }

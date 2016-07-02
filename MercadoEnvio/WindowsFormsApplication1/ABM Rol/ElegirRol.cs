@@ -55,5 +55,11 @@ namespace MercadoEnvios.ABM_Rol
             new Login_y_Seguridad.frmIngresar().Show();
             this.Close();
         }
+
+        private void frmElegirRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new Login_y_Seguridad.frmIngresar().Show();
+            this.Close();
+        }
         }
     }

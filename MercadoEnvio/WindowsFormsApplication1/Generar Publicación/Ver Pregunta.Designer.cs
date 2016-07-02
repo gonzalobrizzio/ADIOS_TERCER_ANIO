@@ -47,7 +47,7 @@
             // txtRespuesta
             // 
             this.txtRespuesta.Location = new System.Drawing.Point(64, 196);
-            this.txtRespuesta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRespuesta.Margin = new System.Windows.Forms.Padding(4);
             this.txtRespuesta.MaxLength = 255;
             this.txtRespuesta.Name = "txtRespuesta";
             this.txtRespuesta.Size = new System.Drawing.Size(600, 190);
@@ -57,7 +57,7 @@
             // btnContestar
             // 
             this.btnContestar.Location = new System.Drawing.Point(375, 462);
-            this.btnContestar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnContestar.Margin = new System.Windows.Forms.Padding(4);
             this.btnContestar.Name = "btnContestar";
             this.btnContestar.Size = new System.Drawing.Size(148, 43);
             this.btnContestar.TabIndex = 15;
@@ -68,7 +68,7 @@
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(531, 462);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(135, 42);
             this.btnVolver.TabIndex = 14;
@@ -85,10 +85,11 @@
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.txtRespuesta);
             this.Controls.Add(this.lblPregunta);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmVerPregunta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pregunta";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmVerPregunta_FormClosed);
             this.Load += new System.EventHandler(this.Ver_Pregunta_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -53,5 +53,12 @@ namespace MercadoEnvios.Generar_Publicación
                 MessageBox.Show(error.Message);
             }
         }
+
+        private void frmVerPregunta_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new Generar_Publicación.frmContestarPreguntas().Show();
+            this.Close();
+        }
     }
 }

@@ -20,6 +20,14 @@ namespace MercadoEnvios.ABM_Rol
             InitializeComponent();
             anterior = sesion.anterior;
             this.getData();
+            if(dgvRoles.Rows.Count == 0)
+            {
+                btnAgregar.Enabled = false;
+                btnFuncRol.Enabled = false;
+                btnHabilitar.Enabled = false;
+                btnInhabilitar.Enabled = false;
+                btnModificar.Enabled = false;
+            }
         }
 
         private void getData(){
@@ -135,6 +143,12 @@ namespace MercadoEnvios.ABM_Rol
         private void dgvRoles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             dgvRoles.CurrentRow.Selected = true;
+        }
+
+        private void frmABMRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new frmPantallaPrincipal().Show();
+            this.Close();
         }
     }
 }

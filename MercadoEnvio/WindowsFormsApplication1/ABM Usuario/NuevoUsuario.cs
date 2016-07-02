@@ -62,6 +62,12 @@ namespace MercadoEnvios.ABM_Usuario
 
         }
 
+        private void frmNuevoUsuario_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new frmABMUsuario().Show();
+            this.Close();
+        }
+
 
     }
 }

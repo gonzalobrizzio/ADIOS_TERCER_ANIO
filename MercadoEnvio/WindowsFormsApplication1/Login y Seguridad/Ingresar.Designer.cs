@@ -39,7 +39,7 @@
             // txtUsr
             // 
             this.txtUsr.Location = new System.Drawing.Point(245, 103);
-            this.txtUsr.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUsr.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsr.MaxLength = 20;
             this.txtUsr.Name = "txtUsr";
             this.txtUsr.Size = new System.Drawing.Size(132, 22);
@@ -69,7 +69,7 @@
             // txtContra
             // 
             this.txtContra.Location = new System.Drawing.Point(245, 153);
-            this.txtContra.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtContra.Margin = new System.Windows.Forms.Padding(4);
             this.txtContra.MaxLength = 50;
             this.txtContra.Name = "txtContra";
             this.txtContra.PasswordChar = '*';
@@ -81,7 +81,7 @@
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.btnIngresar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnIngresar.Location = new System.Drawing.Point(123, 210);
-            this.btnIngresar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnIngresar.Margin = new System.Windows.Forms.Padding(4);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(133, 36);
             this.btnIngresar.TabIndex = 4;
@@ -94,7 +94,7 @@
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnSalir.Location = new System.Drawing.Point(280, 210);
-            this.btnSalir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(89, 36);
             this.btnSalir.TabIndex = 7;
@@ -113,7 +113,7 @@
             this.Controls.Add(this.lblContrasenia);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.txtUsr);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmIngresar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";

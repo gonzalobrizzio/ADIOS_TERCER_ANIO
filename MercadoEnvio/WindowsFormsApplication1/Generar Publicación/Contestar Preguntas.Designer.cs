@@ -38,16 +38,18 @@
             // 
             this.dgvPreguntas.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvPreguntas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPreguntas.Location = new System.Drawing.Point(12, 12);
+            this.dgvPreguntas.Location = new System.Drawing.Point(16, 15);
+            this.dgvPreguntas.Margin = new System.Windows.Forms.Padding(4);
             this.dgvPreguntas.Name = "dgvPreguntas";
-            this.dgvPreguntas.Size = new System.Drawing.Size(990, 431);
+            this.dgvPreguntas.Size = new System.Drawing.Size(1320, 530);
             this.dgvPreguntas.TabIndex = 1;
             // 
             // btnVer
             // 
-            this.btnVer.Location = new System.Drawing.Point(772, 449);
+            this.btnVer.Location = new System.Drawing.Point(1029, 553);
+            this.btnVer.Margin = new System.Windows.Forms.Padding(4);
             this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(111, 35);
+            this.btnVer.Size = new System.Drawing.Size(148, 43);
             this.btnVer.TabIndex = 15;
             this.btnVer.Text = "Ver Pregunta";
             this.btnVer.UseVisualStyleBackColor = true;
@@ -55,9 +57,10 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(889, 449);
+            this.btnVolver.Location = new System.Drawing.Point(1185, 553);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(101, 34);
+            this.btnVolver.Size = new System.Drawing.Size(135, 42);
             this.btnVolver.TabIndex = 14;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -65,15 +68,17 @@
             // 
             // frmContestarPreguntas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1014, 496);
+            this.ClientSize = new System.Drawing.Size(1352, 610);
             this.Controls.Add(this.btnVer);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dgvPreguntas);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmContestarPreguntas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Contestar Preguntas";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmContestarPreguntas_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPreguntas)).EndInit();
             this.ResumeLayout(false);
 

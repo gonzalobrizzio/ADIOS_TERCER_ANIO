@@ -118,5 +118,11 @@ namespace MercadoEnvios.ABM_Visibilidad
         {
             fun.ingresarNumeroDecimal(e);
         }
+
+        private void frmAgregarVisibilidad_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            this.salir();
+        }
     }
 }

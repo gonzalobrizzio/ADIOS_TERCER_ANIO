@@ -60,19 +60,12 @@ namespace MercadoEnvios.ABM_Rol
 
         public void salir()
         {
-            sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Close();
         }
-
-        private void frmVerFuncRol_Shown(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
-        }
-
         private void frmVerFuncRol_FormClosed(object sender, FormClosedEventArgs e)
         {
-            sesion.anterior.Show();
+            this.salir();
         }
     }
 }

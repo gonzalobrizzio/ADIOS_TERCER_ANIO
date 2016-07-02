@@ -156,5 +156,10 @@ namespace MercadoEnvios.ABM_Visibilidad
             funcionesValidacion.ingresarNumero(e);
         }
 
+        private void frmModificarVisibilidad_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.salir();
+        }
+
     }
 }

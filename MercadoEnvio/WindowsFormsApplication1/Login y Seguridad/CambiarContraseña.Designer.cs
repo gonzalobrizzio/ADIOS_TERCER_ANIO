@@ -77,7 +77,7 @@
             // btnConfirmar
             // 
             this.btnConfirmar.Location = new System.Drawing.Point(97, 210);
-            this.btnConfirmar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConfirmar.Margin = new System.Windows.Forms.Padding(4);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(144, 41);
             this.btnConfirmar.TabIndex = 11;
@@ -88,7 +88,7 @@
             // contraseñaNueva
             // 
             this.contraseñaNueva.Location = new System.Drawing.Point(252, 113);
-            this.contraseñaNueva.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.contraseñaNueva.Margin = new System.Windows.Forms.Padding(4);
             this.contraseñaNueva.MaxLength = 50;
             this.contraseñaNueva.Name = "contraseñaNueva";
             this.contraseñaNueva.PasswordChar = '•';
@@ -98,7 +98,7 @@
             // contraseñaConfirmada
             // 
             this.contraseñaConfirmada.Location = new System.Drawing.Point(252, 145);
-            this.contraseñaConfirmada.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.contraseñaConfirmada.Margin = new System.Windows.Forms.Padding(4);
             this.contraseñaConfirmada.MaxLength = 50;
             this.contraseñaConfirmada.Name = "contraseñaConfirmada";
             this.contraseñaConfirmada.PasswordChar = '•';
@@ -108,7 +108,7 @@
             // contraseñaActual
             // 
             this.contraseñaActual.Location = new System.Drawing.Point(252, 81);
-            this.contraseñaActual.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.contraseñaActual.Margin = new System.Windows.Forms.Padding(4);
             this.contraseñaActual.MaxLength = 50;
             this.contraseñaActual.Name = "contraseñaActual";
             this.contraseñaActual.PasswordChar = '•';
@@ -118,7 +118,7 @@
             // btnCancelar
             // 
             this.btnCancelar.Location = new System.Drawing.Point(293, 210);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(144, 41);
             this.btnCancelar.TabIndex = 15;
@@ -139,10 +139,11 @@
             this.Controls.Add(this.contraseñaNueva);
             this.Controls.Add(this.contraseñaConfirmada);
             this.Controls.Add(this.contraseñaActual);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmCambiarContraseña";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cambiar Contraseña";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCambiarContraseña_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

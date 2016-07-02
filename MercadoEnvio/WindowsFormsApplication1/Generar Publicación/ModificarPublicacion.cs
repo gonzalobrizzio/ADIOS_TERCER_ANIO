@@ -24,6 +24,14 @@ namespace MercadoEnvios.Generar_Publicación
             conn = Conexion.Instance;
             sesion = Sesion.Instance;
             this.getData();
+            if(publicaciones.Rows.Count == 0)
+            {
+                btnActivar.Enabled = false;
+                btnFinalizar.Enabled = false;
+                btnPausar.Enabled = false;
+                btnModificar.Enabled = false;
+
+            }
         }
 
         public void getData()
@@ -81,8 +89,7 @@ namespace MercadoEnvios.Generar_Publicación
                 actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
             }
-
-            if (this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Pausada")
+            else if (this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Pausada")
             {
                 string despausar = "UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2 WHERE @idPublicacion = id";
                 SqlCommand actualizarPublicacion = new SqlCommand(despausar, conn.getConexion);
@@ -93,6 +100,10 @@ namespace MercadoEnvios.Generar_Publicación
                 actualizarPublicacion.Parameters.Add(id);
                 actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
+            }
+            else
+            {
+                MessageBox.Show("Solo se pueden modificar publicaciones con estado borrador o pausada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -108,6 +119,10 @@ namespace MercadoEnvios.Generar_Publicación
                 actualizarPublicacion.Parameters.Add(id);
                 actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
+            }
+            else
+            {
+                MessageBox.Show("Solo se pueden modificar publicaciones con estado pausada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -130,6 +145,10 @@ namespace MercadoEnvios.Generar_Publicación
                 actualizarPublicacion.ExecuteNonQuery();
                 this.getData();
             }
+            else
+            {
+                MessageBox.Show("Solo se pueden modificar publicaciones con estado distinto a Finalizada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -140,9 +159,19 @@ namespace MercadoEnvios.Generar_Publicación
                 new EditarPublicacion(Convert.ToInt32(this.publicaciones.CurrentRow.Cells[0].Value)).Show();
                 this.Close();
             }
+            else
+            {
+                MessageBox.Show("Solo se pueden modificar publicaciones con estado borrador", "Error al modificar",  MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
+        {
+            new frmElegirAccion().Show();
+            this.Close();
+        }
+
+        private void frmModificarPublicacion_FormClosed(object sender, FormClosedEventArgs e)
         {
             new frmElegirAccion().Show();
             this.Close();

@@ -144,14 +144,8 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            sesion.anterior = this;
             new ABM_Rol.frmABMRol().Show();
             this.Close();
-        }
-
-        private void frmModificarRoles_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnModficar_Click(object sender, EventArgs e)
@@ -262,12 +256,8 @@ namespace MercadoEnvios.ABM_Rol
 
         private void frmModificarRoles_FormClosed_1(object sender, FormClosedEventArgs e)
         {
-            sesion.anterior.Show();
-        }
-
-        private void frmModificarRoles_Shown_1(object sender, EventArgs e)
-        {
-            sesion.anterior = anterior;
+            new ABM_Rol.frmABMRol().Show();
+            this.Close();
         }
 
         private void dgvFuncionalidadesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)

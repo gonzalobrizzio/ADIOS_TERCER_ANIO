@@ -2712,12 +2712,11 @@ SELECT TOP 5 idUsuario, count(*) AS cantidad, nombre FROM (SELECT per.idUsuario,
 						AND
 						YEAR(pub.fechaFin) = @anio
 						AND
-						pub.idVisibilidad = @idVisibilidad) publSinCompra
+						((pub.idVisibilidad = @idVisibilidad) OR (@idVisibilidad IS NULL))) publSinCompra
 GROUP BY idUsuario, nombre
 ORDER BY cantidad DESC
 END
 GO
-
 --Clientes con mayor cantidad de productos comprados, por mes y por año, dentro de
 --un rubro particular
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[clientesConMasComprasPorTrimestreYRubro] (@trimestre INT, @anio INT, @idRubro INT)
@@ -2763,7 +2762,7 @@ FROM 			ADIOS_TERCER_ANIO.Compra com
 	LEFT JOIN	ADIOS_TERCER_ANIO.Publicacion pub ON com.idPublicacion = pub.id
 	LEFT JOIN	ADIOS_TERCER_ANIO.Persona per on per.idUsuario = com.idComprador
 WHERE 
-	pub.idRubro = @idRubro
+	((pub.idRubro = @idRubro) OR (@idRubro IS NULL))
 	AND
 	YEAR(pub.fechaFin) = @anio
 	AND

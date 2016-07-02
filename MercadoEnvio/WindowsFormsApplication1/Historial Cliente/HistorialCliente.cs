@@ -114,5 +114,15 @@ namespace MercadoEnvios.Historial_Cliente
             btnSgte.Enabled = true;
             this.getData();
         }
+
+        private void btnHistorialCalif_Click(object sender, EventArgs e)
+        {
+           // new Calificar.frmHistorial().Show();
+        }
+
+        private void frmHistorialCliente_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

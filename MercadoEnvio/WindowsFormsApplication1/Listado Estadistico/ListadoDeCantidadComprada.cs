@@ -63,5 +63,12 @@ namespace MercadoEnvios.Listado_Estadistico
 
         }
 
+        private void frmListadoDeCantidadComprada_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new frmListadoEstadistico().Show();
+            this.Close();
+        }
+
     }
 }

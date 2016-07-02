@@ -58,5 +58,12 @@ namespace MercadoEnvios.Generar_Publicación
             new Generar_Publicación.frmVerPregunta(Convert.ToString(dgvPreguntas.CurrentRow.Cells[1].Value), Convert.ToInt32(dgvPreguntas.CurrentRow.Cells[0].Value)).Show();
             this.Hide();
         }
+
+        private void frmContestarPreguntas_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new Generar_Publicación.frmElegirAccion().Show();
+            this.Close();
+        }
     }
 }

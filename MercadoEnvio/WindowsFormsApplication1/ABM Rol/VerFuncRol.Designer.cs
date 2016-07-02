@@ -89,7 +89,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Funcionalidades del rol";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmVerFuncRol_FormClosed);
-            this.Shown += new System.EventHandler(this.frmVerFuncRol_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aBMRolBindingSource)).EndInit();
             this.ResumeLayout(false);

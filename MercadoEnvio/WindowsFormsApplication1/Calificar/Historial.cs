@@ -223,5 +223,12 @@ namespace MercadoEnvios.Calificar
             new frmCalificacion().Show();
             this.Close();
         }
+
+        private void frmHistorial_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new frmCalificacion().Show();
+            this.Close();
+        }
     }
 }

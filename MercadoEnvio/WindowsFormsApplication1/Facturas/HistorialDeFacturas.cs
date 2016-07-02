@@ -25,6 +25,12 @@ namespace MercadoEnvios.Facturas
             InitializeComponent();
             sesion = Sesion.Instance;
             this.getData();
+
+            if(dgvFacturas.Rows.Count == 0){
+                btnAnt.Enabled = false;
+                btnSgte.Enabled = false;
+                btnFiltrar.Enabled = false;
+            }
         }
 
         private void getData()
@@ -340,6 +346,12 @@ namespace MercadoEnvios.Facturas
             nroPagina = 0;
             this.getData();
             btnSgte.Enabled = true;
+        }
+
+        private void HistorialDeFacturas_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new MercadoEnvios.ABM_Usuario.frmPantallaPrincipal().Show();
+            this.Close();
         }
     }
 }

@@ -76,7 +76,7 @@ namespace MercadoEnvios.ComprarOfertar
                 {
                     if (dataReader.GetInt32(11) != 0)
                     {
-                        lblCalificacionPromedio.Text = dataReader.GetInt32(11).ToString();
+                        lblCalificacionPromedio.Text = "Calificación Promedio: " + dataReader.GetInt32(11).ToString();
                     }
                     else
                     {
@@ -234,6 +234,12 @@ namespace MercadoEnvios.ComprarOfertar
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            new frmComprarOfertar().Show();
+            this.Close();
+        }
+
+        private void frmDetalle_FormClosed(object sender, FormClosedEventArgs e)
         {
             new frmComprarOfertar().Show();
             this.Close();

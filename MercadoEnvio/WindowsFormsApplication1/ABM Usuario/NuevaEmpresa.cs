@@ -292,5 +292,12 @@ namespace MercadoEnvios.ABM_Usuario
         {
             funcionesValidacion.ingresarMail(e);
         }
+
+        private void frmNuevaEmpresa_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new frmABMUsuario().Show();
+            this.Close();
+        }
     }
 }

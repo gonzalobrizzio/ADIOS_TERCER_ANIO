@@ -123,5 +123,12 @@ namespace MercadoEnvios.ABM_Visibilidad
             dgvVisibilidad.CurrentRow.Selected = true;
         }
 
+        private void frmABMVisibilidad_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            new ABM_Usuario.frmPantallaPrincipal().Show();
+            this.Close();
+        }
+
     }
 }
