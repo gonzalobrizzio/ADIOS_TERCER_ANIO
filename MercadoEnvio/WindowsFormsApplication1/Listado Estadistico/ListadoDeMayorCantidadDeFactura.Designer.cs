@@ -35,11 +35,10 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(640, 244);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Location = new System.Drawing.Point(480, 198);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(121, 39);
-            this.btnVolver.TabIndex = 3;
+            this.btnVolver.Size = new System.Drawing.Size(91, 32);
+            this.btnVolver.TabIndex = 2;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
@@ -47,20 +46,18 @@
             // listado
             // 
             this.listado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.listado.Location = new System.Drawing.Point(25, 28);
-            this.listado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listado.Location = new System.Drawing.Point(19, 23);
             this.listado.Name = "listado";
-            this.listado.Size = new System.Drawing.Size(736, 193);
+            this.listado.Size = new System.Drawing.Size(552, 157);
             this.listado.TabIndex = 2;
             // 
             // frmListadoDeMayorCantidadDeFactura
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 298);
+            this.ClientSize = new System.Drawing.Size(587, 242);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.listado);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmListadoDeMayorCantidadDeFactura";
             this.Text = "Listado de mayores cantidades de facturas";
             ((System.ComponentModel.ISupportInitialize)(this.listado)).EndInit();

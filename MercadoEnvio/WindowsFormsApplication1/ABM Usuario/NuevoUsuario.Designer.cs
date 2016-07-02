@@ -52,7 +52,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(65, 173);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 20;
+            this.btnAceptar.TabIndex = 2;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -62,7 +62,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(196, 173);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 21;
+            this.btnCancelar.TabIndex = 3;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -83,7 +83,7 @@
             this.cmbRolAsignado.Location = new System.Drawing.Point(140, 78);
             this.cmbRolAsignado.Name = "cmbRolAsignado";
             this.cmbRolAsignado.Size = new System.Drawing.Size(159, 21);
-            this.cmbRolAsignado.TabIndex = 23;
+            this.cmbRolAsignado.TabIndex = 1;
             // 
             // frmNuevoUsuario
             // 

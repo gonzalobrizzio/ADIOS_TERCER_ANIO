@@ -329,6 +329,7 @@
             this.Name = "frmHistorial";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Historial";
+            this.Load += new System.EventHandler(this.frmHistorial_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -42,7 +42,7 @@
             this.btnConfirmar.Location = new System.Drawing.Point(28, 154);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(96, 42);
-            this.btnConfirmar.TabIndex = 0;
+            this.btnConfirmar.TabIndex = 1;
             this.btnConfirmar.Text = "Confirmar";
             this.btnConfirmar.UseVisualStyleBackColor = true;
             this.btnConfirmar.Click += new System.EventHandler(this.btnConfirmar_Click);
@@ -51,7 +51,7 @@
             // 
             this.txtNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNumeric.Location = new System.Drawing.Point(84, 107);
-            this.txtNumeric.MaxLength = 15;
+            this.txtNumeric.MaxLength = 0;
             this.txtNumeric.Name = "txtNumeric";
             this.txtNumeric.Size = new System.Drawing.Size(96, 26);
             this.txtNumeric.TabIndex = 1;

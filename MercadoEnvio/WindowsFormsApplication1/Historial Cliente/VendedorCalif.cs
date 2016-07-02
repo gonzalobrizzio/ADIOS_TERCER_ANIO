@@ -8,25 +8,25 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MercadoEnvios.Calificar
+namespace MercadoEnvios.Historial_Cliente
 {
-    public partial class frmHistorial : Form
+    public partial class VendedorCalif : Form
     {
         Conexion conn = Conexion.Instance;
-        SqlDataAdapter da;
         Sesion sesion = Sesion.Instance;
 
-        public frmHistorial()
+        public VendedorCalif()
         {
             InitializeComponent();
+          
             this.getData();
         }
 
-        private void getData(){
-
-            String queryCantPendientes = "SELECT COUNT(calificacion.id) FROM ADIOS_TERCER_ANIO.Calificacion calificacion" + 
-            " inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calificacion.idCompra" +
-            " where compra.idComprador = " + sesion.idUsuario + " and pendiente = 1";
+        public void getData()
+        {
+            String queryCantPendientes = "SELECT COUNT(calificacion.id) FROM ADIOS_TERCER_ANIO.Calificacion calificacion" +
+                        " inner join ADIOS_TERCER_ANIO.Compra compra on compra.id = calificacion.idCompra" +
+                        " where compra.idComprador = " + sesion.idUsuario + " and pendiente = 1";
 
             try
             {
@@ -38,42 +38,13 @@ namespace MercadoEnvios.Calificar
             {
                 throw new Exception("Error al intentar obtener calificaciones pendientes.\n" + ex.Message);
             }
-        
 
             SqlParameter idCalificador = new SqlParameter("@idCalificador", SqlDbType.Int);
             idCalificador.SqlValue = sesion.idUsuario;
             idCalificador.Direction = ParameterDirection.Input;
 
-            String cmd = "ADIOS_TERCER_ANIO.cargarUltimasCalificaciones";
-
-            da = new SqlDataAdapter(cmd, conn.getConexion);
-            da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
-            da.SelectCommand.Parameters.Add(idCalificador);
-            da.SelectCommand.ExecuteNonQuery();
-
-            try
-            {
-                da.SelectCommand.ExecuteNonQuery();
-
-                DataTable tablaDeCompras = new DataTable("Calificaciones");
-                da.Fill(tablaDeCompras);
-                dgvHistorial.DataSource = tablaDeCompras;
-                dgvHistorial.Columns[0].Width = 100;
-                dgvHistorial.Columns[1].Width = 200;
-                dgvHistorial.Columns[2].Visible = false;
-                dgvHistorial.AllowUserToAddRows = false;
-                dgvHistorial.AllowUserToDeleteRows = false;
-                dgvHistorial.ReadOnly = true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al intentar obtener ultimas calificaciones.\n" + ex.Message);
-            }
-
             SqlCommand obtenerCantidad = new SqlCommand("ADIOS_TERCER_ANIO.obtenerTipoDeCompraConNPuntaje", conn.getConexion);
             obtenerCantidad.CommandType = System.Data.CommandType.StoredProcedure;
-
-            da.SelectCommand.Parameters.Clear();
 
             SqlParameter puntaje = new SqlParameter("@puntaje", SqlDbType.Int);
             puntaje.Direction = ParameterDirection.Input;
@@ -166,7 +137,7 @@ namespace MercadoEnvios.Calificar
             obtenerCantidad.Parameters.Clear();
 
             puntaje.SqlValue = 2;
-            
+
             obtenerCantidad.Parameters.Add(idCalificador);
             obtenerCantidad.Parameters.Add(puntaje);
             obtenerCantidad.Parameters.Add(tipo);
@@ -218,16 +189,21 @@ namespace MercadoEnvios.Calificar
             obtenerCantidad.Parameters.Clear();
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void btnCalificar_Click(object sender, EventArgs e)
         {
-            new frmCalificacion().Show();
+            new Calificar.frmCalificacion().Show();
             this.Close();
         }
 
-        private void frmHistorial_Load(object sender, EventArgs e)
+        private void VendedorCalif_Load(object sender, EventArgs e)
         {
 
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            new Historial_Cliente.frmHistorialCliente().Show();
+            this.Close();
+        }
     }
 }

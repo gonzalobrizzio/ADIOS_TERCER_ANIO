@@ -13,7 +13,6 @@ namespace MercadoEnvios.ABM_Rol
     public partial class frmElegirRol : Form
     {
         Sesion sesion = Sesion.Instance;
-        string usr;
 
         public frmElegirRol(string roles)
         {

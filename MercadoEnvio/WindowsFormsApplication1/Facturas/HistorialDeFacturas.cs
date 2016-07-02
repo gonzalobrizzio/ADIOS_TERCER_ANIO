@@ -35,9 +35,9 @@ namespace MercadoEnvios.Facturas
 
         private void getData()
         {
-            DateTime fechaDesdeD = DateTime.ParseExact("2015-02-28 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
+            DateTime fechaDesdeD = DateTime.ParseExact("1900-02-28 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
                             System.Globalization.CultureInfo.InvariantCulture);
-            DateTime fechaHastaD = DateTime.ParseExact("2016-05-28 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
+            DateTime fechaHastaD = DateTime.ParseExact("3000-05-28 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
                                        System.Globalization.CultureInfo.InvariantCulture);
             decimal desdePrecioD = -1;
             decimal hastaPrecioD = -1;

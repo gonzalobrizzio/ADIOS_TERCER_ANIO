@@ -208,7 +208,7 @@
             this.btnSgte.Location = new System.Drawing.Point(311, 83);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(117, 22);
-            this.btnSgte.TabIndex = 18;
+            this.btnSgte.TabIndex = 2;
             this.btnSgte.Text = "Siguiente pregunta";
             this.btnSgte.UseVisualStyleBackColor = true;
             this.btnSgte.Click += new System.EventHandler(this.btnSgte_Click);
@@ -218,7 +218,7 @@
             this.btnAnt.Location = new System.Drawing.Point(6, 83);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(117, 22);
-            this.btnAnt.TabIndex = 19;
+            this.btnAnt.TabIndex = 1;
             this.btnAnt.Text = "Anterior pregunta";
             this.btnAnt.UseVisualStyleBackColor = true;
             this.btnAnt.Click += new System.EventHandler(this.btnAnt_Click);
@@ -228,7 +228,7 @@
             this.btnPregunta.Location = new System.Drawing.Point(20, 428);
             this.btnPregunta.Name = "btnPregunta";
             this.btnPregunta.Size = new System.Drawing.Size(316, 23);
-            this.btnPregunta.TabIndex = 20;
+            this.btnPregunta.TabIndex = 4;
             this.btnPregunta.Text = "Realizar pregunta";
             this.btnPregunta.UseVisualStyleBackColor = true;
             this.btnPregunta.Click += new System.EventHandler(this.btnPregunta_Click);
@@ -240,14 +240,14 @@
             this.txtPregunta.Multiline = true;
             this.txtPregunta.Name = "txtPregunta";
             this.txtPregunta.Size = new System.Drawing.Size(316, 73);
-            this.txtPregunta.TabIndex = 21;
+            this.txtPregunta.TabIndex = 3;
             // 
             // btnComprar
             // 
             this.btnComprar.Location = new System.Drawing.Point(342, 349);
             this.btnComprar.Name = "btnComprar";
             this.btnComprar.Size = new System.Drawing.Size(112, 46);
-            this.btnComprar.TabIndex = 22;
+            this.btnComprar.TabIndex = 5;
             this.btnComprar.Text = "Comprar";
             this.btnComprar.UseVisualStyleBackColor = true;
             this.btnComprar.Click += new System.EventHandler(this.btnComprar_Click);
@@ -257,7 +257,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(343, 405);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(112, 46);
-            this.btnCancelar.TabIndex = 23;
+            this.btnCancelar.TabIndex = 6;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);

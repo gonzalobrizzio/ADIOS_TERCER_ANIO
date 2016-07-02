@@ -129,6 +129,7 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 frmHistorialCliente frm = new frmHistorialCliente();
                 frm.Show(this);
+                this.Close();
             }
 
             else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Listado Estadistico")

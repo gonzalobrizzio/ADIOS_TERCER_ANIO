@@ -102,7 +102,7 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void btnSgte_Click(object sender, EventArgs e)
         {
-            if (nroPagina < getCantPublicaciones()/10)
+            if (nroPagina < getCantPublicaciones() / 10)
             {
                 nroPagina++;
                 btnAnt.Enabled = true;
@@ -126,9 +126,10 @@ namespace MercadoEnvios.ComprarOfertar
         private void btnVolver_Click(object sender, EventArgs e)
         {
             new frmPantallaPrincipal().Show();
+            btnSgte.Enabled = true;
             this.Close();
         }
-        
+
         public int getCantPublicaciones()
         {
             int retorno = 0;
@@ -136,8 +137,9 @@ namespace MercadoEnvios.ComprarOfertar
             String queryCant = "SELECT COUNT(publicacion.id) FROM ADIOS_TERCER_ANIO.Publicacion publicacion " +
             "inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id " +
             "inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion " +
-            "inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro " +
-            "WHERE ((publicacion.idEstado = 2) OR (publicacion.idEstado = 3)) AND publicacion.idPublicador != " + sesion.idUsuario + " - " + nroPagina + " * 20";
+            "inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro ";
+
+            //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
 
             if (!String.IsNullOrEmpty(txtDescripción.Text))
             {
@@ -162,7 +164,7 @@ namespace MercadoEnvios.ComprarOfertar
             }
 
             queryCant += " WHERE publicacion.idPublicador != " + sesion.idUsuario + "and publicacion.stock > 0";
-            //queryCant += " AND publicacion.idEstado = 2";
+            queryCant += " AND (publicacion.idEstado = 2 OR publicacion.idEstado = 3)";
 
             //MessageBox.Show(queryCant);
 
@@ -182,25 +184,25 @@ namespace MercadoEnvios.ComprarOfertar
         public void getPublicacionesPagina()
         {
 
-            int paginaInicio = getCantPublicaciones() - nroPagina * 20;
-            label1.Text = paginaInicio.ToString();
+            int paginaInicio = getCantPublicaciones() - nroPagina * 10;
 
-            String queryPublicaciones = "WITH tabla AS (SELECT TOP " + paginaInicio + 
+            String queryPublicaciones = "WITH tabla AS (SELECT TOP " + paginaInicio +
                                                                     " publicacion.descripcion, " +
-                            										"tipoP.nombre AS tipo, " +
-                            										"publicacion.precio, " +
-                            										"publicacion.fechaInicio as fechaInicio, " +
+                                                                    "tipoP.nombre AS tipo, " +
+                                                                    "publicacion.precio, " +
+                                                                    "publicacion.fechaInicio as fechaInicio, " +
                                                                     "publicacion.fechaFin, " +
                                                                     "publicacion.stock, " +
                                                                     "rubro.descripcionCorta as rubro, " +
                                                                     "IIF(publicacion.tieneEnvio = 0, 'SI', 'NO') AS envio, " +
                                                                     "visib.porcentaje as porcentaje, " +
-                                                                    "publicacion.id " + 
-						                            "FROM ADIOS_TERCER_ANIO.Publicacion publicacion " + 
+                                                                    "publicacion.id " +
+                                                    "FROM ADIOS_TERCER_ANIO.Publicacion publicacion " +
                             "inner join ADIOS_TERCER_ANIO.Visibilidad visib ON publicacion.idVisibilidad = visib.id " +
-							"inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion " +
-							"inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro " +
-                            "WHERE ((publicacion.idEstado = 2) OR (publicacion.idEstado = 3)) AND publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";
+                            "inner join ADIOS_TERCER_ANIO.TipoPublicacion tipoP ON tipoP.id = publicacion.idTipoPublicacion " +
+                            "inner join ADIOS_TERCER_ANIO.Rubro rubro ON rubro.id = publicacion.idRubro ";
+
+            //"WHERE publicacion.idPublicador != " + sesion.idUsuario + ") - " + nroPagina + " * 20";  -> FINAL
 
             if (!String.IsNullOrEmpty(txtDescripción.Text))
             {
@@ -224,8 +226,8 @@ namespace MercadoEnvios.ComprarOfertar
                 queryPublicaciones += " AND (" + findRubros + ") ";
             }
 
-            queryPublicaciones += " WHERE publicacion.idPublicador != " + sesion.idUsuario + " and publicacion.stock > 0 " + 
-            //            " AND publicacion.idEstado = 2 " +
+            queryPublicaciones += " WHERE publicacion.idPublicador != " + sesion.idUsuario + " and publicacion.stock > 0 " +
+                            " AND (publicacion.idEstado = 2 OR publicacion.idEstado = 3)" +
                         " ORDER BY visib.porcentaje asc, publicacion.fechaInicio ASC)" +
                         " SELECT TOP 10 * FROM tabla ORDER by tabla.porcentaje DESC, tabla.fechaInicio DESC";
 
@@ -235,33 +237,33 @@ namespace MercadoEnvios.ComprarOfertar
 
             try
             {
-                   da.SelectCommand.ExecuteNonQuery();
-                   DataTable tablaPublicaciones = new DataTable("Facturas");
-                   da.Fill(tablaPublicaciones);
-                   dgvPublicaciones.DataSource = tablaPublicaciones;
-                   //" publicacion.descripcion, " +
-                   //"tipop.nombre as tipo, " +
-                   //"publicacion.precio, " +
-                   //"publicacion.fechainicio, " +
-                   //"publicacion.fechafin, " +
-                   //"publicacion.stock, " +
-                   //"rubro.descripcioncorta as rubro, " +
-                   //"iif(publicacion.tieneenvio = 0, 'si', 'no') as envio " +
-                   //"visib.porcentaje, " +
-                   //"publicacion.id, " + 
-                   dgvPublicaciones.Columns[0].Width = 200;
-                   dgvPublicaciones.Columns[1].Width = 100;
-                   dgvPublicaciones.Columns[2].Width = 50;
-                   dgvPublicaciones.Columns[3].Width = 75;
-                   dgvPublicaciones.Columns[4].Width = 75;
-                   dgvPublicaciones.Columns[5].Width = 50;
-                   dgvPublicaciones.Columns[6].Width = 150;
-                   dgvPublicaciones.Columns[7].Visible = false;
-                   dgvPublicaciones.Columns[8].Visible = false;
-                   dgvPublicaciones.Columns[9].Visible = false;
-                   dgvPublicaciones.AllowUserToDeleteRows = false;
-                   dgvPublicaciones.AllowUserToAddRows = false;
-                   dgvPublicaciones.ReadOnly = true;
+                da.SelectCommand.ExecuteNonQuery();
+                DataTable tablaPublicaciones = new DataTable("Facturas");
+                da.Fill(tablaPublicaciones);
+                dgvPublicaciones.DataSource = tablaPublicaciones;
+                //" publicacion.descripcion, " +
+                //"tipop.nombre as tipo, " +
+                //"publicacion.precio, " +
+                //"publicacion.fechainicio, " +
+                //"publicacion.fechafin, " +
+                //"publicacion.stock, " +
+                //"rubro.descripcioncorta as rubro, " +
+                //"iif(publicacion.tieneenvio = 0, 'si', 'no') as envio " +
+                //"visib.porcentaje, " +
+                //"publicacion.id, " + 
+                dgvPublicaciones.Columns[0].Width = 200;
+                dgvPublicaciones.Columns[1].Width = 100;
+                dgvPublicaciones.Columns[2].Width = 50;
+                dgvPublicaciones.Columns[3].Width = 75;
+                dgvPublicaciones.Columns[4].Width = 75;
+                dgvPublicaciones.Columns[5].Width = 50;
+                dgvPublicaciones.Columns[6].Width = 150;
+                dgvPublicaciones.Columns[7].Visible = false;
+                dgvPublicaciones.Columns[8].Visible = false;
+                dgvPublicaciones.Columns[9].Visible = false;
+                dgvPublicaciones.AllowUserToDeleteRows = false;
+                dgvPublicaciones.AllowUserToAddRows = false;
+                dgvPublicaciones.ReadOnly = true;
             }
             catch (Exception ex)
             {
@@ -274,7 +276,7 @@ namespace MercadoEnvios.ComprarOfertar
         {
             int idPublicacion = Convert.ToInt32(dgvPublicaciones[9, dgvPublicaciones.CurrentCell.RowIndex].Value);
             new frmDetalle(idPublicacion).Show();
-            this.Hide(); 
+            this.Hide();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -349,8 +351,9 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void txtPagina_TextChanged(object sender, EventArgs e)
         {
-            if (txtPagina.Text != ""){
-                if(Convert.ToInt32(txtPagina.Text) <= getCantPublicaciones() / 10)
+            if (txtPagina.Text != "")
+            {
+                if (Convert.ToInt32(txtPagina.Text) <= getCantPublicaciones() / 10)
                 {
                     nroPagina = Convert.ToInt32(txtPagina.Text);
                     getData();
@@ -361,6 +364,5 @@ namespace MercadoEnvios.ComprarOfertar
                 }
             }
         }
-
     }
 }

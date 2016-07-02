@@ -78,7 +78,7 @@
             this.btnVolver.Location = new System.Drawing.Point(726, 462);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(119, 25);
-            this.btnVolver.TabIndex = 10;
+            this.btnVolver.TabIndex = 12;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click_1);
@@ -145,7 +145,7 @@
             this.busquedaClienteTp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.busquedaClienteTp.Location = new System.Drawing.Point(4, 29);
             this.busquedaClienteTp.Name = "busquedaClienteTp";
-            this.busquedaClienteTp.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.busquedaClienteTp.Padding = new System.Windows.Forms.Padding(3);
             this.busquedaClienteTp.Size = new System.Drawing.Size(811, 358);
             this.busquedaClienteTp.TabIndex = 0;
             this.busquedaClienteTp.Text = "Cliente";
@@ -170,7 +170,7 @@
             this.mailC.MaxLength = 75;
             this.mailC.Name = "mailC";
             this.mailC.Size = new System.Drawing.Size(76, 20);
-            this.mailC.TabIndex = 94;
+            this.mailC.TabIndex = 4;
             this.mailC.TextChanged += new System.EventHandler(this.mailC_TextChanged);
             this.mailC.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mailC_KeyPress);
             // 
@@ -190,7 +190,7 @@
             this.dni.MaxLength = 12;
             this.dni.Name = "dni";
             this.dni.Size = new System.Drawing.Size(76, 20);
-            this.dni.TabIndex = 92;
+            this.dni.TabIndex = 3;
             this.dni.TextChanged += new System.EventHandler(this.dni_TextChanged);
             this.dni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dni_KeyPress);
             // 
@@ -210,7 +210,7 @@
             this.apellido.MaxLength = 29;
             this.apellido.Name = "apellido";
             this.apellido.Size = new System.Drawing.Size(76, 20);
-            this.apellido.TabIndex = 90;
+            this.apellido.TabIndex = 2;
             this.apellido.TextChanged += new System.EventHandler(this.apellido_TextChanged);
             this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
             // 
@@ -230,7 +230,7 @@
             this.nombre.MaxLength = 29;
             this.nombre.Name = "nombre";
             this.nombre.Size = new System.Drawing.Size(76, 20);
-            this.nombre.TabIndex = 88;
+            this.nombre.TabIndex = 1;
             this.nombre.TextChanged += new System.EventHandler(this.nombre_TextChanged);
             this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombre_KeyPress);
             // 
@@ -255,7 +255,7 @@
             this.Empresa.Controls.Add(this.label14);
             this.Empresa.Location = new System.Drawing.Point(4, 29);
             this.Empresa.Name = "Empresa";
-            this.Empresa.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.Empresa.Padding = new System.Windows.Forms.Padding(3);
             this.Empresa.Size = new System.Drawing.Size(811, 358);
             this.Empresa.TabIndex = 1;
             this.Empresa.Text = "Empresa";
@@ -280,7 +280,7 @@
             this.mailE.MaxLength = 75;
             this.mailE.Name = "mailE";
             this.mailE.Size = new System.Drawing.Size(103, 20);
-            this.mailE.TabIndex = 102;
+            this.mailE.TabIndex = 7;
             this.mailE.TextChanged += new System.EventHandler(this.mailE_TextChanged);
             this.mailE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mailE_KeyPress);
             // 
@@ -300,7 +300,7 @@
             this.cuit.MaxLength = 20;
             this.cuit.Name = "cuit";
             this.cuit.Size = new System.Drawing.Size(98, 20);
-            this.cuit.TabIndex = 100;
+            this.cuit.TabIndex = 6;
             this.cuit.TextChanged += new System.EventHandler(this.cuit_TextChanged);
             this.cuit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cuit_KeyPress);
             // 
@@ -320,7 +320,7 @@
             this.razonSocial.MaxLength = 75;
             this.razonSocial.Name = "razonSocial";
             this.razonSocial.Size = new System.Drawing.Size(87, 20);
-            this.razonSocial.TabIndex = 98;
+            this.razonSocial.TabIndex = 5;
             this.razonSocial.TextChanged += new System.EventHandler(this.razonSocial_TextChanged);
             // 
             // label14
@@ -338,7 +338,7 @@
             this.btnHabilitar.Location = new System.Drawing.Point(165, 462);
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(109, 25);
-            this.btnHabilitar.TabIndex = 124;
+            this.btnHabilitar.TabIndex = 9;
             this.btnHabilitar.Text = "Habilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
             this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
@@ -348,7 +348,7 @@
             this.btnDeshabilitar.Location = new System.Drawing.Point(280, 462);
             this.btnDeshabilitar.Name = "btnDeshabilitar";
             this.btnDeshabilitar.Size = new System.Drawing.Size(115, 25);
-            this.btnDeshabilitar.TabIndex = 125;
+            this.btnDeshabilitar.TabIndex = 10;
             this.btnDeshabilitar.Text = "Deshabilitar";
             this.btnDeshabilitar.UseVisualStyleBackColor = true;
             this.btnDeshabilitar.Click += new System.EventHandler(this.btnDeshabilitar_Click);
@@ -358,7 +358,7 @@
             this.btnAgregarUsuario.Location = new System.Drawing.Point(401, 462);
             this.btnAgregarUsuario.Name = "btnAgregarUsuario";
             this.btnAgregarUsuario.Size = new System.Drawing.Size(109, 25);
-            this.btnAgregarUsuario.TabIndex = 119;
+            this.btnAgregarUsuario.TabIndex = 11;
             this.btnAgregarUsuario.Text = "Agregar Usuario";
             this.btnAgregarUsuario.UseVisualStyleBackColor = true;
             this.btnAgregarUsuario.Click += new System.EventHandler(this.btnAgregarUsuario_Click);
@@ -368,7 +368,7 @@
             this.btnModificar.Location = new System.Drawing.Point(50, 462);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(109, 25);
-            this.btnModificar.TabIndex = 120;
+            this.btnModificar.TabIndex = 8;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);

@@ -2065,6 +2065,11 @@ BEGIN
 		@uIntentos = u.intentos
 	from ADIOS_TERCER_ANIO.Usuario u
 	where RTRIM(LTRIM(@usuario)) = RTRIM(LTRIM(u.usuario))
+	
+	IF(@uIntentos = 5)
+	BEGIN
+		UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE usuario = @usuario
+	END
 
 	If (@uId is not null)
 	Begin
@@ -2073,6 +2078,7 @@ BEGIN
 			If (@uPass = @pass)
 				Begin
 					set @idUsuario = @uId
+					UPDATE ADIOS_TERCER_ANIO.Usuario SET intentos = 0 WHERE usuario = @usuario
 					RETURN
 				End
 			Else
@@ -3001,38 +3007,40 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
+ALTER PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
 														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant INT OUTPUT)
 AS
 BEGIN
 
 	--DECLARE @idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
-	--		@hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255)
+	--		@hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant int
 	--SET @idUsuario = 3
 	--SET @pagina = 0
 	SET @cant = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-			LEFT JOIN item itm ON (f.id = itm.idFactura) 
+			--LEFT JOIN ADIOS_TERCER_ANIO.Item itm ON (f.id = itm.idFactura) 
 			inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
 			AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
 			AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
-			AND ((itm.nombre LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
+			--AND ((itm.nombre LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 			AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 			where p.idPublicador = @idUsuario) - @pagina * 10;
 		
 		WITH TablaP as (select TOP (@cant) f.numero AS Numero_de_Factura, f.importeTotal AS Importe, f.fecha AS Fecha, u.usuario AS Destinatario from ADIOS_TERCER_ANIO.Factura f
 		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
-		LEFT JOIN item itm ON (f.id = itm.idFactura)
+		--LEFT JOIN ADIOS_TERCER_ANIO.Item itm ON (f.id = itm.idFactura)
 		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
-		WHERE @idUsuario = P.idPublicador 
+		WHERE @idUsuario = p.idPublicador 
 		AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
 		AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
-		AND ((itm.nombre  LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
+		--AND ((itm.nombre  LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 		AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
 		ORDER BY f.fecha ASC)
 	SELECT top 10 * FROM TablaP ORDER by TablaP.Fecha desc
 END
 GO
+
+EXEC ADIOS_TERCER_ANIO.obtenerFacturasPaginaN 2, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT, @pagina INT, @cant INT OUTPUT)
 AS
 BEGIN
@@ -3103,7 +3111,3 @@ AS BEGIN
 	and oferta.idPublicacion = @idPublicacion
 END
 GO
-
-
-
-SELECT * FROM ADIOS_TERCER_ANIO.Usuario

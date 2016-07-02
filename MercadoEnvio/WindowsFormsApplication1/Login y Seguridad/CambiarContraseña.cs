@@ -46,10 +46,11 @@ namespace MercadoEnvios.Login_y_Seguridad
                     MessageBox.Show("Contraseña incorrecta");
                 }
 
-                if (contraseñaNueva.Text != contraseñaConfirmada.Text)
+                else if (contraseñaNueva.Text != contraseñaConfirmada.Text)
                 {
                     MessageBox.Show("La contraseña confirmada difiere de la nueva");
-                } else {
+                } 
+                else {
 
                         SqlCommand comandoModificarPassword = new SqlCommand("ADIOS_TERCER_ANIO.modificarPassword", conn.getConexion);
                         comandoModificarPassword.CommandType = CommandType.StoredProcedure;

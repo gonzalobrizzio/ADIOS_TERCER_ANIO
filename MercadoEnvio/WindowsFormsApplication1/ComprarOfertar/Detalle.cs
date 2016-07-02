@@ -94,7 +94,20 @@ namespace MercadoEnvios.ComprarOfertar
             }
             dataReader.Close();
 
-            if (preguntas)
+            if (idEstado == 3)
+            {
+                txtPregunta.Visible = false;
+                Envio.Enabled = false;
+                lblPausa.Visible = true;
+                grpPreguntas.Visible = false;
+                lblRespuesta.Text = "";
+                txtPregunta.Enabled = false;
+                btnAnt.Enabled = false;
+                btnPregunta.Enabled = false;
+                btnSgte.Enabled = false;
+                btnComprar.Enabled = false;
+            }
+            else if (preguntas )
             {
                 cmd = "ADIOS_TERCER_ANIO.obtenerPregunta";
                 SqlCommand pregunta = new SqlCommand(cmd, conn.getConexion);
@@ -128,26 +141,13 @@ namespace MercadoEnvios.ComprarOfertar
 
                 dataReader.Close();
             }
-            else if(preguntas == false && idEstado !=3) { 
+            else if(!preguntas && idEstado == 2) { 
                 lblPregunta.Text = "¡Las preguntas no están disponibles!";
                 lblRespuesta.Text = "";
                 txtPregunta.Enabled = false;
                 btnAnt.Enabled = false;
                 btnPregunta.Enabled = false;
                 btnSgte.Enabled = false;
-            }
-            else if(idEstado == 3)
-            {
-                txtPregunta.Visible = false;
-                Envio.Enabled = false;
-                lblPausa.Visible = true;
-                grpPreguntas.Visible = false;
-                lblRespuesta.Text = "";
-                txtPregunta.Enabled = false;
-                btnAnt.Enabled = false;
-                btnPregunta.Enabled = false;
-                btnSgte.Enabled = false;
-                btnComprar.Enabled = false;
             }
 
         }

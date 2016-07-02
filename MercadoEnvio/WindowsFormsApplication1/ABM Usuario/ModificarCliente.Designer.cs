@@ -80,7 +80,7 @@
             this.Fecha_De_Nacimiento.MaxLength = 25;
             this.Fecha_De_Nacimiento.Name = "Fecha_De_Nacimiento";
             this.Fecha_De_Nacimiento.Size = new System.Drawing.Size(133, 20);
-            this.Fecha_De_Nacimiento.TabIndex = 14;
+            this.Fecha_De_Nacimiento.TabIndex = 15;
             // 
             // label6
             // 
@@ -144,7 +144,7 @@
             this.Localidad.Location = new System.Drawing.Point(153, 354);
             this.Localidad.Name = "Localidad";
             this.Localidad.Size = new System.Drawing.Size(159, 21);
-            this.Localidad.TabIndex = 12;
+            this.Localidad.TabIndex = 13;
             // 
             // CodigoPostal
             // 
@@ -152,7 +152,7 @@
             this.CodigoPostal.MaxLength = 5;
             this.CodigoPostal.Name = "CodigoPostal";
             this.CodigoPostal.Size = new System.Drawing.Size(100, 20);
-            this.CodigoPostal.TabIndex = 13;
+            this.CodigoPostal.TabIndex = 14;
             this.CodigoPostal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CodigoPostal_KeyPress);
             // 
             // Piso
@@ -161,7 +161,7 @@
             this.Piso.MaxLength = 4;
             this.Piso.Name = "Piso";
             this.Piso.Size = new System.Drawing.Size(57, 20);
-            this.Piso.TabIndex = 11;
+            this.Piso.TabIndex = 12;
             // 
             // Depto
             // 
@@ -169,7 +169,7 @@
             this.Depto.MaxLength = 4;
             this.Depto.Name = "Depto";
             this.Depto.Size = new System.Drawing.Size(49, 20);
-            this.Depto.TabIndex = 10;
+            this.Depto.TabIndex = 11;
             // 
             // Nro_de_Direccion
             // 
@@ -177,7 +177,7 @@
             this.Nro_de_Direccion.MaxLength = 10;
             this.Nro_de_Direccion.Name = "Nro_de_Direccion";
             this.Nro_de_Direccion.Size = new System.Drawing.Size(81, 20);
-            this.Nro_de_Direccion.TabIndex = 9;
+            this.Nro_de_Direccion.TabIndex = 10;
             // 
             // Direccion
             // 
@@ -185,7 +185,7 @@
             this.Direccion.MaxLength = 40;
             this.Direccion.Name = "Direccion";
             this.Direccion.Size = new System.Drawing.Size(100, 20);
-            this.Direccion.TabIndex = 8;
+            this.Direccion.TabIndex = 9;
             // 
             // Telefono
             // 
@@ -193,7 +193,7 @@
             this.Telefono.MaxLength = 20;
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
-            this.Telefono.TabIndex = 7;
+            this.Telefono.TabIndex = 8;
             this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Telefono_KeyPress);
             // 
             // Nro_de_Documento
@@ -202,7 +202,7 @@
             this.Nro_de_Documento.MaxLength = 12;
             this.Nro_de_Documento.Name = "Nro_de_Documento";
             this.Nro_de_Documento.Size = new System.Drawing.Size(100, 20);
-            this.Nro_de_Documento.TabIndex = 60;
+            this.Nro_de_Documento.TabIndex = 7;
             this.Nro_de_Documento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nro_de_Documento_KeyPress);
             // 
             // Apellido
@@ -332,7 +332,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(588, 420);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 83;
+            this.btnCancelar.TabIndex = 17;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -342,7 +342,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(483, 420);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 15;
+            this.btnAceptar.TabIndex = 16;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);

@@ -65,7 +65,7 @@
             this.btnSgte.Location = new System.Drawing.Point(596, 303);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(41, 33);
-            this.btnSgte.TabIndex = 7;
+            this.btnSgte.TabIndex = 8;
             this.btnSgte.Text = ">>>";
             this.btnSgte.UseVisualStyleBackColor = true;
             this.btnSgte.Click += new System.EventHandler(this.btnSgte_Click);
@@ -75,7 +75,7 @@
             this.btnAnt.Location = new System.Drawing.Point(27, 303);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(41, 33);
-            this.btnAnt.TabIndex = 6;
+            this.btnAnt.TabIndex = 7;
             this.btnAnt.Text = "<<<";
             this.btnAnt.UseVisualStyleBackColor = true;
             this.btnAnt.Click += new System.EventHandler(this.btnAnt_Click);
@@ -110,14 +110,14 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvFacturas.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvFacturas.Size = new System.Drawing.Size(507, 249);
-            this.dgvFacturas.TabIndex = 4;
+            this.dgvFacturas.TabIndex = 70;
             // 
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(511, 463);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
-            this.btnVolver.TabIndex = 8;
+            this.btnVolver.TabIndex = 9;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
@@ -138,7 +138,7 @@
             this.destinatarioTxt.Name = "destinatarioTxt";
             this.destinatarioTxt.ReadOnly = true;
             this.destinatarioTxt.Size = new System.Drawing.Size(85, 20);
-            this.destinatarioTxt.TabIndex = 105;
+            this.destinatarioTxt.TabIndex = 6;
             this.destinatarioTxt.TextChanged += new System.EventHandler(this.destinatarioTxt_TextChanged);
             // 
             // label8
@@ -161,7 +161,7 @@
             this.descripcionTxt.Name = "descripcionTxt";
             this.descripcionTxt.ReadOnly = true;
             this.descripcionTxt.Size = new System.Drawing.Size(129, 41);
-            this.descripcionTxt.TabIndex = 103;
+            this.descripcionTxt.TabIndex = 5;
             this.descripcionTxt.TextChanged += new System.EventHandler(this.descripcionTxt_TextChanged);
             // 
             // usuarioLbl
@@ -180,7 +180,7 @@
             this.hastaPrecioTxt.Name = "hastaPrecioTxt";
             this.hastaPrecioTxt.ReadOnly = true;
             this.hastaPrecioTxt.Size = new System.Drawing.Size(85, 20);
-            this.hastaPrecioTxt.TabIndex = 100;
+            this.hastaPrecioTxt.TabIndex = 4;
             this.hastaPrecioTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.hastaPrecioTxt_KeyPress);
             // 
             // label6
@@ -210,7 +210,7 @@
             this.desdePrecioTxt.Name = "desdePrecioTxt";
             this.desdePrecioTxt.ReadOnly = true;
             this.desdePrecioTxt.Size = new System.Drawing.Size(85, 20);
-            this.desdePrecioTxt.TabIndex = 97;
+            this.desdePrecioTxt.TabIndex = 3;
             this.desdePrecioTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.desdePrecioTxt_KeyPress);
             // 
             // label3
@@ -337,7 +337,7 @@
             this.fechaDesdeDtp.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.fechaDesdeDtp.Name = "fechaDesdeDtp";
             this.fechaDesdeDtp.Size = new System.Drawing.Size(85, 20);
-            this.fechaDesdeDtp.TabIndex = 116;
+            this.fechaDesdeDtp.TabIndex = 1;
             this.fechaDesdeDtp.ValueChanged += new System.EventHandler(this.fechaDesdeDtp_ValueChanged);
             // 
             // fechaHastaDtp
@@ -347,7 +347,7 @@
             this.fechaHastaDtp.Location = new System.Drawing.Point(221, 68);
             this.fechaHastaDtp.Name = "fechaHastaDtp";
             this.fechaHastaDtp.Size = new System.Drawing.Size(85, 20);
-            this.fechaHastaDtp.TabIndex = 117;
+            this.fechaHastaDtp.TabIndex = 2;
             this.fechaHastaDtp.ValueChanged += new System.EventHandler(this.fechaHastaDtp_ValueChanged);
             // 
             // HistorialDeFacturas

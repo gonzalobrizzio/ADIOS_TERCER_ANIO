@@ -95,7 +95,7 @@ namespace MercadoEnvios.ABM_Visibilidad
             }
             else
             {
-                MessageBox.Show("El porcentaje ingresado supera el 100 % permitido","Advertencia" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El porcentaje ingresado supera el 100 % permitido, debe ingresar algo menor a 1","Advertencia" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

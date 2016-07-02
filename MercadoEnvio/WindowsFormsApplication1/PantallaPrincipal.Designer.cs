@@ -39,7 +39,7 @@
             this.btnCerrarSesion.Location = new System.Drawing.Point(156, 225);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
             this.btnCerrarSesion.Size = new System.Drawing.Size(143, 33);
-            this.btnCerrarSesion.TabIndex = 8;
+            this.btnCerrarSesion.TabIndex = 3;
             this.btnCerrarSesion.Text = "Cerrar sesión";
             this.btnCerrarSesion.UseVisualStyleBackColor = true;
             this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
@@ -50,7 +50,7 @@
             this.funcionalidadesR.Location = new System.Drawing.Point(12, 12);
             this.funcionalidadesR.Name = "funcionalidadesR";
             this.funcionalidadesR.Size = new System.Drawing.Size(287, 200);
-            this.funcionalidadesR.TabIndex = 10;
+            this.funcionalidadesR.TabIndex = 1;
             this.funcionalidadesR.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.funcionalidadesR_CellClick);
             // 
             // btnElegirFuncionalidad
@@ -58,7 +58,7 @@
             this.btnElegirFuncionalidad.Location = new System.Drawing.Point(12, 225);
             this.btnElegirFuncionalidad.Name = "btnElegirFuncionalidad";
             this.btnElegirFuncionalidad.Size = new System.Drawing.Size(138, 33);
-            this.btnElegirFuncionalidad.TabIndex = 11;
+            this.btnElegirFuncionalidad.TabIndex = 2;
             this.btnElegirFuncionalidad.Text = "Elegir funcionalidad";
             this.btnElegirFuncionalidad.UseVisualStyleBackColor = true;
             this.btnElegirFuncionalidad.Click += new System.EventHandler(this.btnElegirFuncionalidad_Click);

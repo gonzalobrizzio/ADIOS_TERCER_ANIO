@@ -165,7 +165,7 @@ namespace MercadoEnvios.ABM_Usuario
                 }
                 else
                 {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0 WHERE @idUsuario = id";
+                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0, intentos = 0 WHERE @idUsuario = id";
                     SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
                     SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
                     idUsuario.Direction = ParameterDirection.Input;
@@ -183,7 +183,7 @@ namespace MercadoEnvios.ABM_Usuario
                 }
                 else
                 {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0 WHERE @idUsuario = id";
+                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0, intentos = 0 WHERE @idUsuario = id";
                     SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
                     SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
                     idUsuario.Direction = ParameterDirection.Input;
@@ -269,7 +269,7 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void dni_TextChanged(object sender, EventArgs e)
         {
-            this.getDataClientes();
+                this.getDataClientes();
         }
 
         private void mailC_TextChanged(object sender, EventArgs e)

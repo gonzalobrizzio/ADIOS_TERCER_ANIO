@@ -48,7 +48,6 @@
             this.txtPagina = new System.Windows.Forms.TextBox();
             this.lblPagina = new System.Windows.Forms.Label();
             this.lblMax = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubros)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFiltros)).BeginInit();
@@ -102,7 +101,7 @@
             this.btnAnt.Location = new System.Drawing.Point(252, 67);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(100, 30);
-            this.btnAnt.TabIndex = 2;
+            this.btnAnt.TabIndex = 4;
             this.btnAnt.Text = "<< Anterior";
             this.btnAnt.UseVisualStyleBackColor = true;
             this.btnAnt.Click += new System.EventHandler(this.btnAnt_Click);
@@ -112,7 +111,7 @@
             this.btnSgte.Location = new System.Drawing.Point(895, 67);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(100, 30);
-            this.btnSgte.TabIndex = 3;
+            this.btnSgte.TabIndex = 6;
             this.btnSgte.Text = "Siguiente >>";
             this.btnSgte.UseVisualStyleBackColor = true;
             this.btnSgte.Click += new System.EventHandler(this.btnSgte_Click);
@@ -122,7 +121,7 @@
             this.btnVolver.Location = new System.Drawing.Point(825, 354);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(170, 30);
-            this.btnVolver.TabIndex = 4;
+            this.btnVolver.TabIndex = 10;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
@@ -132,7 +131,7 @@
             this.btnDetalle.Location = new System.Drawing.Point(252, 354);
             this.btnDetalle.Name = "btnDetalle";
             this.btnDetalle.Size = new System.Drawing.Size(194, 30);
-            this.btnDetalle.TabIndex = 5;
+            this.btnDetalle.TabIndex = 7;
             this.btnDetalle.Text = "Ver publicación en detalle";
             this.btnDetalle.UseVisualStyleBackColor = true;
             this.btnDetalle.Click += new System.EventHandler(this.btnDetalle_Click);
@@ -192,7 +191,7 @@
             this.txtDescripción.MaxLength = 255;
             this.txtDescripción.Name = "txtDescripción";
             this.txtDescripción.Size = new System.Drawing.Size(247, 23);
-            this.txtDescripción.TabIndex = 11;
+            this.txtDescripción.TabIndex = 1;
             this.txtDescripción.TextChanged += new System.EventHandler(this.txtDescripción_TextChanged);
             // 
             // btnPrimeraPag
@@ -200,7 +199,7 @@
             this.btnPrimeraPag.Location = new System.Drawing.Point(252, 32);
             this.btnPrimeraPag.Name = "btnPrimeraPag";
             this.btnPrimeraPag.Size = new System.Drawing.Size(121, 29);
-            this.btnPrimeraPag.TabIndex = 12;
+            this.btnPrimeraPag.TabIndex = 2;
             this.btnPrimeraPag.Text = "<<<   Primera página";
             this.btnPrimeraPag.UseVisualStyleBackColor = true;
             this.btnPrimeraPag.Click += new System.EventHandler(this.btnPrimeraPag_Click);
@@ -210,7 +209,7 @@
             this.button1.Location = new System.Drawing.Point(874, 32);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(121, 29);
-            this.button1.TabIndex = 13;
+            this.button1.TabIndex = 3;
             this.button1.Text = "Última página   >>>";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -222,7 +221,7 @@
             this.txtPagina.MaxLength = 10;
             this.txtPagina.Name = "txtPagina";
             this.txtPagina.Size = new System.Drawing.Size(57, 26);
-            this.txtPagina.TabIndex = 14;
+            this.txtPagina.TabIndex = 5;
             this.txtPagina.TextChanged += new System.EventHandler(this.txtPagina_TextChanged);
             this.txtPagina.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPagina_KeyPress);
             // 
@@ -245,22 +244,12 @@
             this.lblMax.Size = new System.Drawing.Size(0, 20);
             this.lblMax.TabIndex = 16;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(443, 64);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "label1";
-            // 
             // frmComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1005, 396);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMax);
             this.Controls.Add(this.lblPagina);
             this.Controls.Add(this.txtPagina);
@@ -309,7 +298,6 @@
         private System.Windows.Forms.TextBox txtPagina;
         private System.Windows.Forms.Label lblPagina;
         private System.Windows.Forms.Label lblMax;
-        private System.Windows.Forms.Label label1;
 
     }
 }

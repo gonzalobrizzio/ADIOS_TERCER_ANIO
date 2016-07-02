@@ -16,7 +16,6 @@ namespace MercadoEnvios.Historial_Cliente
         Conexion conn;
         Sesion sesion;
         int cantidad;
-        int cantidadEntrada;
         int nroPagina = 0;
         SqlDataAdapter da;
         public frmHistorialCliente()
@@ -89,6 +88,7 @@ namespace MercadoEnvios.Historial_Cliente
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            new frmPantallaPrincipal().Show();
             this.Close();
 
         }
@@ -117,11 +117,7 @@ namespace MercadoEnvios.Historial_Cliente
 
         private void btnHistorialCalif_Click(object sender, EventArgs e)
         {
-           // new Calificar.frmHistorial().Show();
-        }
-
-        private void frmHistorialCliente_FormClosed(object sender, FormClosedEventArgs e)
-        {
+            new VendedorCalif().Show();
             this.Close();
         }
     }
