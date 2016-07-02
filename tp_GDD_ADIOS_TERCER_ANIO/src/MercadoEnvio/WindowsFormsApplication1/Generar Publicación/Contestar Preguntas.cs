@@ -45,6 +45,11 @@ namespace MercadoEnvios.Generar_Publicación
             dgvPreguntas.AllowUserToAddRows = false;
             dgvPreguntas.AllowUserToDeleteRows = false;
             dgvPreguntas.ReadOnly = true;
+
+            if (dgvPreguntas.Rows.Count == 0)
+            {
+                btnVer.Enabled = false;
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

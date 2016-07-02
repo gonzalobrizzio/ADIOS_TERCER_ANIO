@@ -120,5 +120,19 @@ namespace MercadoEnvios.Historial_Cliente
             new VendedorCalif().Show();
             this.Close();
         }
+
+        private void btnPrimeraPag_Click(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            getData();
+            btnSgte.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            nroPagina = cantidad;
+            getData();
+            btnAnt.Enabled = true;
+        }
     }
 }

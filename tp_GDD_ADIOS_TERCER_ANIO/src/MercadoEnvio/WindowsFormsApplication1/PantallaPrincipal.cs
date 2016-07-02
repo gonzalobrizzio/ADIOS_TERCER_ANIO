@@ -127,8 +127,7 @@ namespace MercadoEnvios.ABM_Usuario
 
             else if (this.funcionalidadesR.CurrentRow.Cells[0].Value.ToString() == "Historial de Compras y Subastas")
             {
-                frmHistorialCliente frm = new frmHistorialCliente();
-                frm.Show(this);
+                new frmHistorialCliente().Show();
                 this.Close();
             }
 

@@ -33,23 +33,27 @@
             this.btnSgte = new System.Windows.Forms.Button();
             this.btnAnt = new System.Windows.Forms.Button();
             this.btnHistorialCalif = new System.Windows.Forms.Button();
+            this.btnPrimeraPag = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grillaDeCompras)).BeginInit();
             this.SuspendLayout();
             // 
             // grillaDeCompras
             // 
             this.grillaDeCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grillaDeCompras.Location = new System.Drawing.Point(66, 43);
+            this.grillaDeCompras.Location = new System.Drawing.Point(60, 45);
+            this.grillaDeCompras.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grillaDeCompras.Name = "grillaDeCompras";
-            this.grillaDeCompras.Size = new System.Drawing.Size(688, 260);
+            this.grillaDeCompras.Size = new System.Drawing.Size(917, 320);
             this.grillaDeCompras.TabIndex = 0;
             this.grillaDeCompras.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(642, 326);
+            this.btnVolver.Location = new System.Drawing.Point(828, 436);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(112, 25);
+            this.btnVolver.Size = new System.Drawing.Size(149, 31);
             this.btnVolver.TabIndex = 4;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
@@ -57,9 +61,10 @@
             // 
             // btnSgte
             // 
-            this.btnSgte.Location = new System.Drawing.Point(765, 159);
+            this.btnSgte.Location = new System.Drawing.Point(922, 375);
+            this.btnSgte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSgte.Name = "btnSgte";
-            this.btnSgte.Size = new System.Drawing.Size(41, 33);
+            this.btnSgte.Size = new System.Drawing.Size(55, 41);
             this.btnSgte.TabIndex = 2;
             this.btnSgte.Text = ">>>";
             this.btnSgte.UseVisualStyleBackColor = true;
@@ -67,9 +72,10 @@
             // 
             // btnAnt
             // 
-            this.btnAnt.Location = new System.Drawing.Point(12, 159);
+            this.btnAnt.Location = new System.Drawing.Point(60, 376);
+            this.btnAnt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAnt.Name = "btnAnt";
-            this.btnAnt.Size = new System.Drawing.Size(41, 33);
+            this.btnAnt.Size = new System.Drawing.Size(55, 41);
             this.btnAnt.TabIndex = 1;
             this.btnAnt.Text = "<<<";
             this.btnAnt.UseVisualStyleBackColor = true;
@@ -77,24 +83,50 @@
             // 
             // btnHistorialCalif
             // 
-            this.btnHistorialCalif.Location = new System.Drawing.Point(66, 326);
+            this.btnHistorialCalif.Location = new System.Drawing.Point(446, 381);
+            this.btnHistorialCalif.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnHistorialCalif.Name = "btnHistorialCalif";
-            this.btnHistorialCalif.Size = new System.Drawing.Size(112, 25);
+            this.btnHistorialCalif.Size = new System.Drawing.Size(149, 31);
             this.btnHistorialCalif.TabIndex = 3;
             this.btnHistorialCalif.Text = "Calificaciones dadas";
             this.btnHistorialCalif.UseVisualStyleBackColor = true;
             this.btnHistorialCalif.Click += new System.EventHandler(this.btnHistorialCalif_Click);
             // 
+            // btnPrimeraPag
+            // 
+            this.btnPrimeraPag.Location = new System.Drawing.Point(124, 373);
+            this.btnPrimeraPag.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPrimeraPag.Name = "btnPrimeraPag";
+            this.btnPrimeraPag.Size = new System.Drawing.Size(184, 46);
+            this.btnPrimeraPag.TabIndex = 5;
+            this.btnPrimeraPag.Text = "<<<   Primera página";
+            this.btnPrimeraPag.UseVisualStyleBackColor = true;
+            this.btnPrimeraPag.Click += new System.EventHandler(this.btnPrimeraPag_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(730, 373);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(184, 44);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Última página   >>>";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmHistorialCliente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(818, 367);
+            this.ClientSize = new System.Drawing.Size(1028, 486);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnPrimeraPag);
             this.Controls.Add(this.btnHistorialCalif);
             this.Controls.Add(this.btnAnt);
             this.Controls.Add(this.btnSgte);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.grillaDeCompras);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmHistorialCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Historial Cliente";
@@ -111,5 +143,7 @@
         private System.Windows.Forms.Button btnSgte;
         private System.Windows.Forms.Button btnAnt;
         private System.Windows.Forms.Button btnHistorialCalif;
+        private System.Windows.Forms.Button btnPrimeraPag;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -166,8 +166,6 @@ namespace MercadoEnvios.ComprarOfertar
             queryCant += " WHERE publicacion.idPublicador != " + sesion.idUsuario + "and publicacion.stock > 0";
             queryCant += " AND (publicacion.idEstado = 2 OR publicacion.idEstado = 3)";
 
-            //MessageBox.Show(queryCant);
-
             try
             {
                 SqlCommand comando = new SqlCommand(queryCant, conn.getConexion);
@@ -361,6 +359,7 @@ namespace MercadoEnvios.ComprarOfertar
                 else
                 {
                     MessageBox.Show("Número de página excedido del máximo existente.");
+                    txtPagina.Text = "0";
                 }
             }
         }

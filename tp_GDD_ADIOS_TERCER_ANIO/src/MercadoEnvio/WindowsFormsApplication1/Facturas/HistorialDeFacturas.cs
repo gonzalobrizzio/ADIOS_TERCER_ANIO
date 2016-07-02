@@ -187,10 +187,9 @@ namespace MercadoEnvios.Facturas
 
                    if (nroPagina >= cantidad)
                    {
-                       btnSgte.Enabled=false;
+                       btnSgte.Enabled=false;   
                    }
-
-                   if (dgvFacturas.Rows.Count < 0)
+                    if (dgvFacturas.Rows.Count < 10)
                    {
                        btnSgte.Enabled = false;
                    }
@@ -346,6 +345,20 @@ namespace MercadoEnvios.Facturas
             nroPagina = 0;
             this.getData();
             btnSgte.Enabled = true;
+        }
+
+        private void btnPrimeraPag_Click(object sender, EventArgs e)
+        {
+            nroPagina = 0;
+            this.getData();
+            btnSgte.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            nroPagina = cantidad;
+            this.getData();
+            btnAnt.Enabled = true;
         }
     }
 }
