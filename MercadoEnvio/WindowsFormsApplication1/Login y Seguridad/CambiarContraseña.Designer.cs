@@ -143,7 +143,6 @@
             this.Name = "frmCambiarContraseña";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cambiar Contraseña";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmCambiarContraseña_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

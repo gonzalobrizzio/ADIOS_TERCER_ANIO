@@ -103,12 +103,5 @@ namespace MercadoEnvios.Login_y_Seguridad
             this.Close();
 
         }
-
-        private void frmCambiarContraseña_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-            new frmPantallaPrincipal().Show();
-            this.Close();
-        }
     }
 }
