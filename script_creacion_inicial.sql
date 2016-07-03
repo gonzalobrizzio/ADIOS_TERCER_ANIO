@@ -3109,3 +3109,5 @@ AS BEGIN
 	and oferta.idPublicacion = @idPublicacion
 END
 GO
+
+SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro
