@@ -134,8 +134,10 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(CodigoPostal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Fecha_De_Nacimiento, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Nro_de_Direccion, mensajeDeAviso);
-            this.funcionesValidacion.validarFechaDeNacimiento(fechaMaximaNacimiento, fechaMinimaNacimiento, DateTime.Parse(Fecha_De_Nacimiento.Text), mensajeDeAviso);
-           
+            if (Fecha_De_Nacimiento.Text != "")
+            {
+                this.funcionesValidacion.validarFechaDeNacimiento(fechaMaximaNacimiento, fechaMinimaNacimiento, DateTime.Parse(Fecha_De_Nacimiento.Text), mensajeDeAviso);
+            }
             if (!(string.IsNullOrEmpty(Nro_de_Direccion.Text)))
             {
                 this.funcionesValidacion.validarNumerico(Nro_de_Direccion, mensajeDeAviso);
