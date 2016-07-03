@@ -232,7 +232,7 @@ namespace MercadoEnvios.Generar_Publicación
 
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            new frmDatosVisibilidad(Visibilidad.SelectedIndex + 1).Show();
+            new frmDatosVisibilidad(Convert.ToString(Visibilidad.SelectedItem)).Show();
         }
 
         private void Precio_KeyPress(object sender, KeyPressEventArgs e)

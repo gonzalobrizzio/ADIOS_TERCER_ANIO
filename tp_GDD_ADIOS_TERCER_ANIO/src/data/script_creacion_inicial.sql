@@ -368,6 +368,7 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Funcionalidad VALUES ('Cambiar Contrasenia');
 
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,1);
+	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,3);
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,4);
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (1,6);
 	INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad) Values (2,2);
@@ -2064,7 +2065,7 @@ BEGIN
 		@uPass = u.pass,
 		@uIntentos = u.intentos
 	from ADIOS_TERCER_ANIO.Usuario u
-	where RTRIM(LTRIM(@usuario)) = RTRIM(LTRIM(u.usuario))
+	where RTRIM(LTRIM(@usuario)) = RTRIM(LTRIM(u.usuario)) AND u.deleted = 0
 	
 	IF(@uIntentos = 5)
 	BEGIN
@@ -3011,7 +3012,6 @@ CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerFacturasPaginaN(@idUsuario INT, @pagin
 														  @hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant INT OUTPUT)
 AS
 BEGIN
-
 	--DECLARE @idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
 	--		@hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant int
 	--SET @idUsuario = 3
@@ -3024,13 +3024,13 @@ BEGIN
 			AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
 			--AND ((itm.nombre LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )
 			AND ((u.usuario LIKE '%' + @destinatario + '%') OR (@destinatario is null OR @destinatario = ''))
-			where p.idPublicador = @idUsuario) - @pagina * 10;
+			where ((p.idPublicador = @idUsuario AND @idRol != 1) OR (@idRol = 1))) - @pagina * 10;
 		
 		WITH TablaP as (select TOP (@cant) f.numero AS Numero_de_Factura, f.importeTotal AS Importe, f.fecha AS Fecha, u.usuario AS Destinatario from ADIOS_TERCER_ANIO.Factura f
 		inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion
 		--LEFT JOIN ADIOS_TERCER_ANIO.Item itm ON (f.id = itm.idFactura)
 		inner join ADIOS_TERCER_ANIO.Usuario u on u.id = p.idPublicador
-		WHERE @idUsuario = p.idPublicador 
+		WHERE ((p.idPublicador = @idUsuario AND @idRol != 1) OR (@idRol = 1)) 
 		AND ((f.fecha BETWEEN @fechaDesde AND @fechaHasta) OR (@fechaDesde IS NULL and @fechaHasta IS NULL))
 		AND ((f.importeTotal BETWEEN @desdePrecio AND @hastaPrecio) OR (@desdePrecio is null OR @desdePrecio = -1))
 		--AND ((itm.nombre  LIKE '%' + @descripcion + '%') OR (@descripcion is null OR @descripcion = '') )

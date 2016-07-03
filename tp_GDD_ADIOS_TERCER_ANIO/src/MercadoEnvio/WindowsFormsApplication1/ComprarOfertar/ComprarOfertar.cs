@@ -75,6 +75,8 @@ namespace MercadoEnvios.ComprarOfertar
                 btnSgte.Enabled = false;
                 btnAnt.Enabled = false;
                 btnDetalle.Enabled = false;
+                btnPrimeraPag.Enabled = false;
+                button1.Enabled = false;
             }
             else
             {
@@ -170,7 +172,6 @@ namespace MercadoEnvios.ComprarOfertar
             {
                 SqlCommand comando = new SqlCommand(queryCant, conn.getConexion);
                 retorno = (Int32)comando.ExecuteScalar();
-                lblMax.Text = " de " + retorno.ToString();
                 return retorno;
             }
             catch (Exception ex)

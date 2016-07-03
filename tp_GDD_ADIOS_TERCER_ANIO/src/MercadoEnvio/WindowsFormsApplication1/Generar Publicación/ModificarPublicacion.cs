@@ -103,7 +103,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             else
             {
-                MessageBox.Show("Solo se pueden modificar publicaciones con estado borrador o pausada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Solo se pueden modificar publicaciones con un estado Borrador o Pausada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -122,13 +122,13 @@ namespace MercadoEnvios.Generar_Publicación
             }
             else
             {
-                MessageBox.Show("Solo se pueden modificar publicaciones con estado pausada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Solo se pueden modificar publicaciones con un estado Pausada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
-            if (this.publicaciones.CurrentRow.Cells[9].Value.ToString() != "Finalizada")
+            if (this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Activa" || this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Pausada")
             {
                 SqlCommand actualizarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarPublicacion", conn.getConexion);
                 actualizarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
@@ -147,7 +147,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             else
             {
-                MessageBox.Show("Solo se pueden modificar publicaciones con estado distinto a Finalizada", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Solo se pueden modificar publicaciones con un estado distinto a Finalizada o Borrador", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

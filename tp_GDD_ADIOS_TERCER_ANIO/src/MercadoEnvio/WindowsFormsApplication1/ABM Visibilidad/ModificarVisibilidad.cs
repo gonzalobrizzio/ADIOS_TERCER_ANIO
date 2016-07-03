@@ -148,12 +148,12 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
         {
-            funcionesValidacion.ingresarNumero(e);
+            funcionesValidacion.ingresarNumeroDecimal(e);
         }
 
         private void txtPorcentaje_KeyPress(object sender, KeyPressEventArgs e)
         {
-            funcionesValidacion.ingresarNumero(e);
+            funcionesValidacion.ingresarNumeroDecimal(e);
         }
 
     }

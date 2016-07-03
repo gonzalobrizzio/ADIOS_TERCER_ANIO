@@ -47,7 +47,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.txtPagina = new System.Windows.Forms.TextBox();
             this.lblPagina = new System.Windows.Forms.Label();
-            this.lblMax = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPublicaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubros)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFiltros)).BeginInit();
@@ -73,7 +72,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPublicaciones.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvPublicaciones.Location = new System.Drawing.Point(336, 127);
-            this.dgvPublicaciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvPublicaciones.Margin = new System.Windows.Forms.Padding(4);
             this.dgvPublicaciones.Name = "dgvPublicaciones";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -101,7 +100,7 @@
             // btnAnt
             // 
             this.btnAnt.Location = new System.Drawing.Point(336, 82);
-            this.btnAnt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAnt.Margin = new System.Windows.Forms.Padding(4);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(133, 37);
             this.btnAnt.TabIndex = 4;
@@ -112,7 +111,7 @@
             // btnSgte
             // 
             this.btnSgte.Location = new System.Drawing.Point(1193, 82);
-            this.btnSgte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSgte.Margin = new System.Windows.Forms.Padding(4);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(133, 37);
             this.btnSgte.TabIndex = 6;
@@ -123,7 +122,7 @@
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(1100, 436);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(227, 37);
             this.btnVolver.TabIndex = 10;
@@ -134,7 +133,7 @@
             // btnDetalle
             // 
             this.btnDetalle.Location = new System.Drawing.Point(336, 436);
-            this.btnDetalle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDetalle.Margin = new System.Windows.Forms.Padding(4);
             this.btnDetalle.Name = "btnDetalle";
             this.btnDetalle.Size = new System.Drawing.Size(259, 37);
             this.btnDetalle.TabIndex = 7;
@@ -146,7 +145,7 @@
             // 
             this.dgvRubros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRubros.Location = new System.Drawing.Point(17, 39);
-            this.dgvRubros.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvRubros.Margin = new System.Windows.Forms.Padding(4);
             this.dgvRubros.Name = "dgvRubros";
             this.dgvRubros.Size = new System.Drawing.Size(295, 228);
             this.dgvRubros.TabIndex = 6;
@@ -156,7 +155,7 @@
             // 
             this.dgvFiltros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFiltros.Location = new System.Drawing.Point(17, 310);
-            this.dgvFiltros.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvFiltros.Margin = new System.Windows.Forms.Padding(4);
             this.dgvFiltros.Name = "dgvFiltros";
             this.dgvFiltros.Size = new System.Drawing.Size(295, 162);
             this.dgvFiltros.TabIndex = 7;
@@ -165,7 +164,7 @@
             // btnAgregar
             // 
             this.btnAgregar.Location = new System.Drawing.Point(17, 274);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAgregar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(139, 28);
             this.btnAgregar.TabIndex = 8;
@@ -176,7 +175,7 @@
             // btnQuitar
             // 
             this.btnQuitar.Location = new System.Drawing.Point(164, 274);
-            this.btnQuitar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnQuitar.Margin = new System.Windows.Forms.Padding(4);
             this.btnQuitar.Name = "btnQuitar";
             this.btnQuitar.Size = new System.Drawing.Size(148, 28);
             this.btnQuitar.TabIndex = 9;
@@ -199,7 +198,7 @@
             // 
             this.txtDescripción.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDescripción.Location = new System.Drawing.Point(591, 4);
-            this.txtDescripción.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDescripción.Margin = new System.Windows.Forms.Padding(4);
             this.txtDescripción.MaxLength = 255;
             this.txtDescripción.Name = "txtDescripción";
             this.txtDescripción.Size = new System.Drawing.Size(328, 26);
@@ -209,7 +208,7 @@
             // btnPrimeraPag
             // 
             this.btnPrimeraPag.Location = new System.Drawing.Point(336, 39);
-            this.btnPrimeraPag.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPrimeraPag.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrimeraPag.Name = "btnPrimeraPag";
             this.btnPrimeraPag.Size = new System.Drawing.Size(161, 36);
             this.btnPrimeraPag.TabIndex = 2;
@@ -220,7 +219,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(1165, 39);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(161, 36);
             this.button1.TabIndex = 3;
@@ -231,8 +230,8 @@
             // txtPagina
             // 
             this.txtPagina.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPagina.Location = new System.Drawing.Point(741, 79);
-            this.txtPagina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPagina.Location = new System.Drawing.Point(788, 79);
+            this.txtPagina.Margin = new System.Windows.Forms.Padding(4);
             this.txtPagina.MaxLength = 10;
             this.txtPagina.Name = "txtPagina";
             this.txtPagina.Size = new System.Drawing.Size(75, 30);
@@ -251,23 +250,12 @@
             this.lblPagina.TabIndex = 15;
             this.lblPagina.Text = "Página:";
             // 
-            // lblMax
-            // 
-            this.lblMax.AutoSize = true;
-            this.lblMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMax.Location = new System.Drawing.Point(825, 86);
-            this.lblMax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblMax.Name = "lblMax";
-            this.lblMax.Size = new System.Drawing.Size(0, 25);
-            this.lblMax.TabIndex = 16;
-            // 
             // frmComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1340, 487);
-            this.Controls.Add(this.lblMax);
             this.Controls.Add(this.lblPagina);
             this.Controls.Add(this.txtPagina);
             this.Controls.Add(this.button1);
@@ -284,7 +272,7 @@
             this.Controls.Add(this.btnAnt);
             this.Controls.Add(this.lblListado);
             this.Controls.Add(this.dgvPublicaciones);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmComprarOfertar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Publicaciones";
@@ -315,7 +303,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtPagina;
         private System.Windows.Forms.Label lblPagina;
-        private System.Windows.Forms.Label lblMax;
 
     }
 }

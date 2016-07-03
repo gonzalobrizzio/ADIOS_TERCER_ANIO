@@ -49,6 +49,7 @@
             this.habilitarEnvios = new System.Windows.Forms.CheckBox();
             this.Rubro = new System.Windows.Forms.ComboBox();
             this.btnConsultar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Stock)).BeginInit();
             this.SuspendLayout();
             // 
@@ -288,11 +289,24 @@
             this.btnConsultar.UseVisualStyleBackColor = true;
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(389, 225);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 20);
+            this.label2.TabIndex = 816;
+            this.label2.Text = "*";
+            // 
             // frmGenerarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 551);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnConsultar);
             this.Controls.Add(this.Rubro);
             this.Controls.Add(this.habilitarEnvios);
@@ -347,6 +361,7 @@
         private System.Windows.Forms.CheckBox habilitarEnvios;
         private System.Windows.Forms.ComboBox Rubro;
         private System.Windows.Forms.Button btnConsultar;
+        private System.Windows.Forms.Label label2;
 
     }
 }

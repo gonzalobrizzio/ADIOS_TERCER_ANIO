@@ -49,6 +49,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Descripcion = new System.Windows.Forms.TextBox();
             this.btnConsultar = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Stock)).BeginInit();
             this.SuspendLayout();
             // 
@@ -287,11 +288,24 @@
             this.btnConsultar.UseVisualStyleBackColor = true;
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(406, 212);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 20);
+            this.label2.TabIndex = 822;
+            this.label2.Text = "*";
+            // 
             // EditarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 535);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnConsultar);
             this.Controls.Add(this.Rubro);
             this.Controls.Add(this.habilitarEnvios);
@@ -346,5 +360,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox Descripcion;
         private System.Windows.Forms.Button btnConsultar;
+        private System.Windows.Forms.Label label2;
     }
 }

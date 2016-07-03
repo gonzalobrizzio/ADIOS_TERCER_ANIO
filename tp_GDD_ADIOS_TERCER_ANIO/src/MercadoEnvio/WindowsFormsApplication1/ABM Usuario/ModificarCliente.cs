@@ -127,6 +127,7 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(Direccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(CodigoPostal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Fecha_De_Nacimiento, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Nro_de_Direccion, mensajeDeAviso);
            
             if (!(string.IsNullOrEmpty(Nro_de_Direccion.Text)))
             {
@@ -310,6 +311,41 @@ namespace MercadoEnvios.ABM_Usuario
         }
 
         private void CodigoPostal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Mail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarMail(e);
+        }
+
+        private void Nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Apellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Direccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Nro_de_Direccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Depto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Piso_KeyPress(object sender, KeyPressEventArgs e)
         {
             funcionesValidacion.ingresarNumero(e);
         }

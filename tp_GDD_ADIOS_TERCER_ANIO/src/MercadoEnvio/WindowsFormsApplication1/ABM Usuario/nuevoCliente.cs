@@ -80,6 +80,7 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(Direccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Codigo_Postal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Fecha_de_Nacimiento, mensajeDeAviso);
+            this.funcionesValidacion.validarNoVacio(Nro_de_Direccion, mensajeDeAviso);
             
             bool validaciones;
 
@@ -319,6 +320,29 @@ namespace MercadoEnvios.ABM_Usuario
         private void Codigo_Postal_KeyPress(object sender, KeyPressEventArgs e)
         {
             funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Apellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Depto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Direccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            funcionesValidacion.ingresarNombre(e);
         }
 
     }

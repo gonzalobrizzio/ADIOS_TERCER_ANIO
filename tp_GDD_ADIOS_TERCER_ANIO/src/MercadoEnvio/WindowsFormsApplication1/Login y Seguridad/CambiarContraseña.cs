@@ -26,7 +26,6 @@ namespace MercadoEnvios.Login_y_Seguridad
         {
             InitializeComponent();
             usuarioDeSesion = usuario;
-            anterior = sesion.anterior;
         }
 
         private void btnConfirmar_Click(object sender, EventArgs e)
@@ -64,9 +63,9 @@ namespace MercadoEnvios.Login_y_Seguridad
                         comandoModificarPassword.Parameters[1].Value = passHasheada;
 
                         comandoModificarPassword.ExecuteNonQuery();
-                        MessageBox.Show("Contraseña cambiada correctamente");
+                        MessageBox.Show("Contraseña cambiada correctamente","La operación fue exitosa!",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
-                        anterior.Show();
+                        new frmPantallaPrincipal().Show();
                         this.Close();
                     }
 

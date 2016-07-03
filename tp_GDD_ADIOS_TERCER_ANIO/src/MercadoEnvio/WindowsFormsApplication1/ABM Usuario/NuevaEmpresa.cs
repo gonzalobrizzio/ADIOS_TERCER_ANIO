@@ -273,6 +273,11 @@ namespace MercadoEnvios.ABM_Usuario
             return;
         }
 
+        private void Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
         private void Codigo_Postal_KeyPress(object sender, KeyPressEventArgs e)
         {
             funcionesValidacion.ingresarNumero(e);
@@ -291,6 +296,36 @@ namespace MercadoEnvios.ABM_Usuario
         private void Mail_KeyPress(object sender, KeyPressEventArgs e)
         {
             funcionesValidacion.ingresarMail(e);
+        }
+
+        private void Telefono_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Calle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Direccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNumero(e);
+        }
+
+        private void Depto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Ciudad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
+        }
+
+        private void Nombre_de_Contacto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            funcionesValidacion.ingresarNombre(e);
         }
     }
 }

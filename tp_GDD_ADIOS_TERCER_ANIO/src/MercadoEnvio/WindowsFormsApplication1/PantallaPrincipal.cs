@@ -43,6 +43,11 @@ namespace MercadoEnvios.ABM_Usuario
             funcionalidadesR.AllowUserToAddRows = false;
             funcionalidadesR.ReadOnly = true;
 
+            if (funcionalidadesR.Rows.Count == 0)
+            {
+                btnElegirFuncionalidad.Enabled = false;
+            }
+
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)

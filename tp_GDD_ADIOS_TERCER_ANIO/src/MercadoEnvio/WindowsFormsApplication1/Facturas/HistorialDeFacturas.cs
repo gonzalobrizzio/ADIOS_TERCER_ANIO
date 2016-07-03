@@ -31,6 +31,14 @@ namespace MercadoEnvios.Facturas
                 btnSgte.Enabled = false;
                 btnFiltrar.Enabled = false;
             }
+
+            if (sesion.idRol != 1)
+            {
+                checkBox3.Visible = false;
+                label8.Visible = false;
+                label9.Visible = false;
+                destinatarioTxt.Visible = false;
+            }
         }
 
         private void getData()

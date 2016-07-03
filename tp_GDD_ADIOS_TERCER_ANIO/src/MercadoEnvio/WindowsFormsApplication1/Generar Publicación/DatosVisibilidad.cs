@@ -13,8 +13,8 @@ namespace MercadoEnvios.Generar_Publicacion
     public partial class frmDatosVisibilidad : Form
     {
         Conexion conn;
-        int idVisibilidadEntrada;
-        public frmDatosVisibilidad(int idVisibilidadAModificar)
+        string idVisibilidadEntrada;
+        public frmDatosVisibilidad(string idVisibilidadAModificar)
         {
             conn = Conexion.Instance;
             InitializeComponent();
@@ -24,9 +24,9 @@ namespace MercadoEnvios.Generar_Publicacion
 
         private void getData()
         {
-            String queryHabilitados = "SELECT id, nombre, duracionDias, precio, porcentaje FROM ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad";
+            String queryHabilitados = "SELECT id, nombre, duracionDias, precio, porcentaje FROM ADIOS_TERCER_ANIO.Visibilidad where nombre = @idVisibilidad";
             SqlCommand buscarVisibilidad = new SqlCommand(queryHabilitados, conn.getConexion);
-            SqlParameter idVisibilidad = new SqlParameter("@idVisibilidad", SqlDbType.Int);
+            SqlParameter idVisibilidad = new SqlParameter("@idVisibilidad", SqlDbType.NVarChar, 255);
             idVisibilidad.SqlValue = idVisibilidadEntrada;
             idVisibilidad.Direction = ParameterDirection.Input;
             buscarVisibilidad.Parameters.Add(idVisibilidad);

@@ -18,7 +18,7 @@ namespace MercadoEnvios.ABM_Usuario
         {
             InitializeComponent();
 
-            string queryBuscarRoles = "SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE nombre != 'Administrativo'";
+            string queryBuscarRoles = "SELECT DISTINCT nombre FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = 'Cliente' OR nombre = 'Empresa'";
             SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
             SqlDataReader dataReader = buscarRoles.ExecuteReader();
             while (dataReader.Read())
