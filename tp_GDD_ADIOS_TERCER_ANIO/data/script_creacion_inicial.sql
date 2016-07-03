@@ -3095,7 +3095,6 @@ AS BEGIN
 	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuarioGanador(@idPublicacion INT)
 AS BEGIN
 	SELECT usuario.usuario, usuario.id FROM ADIOS_TERCER_ANIO.Usuario usuario 

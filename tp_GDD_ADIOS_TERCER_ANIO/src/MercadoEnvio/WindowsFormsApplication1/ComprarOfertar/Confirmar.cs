@@ -187,7 +187,7 @@ namespace MercadoEnvios.ComprarOfertar
                     envioP.SqlValue = envio;
                     envioP.Direction = ParameterDirection.Input;
 
-                    SqlParameter monto = new SqlParameter("@monto", SqlDbType.Int);
+                    SqlParameter monto = new SqlParameter("@monto", SqlDbType.Decimal);
 //                    monto.SqlValue = Convert.ToInt32(txtNumeric.Text);
                     monto.SqlValue = Convert.ToDecimal(txtNumeric.Text);
                     monto.Direction = ParameterDirection.Input;
@@ -212,6 +212,7 @@ namespace MercadoEnvios.ComprarOfertar
                     catch (SqlException error)
                     {
                         MessageBox.Show(error.Message);
+                        txtNumeric.Text = "";
                     }
                 }
             }

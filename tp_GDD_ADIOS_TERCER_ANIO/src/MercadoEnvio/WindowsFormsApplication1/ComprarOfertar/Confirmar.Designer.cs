@@ -51,7 +51,7 @@
             // 
             this.txtNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNumeric.Location = new System.Drawing.Point(84, 107);
-            this.txtNumeric.MaxLength = 0;
+            this.txtNumeric.MaxLength = 8;
             this.txtNumeric.Name = "txtNumeric";
             this.txtNumeric.Size = new System.Drawing.Size(96, 26);
             this.txtNumeric.TabIndex = 1;

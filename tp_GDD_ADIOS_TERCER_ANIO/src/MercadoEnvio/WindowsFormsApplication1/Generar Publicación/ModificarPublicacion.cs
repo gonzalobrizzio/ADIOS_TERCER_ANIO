@@ -128,7 +128,7 @@ namespace MercadoEnvios.Generar_Publicación
 
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
-            if (this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Activa" || this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Pausada")
+            if ((this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Activa" || this.publicaciones.CurrentRow.Cells[9].Value.ToString() == "Pausada") && this.publicaciones.CurrentRow.Cells[5].Value.ToString() != "Subasta")
             {
                 SqlCommand actualizarPublicacion = new SqlCommand("ADIOS_TERCER_ANIO.FinalizarPublicacion", conn.getConexion);
                 actualizarPublicacion.CommandType = System.Data.CommandType.StoredProcedure;
@@ -147,7 +147,7 @@ namespace MercadoEnvios.Generar_Publicación
             }
             else
             {
-                MessageBox.Show("Solo se pueden modificar publicaciones con un estado distinto a Finalizada o Borrador", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Solo se pueden modificar publicaciones con un estado distinto a Finalizada o Borrador ni tampoco Publicaciones de tipo Subasta, recuerdelo!","Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

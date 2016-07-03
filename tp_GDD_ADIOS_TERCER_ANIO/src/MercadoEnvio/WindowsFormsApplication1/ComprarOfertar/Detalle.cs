@@ -33,6 +33,25 @@ namespace MercadoEnvios.ComprarOfertar
 
         void getData()
         {
+            String cmdUsu = "ADIOS_TERCER_ANIO.ObtenerUsuarioGanador";
+            SqlCommand usuarioGanador = new SqlCommand(cmdUsu, conn.getConexion);
+            usuarioGanador.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter idPublicacionP = new SqlParameter("@idPublicacion", SqlDbType.Int);
+            idPublicacionP.SqlValue = idPublicacion;
+            idPublicacionP.Direction = ParameterDirection.Input;
+
+            usuarioGanador.Parameters.Add(idPublicacionP);
+            dataReader = usuarioGanador.ExecuteReader();
+            dataReader.Read();
+
+            if (dataReader.HasRows)
+            {
+                if (!dataReader[0].Equals(DBNull.Value)) { label1.Text = "Usuario Ganando: " + dataReader.GetString(0); }
+            }
+
+            dataReader.Close();
+
             String cmd = "ADIOS_TERCER_ANIO.detallePublicacion";
             SqlCommand detallePublicacion = new SqlCommand(cmd, conn.getConexion);
             detallePublicacion.CommandType = System.Data.CommandType.StoredProcedure;
@@ -53,12 +72,14 @@ namespace MercadoEnvios.ComprarOfertar
                 if (!dataReader[2].Equals(DBNull.Value)) { lblFechaFin.Text = Convert.ToString(dataReader.GetDateTime(2)); }
                 if (!dataReader[3].Equals(DBNull.Value)) {
                     lblTipo.Text = dataReader.GetString(3);
-                    if (lblTipo.Text.Equals("Compra Inmediata")) { btnComprar.Text = "Comprar";}
+                    if (lblTipo.Text.Equals("Compra Inmediata")) { btnComprar.Text = "Comprar";
+                    label1.Visible = false;
+                    }
                     else  { btnComprar.Text = "Ofertar"; }
                 }
                 if (!dataReader[4].Equals(DBNull.Value)) { lblPrecio.Text = Convert.ToString(dataReader.GetDecimal(4)); }
                 if (!dataReader[5].Equals(DBNull.Value)) { lblVis.Text = dataReader.GetString(5); }
-                if (!dataReader[6].Equals(DBNull.Value)) { lblUsuario.Text = dataReader.GetString(6); }
+                if (!dataReader[6].Equals(DBNull.Value)) { lblUsuario.Text = "Usuario: " + dataReader.GetString(6); }
                 if (!dataReader[7].Equals(DBNull.Value)) { lblRubro.Text = dataReader.GetString(7); }
                 if (!dataReader[8].Equals(DBNull.Value)) { lblStock.Text = dataReader.GetInt32(8).ToString() + " unidades disponibles."; }
                 if (!dataReader[9].Equals(DBNull.Value))

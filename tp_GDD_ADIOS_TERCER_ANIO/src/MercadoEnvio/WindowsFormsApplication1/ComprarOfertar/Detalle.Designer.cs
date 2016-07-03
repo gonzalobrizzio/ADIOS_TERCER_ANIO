@@ -55,6 +55,7 @@
             this.lblCalificacionPromedio = new System.Windows.Forms.Label();
             this.Envio = new System.Windows.Forms.CheckBox();
             this.lblPausa = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.grpPreguntas.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,7 +168,7 @@
             // 
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(13, 100);
+            this.lblUsuario.Location = new System.Drawing.Point(14, 103);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(81, 20);
             this.lblUsuario.TabIndex = 13;
@@ -225,7 +226,7 @@
             // 
             // btnPregunta
             // 
-            this.btnPregunta.Location = new System.Drawing.Point(20, 428);
+            this.btnPregunta.Location = new System.Drawing.Point(46, 431);
             this.btnPregunta.Name = "btnPregunta";
             this.btnPregunta.Size = new System.Drawing.Size(316, 23);
             this.btnPregunta.TabIndex = 4;
@@ -235,7 +236,7 @@
             // 
             // txtPregunta
             // 
-            this.txtPregunta.Location = new System.Drawing.Point(20, 349);
+            this.txtPregunta.Location = new System.Drawing.Point(46, 352);
             this.txtPregunta.MaxLength = 255;
             this.txtPregunta.Multiline = true;
             this.txtPregunta.Name = "txtPregunta";
@@ -244,7 +245,7 @@
             // 
             // btnComprar
             // 
-            this.btnComprar.Location = new System.Drawing.Point(342, 349);
+            this.btnComprar.Location = new System.Drawing.Point(368, 352);
             this.btnComprar.Name = "btnComprar";
             this.btnComprar.Size = new System.Drawing.Size(112, 46);
             this.btnComprar.TabIndex = 5;
@@ -254,7 +255,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(343, 405);
+            this.btnCancelar.Location = new System.Drawing.Point(369, 408);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(112, 46);
             this.btnCancelar.TabIndex = 6;
@@ -278,7 +279,7 @@
             this.grpPreguntas.Controls.Add(this.lblRespuesta);
             this.grpPreguntas.Controls.Add(this.btnAnt);
             this.grpPreguntas.Controls.Add(this.btnSgte);
-            this.grpPreguntas.Location = new System.Drawing.Point(17, 232);
+            this.grpPreguntas.Location = new System.Drawing.Point(43, 235);
             this.grpPreguntas.Name = "grpPreguntas";
             this.grpPreguntas.Size = new System.Drawing.Size(434, 111);
             this.grpPreguntas.TabIndex = 25;
@@ -299,7 +300,7 @@
             // 
             this.lblCalificacionPromedio.AutoSize = true;
             this.lblCalificacionPromedio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCalificacionPromedio.Location = new System.Drawing.Point(219, 100);
+            this.lblCalificacionPromedio.Location = new System.Drawing.Point(306, 37);
             this.lblCalificacionPromedio.Name = "lblCalificacionPromedio";
             this.lblCalificacionPromedio.Size = new System.Drawing.Size(191, 20);
             this.lblCalificacionPromedio.TabIndex = 27;
@@ -318,17 +319,28 @@
             // 
             this.lblPausa.AutoSize = true;
             this.lblPausa.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPausa.Location = new System.Drawing.Point(32, 349);
+            this.lblPausa.Location = new System.Drawing.Point(58, 352);
             this.lblPausa.Name = "lblPausa";
             this.lblPausa.Size = new System.Drawing.Size(288, 18);
             this.lblPausa.TabIndex = 20;
             this.lblPausa.Text = "La publicación se encuentra Pausada";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(287, 106);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(190, 16);
+            this.label1.TabIndex = 29;
+            this.label1.Text = "Usuario Ganando : No hay";
+            // 
             // frmDetalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 459);
+            this.ClientSize = new System.Drawing.Size(519, 459);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblPausa);
             this.Controls.Add(this.Envio);
             this.Controls.Add(this.lblCalificacionPromedio);
@@ -391,5 +403,6 @@
         private System.Windows.Forms.Label lblCalificacionPromedio;
         private System.Windows.Forms.CheckBox Envio;
         private System.Windows.Forms.Label lblPausa;
+        private System.Windows.Forms.Label label1;
     }
 }
