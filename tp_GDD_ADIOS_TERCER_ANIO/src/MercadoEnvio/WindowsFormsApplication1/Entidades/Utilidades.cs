@@ -142,6 +142,21 @@ namespace MercadoEnvios.Entidades
             };
         }
 
+        public void validarFechaDeNacimiento(DateTime fechaMax, DateTime fechaMin, DateTime fecha, StringBuilder mensajeValidacion)
+        {
+            if (DateTime.Compare(fecha, fechaMin) < 0)
+            {
+                mensajeValidacion.AppendLine(string.Format(" La fecha {0} es invalida", fecha));
+            }
+
+            if (DateTime.Compare(fecha, fechaMax) > 0)
+            {
+                mensajeValidacion.AppendLine(string.Format(" La fecha {0} es invalida", fecha));
+            }
+
+
+        }
+
         public DataTable ejecutarQuery(string query)
         {
             SqlCommand cmd = new SqlCommand();

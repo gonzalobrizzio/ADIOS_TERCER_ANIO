@@ -29,13 +29,6 @@ namespace MercadoEnvios.ComprarOfertar
             idUser.SqlValue = sesion.idUsuario;
             idUser.Direction = ParameterDirection.Input;
 
-            this.getData();
-        }
-
-        private void getData()
-        {
-            txtPagina.Text = nroPagina.ToString();
-
             dgvRubros.ColumnCount = 1;
             dgvRubros.ColumnHeadersVisible = true;
             dgvRubros.Columns[0].Name = "Rubros";
@@ -67,6 +60,13 @@ namespace MercadoEnvios.ComprarOfertar
             dgvFiltros.AllowUserToAddRows = false;
             dgvFiltros.AllowUserToDeleteRows = false;
             dgvFiltros.ReadOnly = true;
+
+            this.getData();
+        }
+
+        private void getData()
+        {
+            txtPagina.Text = nroPagina.ToString();
 
             getPublicacionesPagina();
 
@@ -318,7 +318,10 @@ namespace MercadoEnvios.ComprarOfertar
 
         private void dgvFiltros_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (dgvFiltros.Rows.Count > 0)
+            {
             dgvFiltros.CurrentRow.Selected = true;
+            }
         }
 
         private void frmComprarOfertar_Load(object sender, EventArgs e)

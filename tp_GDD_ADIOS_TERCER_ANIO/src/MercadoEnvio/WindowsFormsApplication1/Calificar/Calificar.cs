@@ -122,16 +122,18 @@ namespace MercadoEnvios.Calificar
 
         private void btnReputacion_Click(object sender, EventArgs e)
         {
-            sesion.anterior = this;
             new frmHistorial().Show();
-            this.Hide(); //VOY A QUERER QUE VUELVA
+            this.Close();
         }
 
         private void dgvCompras_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            lblUsuario.Text = dgvCompras[0, dgvCompras.CurrentCell.RowIndex].Value.ToString();
-            lblCompra.Text = dgvCompras[1, dgvCompras.CurrentCell.RowIndex].Value.ToString();
-            lblIdCompra.Text = dgvCompras[2, dgvCompras.CurrentCell.RowIndex].Value.ToString();
+            if (dgvCompras.Rows.Count > 0)
+            {
+                lblUsuario.Text = dgvCompras[0, dgvCompras.CurrentCell.RowIndex].Value.ToString();
+                lblCompra.Text = dgvCompras[1, dgvCompras.CurrentCell.RowIndex].Value.ToString();
+                lblIdCompra.Text = dgvCompras[2, dgvCompras.CurrentCell.RowIndex].Value.ToString();
+            }
 
         }
 

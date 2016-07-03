@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -20,12 +21,13 @@ namespace MercadoEnvios.ABM_Usuario
 
         Sesion sesion = Sesion.Instance;
         int idUsuarioActual;
-        Form anterior;
+        DateTime fechaSistema = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
+        DateTime fechaMinimaNacimiento;
+        DateTime fechaMaximaNacimiento;
 
         public frmModificarCliente(int id)
         {
             InitializeComponent();
-            anterior = sesion.anterior;
             conn = Conexion.Instance;
             idUsuarioActual = id;
             Mail.MaxLength = 30;
@@ -116,6 +118,10 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+
+            fechaMinimaNacimiento = fechaSistema.AddYears(-120);
+            fechaMaximaNacimiento = fechaSistema.AddYears(-18);
+
             this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Contraseña, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
@@ -128,6 +134,7 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(CodigoPostal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Fecha_De_Nacimiento, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Nro_de_Direccion, mensajeDeAviso);
+            this.funcionesValidacion.validarFechaDeNacimiento(fechaMaximaNacimiento, fechaMinimaNacimiento, DateTime.Parse(Fecha_De_Nacimiento.Text), mensajeDeAviso);
            
             if (!(string.IsNullOrEmpty(Nro_de_Direccion.Text)))
             {

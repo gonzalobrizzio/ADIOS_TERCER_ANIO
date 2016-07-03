@@ -20,11 +20,19 @@ namespace MercadoEnvios.ABM_Usuario
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
 
+        DateTime fechaSistema = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
+        DateTime fechaMinimaNacimiento;
+        DateTime fechaMaximaNacimiento;
+
         public frmNuevoCliente(string rol)
         {
+
             InitializeComponent();
             conn = Conexion.Instance;
             rolU = rol;
+
+            fechaMinimaNacimiento = fechaSistema.AddYears(-120);
+            fechaMaximaNacimiento = fechaSistema.AddYears(-18);
 
             Mail.MaxLength = 30;
             Usuario.MaxLength = 20;
@@ -67,7 +75,6 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            
 
             bool usuarioB = this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Contrasenia, mensajeDeAviso);
@@ -81,6 +88,10 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(Codigo_Postal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Fecha_de_Nacimiento, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Nro_de_Direccion, mensajeDeAviso);
+            if (Fecha_de_Nacimiento.Text != "")
+            {
+                this.funcionesValidacion.validarFechaDeNacimiento(fechaMaximaNacimiento, fechaMinimaNacimiento, DateTime.Parse(Fecha_de_Nacimiento.Text), mensajeDeAviso);
+            }
             
             bool validaciones;
 

@@ -201,11 +201,22 @@ namespace MercadoEnvios.Facturas
                    {
                        btnSgte.Enabled = false;
                    }
+
+                    if (dgvFacturas.Rows.Count == 0)
+                    {
+                        btnAnt.Enabled = false;
+                        if (btnSgte.Enabled == true)
+                        {
+                            btnSgte.Enabled = false;
+                        }
+                        btnPrimeraPag.Enabled = false;
+                        button1.Enabled = false;
+                    }
                }
                catch (SqlException error)
                {
                    btnSgte.Enabled = false;
-                   MessageBox.Show(error.Message);
+                   MessageBox.Show("No hay páginas para mostrar con esos valores");
                }
            }
            else 

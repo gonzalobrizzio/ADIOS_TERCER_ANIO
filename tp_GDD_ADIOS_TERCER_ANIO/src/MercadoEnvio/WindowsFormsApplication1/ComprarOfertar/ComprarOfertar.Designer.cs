@@ -146,6 +146,7 @@
             this.dgvRubros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRubros.Location = new System.Drawing.Point(17, 39);
             this.dgvRubros.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvRubros.MultiSelect = false;
             this.dgvRubros.Name = "dgvRubros";
             this.dgvRubros.Size = new System.Drawing.Size(295, 228);
             this.dgvRubros.TabIndex = 6;
@@ -156,6 +157,7 @@
             this.dgvFiltros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFiltros.Location = new System.Drawing.Point(17, 310);
             this.dgvFiltros.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvFiltros.MultiSelect = false;
             this.dgvFiltros.Name = "dgvFiltros";
             this.dgvFiltros.Size = new System.Drawing.Size(295, 162);
             this.dgvFiltros.TabIndex = 7;
