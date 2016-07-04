@@ -195,11 +195,6 @@ namespace MercadoEnvios.Historial_Cliente
             this.Close();
         }
 
-        private void VendedorCalif_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnVolver_Click(object sender, EventArgs e)
         {
             new Historial_Cliente.frmHistorialCliente().Show();

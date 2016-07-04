@@ -63,12 +63,6 @@ namespace MercadoEnvios.Historial_Cliente
             {
                 cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 10;
                 btnAnt.Enabled = false;
-                if (grillaDeCompras.Rows.Count < 10) 
-                {
-                    btnSgte.Enabled = false;
-                    btnPrimeraPag.Enabled = false;
-                    button1.Enabled = false;
-                }
             }
 
             if (nroPagina >= cantidad)
@@ -78,7 +72,20 @@ namespace MercadoEnvios.Historial_Cliente
 
             if (grillaDeCompras.Rows.Count <= 0 || grillaDeCompras.Rows.Count < 10)
             {
-                btnSgte.Enabled = false;
+                if (btnSgte.Enabled == true)
+                {
+                    btnSgte.Enabled = false;
+                }
+
+                if (btnPrimeraPag.Enabled == true)
+                {
+                    btnPrimeraPag.Enabled = false;
+                }
+
+                if (button1.Enabled == true)
+                {
+                    button1.Enabled = false;
+                }
             }
         }
 

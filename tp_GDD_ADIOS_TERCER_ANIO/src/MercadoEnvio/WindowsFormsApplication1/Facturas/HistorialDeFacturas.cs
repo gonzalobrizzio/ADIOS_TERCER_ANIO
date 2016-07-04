@@ -195,23 +195,58 @@ namespace MercadoEnvios.Facturas
 
                    if (nroPagina >= cantidad)
                    {
-                       btnSgte.Enabled=false;   
+                       if (btnSgte.Enabled == true)
+                       {
+                           btnSgte.Enabled = false;
+                       }
                    }
-                    if (dgvFacturas.Rows.Count < 10)
+                   else
                    {
-                       btnSgte.Enabled = false;
+                       btnSgte.Enabled = true;
                    }
 
-                    if (dgvFacturas.Rows.Count == 0)
-                    {
-                        btnAnt.Enabled = false;
-                        if (btnSgte.Enabled == true)
-                        {
-                            btnSgte.Enabled = false;
-                        }
-                        btnPrimeraPag.Enabled = false;
-                        button1.Enabled = false;
-                    }
+
+                   if (dgvFacturas.Rows.Count < 10)
+                   {
+                       if (btnSgte.Enabled == true)
+                       {
+                           btnSgte.Enabled = false;
+                       }
+                   }
+                   else
+                   {
+                       btnSgte.Enabled = true;
+                   }
+
+                   if (dgvFacturas.Rows.Count == 0)
+                   {
+                       if (btnAnt.Enabled == true)
+                       {
+                           btnAnt.Enabled = false;
+                       }
+
+                       if (btnSgte.Enabled == true)
+                       {
+                           btnSgte.Enabled = false;
+                       }
+
+                       if (btnPrimeraPag.Enabled == true)
+                       {
+                           btnPrimeraPag.Enabled = false;
+                       }
+
+                       if (button1.Enabled == true)
+                       {
+                           button1.Enabled = false;
+                       }
+                   }
+                   else
+                   {
+                       btnPrimeraPag.Enabled = true;
+                       button1.Enabled = true;
+                       btnSgte.Enabled = true;
+                       btnAnt.Enabled = true;
+                   }
                }
                catch (SqlException error)
                {
