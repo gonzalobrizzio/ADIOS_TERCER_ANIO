@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Rol
@@ -13,6 +13,7 @@ namespace MercadoEnvios.ABM_Rol
     public partial class frmElegirRol : Form
     {
         Sesion sesion = Sesion.Instance;
+        Conexion conn = Conexion.Instance;
 
         public frmElegirRol(string roles)
         {
@@ -28,23 +29,16 @@ namespace MercadoEnvios.ABM_Rol
                 {
                     MessageBox.Show("No ha seleccionado un rol valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
-                else if ((cboRol.SelectedItem).Equals("Administrativo"))
+                else
                 {
-                    sesion.idRol = 1;
+                    string queryBuscarId = "SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = '" +  Convert.ToString(cboRol.SelectedItem) + "'";
+                    SqlCommand buscarRoles = new SqlCommand(queryBuscarId, conn.getConexion);
+                    SqlDataReader dataReader = buscarRoles.ExecuteReader();
+                    dataReader.Read();
+                    sesion.idRol = dataReader.GetInt32(0);
+                    dataReader.Close();
                     new ABM_Usuario.frmPantallaPrincipal().Show();
-                    this.Hide();
-                }
-                else if ((cboRol.SelectedItem).Equals("Cliente"))
-                {
-                    sesion.idRol = 2;
-                    new ABM_Usuario.frmPantallaPrincipal().Show();
-                    this.Hide();
-                }
-                else if ((cboRol.SelectedItem).Equals("Empresa"))
-                {
-                    sesion.idRol = 3;
-                    new ABM_Usuario.frmPantallaPrincipal().Show();
-                    this.Hide();
+                    this.Close();
                 }
 
         }
