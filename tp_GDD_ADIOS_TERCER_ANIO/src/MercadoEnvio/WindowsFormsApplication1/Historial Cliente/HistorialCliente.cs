@@ -63,6 +63,12 @@ namespace MercadoEnvios.Historial_Cliente
             {
                 cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 10;
                 btnAnt.Enabled = false;
+                if (grillaDeCompras.Rows.Count < 10) 
+                {
+                    btnSgte.Enabled = false;
+                    btnPrimeraPag.Enabled = false;
+                    button1.Enabled = false;
+                }
             }
 
             if (nroPagina >= cantidad)
@@ -70,7 +76,7 @@ namespace MercadoEnvios.Historial_Cliente
                 btnSgte.Enabled = false;
             }
 
-            if (grillaDeCompras.Rows.Count <= 0)
+            if (grillaDeCompras.Rows.Count <= 0 || grillaDeCompras.Rows.Count < 10)
             {
                 btnSgte.Enabled = false;
             }

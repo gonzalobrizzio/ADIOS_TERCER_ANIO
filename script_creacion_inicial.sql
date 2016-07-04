@@ -3073,7 +3073,7 @@ AS BEGIN
 	inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario
 	inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol
 	inner join ADIOS_TERCER_ANIO.Persona e on u.id = e.idUsuario
-	WHERE ru.idRol != 1
+	WHERE ru.idRol != 1 AND ru.idRol = 2
 	AND ((e.nombre COLLATE Latin1_General_CI_AI LIKE '%' + @nombre + '%' COLLATE Latin1_General_CI_AI) OR (@nombre IS NULL OR @nombre = ''))
 	AND ((e.apellido COLLATE Latin1_General_CI_AI LIKE '%' + @apellido + '%' COLLATE Latin1_General_CI_AI) OR (@apellido IS NULL OR @apellido = ''))
 	AND ((e.documento LIKE @doc) OR (@doc IS NULL OR @doc = -1))
@@ -3094,7 +3094,7 @@ AS BEGIN
 	inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario 
 	inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol 
 	inner join ADIOS_TERCER_ANIO.Empresa e on u.id = e.idUsuario 
-	WHERE ru.idRol != 1
+	WHERE ru.idRol != 1 AND ru.idRol = 3
 	AND ((e.cuit COLLATE Latin1_General_CI_AI LIKE '%' + @cuit + '%' COLLATE Latin1_General_CI_AI) OR (@cuit IS NULL OR @cuit = ''))
 	AND ((e.razonSocial COLLATE Latin1_General_CI_AI LIKE '%' + @razonSocial + '%' COLLATE Latin1_General_CI_AI) OR (@razonSocial IS NULL OR @razonSocial = ''))
 	AND ((u.mail COLLATE Latin1_General_CI_AI LIKE '%' + @mail + '%' COLLATE Latin1_General_CI_AI) OR (@mail IS NULL OR @mail = ''))
