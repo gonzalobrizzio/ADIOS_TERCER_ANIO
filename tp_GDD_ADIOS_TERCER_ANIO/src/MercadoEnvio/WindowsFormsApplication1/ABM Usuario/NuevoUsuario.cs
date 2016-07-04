@@ -29,11 +29,6 @@ namespace MercadoEnvios.ABM_Usuario
             dataReader.Close();
         }
 
-        private void NuevoUsuario_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
         private void btnAceptar_Click(object sender, EventArgs e)
         {
 

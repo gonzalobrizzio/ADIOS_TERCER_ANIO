@@ -18,7 +18,6 @@ namespace MercadoEnvios.Login_y_Seguridad
         private Utilidades funcionesValidacion = new Utilidades();
         string usuarioDeSesion;
         Conexion conn;
-        Form anterior;
 
         Sesion sesion = Sesion.Instance;
 

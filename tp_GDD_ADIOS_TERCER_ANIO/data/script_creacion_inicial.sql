@@ -1,6 +1,6 @@
--------------------------------------------------------------
---SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE--
--------------------------------------------------------------
+---------------------------------------------------------------
+----SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE--
+---------------------------------------------------------------
 --USE GD1C2016
 --DROP TABLE [ADIOS_TERCER_ANIO].[RolUsuario];
 --DROP TABLE [ADIOS_TERCER_ANIO].[FuncionalidadRol];
@@ -73,6 +73,7 @@
 --DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMasFacturasPorTrimestreAnio;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.vendedoresConMayorMontoFacturadoPorTrimestreAnio;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion;
+--DROP PROCEDURE ADIOS_TERCER_ANIO.AgregarRolXUsuario;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.obtenerPregunta;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.NuevaPregunta;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.Comprar;
@@ -3080,6 +3081,14 @@ AS BEGIN
 			select fu.descripcion from ADIOS_TERCER_ANIO.FuncionalidadRol f
 			INNER JOIN ADIOS_TERCER_ANIO.Funcionalidad fu ON fu.id = f.idFuncionalidad
 			where f.idRol = @idRolActual AND f.deleted = 0
+END
+GO
+CREATE PROCEDURE ADIOS_TERCER_ANIO.AgregarRolXUsuario (@rol NVARCHAR(255), @idUsuario INT)
+AS BEGIN
+	DECLARE @idRol INT
+	SET @idRol = (SELECT id FROM ADIOS_TERCER_ANIO.Rol WHERE nombre = @rol)
+	INSERT INTO ADIOS_TERCER_ANIO.RolUsuario(idRol,idUsuario,deleted)
+	VALUES(@idRol,@idUsuario,0)
 END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa(@cuit NVARCHAR(255), @razonSocial NVARCHAR(255), @mail NVARCHAR(255))

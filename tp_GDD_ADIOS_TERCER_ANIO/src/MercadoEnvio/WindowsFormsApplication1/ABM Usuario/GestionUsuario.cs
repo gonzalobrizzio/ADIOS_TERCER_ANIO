@@ -321,6 +321,35 @@ namespace MercadoEnvios.ABM_Usuario
         {
             fun.ingresarMail(e);
         }
+
+        private void btnRol_Click(object sender, EventArgs e)
+        {
+            if (clienteOEmpresa == 0)
+            {
+                if (dgvClientes.CurrentRow.Selected == false)
+                {
+                    MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                }
+                else
+                {
+                    new AgregarRolAUsuario(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value), "Cliente").Show();
+                    this.Close();
+                }
+            }
+            else
+            {
+                if (dgvEmpresas.CurrentRow.Selected == false)
+                {
+                    MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    new AgregarRolAUsuario(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value), "Empresa").Show();
+                    this.Close();
+                }
+            }
+        }
     
     }
 
