@@ -3120,12 +3120,3 @@ AS BEGIN
 	and oferta.idPublicacion = @idPublicacion
 END
 GO
-
-DECLARE @datetime datetime = GETDATE();
-SET ROWCOUNT 100
-UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2, fechaFin = @datetime   -- o Constante
-SET ROWCOUNT 0
-
-UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 4
-
-SELECT * FROM ADIOS_TERCER_ANIO.Publicacion ORDER BY fechaFin DESC
