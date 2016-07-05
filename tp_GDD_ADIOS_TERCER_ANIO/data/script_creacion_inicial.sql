@@ -3086,7 +3086,7 @@ END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerFuncionalidades (@idRolActual INT)
 AS BEGIN
-			select fu.descripcion from ADIOS_TERCER_ANIO.FuncionalidadRol f
+			select fu.descripcion AS Funcionalidad from ADIOS_TERCER_ANIO.FuncionalidadRol f
 			INNER JOIN ADIOS_TERCER_ANIO.Funcionalidad fu ON fu.id = f.idFuncionalidad
 			where f.idRol = @idRolActual AND f.deleted = 0
 END
@@ -3120,3 +3120,12 @@ AS BEGIN
 	and oferta.idPublicacion = @idPublicacion
 END
 GO
+
+DECLARE @datetime datetime = GETDATE();
+SET ROWCOUNT 100
+UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 2, fechaFin = @datetime   -- o Constante
+SET ROWCOUNT 0
+
+UPDATE ADIOS_TERCER_ANIO.Publicacion SET idEstado = 4
+
+SELECT * FROM ADIOS_TERCER_ANIO.Publicacion ORDER BY fechaFin DESC

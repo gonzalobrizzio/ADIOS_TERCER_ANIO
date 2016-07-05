@@ -70,27 +70,40 @@ namespace MercadoEnvios.ComprarOfertar
 
             getPublicacionesPagina();
 
-            if (dgvPublicaciones.RowCount == 0)
+            if (nroPagina == 0)
             {
-                btnSgte.Enabled = false;
-                btnAnt.Enabled = false;
-                btnDetalle.Enabled = false;
                 btnPrimeraPag.Enabled = false;
-                button1.Enabled = false;
-            }
-            else
-            {
-                btnSgte.Enabled = true;
-                btnAnt.Enabled = true;
-                btnDetalle.Enabled = true;
+                btnAnt.Enabled = false;
             }
 
-            if (dgvPublicaciones.RowCount < 10)
+            if (dgvPublicaciones.RowCount == 0 && nroPagina == 0 || dgvPublicaciones.RowCount < 10 && nroPagina == 0)
             {
-                btnSgte.Enabled = false;
-                if (getCantPublicaciones() < 10)
+                if (btnSgte.Enabled == true)
+                {
+                    btnSgte.Enabled = false;
+                }
+
+                if (btnAnt.Enabled == true)
                 {
                     btnAnt.Enabled = false;
+                }
+
+                if (dgvPublicaciones.RowCount == 0 && nroPagina == 0)
+                {
+                    if (btnDetalle.Enabled == true)
+                    {
+                        btnDetalle.Enabled = false;
+                    }
+                }
+
+                if (btnPrimeraPag.Enabled == true)
+                {
+                    btnPrimeraPag.Enabled = false;
+                }
+
+                if (button1.Enabled == true)
+                {
+                    button1.Enabled = false;
                 }
             }
 
@@ -108,6 +121,7 @@ namespace MercadoEnvios.ComprarOfertar
             {
                 nroPagina++;
                 btnAnt.Enabled = true;
+                btnPrimeraPag.Enabled = true;
                 this.getData();
                 getPublicacionesPagina();
             }
@@ -122,6 +136,8 @@ namespace MercadoEnvios.ComprarOfertar
             nroPagina--;
             if (nroPagina == 0) btnAnt.Enabled = false;
             getData();
+            button1.Enabled = true;
+            btnSgte.Enabled = true;
             getPublicacionesPagina();
         }
 
@@ -290,8 +306,13 @@ namespace MercadoEnvios.ComprarOfertar
                 dgvFiltros.Rows.Add(row);
                 dgvRubros.Rows.Remove(rowPrincipal);
             }
-
+            nroPagina = 0;
             getData();
+            if (0 < getCantPublicaciones() / 10)
+            {
+                button1.Enabled = true;
+                btnSgte.Enabled = true;
+            }
 
         }
 
@@ -308,7 +329,13 @@ namespace MercadoEnvios.ComprarOfertar
                 dgvFiltros.Rows.Remove(rowPrincipal);
 
             }
+            nroPagina = 0;
             getData();
+            if (0 < getCantPublicaciones() / 10)
+            {
+                button1.Enabled = true;
+                btnSgte.Enabled = true;
+            }
         }
 
         private void dgvRubros_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -338,12 +365,18 @@ namespace MercadoEnvios.ComprarOfertar
         {
             nroPagina = 0;
             getData();
+            btnSgte.Enabled = true;
+            button1.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             nroPagina = getCantPublicaciones() / 10;
             getData();
+            btnPrimeraPag.Enabled = true;
+            btnSgte.Enabled = false;
+            btnAnt.Enabled = true;
+            button1.Enabled = false;
         }
 
         private void txtPagina_KeyPress(object sender, KeyPressEventArgs e)
@@ -359,6 +392,11 @@ namespace MercadoEnvios.ComprarOfertar
                 {
                     nroPagina = Convert.ToInt32(txtPagina.Text);
                     getData();
+                    if (nroPagina != 0)
+                    {
+                        btnPrimeraPag.Enabled = true;
+                        btnAnt.Enabled = true;
+                    }
                 }
                 else
                 {

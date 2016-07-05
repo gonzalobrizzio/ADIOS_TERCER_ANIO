@@ -307,7 +307,6 @@ namespace MercadoEnvios.Facturas
         {
             nroPagina = 0;
             this.getData();
-            btnSgte.Enabled = true;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -380,28 +379,24 @@ namespace MercadoEnvios.Facturas
         {
             nroPagina = 0;
             this.getData();
-            btnSgte.Enabled = true;
         }
 
         private void descripcionTxt_TextChanged(object sender, EventArgs e)
         {
             nroPagina = 0;
             this.getData();
-            btnSgte.Enabled = true;
         }
 
         private void fechaHastaDtp_ValueChanged(object sender, EventArgs e)
         {
             nroPagina = 0;
             this.getData();
-            btnSgte.Enabled = true;
         }
 
         private void fechaDesdeDtp_ValueChanged(object sender, EventArgs e)
         {
             nroPagina = 0;
             this.getData();
-            btnSgte.Enabled = true;
         }
 
         private void btnPrimeraPag_Click(object sender, EventArgs e)
