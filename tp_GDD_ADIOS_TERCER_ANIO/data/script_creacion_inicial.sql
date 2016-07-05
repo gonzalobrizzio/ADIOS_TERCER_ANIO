@@ -3040,29 +3040,36 @@ CREATE PROCEDURE [ADIOS_TERCER_ANIO].[verHistoricoComprasUsuario](@userId INT, @
 AS
 BEGIN
 
-		SET @cant =	(SELECT COUNT (*) FROM ADIOS_TERCER_ANIO.Usuario usu
-						inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
-						inner JOIN ADIOS_TERCER_ANIO.Compra com ON com.idPublicacion = pub.id
-						LEFT outer JOIN ADIOS_TERCER_ANIO.Oferta ofe ON ofe.idPublicacion = pub.id and com.id is null
-						inner JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
-						INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
-						where usu.id = com.idComprador or usu.id = ofe.idUsuario) - (@pagina * 10);
+	CREATE TABLE #tablaTemporal (
+	tipoPublicacion nvarchar(255),
+	monto numeric(18,2),
+	cantidad int, 
+	descripcion nvarchar(255), 
+	fecha datetime);
 
-		WITH TablaP AS (SELECT TOP (@cant) pub.descripcion, iif(com.cantidad <> pub.stock, com.cantidad, pub.stock) as cantidad, com.fecha as fecha,
-						iif(ofe.monto is not null, ofe.monto, pub.precio) as precio, cal.puntaje as calificacion, tp.nombre
-						FROM ADIOS_TERCER_ANIO.Usuario usu
-						inner JOIN ADIOS_TERCER_ANIO.Publicacion pub ON usu.id = @userId
-						inner JOIN ADIOS_TERCER_ANIO.Compra com ON com.idPublicacion = pub.id
-						LEFT outer JOIN ADIOS_TERCER_ANIO.Oferta ofe ON ofe.idPublicacion = pub.id and com.id is null
-						inner JOIN ADIOS_TERCER_ANIO.Calificacion cal ON com.id = cal.idCompra
-						INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = pub.idTipoPublicacion
-						where usu.id = com.idComprador or usu.id = ofe.idUsuario
-						ORDER BY com.fecha ASC)
+	INSERT INTO #tablaTemporal
+	SELECT tp.nombre, p.precio, c.cantidad, p.descripcion, c.fecha
+	FROM ADIOS_TERCER_ANIO.Publicacion p 
+	INNER JOIN ADIOS_TERCER_ANIO.Compra c ON p.id = c.idPublicacion
+	INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = p.idTipoPublicacion
+	WHERE @userId = c.idComprador
 
-	SELECT TOP 10 * FROM TablaP ORDER BY tablaP.fecha DESC
+	INSERT INTO #tablaTemporal
+	SELECT tp.nombre, o.monto, p.stock, p.descripcion, o.fecha
+	FROM ADIOS_TERCER_ANIO.Publicacion p
+	INNER JOIN ADIOS_TERCER_ANIO.Oferta o ON p.id = o.idPublicacion 
+	INNER JOIN ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = p.idTipoPublicacion
+	WHERE @userId = o.idUsuario
+
+	SET @cant =	(SELECT COUNT(*) FROM #tablaTemporal) - (@pagina * 10);
+
+	WITH TablaP AS (SELECT TOP (@cant) * FROM #tablaTemporal ORDER BY #tablaTemporal.fecha ASC)
+
+	SELECT TOP 10 * FROM TablaP ORDER BY TablaP.fecha DESC
 	
 END
 GO
+EXEC ADIOS_TERCER_ANIO.verHistoricoComprasUsuario 1,0,0
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 
 AS BEGIN
 	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 

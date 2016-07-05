@@ -333,8 +333,7 @@ namespace MercadoEnvios.ABM_Usuario
                 }
                 else
                 {
-                    new AgregarRolAUsuario(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value), "Cliente").Show();
-                    this.Close();
+                    this.verCant(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value));
                 }
             }
             else
@@ -345,9 +344,29 @@ namespace MercadoEnvios.ABM_Usuario
                 }
                 else
                 {
-                    new AgregarRolAUsuario(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value), "Empresa").Show();
-                    this.Close();
+                    this.verCant(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value));
                 }
+            }
+        }
+
+
+        public void verCant(int idUsuario)
+        {
+            string queryBuscarRoles = "SELECT r.nombre FROM ADIOS_TERCER_ANIO.Rol r LEFT JOIN ADIOS_TERCER_ANIO.RolUsuario rolU ON r.id = rolU.idRol AND rolU.idUsuario = " + idUsuario + " WHERE rolU.idRol is null AND r.deleted = 0";
+            SqlCommand buscarRoles = new SqlCommand(queryBuscarRoles, conn.getConexion);
+            SqlDataReader dataReader = buscarRoles.ExecuteReader();
+            dataReader.Read();
+
+            if(dataReader.HasRows)
+            {
+                dataReader.Close();
+                new AgregarRolAUsuario(idUsuario).Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("El usuario posee todos los roles!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataReader.Close();
             }
         }
     

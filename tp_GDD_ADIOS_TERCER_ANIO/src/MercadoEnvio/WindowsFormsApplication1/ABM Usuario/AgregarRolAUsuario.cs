@@ -16,7 +16,7 @@ namespace MercadoEnvios.ABM_Usuario
         Conexion conn = Conexion.Instance;
         Sesion sesion = Sesion.Instance;
         int idUsuario;
-        public AgregarRolAUsuario(int usu, string rolUtilizado)
+        public AgregarRolAUsuario(int usu)
         {
             InitializeComponent();
             idUsuario = usu;
@@ -30,16 +30,7 @@ namespace MercadoEnvios.ABM_Usuario
             }
 
             dataReader.Close();
-
-            if (cmbRolAsignado.Items.Count == 0)
-            {
-                MessageBox.Show("El usuario posee todos los roles!", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.btnAceptar.Enabled = false;
-            }
-            else
-            {
-                cmbRolAsignado.SelectedIndex = 0;
-            }
+            cmbRolAsignado.SelectedIndex = 0;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)

@@ -56,9 +56,8 @@ namespace MercadoEnvios.Historial_Cliente
             grillaDeCompras.AllowUserToDeleteRows = false;
             grillaDeCompras.AllowUserToAddRows = false;
             grillaDeCompras.ReadOnly = true;
-            grillaDeCompras.Columns[0].Width = 250;
-            grillaDeCompras.Columns[5].Width = 250;
-
+            grillaDeCompras.Columns[0].Width = 150;
+            grillaDeCompras.Columns[3].Width = 250;
             if (nroPagina == 0)
             {
                 cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 10;
