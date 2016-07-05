@@ -3069,7 +3069,6 @@ BEGIN
 	
 END
 GO
-EXEC ADIOS_TERCER_ANIO.verHistoricoComprasUsuario 1,0,0
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 
 AS BEGIN
 	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
