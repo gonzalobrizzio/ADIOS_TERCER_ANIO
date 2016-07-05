@@ -31,63 +31,67 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void btnAceptar_Click_1(object sender, EventArgs e)
         {
-                fun.validarVisibilidad(txtNombre, mensajeValidacion);
+                this.fun.validarVisibilidad(Nombre, mensajeValidacion);
+                this.fun.validarNoVacio(Nombre, mensajeValidacion);
+                this.fun.validarNoVacio(Duracion, mensajeValidacion);
+                this.fun.validarNoVacio(Porcentaje, mensajeValidacion);
+                this.fun.validarNoVacio(Precio, mensajeValidacion);
                 decimal valor;
                 if (mensajeValidacion.Length == 0)
                 {
-                    if(String.IsNullOrEmpty(txtPorcentaje.Text))
+                    if(String.IsNullOrEmpty(Porcentaje.Text))
                     {
                         valor = 1;
                     }
                     else
                     {
-                        valor = Convert.ToDecimal(txtPorcentaje.Text);
+                        valor = Convert.ToDecimal(Porcentaje.Text);
                     }
                     if ( valor <= 1)
                     {
                     SqlCommand agregarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.AgregarVisibilidad", conn.getConexion);
                     agregarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
                     SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                    if (string.IsNullOrEmpty(txtNombre.Text))
+                    if (string.IsNullOrEmpty(Nombre.Text))
                     {
                         nombre.SqlValue = DBNull.Value;
                     }
                     else
                     {
-                        nombre.SqlValue = txtNombre.Text;
+                        nombre.SqlValue = Nombre.Text;
                     }
                     nombre.Direction = ParameterDirection.Input;
 
                     SqlParameter duracion = new SqlParameter("@duracion", SqlDbType.Int);
-                    if (string.IsNullOrEmpty(txtDuracion.Text))
+                    if (string.IsNullOrEmpty(Duracion.Text))
                     {
                         duracion.SqlValue = DBNull.Value;
                     }
                     else
                     {
-                        duracion.SqlValue = Convert.ToInt32(txtDuracion.Text);
+                        duracion.SqlValue = Convert.ToInt32(Duracion.Text);
                     }
                     duracion.Direction = ParameterDirection.Input;
 
                     SqlParameter precio = new SqlParameter("@precio", SqlDbType.Decimal);
-                    if (string.IsNullOrEmpty(txtPrecio.Text))
+                    if (string.IsNullOrEmpty(Precio.Text))
                     {
                         precio.SqlValue = DBNull.Value;
                     }
                     else
                     {
-                        precio.SqlValue = Convert.ToDecimal(txtPrecio.Text);
+                        precio.SqlValue = Convert.ToDecimal(Precio.Text);
                     }
                     precio.Direction = ParameterDirection.Input;
 
                     SqlParameter porcentaje = new SqlParameter("@porcentaje", SqlDbType.Decimal);
-                    if (string.IsNullOrEmpty(txtPorcentaje.Text))
+                    if (string.IsNullOrEmpty(Porcentaje.Text))
                     {
                         porcentaje.SqlValue = DBNull.Value;
                     }
                     else
                     {
-                        porcentaje.SqlValue = Convert.ToDecimal(txtPorcentaje.Text);
+                        porcentaje.SqlValue = Convert.ToDecimal(Porcentaje.Text);
                     }
                     porcentaje.Direction = ParameterDirection.Input;
 

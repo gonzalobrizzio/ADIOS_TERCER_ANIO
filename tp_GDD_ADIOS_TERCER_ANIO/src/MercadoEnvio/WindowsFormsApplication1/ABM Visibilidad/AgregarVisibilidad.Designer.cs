@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.lblPorcentaje = new System.Windows.Forms.Label();
-            this.txtPorcentaje = new System.Windows.Forms.TextBox();
+            this.Porcentaje = new System.Windows.Forms.TextBox();
             this.lblPrecio = new System.Windows.Forms.Label();
-            this.txtPrecio = new System.Windows.Forms.TextBox();
+            this.Precio = new System.Windows.Forms.TextBox();
             this.lblDuracion = new System.Windows.Forms.Label();
-            this.txtDuracion = new System.Windows.Forms.TextBox();
+            this.Duracion = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.Nombre = new System.Windows.Forms.TextBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -50,15 +50,15 @@
             this.lblPorcentaje.TabIndex = 13;
             this.lblPorcentaje.Text = "Porcentaje:";
             // 
-            // txtPorcentaje
+            // Porcentaje
             // 
-            this.txtPorcentaje.Location = new System.Drawing.Point(131, 111);
-            this.txtPorcentaje.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtPorcentaje.MaxLength = 4;
-            this.txtPorcentaje.Name = "txtPorcentaje";
-            this.txtPorcentaje.Size = new System.Drawing.Size(289, 22);
-            this.txtPorcentaje.TabIndex = 4;
-            this.txtPorcentaje.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorcentaje_KeyPress);
+            this.Porcentaje.Location = new System.Drawing.Point(131, 111);
+            this.Porcentaje.Margin = new System.Windows.Forms.Padding(4);
+            this.Porcentaje.MaxLength = 4;
+            this.Porcentaje.Name = "Porcentaje";
+            this.Porcentaje.Size = new System.Drawing.Size(289, 22);
+            this.Porcentaje.TabIndex = 4;
+            this.Porcentaje.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorcentaje_KeyPress);
             // 
             // lblPrecio
             // 
@@ -70,15 +70,15 @@
             this.lblPrecio.TabIndex = 12;
             this.lblPrecio.Text = "Precio:";
             // 
-            // txtPrecio
+            // Precio
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(131, 79);
-            this.txtPrecio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtPrecio.MaxLength = 14;
-            this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(289, 22);
-            this.txtPrecio.TabIndex = 3;
-            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
+            this.Precio.Location = new System.Drawing.Point(131, 79);
+            this.Precio.Margin = new System.Windows.Forms.Padding(4);
+            this.Precio.MaxLength = 14;
+            this.Precio.Name = "Precio";
+            this.Precio.Size = new System.Drawing.Size(289, 22);
+            this.Precio.TabIndex = 3;
+            this.Precio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
             // 
             // lblDuracion
             // 
@@ -90,15 +90,15 @@
             this.lblDuracion.TabIndex = 11;
             this.lblDuracion.Text = "Duración:";
             // 
-            // txtDuracion
+            // Duracion
             // 
-            this.txtDuracion.Location = new System.Drawing.Point(131, 47);
-            this.txtDuracion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtDuracion.MaxLength = 2;
-            this.txtDuracion.Name = "txtDuracion";
-            this.txtDuracion.Size = new System.Drawing.Size(289, 22);
-            this.txtDuracion.TabIndex = 2;
-            this.txtDuracion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDuracion_KeyPress);
+            this.Duracion.Location = new System.Drawing.Point(131, 47);
+            this.Duracion.Margin = new System.Windows.Forms.Padding(4);
+            this.Duracion.MaxLength = 2;
+            this.Duracion.Name = "Duracion";
+            this.Duracion.Size = new System.Drawing.Size(289, 22);
+            this.Duracion.TabIndex = 2;
+            this.Duracion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDuracion_KeyPress);
             // 
             // lblNombre
             // 
@@ -110,19 +110,19 @@
             this.lblNombre.TabIndex = 10;
             this.lblNombre.Text = "Nombre: ";
             // 
-            // txtNombre
+            // Nombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(131, 15);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtNombre.MaxLength = 20;
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(289, 22);
-            this.txtNombre.TabIndex = 1;
+            this.Nombre.Location = new System.Drawing.Point(131, 15);
+            this.Nombre.Margin = new System.Windows.Forms.Padding(4);
+            this.Nombre.MaxLength = 20;
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Size = new System.Drawing.Size(289, 22);
+            this.Nombre.TabIndex = 1;
             // 
             // btnCancelar
             // 
             this.btnCancelar.Location = new System.Drawing.Point(265, 143);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(156, 38);
             this.btnCancelar.TabIndex = 6;
@@ -133,7 +133,7 @@
             // btnAceptar
             // 
             this.btnAceptar.Location = new System.Drawing.Point(29, 143);
-            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(157, 38);
             this.btnAceptar.TabIndex = 5;
@@ -149,14 +149,14 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.lblNombre);
-            this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.Nombre);
             this.Controls.Add(this.lblDuracion);
-            this.Controls.Add(this.txtDuracion);
+            this.Controls.Add(this.Duracion);
             this.Controls.Add(this.lblPrecio);
-            this.Controls.Add(this.txtPrecio);
+            this.Controls.Add(this.Precio);
             this.Controls.Add(this.lblPorcentaje);
-            this.Controls.Add(this.txtPorcentaje);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Controls.Add(this.Porcentaje);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmAgregarVisibilidad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AgregarVisibilidad";
@@ -168,13 +168,13 @@
         #endregion
 
         private System.Windows.Forms.Label lblPorcentaje;
-        private System.Windows.Forms.TextBox txtPorcentaje;
+        private System.Windows.Forms.TextBox Porcentaje;
         private System.Windows.Forms.Label lblPrecio;
-        private System.Windows.Forms.TextBox txtPrecio;
+        private System.Windows.Forms.TextBox Precio;
         private System.Windows.Forms.Label lblDuracion;
-        private System.Windows.Forms.TextBox txtDuracion;
+        private System.Windows.Forms.TextBox Duracion;
         private System.Windows.Forms.Label lblNombre;
-        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.TextBox Nombre;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnAceptar;
     }
