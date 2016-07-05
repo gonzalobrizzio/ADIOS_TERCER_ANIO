@@ -24,6 +24,10 @@ namespace MercadoEnvios.ABM_Usuario
         DateTime fechaSistema = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]);
         DateTime fechaMinimaNacimiento;
         DateTime fechaMaximaNacimiento;
+        string tipov;
+        string nrov;
+        string usuariov;
+        string mailv;
 
         public frmModificarCliente(int id)
         {
@@ -100,6 +104,10 @@ namespace MercadoEnvios.ABM_Usuario
                 if (!dataReader[11].Equals(DBNull.Value)) { Fecha_De_Nacimiento.Text = Convert.ToString(dataReader.GetDateTime(11)); }
             }
 
+            nrov = Nro_de_Documento.Text;
+            tipov = Tipo_de_Documento.Text;
+            usuariov = Usuario.Text;
+            mailv = Mail.Text;
 
             if (Localidad.SelectedIndex.Equals(-1))
             {
@@ -122,14 +130,14 @@ namespace MercadoEnvios.ABM_Usuario
             fechaMinimaNacimiento = fechaSistema.AddYears(-120);
             fechaMaximaNacimiento = fechaSistema.AddYears(-18);
 
-            this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
+            bool usuarioB = this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Contraseña, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
+            bool mailB = this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Nombre, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Apellido, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(Nro_de_Documento, mensajeDeAviso);
+            bool dniB = this.funcionesValidacion.validarNoVacio(Nro_de_Documento, mensajeDeAviso);
             this.funcionesValidacion.validarNumerico(Nro_de_Documento, mensajeDeAviso);
-            this.funcionesValidacion.validarComboVacio(Tipo_de_Documento, mensajeDeAviso);
+            bool tipoB = this.funcionesValidacion.validarComboVacio(Tipo_de_Documento, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Direccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(CodigoPostal, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Fecha_De_Nacimiento, mensajeDeAviso);
@@ -138,6 +146,24 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 this.funcionesValidacion.validarFechaDeNacimiento(fechaMaximaNacimiento, fechaMinimaNacimiento, DateTime.Parse(Fecha_De_Nacimiento.Text), mensajeDeAviso);
             }
+
+            bool validaciones;
+
+            if (usuarioB && usuariov != Usuario.Text)
+            {
+                this.funcionesValidacion.validarUsuario(Usuario, mensajeDeAviso);
+            }
+
+            if (dniB && tipoB && (Nro_de_Documento.Text != nrov || Tipo_de_Documento.Text != tipov))
+            {
+                this.funcionesValidacion.validarDNI(Tipo_de_Documento.Text, Nro_de_Documento, mensajeDeAviso);
+            }
+
+            if (mailB && mailv != Mail.Text)
+            {
+                this.funcionesValidacion.validarEmail(Mail, mensajeDeAviso);
+            }
+
             if (!(string.IsNullOrEmpty(Nro_de_Direccion.Text)))
             {
                 this.funcionesValidacion.validarNumerico(Nro_de_Direccion, mensajeDeAviso);
@@ -147,8 +173,6 @@ namespace MercadoEnvios.ABM_Usuario
             {
                 this.funcionesValidacion.validarNumerico(Piso, mensajeDeAviso);
             }
-
-            bool validaciones;
 
             if (mensajeDeAviso.Length > 0)
             {

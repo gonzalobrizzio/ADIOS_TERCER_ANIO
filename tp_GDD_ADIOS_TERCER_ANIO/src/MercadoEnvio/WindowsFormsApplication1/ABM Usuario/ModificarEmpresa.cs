@@ -19,6 +19,10 @@ namespace MercadoEnvios.ABM_Usuario
         Form anterior;
         StringBuilder mensajeDeAviso = new StringBuilder();
         private Utilidades funcionesValidacion = new Utilidades();
+        string cuitv;
+        string razonv;
+        string usuariov;
+        string mailv;
 
         public frmModificarEmpresa(int id)
         {
@@ -98,6 +102,11 @@ namespace MercadoEnvios.ABM_Usuario
                 if (!dataReader[10].Equals(DBNull.Value)) { Telefono.Text = dataReader.GetString(10); }
             }
 
+             cuitv = CUIT.Text;
+             razonv = Razon_Social.Text;
+             usuariov = Usuario.Text;
+             mailv = Mail.Text;
+
             if (Localidad.SelectedIndex.Equals(-1))
             {
                 Localidad.SelectedIndex = 0;
@@ -119,12 +128,13 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
+            bool usuarioB = this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Contrasenia, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(Razon_Social, mensajeDeAviso);
-            this.funcionesValidacion.validarNoVacio(CUIT, mensajeDeAviso);
-          
+            bool mailB = this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
+            bool razonSocialB = this.funcionesValidacion.validarNoVacio(Razon_Social, mensajeDeAviso);
+            bool cuitB = this.funcionesValidacion.validarNoVacio(CUIT, mensajeDeAviso);
+            this.funcionesValidacion.verSiElCuitEsValido(CUIT, mensajeDeAviso);
+
             if (!(string.IsNullOrEmpty(Direccion.Text)))
             {
                 this.funcionesValidacion.validarNumerico(Direccion, mensajeDeAviso);
@@ -136,6 +146,26 @@ namespace MercadoEnvios.ABM_Usuario
             }
 
             bool validaciones;
+
+            if (cuitB && cuitv != CUIT.Text )
+            {
+                this.funcionesValidacion.validarCUIT(CUIT, mensajeDeAviso);
+            }
+
+            if (razonSocialB && razonv != Razon_Social.Text)
+            {
+                this.funcionesValidacion.validarRazonSocial(Razon_Social, mensajeDeAviso);
+            }
+
+            if (usuarioB && usuariov != Usuario.Text)
+            {
+                this.funcionesValidacion.validarUsuario(Usuario, mensajeDeAviso);
+            }
+
+            if (mailB && mailv != Mail.Text)
+            {
+                this.funcionesValidacion.validarEmail(Mail, mensajeDeAviso);
+            }
 
             if (mensajeDeAviso.Length > 0)
             {

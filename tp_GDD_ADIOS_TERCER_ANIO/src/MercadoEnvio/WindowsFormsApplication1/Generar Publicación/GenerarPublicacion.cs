@@ -40,7 +40,6 @@ namespace MercadoEnvios.Generar_Publicación
             {
                 Rubro.Items.Add(dabuscarRubrosDisponibles.GetString(0));
             }
-            Rubro.SelectedIndex = 0;
             dabuscarRubrosDisponibles.Close();
 
             string queryVisibilidad = "SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad where deleted = 0";
@@ -50,7 +49,6 @@ namespace MercadoEnvios.Generar_Publicación
             {
                 Visibilidad.Items.Add(dataReader.GetString(0));
             }
-            Visibilidad.SelectedIndex = 0;
             dataReader.Close();
 
 
@@ -62,6 +60,35 @@ namespace MercadoEnvios.Generar_Publicación
                 Tipo_de_Publicacion.Items.Add(daBuscarTiposDePublicacion.GetString(0));
             }
             daBuscarTiposDePublicacion.Close();
+
+            string queryFormaDePago = "SELECT nombre FROM ADIOS_TERCER_ANIO.FormaDePago";
+            SqlCommand buscarFormaDePago = new SqlCommand(queryFormaDePago, conn.getConexion);
+            SqlDataReader daBuscarFormaDePago = buscarFormaDePago.ExecuteReader();
+            while (daBuscarFormaDePago.Read())
+            {
+                Forma_de_pago.Items.Add(daBuscarFormaDePago.GetString(0));
+            }
+            daBuscarFormaDePago.Close();
+
+            if (Rubro.SelectedIndex.Equals(-1))
+            {
+                Rubro.SelectedIndex = 0;
+            }
+
+            if (Tipo_de_Publicacion.SelectedIndex.Equals(-1))
+            {
+                Tipo_de_Publicacion.SelectedIndex = 0;
+            }
+
+            if (Visibilidad.SelectedIndex.Equals(-1))
+            {
+                Visibilidad.SelectedIndex = 0;
+            }
+
+            if (Forma_de_pago.SelectedIndex.Equals(-1))
+            {
+                Forma_de_pago.SelectedIndex = 0;
+            }
 
         }
 
@@ -113,6 +140,10 @@ namespace MercadoEnvios.Generar_Publicación
                 SqlParameter visibilidadP = new SqlParameter("@visibilidad", SqlDbType.NVarChar, 255);
                 visibilidadP.SqlValue = Visibilidad.Text;
                 visibilidadP.Direction = ParameterDirection.Input;
+
+                SqlParameter formaDePago = new SqlParameter("@forma", SqlDbType.NVarChar, 50);
+                formaDePago.SqlValue = Forma_de_pago.Text;
+                formaDePago.Direction = ParameterDirection.Input;
 
                 SqlParameter tipoDePublicacionP = new SqlParameter("@tipo", SqlDbType.NVarChar, 255);
                 tipoDePublicacionP.SqlValue = Tipo_de_Publicacion.Text;
@@ -182,6 +213,7 @@ namespace MercadoEnvios.Generar_Publicación
                 da.Close();
 
                 generarPublicacion.Parameters.Add(descripcionP);
+                generarPublicacion.Parameters.Add(formaDePago);
                 generarPublicacion.Parameters.Add(primerPublicacion);
                 generarPublicacion.Parameters.Add(precioP);
                 generarPublicacion.Parameters.Add(stockP);

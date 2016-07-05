@@ -63,6 +63,7 @@ namespace MercadoEnvios.Historial_Cliente
             {
                 cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 10;
                 btnAnt.Enabled = false;
+                btnPrimeraPag.Enabled = false;
             }
 
             if (nroPagina >= cantidad)
@@ -113,6 +114,7 @@ namespace MercadoEnvios.Historial_Cliente
                 nroPagina++;
                 btnAnt.Enabled = true;
                 this.getData();
+                btnPrimeraPag.Enabled = true;
             }
             else
             {
@@ -125,6 +127,7 @@ namespace MercadoEnvios.Historial_Cliente
             nroPagina--;
             if (nroPagina == 0) btnAnt.Enabled = false;
             btnSgte.Enabled = true;
+            button1.Enabled = true;
             this.getData();
         }
 
@@ -139,6 +142,7 @@ namespace MercadoEnvios.Historial_Cliente
             nroPagina = 0;
             getData();
             btnSgte.Enabled = true;
+            button1.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -146,6 +150,7 @@ namespace MercadoEnvios.Historial_Cliente
             nroPagina = cantidad;
             getData();
             btnAnt.Enabled = true;
+            btnPrimeraPag.Enabled = true;
         }
     }
 }

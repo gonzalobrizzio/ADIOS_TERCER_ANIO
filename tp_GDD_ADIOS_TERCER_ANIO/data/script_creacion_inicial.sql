@@ -1,10 +1,11 @@
 ---------------------------------------------------------------
-----SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE--
----------------------------------------------------------------
+------SCRIPT DE BORRADO - HAY QUE AGREGAR CADA COSA QUE SE CREE--
+-----------------------------------------------------------------
 --USE GD1C2016
 --DROP TABLE [ADIOS_TERCER_ANIO].[RolUsuario];
 --DROP TABLE [ADIOS_TERCER_ANIO].[FuncionalidadRol];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Funcionalidad];
+--DROP TABLE [ADIOS_TERCER_ANIO].[FormaDePago];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Rol];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Persona];
 --DROP TABLE [ADIOS_TERCER_ANIO].[Empresa];
@@ -81,7 +82,6 @@
 --DROP PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa;
 --DROP PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuarioGanador;
---DROP PROCEDURE ADIOS_TERCER_ANIO.FACTURAREMPRESA;
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeCuit;
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdDeDNI;
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcObtenerIdPublicacionDesdeCodigoVIejo;
@@ -89,15 +89,15 @@
 --DROP SCHEMA ADIOS_TERCER_ANIO;
 
 
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
------------------CREACION DE TABLAS Y CARGA DE DATOS ADMINISTRATIVOS----------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-------------------CREACION DE TABLAS Y CARGA DE DATOS ADMINISTRATIVOS----------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 USE [GD1C2016] ;
 GO
 
@@ -197,7 +197,7 @@ CREATE  TABLE Rubro (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
   descripcionCorta NVARCHAR(50) NOT NULL ,
   descripcionLarga NVARCHAR(255) NULL ,
-   )
+)
 
 CREATE  TABLE Publicacion (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY,
@@ -211,10 +211,16 @@ CREATE  TABLE Publicacion (
   idVisibilidad INT REFERENCES Visibilidad(id) ,
   idPublicador INT REFERENCES Usuario(id) ,
   idRubro INT REFERENCES Rubro(id) ,
+  idForma INT REFERENCES FormaDePago(id),
   stock INT NULL ,
   tieneEnvio INT DEFAULT 1,
   primerPublicacion INT
   )
+
+  CREATE  TABLE FormaDePago (
+  id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
+  nombre NVARCHAR(50) NULL ,
+   )
 
 CREATE  TABLE RolUsuario (
   id INTEGER PRIMARY KEY NOT NULL IDENTITY ,
@@ -348,6 +354,11 @@ AS BEGIN
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Activa')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Pausada')
 	INSERT INTO ADIOS_TERCER_ANIO.Estado(nombre) VALUES ('Finalizada')
+
+	
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('Efectivo')
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('No disponible')
+	INSERT INTO ADIOS_TERCER_ANIO.FormaDePago(nombre) VALUES ('Tarjeta de Credito')
 
 	--password es "w23e" encriptado a SHA256
 	INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario, pass, mail) VALUES ('admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 'gd@mailinator.com')
@@ -1780,6 +1791,7 @@ AS BEGIN
 										idVisibilidad,
 										idPublicador,
 										idRubro,
+										idForma,
 										stock,
 										tieneEnvio,
 										primerPublicacion
@@ -1799,6 +1811,7 @@ AS BEGIN
 			ELSE ADIOS_TERCER_ANIO.funcObtenerIdDeCuit(Publ_Empresa_Cuit)
 		END																								AS idUsuario,
 		(SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = Publicacion_Rubro_Descripcion)	AS idRubro,
+		IIF(Forma_Pago_Desc IS NULL, 2, (SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre = Forma_Pago_Desc)) AS idForma,
 		Publicacion_Stock																				AS stock,
 		1																								AS tienEnvio,
 		1																								AS primerPublicacion
@@ -1821,7 +1834,6 @@ AS BEGIN
 	SET IDENTITY_INSERT ADIOS_TERCER_ANIO.Publicacion OFF
 END
 GO
-
 --ACTUALIZO EL VALOR DE LAS CALIFICACIONES PROMEDIO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[calcularCalificacionPromedio]
 AS BEGIN
@@ -2314,23 +2326,20 @@ BEGIN
 	UPDATE ADIOS_TERCER_ANIO.Persona
 	SET nombre = @nombre, apellido = @apellido, idTipoDocumento = (SELECT id FROM ADIOS_TERCER_ANIO.TipoDocumento WHERE descripcion = @tipoDeDocumento),
 				 telefono = @telefono,direccion_numero = @direccion, direccion = @calle, piso = @piso, dpto = @depto, codigoPostal = @codigoPostal, 
-				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad) WHERE @id = idUsuario
+				 fechaNacimiento = @fechaNac, idLocalidad = (SELECT id FROM Localidad WHERE nombre = @localidad), documento = @documento WHERE @id = idUsuario
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.validarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
 AS
 BEGIN
 SELECT u.id FROM ADIOS_TERCER_ANIO.Usuario u WHERE u.usuario=@usuario AND u.pass=@password
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.modificarPassword(@usuario NVARCHAR(255), @password NVARCHAR(255))
 AS
 BEGIN
 UPDATE ADIOS_TERCER_ANIO.Usuario  SET pass=@password WHERE usuario=@usuario
 END
-
 GO 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.cargarUltimasCalificaciones(@idCalificador INT)
 AS
@@ -2342,7 +2351,6 @@ BEGIN
 	inner join ADIOS_TERCER_ANIO.Usuario usr on usr.id = publicacion.idPublicador
 	where compra.idComprador = @idCalificador and pendiente = 0 ORDER BY calif.fecha DESC 
 END
-
 GO 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.obtenerTipoDeCompraConNPuntaje(@puntaje INT, @tipo NVARCHAR(255), @idCalificador INT, @cant INT OUTPUT)
 AS
@@ -2357,12 +2365,11 @@ BEGIN
 	inner join ADIOS_TERCER_ANIO.TipoPublicacion tp on tp.id = publicacion.idTipoPublicacion
 	where compra.idComprador = @idCalificador and pendiente = 0 and tp.nombre like @tipo and calif.puntaje = @puntaje)
 END
-
 GO 
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[AgregarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
 														   @visibilidad NVARCHAR(255), @idPublicador INT, @rubro NVARCHAR(255), @stock INT, @envio INT,
-														   @primerPublicacion INT)
+														   @primerPublicacion INT, @forma NVARCHAR(50))
 AS
 BEGIN
 		INSERT INTO ADIOS_TERCER_ANIO.Publicacion(descripcion, 
@@ -2375,18 +2382,22 @@ BEGIN
 												  idVisibilidad, 
 												  idPublicador, 
 												  idRubro, 
+												  idForma,
 												  stock,
 												  tieneEnvio,
 												  primerPublicacion)
 		 VALUES (@descripcion, @fechaInicio, @fechaFin, @tienePreguntas, (select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like @tipo), 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
 	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad), @idPublicador, 
-		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, @envio, @primerPublicacion)
+		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), @stock, 
+		 (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad),
+		 @envio, @primerPublicacion)
 END
 GO
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[EditarPublicacion] (@descripcion NVARCHAR(255), @fechaInicio DATETIME, @fechaFin DATETIME,
 														   @tienePreguntas INT, @tipo NVARCHAR(255), @estado NVARCHAR(255), @precio DECIMAL(18,2), 
-														   @visibilidad NVARCHAR(255), @idPublicacion INT, @rubro NVARCHAR(255), @stock INT, @envio INT)
+														   @visibilidad NVARCHAR(255), @idPublicacion INT, @rubro NVARCHAR(255), @stock INT, @envio INT,
+														   @forma NVARCHAR(50))
 AS
 BEGIN
 		UPDATE	ADIOS_TERCER_ANIO.Publicacion
@@ -2394,7 +2405,7 @@ BEGIN
 		 idTipoPublicacion = (select id from ADIOS_TERCER_ANIO.TipoPublicacion where nombre like @tipo), idEstado = (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), precio = @precio,
 	     idVisibilidad = (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad), 
 		 idRubro = (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro),stock = @stock,
-		 tieneEnvio = @envio
+		 tieneEnvio = @envio, idForma = (SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre = @forma)
 		 WHERE id = @idPublicacion
 END
 GO
@@ -2662,8 +2673,6 @@ BEGIN
 			EXEC [ADIOS_TERCER_ANIO].[FacturarCompraInmediata] @idPublicacion, @fechaFin
 END
 GO
-
-
 --Vendedores con mayor cantidad de productos no vendidos, dicho listado debe
 --filtrarse por grado de visibilidad de la publicación y por mes-año. Primero se deberá
 --ordenar por fecha y luego por visibilidad.
@@ -2773,7 +2782,6 @@ GROUP BY com.idComprador, nombre, documento, apellido
 ORDER BY cantidadCompras DESC
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.puedeComprar(@idUsuario INT, @puede INT OUTPUT)
 AS
 BEGIN
@@ -2783,7 +2791,6 @@ BEGIN
 	SET @puede = iif((@cantNoCalif>3),0,1);
 END
 GO
-
 --Vendedores con mayor cantidad de facturas dentro de un mes y año particular
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMasFacturasPorTrimestreAnio] (@trimestre INT, @anio INT)
 AS
@@ -2835,7 +2842,6 @@ GROUP BY per.idUsuario, per.apellido, usuario
 ORDER BY cantidadDeFacturas DESC
 END
 GO
-
 --Vendedores con mayor monto facturado dentro de un mes y año particular.r
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[vendedoresConMayorMontoFacturadoPorTrimestreAnio] (@trimestre INT, @anio INT)
 AS
@@ -2887,8 +2893,6 @@ GROUP BY per.idUsuario, per.apellido, usuario
 ORDER BY montoFacturado DESC
 END
 GO
-
-GO 
 CREATE PROCEDURE ADIOS_TERCER_ANIO.detallePublicacion(@idPublicacion INT)
 AS
 BEGIN
@@ -2913,7 +2917,6 @@ BEGIN
 	where publi.id = @idPublicacion AND preg.nroDePregunta = @nroPreg
 END
 GO 
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.NuevaPregunta (@idPublicacion INT, @fecha DATETIME, @pregunta NVARCHAR(255), @idUsuario INT)
 AS
 BEGIN
@@ -2929,7 +2932,6 @@ BEGIN
 
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.Comprar(@idPublicacion INT, @fecha DATETIME, @cant INT, @idComprador INT, @envio INT, @monto INT)
 AS
 BEGIN
@@ -2975,7 +2977,6 @@ BEGIN
 
 END
 GO
-
 CREATE PROCEDURE ADIOS_TERCER_ANIO.Ofertar(@idPublicacion INT, @fecha DATETIME, @monto DECIMAL(18,2), @idUsuario INT, @envio INT)
 AS
 BEGIN

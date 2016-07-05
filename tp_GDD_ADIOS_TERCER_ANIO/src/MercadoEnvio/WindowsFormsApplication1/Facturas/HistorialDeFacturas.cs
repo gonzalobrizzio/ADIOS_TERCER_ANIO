@@ -191,6 +191,7 @@ namespace MercadoEnvios.Facturas
                    if (nroPagina == 0)
                    {
                        cantidad = Convert.ToInt32(da.SelectCommand.Parameters["@cant"].Value) / 10;
+                       btnPrimeraPag.Enabled = false;
                    }
 
                    if (nroPagina >= cantidad)
@@ -205,27 +206,14 @@ namespace MercadoEnvios.Facturas
                        btnSgte.Enabled = true;
                    }
 
-
-                   if (dgvFacturas.Rows.Count < 10)
-                   {
-                       if (btnSgte.Enabled == true)
-                       {
-                           btnSgte.Enabled = false;
-                       }
-                   }
-                   else
-                   {
-                       btnSgte.Enabled = true;
-                   }
-
-                   if (dgvFacturas.Rows.Count == 0)
+                   if (nroPagina == 0 && dgvFacturas.Rows.Count < 10)
                    {
                        if (btnAnt.Enabled == true)
                        {
                            btnAnt.Enabled = false;
                        }
 
-                       if (btnSgte.Enabled == true)
+                       if (btnSgte.Enabled == false)
                        {
                            btnSgte.Enabled = false;
                        }
@@ -242,7 +230,6 @@ namespace MercadoEnvios.Facturas
                    }
                    else
                    {
-                       btnPrimeraPag.Enabled = true;
                        button1.Enabled = true;
                        btnSgte.Enabled = true;
                        btnAnt.Enabled = true;
@@ -281,6 +268,7 @@ namespace MercadoEnvios.Facturas
             {
                 nroPagina++;
                 btnAnt.Enabled = true;
+                btnPrimeraPag.Enabled = true;
                 this.getData();
             }
             else
@@ -412,7 +400,10 @@ namespace MercadoEnvios.Facturas
         {
             nroPagina = cantidad;
             this.getData();
+            btnPrimeraPag.Enabled = true;
+            btnSgte.Enabled = false;
             btnAnt.Enabled = true;
+            button1.Enabled = false;
         }
     }
 }
