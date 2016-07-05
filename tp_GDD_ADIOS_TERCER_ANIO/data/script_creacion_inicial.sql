@@ -3012,6 +3012,7 @@ BEGIN
 	--DECLARE @idUsuario INT, @pagina INT, @idRol INT, @fechaDesde DATETIME, @fechaHasta DATETIME, @desdePrecio DECIMAL(18,2),
 	--		@hastaPrecio DECIMAL (18,2), @descripcion NVARCHAR(255), @destinatario NVARCHAR(255), @cant int
 	--SET @idUsuario = 3
+	--SET @idRol = 1
 	--SET @pagina = 0
 	SET @cant = (select count(*) from ADIOS_TERCER_ANIO.Factura f
 			inner join ADIOS_TERCER_ANIO.Publicacion p on p.id = f.idPublicacion

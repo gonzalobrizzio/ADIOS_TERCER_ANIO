@@ -213,7 +213,7 @@ namespace MercadoEnvios.Facturas
                            btnAnt.Enabled = false;
                        }
 
-                       if (btnSgte.Enabled == false)
+                       if (btnSgte.Enabled == true)
                        {
                            btnSgte.Enabled = false;
                        }
@@ -227,12 +227,27 @@ namespace MercadoEnvios.Facturas
                        {
                            button1.Enabled = false;
                        }
+
+                       btnSgte.Enabled = false;
                    }
                    else
                    {
                        button1.Enabled = true;
                        btnSgte.Enabled = true;
                        btnAnt.Enabled = true;
+                   }
+
+                   if (nroPagina != 0 && dgvFacturas.Rows.Count < 10)
+                   {
+                       if (btnSgte.Enabled == true)
+                       {
+                           btnSgte.Enabled = false;
+                       }
+
+                       if (button1.Enabled == true)
+                       {
+                           button1.Enabled = false;
+                       }
                    }
                }
                catch (SqlException error)
