@@ -137,6 +137,7 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(Apellido, mensajeDeAviso);
             bool dniB = this.funcionesValidacion.validarNoVacio(Nro_de_Documento, mensajeDeAviso);
             this.funcionesValidacion.validarNumerico(Nro_de_Documento, mensajeDeAviso);
+            this.funcionesValidacion.validarCantidad(Nro_de_Documento.Text, mensajeDeAviso);
             bool tipoB = this.funcionesValidacion.validarComboVacio(Tipo_de_Documento, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Direccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(CodigoPostal, mensajeDeAviso);

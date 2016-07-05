@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MercadoEnvios.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,7 +7,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
 
 namespace MercadoEnvios.ABM_Rol
@@ -16,12 +16,12 @@ namespace MercadoEnvios.ABM_Rol
         Conexion conn;
 
         Sesion sesion = Sesion.Instance;
-        Form anterior;
+        Utilidades fun = new Utilidades();
+        StringBuilder mensajeValidacion = new StringBuilder();
 
         public frmAgregarRol()
         {
             InitializeComponent();
-            anterior = sesion.anterior;
 
             dgvFuncionalidadesAgregadas.ColumnCount = 2;
             dgvFuncionalidadesAgregadas.ColumnHeadersVisible = true;
@@ -67,47 +67,56 @@ namespace MercadoEnvios.ABM_Rol
             {
                 MessageBox.Show("Está intentando agregar un rol sin nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if(dgvFuncionalidadesAgregadas.Rows.Count==0)
-                    {
-                        MessageBox.Show("No ha agregado funcionalidades a el rol que desea crear", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                 else
-                    {
-                        SqlCommand agregarRol = new SqlCommand("ADIOS_TERCER_ANIO.AgregarRol", conn.getConexion);
-                        agregarRol.CommandType = System.Data.CommandType.StoredProcedure;
-                        SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-                        nombre.SqlValue = txtNombre.Text;
-                        nombre.Direction = ParameterDirection.Input;
-                        SqlParameter idRol = new SqlParameter("@id", null);
-                        idRol.Direction = ParameterDirection.Output;
-                        idRol.SqlDbType = SqlDbType.Int;
-                        agregarRol.Parameters.Add(nombre);
-                        agregarRol.Parameters.Add(idRol);
-                        agregarRol.ExecuteNonQuery();
-                        
-                        int ultimoIdRol = Convert.ToInt32(agregarRol.Parameters["@id"].Value);
+            else if (dgvFuncionalidadesAgregadas.Rows.Count == 0)
+            {
+                MessageBox.Show("No ha agregado funcionalidades a el rol que desea crear", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                this.fun.validarRol(txtNombre, mensajeValidacion);
+                if (mensajeValidacion.Length == 0)
+                {
+                    SqlCommand agregarRol = new SqlCommand("ADIOS_TERCER_ANIO.AgregarRol", conn.getConexion);
+                    agregarRol.CommandType = System.Data.CommandType.StoredProcedure;
+                    SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+                    nombre.SqlValue = txtNombre.Text;
+                    nombre.Direction = ParameterDirection.Input;
+                    SqlParameter idRol = new SqlParameter("@id", null);
+                    idRol.Direction = ParameterDirection.Output;
+                    idRol.SqlDbType = SqlDbType.Int;
+                    agregarRol.Parameters.Add(nombre);
+                    agregarRol.Parameters.Add(idRol);
+                    agregarRol.ExecuteNonQuery();
 
-                        String queryRol = "INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad)"
-                                        + "VALUES (@idRol, @idFuncionalidad)";
-                        SqlCommand agregarRolFuncionalidad = new SqlCommand(queryRol, conn.getConexion);
-                        SqlParameter idRolDeFuncionalidad = new SqlParameter("@idRol", SqlDbType.Int);
-                        idRolDeFuncionalidad.SqlValue = ultimoIdRol;
-                        idRolDeFuncionalidad.Direction = ParameterDirection.Input;
-                        agregarRolFuncionalidad.Parameters.Add(idRolDeFuncionalidad);
-                        SqlParameter idFuncionalidad = new SqlParameter("@idFuncionalidad", SqlDbType.Int);
-                        idFuncionalidad.Direction = ParameterDirection.Input;
-                        agregarRolFuncionalidad.Parameters.Add(idFuncionalidad);
+                    int ultimoIdRol = Convert.ToInt32(agregarRol.Parameters["@id"].Value);
 
-                        foreach (DataGridViewRow row in dgvFuncionalidadesAgregadas.Rows)
+                    String queryRol = "INSERT INTO ADIOS_TERCER_ANIO.FuncionalidadRol(idRol, idFuncionalidad)"
+                                    + "VALUES (@idRol, @idFuncionalidad)";
+                    SqlCommand agregarRolFuncionalidad = new SqlCommand(queryRol, conn.getConexion);
+                    SqlParameter idRolDeFuncionalidad = new SqlParameter("@idRol", SqlDbType.Int);
+                    idRolDeFuncionalidad.SqlValue = ultimoIdRol;
+                    idRolDeFuncionalidad.Direction = ParameterDirection.Input;
+                    agregarRolFuncionalidad.Parameters.Add(idRolDeFuncionalidad);
+                    SqlParameter idFuncionalidad = new SqlParameter("@idFuncionalidad", SqlDbType.Int);
+                    idFuncionalidad.Direction = ParameterDirection.Input;
+                    agregarRolFuncionalidad.Parameters.Add(idFuncionalidad);
+
+                    foreach (DataGridViewRow row in dgvFuncionalidadesAgregadas.Rows)
+                    {
+                        if (row.Cells[1].Value != null)
                         {
-                            if (row.Cells[1].Value != null)
-                            {
-                                idFuncionalidad.SqlValue = row.Cells[1].Value;
-                                agregarRolFuncionalidad.ExecuteNonQuery();
-                            }
+                            idFuncionalidad.SqlValue = row.Cells[1].Value;
+                            agregarRolFuncionalidad.ExecuteNonQuery();
                         }
-                        this.salir();
                     }
+                    this.salir();
+                }
+                else
+                {
+                    MessageBox.Show(mensajeValidacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mensajeValidacion = new StringBuilder();
+                }
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -153,6 +162,11 @@ namespace MercadoEnvios.ABM_Rol
         {
             new ABM_Rol.frmABMRol().Show();
             this.Close();
+        }
+
+        private void dgvFuncionalidades_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvFuncionalidades.CurrentRow.Selected = true;
         }
     }
 }

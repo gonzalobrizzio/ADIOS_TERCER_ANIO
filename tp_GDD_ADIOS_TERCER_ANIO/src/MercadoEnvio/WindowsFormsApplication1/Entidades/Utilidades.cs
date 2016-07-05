@@ -87,6 +87,14 @@ namespace MercadoEnvios.Entidades
             };
         }
 
+        public void validarCantidad(string nro, StringBuilder mensajeValidacion)
+        {
+            if (Convert.ToInt32(nro.Length) != 8)
+            {
+                mensajeValidacion.AppendLine(string.Format(" Su número de documento posee menos de 8 caracteres"));
+            }
+        }
+
         public void validarDNI(string tipo, Control numero, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
@@ -106,6 +114,28 @@ namespace MercadoEnvios.Entidades
             if (ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El razón social {0} ya existe.", razonSocial.Text));
+            };
+        }
+
+        public void validarVisibilidad(Control visibilidad, StringBuilder mensajeValidacion)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Visibilidad v WHERE v.nombre = '" + visibilidad.Text + "'");
+
+            if (ejecutarQuery(query.ToString()).Rows.Count > 0)
+            {
+                mensajeValidacion.AppendLine(string.Format(" La visibilidad {0} ya existe.", visibilidad.Text));
+            };
+        }
+
+        public void validarRol(Control rol, StringBuilder mensajeValidacion)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendFormat("SELECT * FROM ADIOS_TERCER_ANIO.Rol r WHERE r.nombre = '" + rol.Text + "'");
+
+            if (ejecutarQuery(query.ToString()).Rows.Count > 0)
+            {
+                mensajeValidacion.AppendLine(string.Format(" El rol {0} ya existe.", rol.Text));
             };
         }
 
@@ -197,7 +227,8 @@ namespace MercadoEnvios.Entidades
             obtenerDuracion.Parameters.Add(vis);
             SqlDataReader dataReader = obtenerDuracion.ExecuteReader();
             dataReader.Read();
-            dias = dataReader.GetInt32(0);
+            if (!dataReader[0].Equals(DBNull.Value)) { dias = dataReader.GetInt32(0); }
+            else { dias = 7; };
 
             dataReader.Close();
 

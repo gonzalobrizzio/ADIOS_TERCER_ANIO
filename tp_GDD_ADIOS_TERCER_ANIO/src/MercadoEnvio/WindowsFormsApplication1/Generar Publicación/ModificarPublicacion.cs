@@ -78,7 +78,6 @@ namespace MercadoEnvios.Generar_Publicación
                 fechaInicio.Direction = ParameterDirection.Input;
 
                 int dias = funcion.obtenerDuracionDeVisibilidad(Convert.ToString(this.publicaciones.CurrentRow.Cells[4].Value));
-
                 SqlParameter fechaFin = new SqlParameter("@fechaFin", SqlDbType.DateTime);
                 fechaFin.SqlValue = Convert.ToDateTime(ConfigurationManager.AppSettings["fecha"]).AddDays(dias);
                 fechaFin.Direction = ParameterDirection.Input;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using MercadoEnvios.Entidades;
 
 namespace MercadoEnvios.ABM_Rol
 {
@@ -15,14 +16,13 @@ namespace MercadoEnvios.ABM_Rol
         Conexion conn;
         int idRol;
         string nombreRol;
-
-        Form anterior;
         Sesion sesion = Sesion.Instance;
+        Utilidades fun = new Utilidades();
+        StringBuilder mensajeValidacion = new StringBuilder();
 
         public frmModificarRoles(int idRolModificar, string nombreRolModificar)
         {
             InitializeComponent();
-            anterior = sesion.anterior;
             this.conn = Conexion.Instance;
             idRol = idRolModificar;
             nombreRol = nombreRolModificar;
@@ -150,30 +150,43 @@ namespace MercadoEnvios.ABM_Rol
 
         private void btnModficar_Click(object sender, EventArgs e)
         {
-            SqlCommand updateRol = new SqlCommand("ADIOS_TERCER_ANIO.ModificarRol", conn.getConexion);
-            updateRol.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter nuevoNombreRol = new SqlParameter("@nombre", txtNombre.Text);
-            nuevoNombreRol.Direction = ParameterDirection.Input;
-            nuevoNombreRol.SqlDbType = SqlDbType.NVarChar;
-
-            SqlParameter idRolModificar = new SqlParameter("@id", this.idRol);
-            idRolModificar.Direction = ParameterDirection.Input;
-            idRolModificar.SqlDbType = SqlDbType.Int;
-
-            updateRol.Parameters.Add(nuevoNombreRol);
-            updateRol.Parameters.Add(idRolModificar);
-            try
+            if (txtNombre.Text != nombreRol)
             {
-                updateRol.ExecuteNonQuery();
-                lblNombreAnterior.Text = txtNombre.Text;
-                this.updateFuncionalidades();
-                this.salir();
+                this.fun.validarRol(txtNombre, mensajeValidacion);
             }
-            catch (SqlException error)
-            {
-                MessageBox.Show(error.Message);
-            }
+             this.fun.validarNoVacio(txtNombre, mensajeValidacion);
+             if (mensajeValidacion.Length == 0)
+             {
+                 SqlCommand updateRol = new SqlCommand("ADIOS_TERCER_ANIO.ModificarRol", conn.getConexion);
+                 updateRol.CommandType = System.Data.CommandType.StoredProcedure;
+
+                 SqlParameter nuevoNombreRol = new SqlParameter("@nombre", txtNombre.Text);
+                 nuevoNombreRol.Direction = ParameterDirection.Input;
+                 nuevoNombreRol.SqlDbType = SqlDbType.NVarChar;
+
+                 SqlParameter idRolModificar = new SqlParameter("@id", this.idRol);
+                 idRolModificar.Direction = ParameterDirection.Input;
+                 idRolModificar.SqlDbType = SqlDbType.Int;
+
+                 updateRol.Parameters.Add(nuevoNombreRol);
+                 updateRol.Parameters.Add(idRolModificar);
+                 try
+                 {
+                     updateRol.ExecuteNonQuery();
+                     lblNombreAnterior.Text = txtNombre.Text;
+                     this.updateFuncionalidades();
+                     this.salir();
+                 }
+                 catch (SqlException error)
+                 {
+                     MessageBox.Show(error.Message);
+                 }
+             }
+             else
+             {
+                 MessageBox.Show(mensajeValidacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 mensajeValidacion = new StringBuilder();
+             }
         }
 
         private void updateFuncionalidades()

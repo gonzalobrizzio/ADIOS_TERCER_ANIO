@@ -14,7 +14,7 @@ namespace MercadoEnvios.ABM_Visibilidad
     public partial class frmAgregarVisibilidad : Form
     {
         Conexion conn;
-
+        StringBuilder mensajeValidacion = new StringBuilder();
         Utilidades fun = new Utilidades();
 
         public frmAgregarVisibilidad()
@@ -31,73 +31,93 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void btnAceptar_Click_1(object sender, EventArgs e)
         {
-            if(Convert.ToDecimal(txtPorcentaje.Text)  <= 1){ 
-            SqlCommand agregarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.AgregarVisibilidad", conn.getConexion);
-            agregarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
-            if (string.IsNullOrEmpty(txtNombre.Text))
-            {
-                nombre.SqlValue = DBNull.Value;
-            }
-            else
-            {
-                nombre.SqlValue = txtNombre.Text;
-            }
-            nombre.Direction = ParameterDirection.Input;
+                fun.validarVisibilidad(txtNombre, mensajeValidacion);
+                decimal valor;
+                if (mensajeValidacion.Length == 0)
+                {
+                    if(String.IsNullOrEmpty(txtPorcentaje.Text))
+                    {
+                        valor = 1;
+                    }
+                    else
+                    {
+                        valor = Convert.ToDecimal(txtPorcentaje.Text);
+                    }
+                    if ( valor <= 1)
+                    {
+                    SqlCommand agregarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.AgregarVisibilidad", conn.getConexion);
+                    agregarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
+                    SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
+                    if (string.IsNullOrEmpty(txtNombre.Text))
+                    {
+                        nombre.SqlValue = DBNull.Value;
+                    }
+                    else
+                    {
+                        nombre.SqlValue = txtNombre.Text;
+                    }
+                    nombre.Direction = ParameterDirection.Input;
 
-            SqlParameter duracion = new SqlParameter("@duracion", SqlDbType.Int);
-            if (string.IsNullOrEmpty(txtDuracion.Text))
-            {
-                duracion.SqlValue = DBNull.Value;
-            }
-            else
-            {
-                duracion.SqlValue = Convert.ToInt32(txtDuracion.Text);
-            }
-            duracion.Direction = ParameterDirection.Input;
+                    SqlParameter duracion = new SqlParameter("@duracion", SqlDbType.Int);
+                    if (string.IsNullOrEmpty(txtDuracion.Text))
+                    {
+                        duracion.SqlValue = DBNull.Value;
+                    }
+                    else
+                    {
+                        duracion.SqlValue = Convert.ToInt32(txtDuracion.Text);
+                    }
+                    duracion.Direction = ParameterDirection.Input;
 
-            SqlParameter precio = new SqlParameter("@precio", SqlDbType.Decimal);
-            if (string.IsNullOrEmpty(txtPrecio.Text))
-            {
-                precio.SqlValue = DBNull.Value;
-            }
-            else
-            {
-                precio.SqlValue = Convert.ToDecimal(txtPrecio.Text);
-            }
-            precio.Direction = ParameterDirection.Input;
+                    SqlParameter precio = new SqlParameter("@precio", SqlDbType.Decimal);
+                    if (string.IsNullOrEmpty(txtPrecio.Text))
+                    {
+                        precio.SqlValue = DBNull.Value;
+                    }
+                    else
+                    {
+                        precio.SqlValue = Convert.ToDecimal(txtPrecio.Text);
+                    }
+                    precio.Direction = ParameterDirection.Input;
 
-            SqlParameter porcentaje = new SqlParameter("@porcentaje", SqlDbType.Decimal);
-            if (string.IsNullOrEmpty(txtPorcentaje.Text))
-            {
-                porcentaje.SqlValue = DBNull.Value;
-            }
-            else
-            {
-                porcentaje.SqlValue = Convert.ToDecimal(txtPorcentaje.Text);
-            }
-            porcentaje.Direction = ParameterDirection.Input;
+                    SqlParameter porcentaje = new SqlParameter("@porcentaje", SqlDbType.Decimal);
+                    if (string.IsNullOrEmpty(txtPorcentaje.Text))
+                    {
+                        porcentaje.SqlValue = DBNull.Value;
+                    }
+                    else
+                    {
+                        porcentaje.SqlValue = Convert.ToDecimal(txtPorcentaje.Text);
+                    }
+                    porcentaje.Direction = ParameterDirection.Input;
 
-            agregarVisibilidad.Parameters.Add(nombre);
-            agregarVisibilidad.Parameters.Add(duracion);
-            agregarVisibilidad.Parameters.Add(precio);
-            agregarVisibilidad.Parameters.Add(porcentaje);
+                    agregarVisibilidad.Parameters.Add(nombre);
+                    agregarVisibilidad.Parameters.Add(duracion);
+                    agregarVisibilidad.Parameters.Add(precio);
+                    agregarVisibilidad.Parameters.Add(porcentaje);
 
-            try
-            {
-                agregarVisibilidad.ExecuteNonQuery();
-                this.salir();
+                    try
+                    {
+                        agregarVisibilidad.ExecuteNonQuery();
+                        this.salir();
+                    }
+                    catch (SqlException error)
+                    {
+                        MessageBox.Show(error.Message);
+                    }
+                    }        
+                    else
+                    {
+                        MessageBox.Show("El porcentaje ingresado supera el 100 % permitido, debe ingresar algo menor a 1","Advertencia" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                }
+                else
+                {
+                     MessageBox.Show(mensajeValidacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mensajeValidacion = new StringBuilder();
+                }
             }
-            catch (SqlException error)
-            {
-                MessageBox.Show(error.Message);
-            }
-            }
-            else
-            {
-                MessageBox.Show("El porcentaje ingresado supera el 100 % permitido, debe ingresar algo menor a 1","Advertencia" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {

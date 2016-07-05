@@ -34,10 +34,10 @@ namespace MercadoEnvios.Generar_Publicacion
             if (da.HasRows)
             {
                 da.Read();
-                txtNombre.Text = Convert.ToString(da.GetString(1));
-                txtDuracion.Text = Convert.ToString(da.GetInt32(2));
-                txtPrecio.Text = Convert.ToString(da.GetDecimal(3));
-                txtPorcentaje.Text = Convert.ToString(da.GetDecimal(4));
+                if(!da[1].Equals(DBNull.Value)) { txtNombre.Text = Convert.ToString(da.GetString(1));};
+                if(!da[2].Equals(DBNull.Value)) { txtDuracion.Text = Convert.ToString(da.GetInt32(2));};
+                if(!da[3].Equals(DBNull.Value)) { txtPrecio.Text = Convert.ToString(da.GetDecimal(3));};
+                if (!da[4].Equals(DBNull.Value)) { txtPorcentaje.Text = Convert.ToString(da.GetDecimal(4)); };
                 da.Close();
             }
             else

@@ -75,7 +75,6 @@ namespace MercadoEnvios.ABM_Usuario
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-
             bool usuarioB = this.funcionesValidacion.validarNoVacio(Usuario, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Contrasenia, mensajeDeAviso);
             bool mailB = this.funcionesValidacion.validarNoVacio(Mail, mensajeDeAviso);
@@ -83,6 +82,7 @@ namespace MercadoEnvios.ABM_Usuario
             this.funcionesValidacion.validarNoVacio(Apellido, mensajeDeAviso);
             bool dniB = this.funcionesValidacion.validarNoVacio(Nro_de_Documento, mensajeDeAviso);
             this.funcionesValidacion.validarNumerico(Nro_de_Documento, mensajeDeAviso);
+            this.funcionesValidacion.validarCantidad(Nro_de_Documento.Text, mensajeDeAviso);
             bool tipoB = this.funcionesValidacion.validarComboVacio(Tipo_de_Documento, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Direccion, mensajeDeAviso);
             this.funcionesValidacion.validarNoVacio(Codigo_Postal, mensajeDeAviso);
