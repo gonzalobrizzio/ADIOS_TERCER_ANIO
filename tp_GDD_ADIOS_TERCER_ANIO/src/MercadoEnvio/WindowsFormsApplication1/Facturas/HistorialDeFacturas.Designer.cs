@@ -68,7 +68,7 @@
             this.btnSgte.Margin = new System.Windows.Forms.Padding(4);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(55, 41);
-            this.btnSgte.TabIndex = 8;
+            this.btnSgte.TabIndex = 3;
             this.btnSgte.Text = ">>>";
             this.btnSgte.UseVisualStyleBackColor = true;
             this.btnSgte.Click += new System.EventHandler(this.btnSgte_Click);
@@ -79,7 +79,7 @@
             this.btnAnt.Margin = new System.Windows.Forms.Padding(4);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(55, 41);
-            this.btnAnt.TabIndex = 7;
+            this.btnAnt.TabIndex = 0;
             this.btnAnt.Text = "<<<";
             this.btnAnt.UseVisualStyleBackColor = true;
             this.btnAnt.Click += new System.EventHandler(this.btnAnt_Click);
@@ -146,7 +146,7 @@
             this.destinatarioTxt.Name = "destinatarioTxt";
             this.destinatarioTxt.ReadOnly = true;
             this.destinatarioTxt.Size = new System.Drawing.Size(112, 22);
-            this.destinatarioTxt.TabIndex = 6;
+            this.destinatarioTxt.TabIndex = 9;
             this.destinatarioTxt.TextChanged += new System.EventHandler(this.destinatarioTxt_TextChanged);
             // 
             // label8
@@ -171,7 +171,7 @@
             this.descripcionTxt.Name = "descripcionTxt";
             this.descripcionTxt.ReadOnly = true;
             this.descripcionTxt.Size = new System.Drawing.Size(171, 50);
-            this.descripcionTxt.TabIndex = 5;
+            this.descripcionTxt.TabIndex = 8;
             this.descripcionTxt.TextChanged += new System.EventHandler(this.descripcionTxt_TextChanged);
             // 
             // usuarioLbl
@@ -192,7 +192,7 @@
             this.hastaPrecioTxt.Name = "hastaPrecioTxt";
             this.hastaPrecioTxt.ReadOnly = true;
             this.hastaPrecioTxt.Size = new System.Drawing.Size(112, 22);
-            this.hastaPrecioTxt.TabIndex = 4;
+            this.hastaPrecioTxt.TabIndex = 7;
             this.hastaPrecioTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.hastaPrecioTxt_KeyPress);
             // 
             // label6
@@ -225,7 +225,7 @@
             this.desdePrecioTxt.Name = "desdePrecioTxt";
             this.desdePrecioTxt.ReadOnly = true;
             this.desdePrecioTxt.Size = new System.Drawing.Size(112, 22);
-            this.desdePrecioTxt.TabIndex = 3;
+            this.desdePrecioTxt.TabIndex = 6;
             this.desdePrecioTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.desdePrecioTxt_KeyPress);
             // 
             // label3
@@ -364,7 +364,7 @@
             this.fechaDesdeDtp.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.fechaDesdeDtp.Name = "fechaDesdeDtp";
             this.fechaDesdeDtp.Size = new System.Drawing.Size(112, 22);
-            this.fechaDesdeDtp.TabIndex = 1;
+            this.fechaDesdeDtp.TabIndex = 4;
             this.fechaDesdeDtp.ValueChanged += new System.EventHandler(this.fechaDesdeDtp_ValueChanged);
             // 
             // fechaHastaDtp
@@ -375,7 +375,7 @@
             this.fechaHastaDtp.Margin = new System.Windows.Forms.Padding(4);
             this.fechaHastaDtp.Name = "fechaHastaDtp";
             this.fechaHastaDtp.Size = new System.Drawing.Size(112, 22);
-            this.fechaHastaDtp.TabIndex = 2;
+            this.fechaHastaDtp.TabIndex = 5;
             this.fechaHastaDtp.ValueChanged += new System.EventHandler(this.fechaHastaDtp_ValueChanged);
             // 
             // btnPrimeraPag
@@ -384,7 +384,7 @@
             this.btnPrimeraPag.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrimeraPag.Name = "btnPrimeraPag";
             this.btnPrimeraPag.Size = new System.Drawing.Size(163, 41);
-            this.btnPrimeraPag.TabIndex = 116;
+            this.btnPrimeraPag.TabIndex = 1;
             this.btnPrimeraPag.Text = "<<<   Primera página";
             this.btnPrimeraPag.UseVisualStyleBackColor = true;
             this.btnPrimeraPag.Click += new System.EventHandler(this.btnPrimeraPag_Click);
@@ -395,7 +395,7 @@
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(161, 41);
-            this.button1.TabIndex = 117;
+            this.button1.TabIndex = 2;
             this.button1.Text = "Última página   >>>";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
