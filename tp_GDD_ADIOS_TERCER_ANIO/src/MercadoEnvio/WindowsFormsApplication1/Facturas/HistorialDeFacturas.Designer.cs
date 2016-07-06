@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSgte = new System.Windows.Forms.Button();
             this.btnAnt = new System.Windows.Forms.Button();
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
@@ -64,8 +64,8 @@
             // 
             // btnSgte
             // 
-            this.btnSgte.Location = new System.Drawing.Point(726, 553);
-            this.btnSgte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSgte.Location = new System.Drawing.Point(831, 553);
+            this.btnSgte.Margin = new System.Windows.Forms.Padding(4);
             this.btnSgte.Name = "btnSgte";
             this.btnSgte.Size = new System.Drawing.Size(55, 41);
             this.btnSgte.TabIndex = 8;
@@ -75,8 +75,8 @@
             // 
             // btnAnt
             // 
-            this.btnAnt.Location = new System.Drawing.Point(101, 553);
-            this.btnAnt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAnt.Location = new System.Drawing.Point(29, 553);
+            this.btnAnt.Margin = new System.Windows.Forms.Padding(4);
             this.btnAnt.Name = "btnAnt";
             this.btnAnt.Size = new System.Drawing.Size(55, 41);
             this.btnAnt.TabIndex = 7;
@@ -86,41 +86,41 @@
             // 
             // dgvFacturas
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFacturas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFacturas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvFacturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvFacturas.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvFacturas.Location = new System.Drawing.Point(105, 239);
-            this.dgvFacturas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvFacturas.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvFacturas.Location = new System.Drawing.Point(29, 239);
+            this.dgvFacturas.Margin = new System.Windows.Forms.Padding(4);
             this.dgvFacturas.Name = "dgvFacturas";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFacturas.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvFacturas.Size = new System.Drawing.Size(676, 306);
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFacturas.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvFacturas.Size = new System.Drawing.Size(857, 306);
             this.dgvFacturas.TabIndex = 70;
             // 
             // btnVolver
             // 
             this.btnVolver.Location = new System.Drawing.Point(786, 647);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(100, 28);
             this.btnVolver.TabIndex = 9;
@@ -141,7 +141,7 @@
             // destinatarioTxt
             // 
             this.destinatarioTxt.Location = new System.Drawing.Point(521, 160);
-            this.destinatarioTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.destinatarioTxt.Margin = new System.Windows.Forms.Padding(4);
             this.destinatarioTxt.MaxLength = 15;
             this.destinatarioTxt.Name = "destinatarioTxt";
             this.destinatarioTxt.ReadOnly = true;
@@ -165,7 +165,7 @@
             // descripcionTxt
             // 
             this.descripcionTxt.Location = new System.Drawing.Point(135, 169);
-            this.descripcionTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.descripcionTxt.Margin = new System.Windows.Forms.Padding(4);
             this.descripcionTxt.MaxLength = 200;
             this.descripcionTxt.Multiline = true;
             this.descripcionTxt.Name = "descripcionTxt";
@@ -187,7 +187,7 @@
             // hastaPrecioTxt
             // 
             this.hastaPrecioTxt.Location = new System.Drawing.Point(695, 86);
-            this.hastaPrecioTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.hastaPrecioTxt.Margin = new System.Windows.Forms.Padding(4);
             this.hastaPrecioTxt.MaxLength = 10;
             this.hastaPrecioTxt.Name = "hastaPrecioTxt";
             this.hastaPrecioTxt.ReadOnly = true;
@@ -220,7 +220,7 @@
             // desdePrecioTxt
             // 
             this.desdePrecioTxt.Location = new System.Drawing.Point(515, 87);
-            this.desdePrecioTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.desdePrecioTxt.Margin = new System.Windows.Forms.Padding(4);
             this.desdePrecioTxt.MaxLength = 10;
             this.desdePrecioTxt.Name = "desdePrecioTxt";
             this.desdePrecioTxt.ReadOnly = true;
@@ -303,7 +303,7 @@
             // btnFiltrar
             // 
             this.btnFiltrar.Location = new System.Drawing.Point(816, 86);
-            this.btnFiltrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFiltrar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(33, 26);
             this.btnFiltrar.TabIndex = 111;
@@ -315,7 +315,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(43, 60);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(18, 17);
             this.checkBox1.TabIndex = 112;
@@ -326,7 +326,7 @@
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(456, 60);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(18, 17);
             this.checkBox2.TabIndex = 113;
@@ -337,7 +337,7 @@
             // 
             this.checkBox3.AutoSize = true;
             this.checkBox3.Location = new System.Drawing.Point(456, 137);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(18, 17);
             this.checkBox3.TabIndex = 114;
@@ -348,7 +348,7 @@
             // 
             this.checkBox4.AutoSize = true;
             this.checkBox4.Location = new System.Drawing.Point(43, 137);
-            this.checkBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox4.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(18, 17);
             this.checkBox4.TabIndex = 115;
@@ -360,7 +360,7 @@
             this.fechaDesdeDtp.Enabled = false;
             this.fechaDesdeDtp.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.fechaDesdeDtp.Location = new System.Drawing.Point(101, 84);
-            this.fechaDesdeDtp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.fechaDesdeDtp.Margin = new System.Windows.Forms.Padding(4);
             this.fechaDesdeDtp.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.fechaDesdeDtp.Name = "fechaDesdeDtp";
             this.fechaDesdeDtp.Size = new System.Drawing.Size(112, 22);
@@ -372,7 +372,7 @@
             this.fechaHastaDtp.Enabled = false;
             this.fechaHastaDtp.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.fechaHastaDtp.Location = new System.Drawing.Point(295, 84);
-            this.fechaHastaDtp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.fechaHastaDtp.Margin = new System.Windows.Forms.Padding(4);
             this.fechaHastaDtp.Name = "fechaHastaDtp";
             this.fechaHastaDtp.Size = new System.Drawing.Size(112, 22);
             this.fechaHastaDtp.TabIndex = 2;
@@ -380,7 +380,7 @@
             // 
             // btnPrimeraPag
             // 
-            this.btnPrimeraPag.Location = new System.Drawing.Point(166, 553);
+            this.btnPrimeraPag.Location = new System.Drawing.Point(94, 553);
             this.btnPrimeraPag.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrimeraPag.Name = "btnPrimeraPag";
             this.btnPrimeraPag.Size = new System.Drawing.Size(163, 41);
@@ -391,7 +391,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(557, 553);
+            this.button1.Location = new System.Drawing.Point(662, 553);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(161, 41);
@@ -433,7 +433,7 @@
             this.Controls.Add(this.btnSgte);
             this.Controls.Add(this.btnAnt);
             this.Controls.Add(this.dgvFacturas);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HistorialDeFacturas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facturas";

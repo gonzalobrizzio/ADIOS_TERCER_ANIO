@@ -113,6 +113,11 @@ namespace MercadoEnvios.ComprarOfertar
                 btnAgregar.Enabled = false;
             }
 
+            if (nroPagina == getCantPublicaciones() / 10)
+            {
+                button1.Enabled = false;
+                btnSgte.Enabled = false;
+            }
         }
 
         private void btnSgte_Click(object sender, EventArgs e)
@@ -396,6 +401,12 @@ namespace MercadoEnvios.ComprarOfertar
                     {
                         btnPrimeraPag.Enabled = true;
                         btnAnt.Enabled = true;
+                    }
+
+                    if (nroPagina != getCantPublicaciones() / 10)
+                    {
+                        button1.Enabled = true;
+                        btnSgte.Enabled = true;
                     }
                 }
                 else

@@ -39,6 +39,9 @@ namespace MercadoEnvios.Facturas
                 label9.Visible = false;
                 destinatarioTxt.Visible = false;
             }
+
+            dgvFacturas.ReadOnly = true;
+            dgvFacturas.Columns[4].Width = 250;
         }
 
         private void getData()
