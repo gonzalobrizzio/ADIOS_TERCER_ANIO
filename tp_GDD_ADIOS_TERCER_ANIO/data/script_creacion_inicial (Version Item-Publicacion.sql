@@ -89,7 +89,6 @@
 --DROP FUNCTION ADIOS_TERCER_ANIO.funcConvertirCalificacion;
 --DROP SCHEMA ADIOS_TERCER_ANIO;
 
-
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
@@ -1986,14 +1985,18 @@ CREATE FUNCTION [ADIOS_TERCER_ANIO].[funcObtenerItem](@Publicacion_Cod NUMERIC(1
 RETURNS NVARCHAR(255)
 AS
 BEGIN
+	DECLARE @nombreVisibilidad varchar(50);
+	DECLARE @poseeVentas varchar(50);
+	DECLARE @descripcion varchar(255);
 	DECLARE @retorno NUMERIC(18,0)
-	DECLARE @string NVARCHAR(255)
+
 	SET @retorno = @Publicacion_Cod - 12352
 
-	SET @string = (SELECT v.nombre FROM ADIOS_TERCER_ANIO.Publicacion p
-				   inner join ADIOS_TERCER_ANIO.Visibilidad v ON p.idVisibilidad = v.id
-					WHERE p.id = @retorno)
-	return @string
+	SELECT @nombreVisibilidad = (SELECT v.nombre FROM ADIOS_TERCER_ANIO.Publicacion p INNER JOIN ADIOS_TERCER_ANIO.Visibilidad v ON v.id = p.idVisibilidad WHERE p.id = @retorno); 
+	SELECT @poseeVentas = '; Venta'
+	SELECT @descripcion = CONCAT(@nombreVisibilidad, @poseeVentas);
+
+	return @descripcion
 END
 GO
 -- -----------------------------------------------------
@@ -2050,7 +2053,6 @@ GO
 --GENERO LOS USUARIOS
 EXEC [ADIOS_TERCER_ANIO].[generarUsuariosAdministrativos];
 GO
-
 
 --TRIGER PARA ACTUALIZAR LA CALIFICACION PROMEDIO
 CREATE TRIGGER [ADIOS_TERCER_ANIO].[tg_actualizarCalificacionPromedio] ON ADIOS_TERCER_ANIO.Calificacion 
@@ -2462,6 +2464,7 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
+
 CREATE PROCEDURE [ADIOS_TERCER_ANIO].[ModificarVisibilidad] (@id int,
 														   @nombre NVARCHAR(255),
 														   @duracion int output,
@@ -2529,44 +2532,57 @@ BEGIN
 
 -----Calculo costo vsibilidad
 	Declare @costoVisibilidad numeric(18,2);
+	Select @costoVisibilidad = (iif(precio is not null, precio, 0)) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
 
 	IF(@primerPublicacion = 0)
 	BEGIN
 		SET @costoVisibilidad = 0
 	END
 	ELSE
-	Select @costoVisibilidad = (iif(precio is not null, precio, 0)) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
 
 ----Calculo costo
 	Declare @comision numeric(18,2);
 	Select @comision = ((@precioPubli * @cantidadTotal) * porcentaje) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
 		
-	DECLARE @detalle1 NVARCHAR(255), @detalle2 NVARCHAR(255)				
+	DECLARE @detalle1 NVARCHAR(255), @detalle2 NVARCHAR(255), @detalle3 NVARCHAR(255)			
 -----creo item envio
 	if(@costoEnvio <> 0)
 	begin
 		Insert into ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 		Values('Costo envio', @costoEnvio, 1, @idPublicacion)
-		SET @detalle1 = CONCAT('Envio',';')
 	end
 -----creo item comision
-	if(@comision <> 0)
+	if(@comision <> 0 AND EXISTS (Select * from ADIOS_TERCER_ANIO.Visibilidad where 1 = @idVisibilidad ))
 	begin
 		Insert into ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 		Values('Comision', @comision, 1, @idPublicacion)
 	end
 -----creo item costo visibilidad
-	if(@costoVisibilidad <> 0)
+	if(@costoVisibilidad <> 0 AND EXISTS (Select * from ADIOS_TERCER_ANIO.Visibilidad where 1 = @idVisibilidad ))
 	begin
 		Insert into ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 		Values('Costo Publicacion', @costoVisibilidad, 1, @idPublicacion)
-		SET @detalle2 = CONCAT((SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE id = @idVisibilidad),';')
 	end
+
+	DECLARE @nombreVisibilidad varchar(50);
+	DECLARE @poseeVentas varchar(50);
+	DECLARE @poseeEnvio varchar(50);
+	DECLARE @descripcion varchar(255);
+
+	SELECT @nombreVisibilidad = (SELECT v.nombre FROM ADIOS_TERCER_ANIO.Publicacion p INNER JOIN ADIOS_TERCER_ANIO.Visibilidad v ON v.id = p.idVisibilidad WHERE p.id = @idPublicacion) + ';'; 
+
+
+	SELECT @poseeVentas = ((case when (EXISTS (SELECT 1 FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion = @idPublicacion)) THEN ('; Ventas') ELSE ('') end));
+
+
+	SELECT @poseeEnvio = ((case when (EXISTS (SELECT 1 FROM ADIOS_TERCER_ANIO.Item i WHERE i.idPublicacion = @idPublicacion AND nombre = 'Costo envio')) THEN ('; Envio') ELSE ('') end));
+
+
+	SELECT @descripcion = CONCAT(@nombreVisibilidad, @poseeVentas, @poseeEnvio);
 
 	-----creo factura
 	Declare @idFactura INT, @detalle NVARCHAR(255);
 	Declare @importeTotalFactura numeric(18,2);
-	SET @detalle = CONCAT(@detalle1,@detalle2);
 	set @importeTotalFactura = @costoEnvio + @costoVisibilidad + @comision;
 	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idPublicacion,detalle)
 	VALUES (
@@ -2574,7 +2590,7 @@ BEGIN
 		@importeTotalFactura,
 		@fecha,
 		@idPublicacion,
-		@detalle
+		@descripcion
 	)
 	set @idFactura = @@IDENTITY;
 END
@@ -2610,13 +2626,12 @@ BEGIN
 	ELSE
 	Select @costoVisibilidad = (iif(precio is not null, precio, 0)) from ADIOS_TERCER_ANIO.Visibilidad where id = @idVisibilidad
 
-	DECLARE @detalle1 NVARCHAR(255), @detalle2 NVARCHAR(255)
+	DECLARE @detalle1 NVARCHAR(255), @detalle2 NVARCHAR(255), @detalle3 NVARCHAR(255)
 -----creo item envio
 	if(@costoEnvio <> 0)
 	begin
 		Insert into ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 		Values('Envio', @costoEnvio, 1, @idPublicacion)
-		SET @detalle1 = CONCAT('Envio',';')
 	end
 	
 ----Calculo costo
@@ -2624,23 +2639,37 @@ BEGIN
 	Select @comision = ((@precioPubli * @cantidadCompra)* v.porcentaje) from ADIOS_TERCER_ANIO.Visibilidad v where id = @idVisibilidad
 
 -----creo item comision
-	if(@comision <> 0)
+	if(@comision <> 0 AND EXISTS (Select * from ADIOS_TERCER_ANIO.Visibilidad where 1 = @idVisibilidad ))
 	begin
 		Insert into ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 		Values('Comision', @comision, 1, @idPublicacion)
 	end
 -----creo item costo visibilidad
-	if(@costoVisibilidad <> 0)
+	if(@costoVisibilidad <> 0 AND EXISTS (Select * from ADIOS_TERCER_ANIO.Visibilidad where 1 = @idVisibilidad ))
 	begin
 		Insert into ADIOS_TERCER_ANIO.Item(nombre, precio, cantidad, idPublicacion)
 		Values('Costo Publicación', @costoVisibilidad, 1, @idPublicacion)
-		SET @detalle2 = CONCAT((SELECT nombre FROM ADIOS_TERCER_ANIO.Visibilidad WHERE id = @idVisibilidad),';')
 	end
 	
+	DECLARE @nombreVisibilidad varchar(50);
+	DECLARE @poseeVentas varchar(50);
+	DECLARE @poseeEnvio varchar(50);
+	DECLARE @descripcion varchar(255);
+
+	SELECT @nombreVisibilidad = (SELECT v.nombre FROM ADIOS_TERCER_ANIO.Publicacion p INNER JOIN ADIOS_TERCER_ANIO.Visibilidad v ON v.id = p.idVisibilidad WHERE p.id = @idPublicacion); 
+
+
+	SELECT @poseeVentas = ((case when (EXISTS (SELECT 1 FROM ADIOS_TERCER_ANIO.Compra WHERE idPublicacion = @idPublicacion)) THEN ('; Ventas') ELSE ('') end));
+
+
+	SELECT @poseeEnvio = ((case when (EXISTS (SELECT 1 FROM ADIOS_TERCER_ANIO.Item i WHERE i.idPublicacion = @idPublicacion AND nombre = 'Costo envio')) THEN ('; Envio') ELSE ('') end));
+
+
+	SELECT @descripcion = CONCAT(@nombreVisibilidad, @poseeVentas, @poseeEnvio);
 -----creo factura
 	Declare @idFactura INT, @detalle NVARCHAR(255);
 	Declare @importeTotalFactura numeric(18,2);
-	SET @detalle = CONCAT(@detalle1,@detalle2);
+	SET @detalle = CONCAT(@detalle1,@detalle2,@detalle3);
 	set @importeTotalFactura = @costoEnvio + @costoVisibilidad + @comision;
 	INSERT INTO ADIOS_TERCER_ANIO.Factura(numero, importeTotal, fecha, idPublicacion, detalle)
 	VALUES (
@@ -2648,7 +2677,7 @@ BEGIN
 		@importeTotalFactura,
 		@fecha,
 		@idPublicacion,
-		@detalle
+		@descripcion
 	)
 	set @idFactura = @@IDENTITY;
 END

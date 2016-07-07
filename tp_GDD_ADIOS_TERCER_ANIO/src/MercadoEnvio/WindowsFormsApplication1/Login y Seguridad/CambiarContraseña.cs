@@ -42,11 +42,17 @@ namespace MercadoEnvios.Login_y_Seguridad
 
                 if (!validarPassword(usuarioDeSesion, contraseñaActual.Text)){
                     MessageBox.Show("Contraseña incorrecta");
+                    contraseñaActual.Text = "";
+                    contraseñaConfirmada.Text = "";
+                    contraseñaNueva.Text = "";
                 }
 
                 else if (contraseñaNueva.Text != contraseñaConfirmada.Text)
                 {
                     MessageBox.Show("La contraseña confirmada difiere de la nueva");
+                    contraseñaActual.Text = "";
+                    contraseñaConfirmada.Text = "";
+                    contraseñaNueva.Text = "";
                 } 
                 else {
 

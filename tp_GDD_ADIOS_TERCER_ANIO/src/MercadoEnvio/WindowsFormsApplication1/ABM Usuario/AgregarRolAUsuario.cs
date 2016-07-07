@@ -53,7 +53,7 @@ namespace MercadoEnvios.ABM_Usuario
                 agregarRolUsuario.ExecuteNonQuery();
             }catch(SqlException error)
             {
-                MessageBox.Show("No se pudo agregar correctamente el rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             new frmABMUsuario().Show();

@@ -256,7 +256,7 @@ namespace MercadoEnvios.Facturas
                catch (SqlException error)
                {
                    btnSgte.Enabled = false;
-                   MessageBox.Show("No hay páginas para mostrar con esos valores");
+                   MessageBox.Show(error.ToString());
                }
            }
            else 
