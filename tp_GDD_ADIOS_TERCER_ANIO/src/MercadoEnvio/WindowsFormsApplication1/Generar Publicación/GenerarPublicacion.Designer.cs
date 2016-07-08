@@ -108,6 +108,7 @@
             this.Visibilidad.Name = "Visibilidad";
             this.Visibilidad.Size = new System.Drawing.Size(235, 24);
             this.Visibilidad.TabIndex = 4;
+            this.Visibilidad.SelectedIndexChanged += new System.EventHandler(this.Visibilidad_SelectedIndexChanged);
             // 
             // label8
             // 

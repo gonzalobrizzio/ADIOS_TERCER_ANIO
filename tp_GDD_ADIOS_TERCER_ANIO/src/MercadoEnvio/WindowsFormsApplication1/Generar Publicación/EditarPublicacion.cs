@@ -116,6 +116,11 @@ namespace MercadoEnvios.Generar_Publicación
                 Visibilidad.SelectedIndex = 0;
             }
 
+            if (Visibilidad.SelectedItem.ToString() == "Gratis")
+            {
+                habilitarEnvios.Enabled = false;
+            }
+
             dataReader.Close();
         }
 
@@ -176,17 +181,6 @@ namespace MercadoEnvios.Generar_Publicación
                 rubro.SqlValue = Rubro.Text;
                 rubro.Direction = ParameterDirection.Input;
 
-                SqlParameter habilitaPreguntas = new SqlParameter("@tienePreguntas", SqlDbType.Int);
-                if (habilitarEnvios.Checked)
-                {
-                    habilitaPreguntas.SqlValue = 0;
-                }
-                else
-                {
-                    habilitaPreguntas.SqlValue = 1;
-                }
-                habilitaPreguntas.Direction = ParameterDirection.Input;
-
                 SqlParameter fechaInicio = new SqlParameter("@fechaInicio", SqlDbType.DateTime);
                 fechaInicio.SqlValue = DBNull.Value;
                 fechaInicio.Direction = ParameterDirection.Input;
@@ -214,6 +208,17 @@ namespace MercadoEnvios.Generar_Publicación
                     envio.SqlValue = 1;
                 }
                 envio.Direction = ParameterDirection.Input;
+
+                SqlParameter habilitaPreguntas = new SqlParameter("@tienePreguntas", SqlDbType.Int);
+                if (habilitarPreguntas.Checked)
+                {
+                    habilitaPreguntas.SqlValue = 0;
+                }
+                else
+                {
+                    habilitaPreguntas.SqlValue = 1;
+                }
+                habilitaPreguntas.Direction = ParameterDirection.Input;
 
 
                 actualizarPublicacion.Parameters.Add(descripcionP);
@@ -250,6 +255,19 @@ namespace MercadoEnvios.Generar_Publicación
         private void Precio_KeyPress(object sender, KeyPressEventArgs e)
         {
             funcion.ingresarNumeroDecimal(e);
+        }
+
+        private void Visibilidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Visibilidad.SelectedItem.ToString() == "Gratis")
+            {
+                habilitarEnvios.Checked = false;
+                habilitarEnvios.Enabled = false;
+            }
+            else
+            {
+                habilitarEnvios.Enabled = true;
+            }
         }
     }
 }

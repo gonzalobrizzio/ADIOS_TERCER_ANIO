@@ -27,6 +27,12 @@ namespace MercadoEnvios.Generar_Publicación
             this.conn = Conexion.Instance;
             this.loadGrid();
             Tipo_de_Publicacion.SelectedIndex = 0;
+
+            if (Visibilidad.SelectedItem.ToString() == "Gratis")
+            {
+                habilitarEnvios.Checked = false;
+                habilitarEnvios.Enabled = false;
+            }
         }
 
         private void loadGrid()
@@ -270,6 +276,19 @@ namespace MercadoEnvios.Generar_Publicación
         private void Precio_KeyPress(object sender, KeyPressEventArgs e)
         {
             funcion.ingresarNumeroDecimal(e);
+        }
+
+        private void Visibilidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Visibilidad.SelectedItem.ToString() == "Gratis")
+            {
+                habilitarEnvios.Checked = false;
+                habilitarEnvios.Enabled = false;
+            }
+            else
+            {
+                habilitarEnvios.Enabled = true;
+            }
         }
     }
 

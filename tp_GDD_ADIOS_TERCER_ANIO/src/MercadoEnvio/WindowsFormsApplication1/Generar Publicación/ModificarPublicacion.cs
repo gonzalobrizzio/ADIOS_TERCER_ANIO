@@ -40,7 +40,7 @@ namespace MercadoEnvios.Generar_Publicación
             + "(select nombre from ADIOS_TERCER_ANIO.TipoPublicacion where id = idTipoPublicacion) AS Tipo_De_Publicacion, "
             + "(SELECT descripcionCorta FROM ADIOS_TERCER_ANIO.Rubro WHERE idRubro = id) AS Rubro, iif(tienePreguntas = 0, 'SI', 'NO') AS Acepta_Preguntas, "
             + "iif(tieneEnvio = 1, 'NO', 'SI') AS Permite_Envios, "
-            + "(SELECT nombre FROM ADIOS_TERCER_ANIO.Estado WHERE idEstado = id) AS Estado, fechaFin AS Fecha_Finalización "
+            + "(SELECT nombre FROM ADIOS_TERCER_ANIO.Estado WHERE idEstado = id) AS Estado, fechaFin AS Fecha_Finalización,  (SELECT nombre FROM ADIOS_TERCER_ANIO.FormaDePago WHERE id = idForma) AS Forma_de_pago "
             +"FROM ADIOS_TERCER_ANIO.Publicacion WHERE @idPublic = idPublicador ORDER BY idEstado ASC";
             SqlParameter idPu = new SqlParameter("@idPublic", SqlDbType.Int);
             idPu.SqlValue = sesion.idUsuario;

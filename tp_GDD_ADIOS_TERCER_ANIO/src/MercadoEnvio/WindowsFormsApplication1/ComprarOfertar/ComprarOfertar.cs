@@ -95,6 +95,10 @@ namespace MercadoEnvios.ComprarOfertar
                         btnDetalle.Enabled = false;
                     }
                 }
+                else
+                {
+                    btnDetalle.Enabled = true;
+                }
 
                 if (btnPrimeraPag.Enabled == true)
                 {
