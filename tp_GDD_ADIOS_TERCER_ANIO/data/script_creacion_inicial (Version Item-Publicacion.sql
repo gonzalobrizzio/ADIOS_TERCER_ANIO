@@ -2221,13 +2221,6 @@ AS BEGIN
 	set nocount on;
 	set xact_abort on;
 
-		
-	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%') OR @mail = '')
-		THROW 50004, 'Mail invalido',1;
-
-	IF(@usuario IS NULL)
-		THROW 50004, 'Necesita ingresar un usuario', 1;
-
 		INSERT INTO ADIOS_TERCER_ANIO.Usuario(usuario,pass, mail, deleted) VALUES (@usuario,@password,@mail, 0)
 		SET @ultimoID = @@IDENTITY;
 END
@@ -2252,10 +2245,6 @@ CREATE PROCEDURE ADIOS_TERCER_ANIO.ModificarUsuario (@usuario NVARCHAR(255), @ma
 AS BEGIN
 	set nocount on;
 	set xact_abort on;
-
-		
-	IF (@mail IS NULL OR (@mail NOT LIKE '%@%' OR @mail NOT LIKE '%.com%'))
-		THROW 50004, 'Mail invalido',1;
 
 	BEGIN TRANSACTION
 	BEGIN TRY

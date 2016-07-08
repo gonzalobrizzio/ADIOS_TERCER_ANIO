@@ -97,6 +97,34 @@ namespace MercadoEnvios.Entidades
             };
         }
 
+
+        public void validarFormaMail(Control mail, StringBuilder mensajeValidacion)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendFormat("IF('{0}' NOT LIKE '%@%' OR '{0}' NOT LIKE '%.com%') SELECT * FROM ADIOS_TERCER_ANIO.Usuario", mail.Text);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandTimeout = 800;
+            cmd.CommandText = query.ToString();
+            if (darEscalar(cmd))
+            {
+                mensajeValidacion.AppendLine(string.Format(" El email {0} tiene un formato invalido", mail.Text));
+            };
+        }
+
+        public void verSiElCuitEsValido(Control cuit, StringBuilder mensajeValidación)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendFormat("IF('{0}' NOT LIKE '%-%-%') SELECT * FROM ADIOS_TERCER_ANIO.TipoDocumento", cuit.Text);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandTimeout = 800;
+            cmd.CommandText = query.ToString();
+            if (darEscalar(cmd))
+            {
+                mensajeValidación.AppendLine(string.Format("El cuit tiene un formato invalido"));
+            }
+
+        }
+
         public void validarCantidad(string nro, StringBuilder mensajeValidacion)
         {
             if (Convert.ToInt32(nro.Length) != 8)
@@ -158,20 +186,6 @@ namespace MercadoEnvios.Entidades
             {
                 mensajeValidacion.AppendLine(string.Format(" El CUIT con el numero {0} ya existe.", cuit.Text));
             };
-        }
-
-        public void verSiElCuitEsValido(Control cuit, StringBuilder mensajeValidación)
-        {
-            StringBuilder query = new StringBuilder();
-            query.AppendFormat("IF('{0}' NOT LIKE '%-%-%') SELECT * FROM ADIOS_TERCER_ANIO.TipoDocumento", cuit.Text);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandTimeout = 800;
-            cmd.CommandText = query.ToString();
-            if (darEscalar(cmd))
-            {
-                mensajeValidación.AppendLine(string.Format("El cuit tiene un formato invalido"));
-            }
-
         }
        
         public void validarUsuario(Control usuario, StringBuilder mensajeValidacion)
