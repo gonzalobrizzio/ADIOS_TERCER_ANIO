@@ -416,5 +416,10 @@ namespace MercadoEnvios.ComprarOfertar
                 }
             }
         }
+
+        private void lblPagina_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

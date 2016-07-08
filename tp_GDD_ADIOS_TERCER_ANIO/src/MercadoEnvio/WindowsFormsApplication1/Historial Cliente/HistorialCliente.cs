@@ -151,5 +151,33 @@ namespace MercadoEnvios.Historial_Cliente
             btnAnt.Enabled = true;
             btnPrimeraPag.Enabled = true;
         }
+
+        private void txtPagina_TextChanged(object sender, EventArgs e)
+        {
+            if (txtPagina.Text != "")
+            {
+                if (Convert.ToInt32(txtPagina.Text) <= cantidad)
+                {
+                    nroPagina = Convert.ToInt32(txtPagina.Text);
+                    getData();
+                    if (nroPagina != 0)
+                    {
+                        btnPrimeraPag.Enabled = true;
+                        btnAnt.Enabled = true;
+                    }
+
+                    if (nroPagina != cantidad)
+                    {
+                        button1.Enabled = true;
+                        btnSgte.Enabled = true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Número de página excedido del máximo existente.");
+                    txtPagina.Text = "0";
+                }
+            }
+        }
     }
 }

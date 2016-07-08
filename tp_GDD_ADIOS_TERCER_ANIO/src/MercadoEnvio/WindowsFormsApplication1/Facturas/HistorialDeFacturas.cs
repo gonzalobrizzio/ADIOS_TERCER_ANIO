@@ -418,5 +418,33 @@ namespace MercadoEnvios.Facturas
             btnAnt.Enabled = true;
             button1.Enabled = false;
         }
+
+        private void paginaNro_TextChanged(object sender, EventArgs e)
+        {
+            if (paginaNro.Text != "")
+            {
+                if (Convert.ToInt32(paginaNro.Text) <= cantidad)
+                {
+                    nroPagina = Convert.ToInt32(paginaNro.Text);
+                    getData();
+                    if (nroPagina != 0)
+                    {
+                        btnPrimeraPag.Enabled = true;
+                        btnAnt.Enabled = true;
+                    }
+
+                    if (nroPagina != cantidad)
+                    {
+                        button1.Enabled = true;
+                        btnSgte.Enabled = true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Número de página excedido del máximo existente.");
+                    paginaNro.Text = "0";
+                }
+            }
+        }
     }
 }
