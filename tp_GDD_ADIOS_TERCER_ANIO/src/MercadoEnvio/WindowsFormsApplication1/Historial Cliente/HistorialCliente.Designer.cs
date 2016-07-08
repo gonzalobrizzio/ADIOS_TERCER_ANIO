@@ -136,7 +136,9 @@
             this.txtPagina.Name = "txtPagina";
             this.txtPagina.Size = new System.Drawing.Size(75, 30);
             this.txtPagina.TabIndex = 16;
+            this.txtPagina.Text = "0";
             this.txtPagina.TextChanged += new System.EventHandler(this.txtPagina_TextChanged);
+            this.txtPagina.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPagina_KeyPress);
             // 
             // frmHistorialCliente
             // 

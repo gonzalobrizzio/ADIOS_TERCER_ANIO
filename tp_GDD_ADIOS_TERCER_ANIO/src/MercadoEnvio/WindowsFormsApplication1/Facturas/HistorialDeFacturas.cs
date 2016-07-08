@@ -446,5 +446,10 @@ namespace MercadoEnvios.Facturas
                 }
             }
         }
+
+        private void paginaNro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.fun.ingresarNumero(e);
+        }
     }
 }

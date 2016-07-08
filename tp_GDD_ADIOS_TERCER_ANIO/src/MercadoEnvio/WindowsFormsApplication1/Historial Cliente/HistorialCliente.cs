@@ -1,4 +1,5 @@
 ﻿using MercadoEnvios.ABM_Usuario;
+using MercadoEnvios.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace MercadoEnvios.Historial_Cliente
         int cantidad;
         int nroPagina = 0;
         SqlDataAdapter da;
+        Utilidades fun = new Utilidades();
         public frmHistorialCliente()
         {
             InitializeComponent();
@@ -178,6 +180,11 @@ namespace MercadoEnvios.Historial_Cliente
                     txtPagina.Text = "0";
                 }
             }
+        }
+
+        private void txtPagina_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.fun.ingresarNumero(e);
         }
     }
 }
