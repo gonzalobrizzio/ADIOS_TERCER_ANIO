@@ -34,21 +34,18 @@ namespace MercadoEnvios.ABM_Visibilidad
                 this.fun.validarVisibilidad(Nombre, mensajeValidacion);
                 this.fun.validarNoVacio(Nombre, mensajeValidacion);
                 this.fun.validarNoVacio(Duracion, mensajeValidacion);
-                this.fun.validarNoVacio(Porcentaje, mensajeValidacion);
+                bool porc = this.fun.validarNoVacio(Porcentaje, mensajeValidacion);
                 this.fun.validarNoVacio(Precio, mensajeValidacion);
-                decimal valor;
+                this.fun.validarDecimal(Precio, mensajeValidacion);
+                bool num = this.fun.validarDecimal(Porcentaje, mensajeValidacion);
+
+                if (porc && num)
+                {
+                    this.fun.validarPorcentaje(Porcentaje, mensajeValidacion);
+                }
+
                 if (mensajeValidacion.Length == 0)
                 {
-                    if(String.IsNullOrEmpty(Porcentaje.Text))
-                    {
-                        valor = 1;
-                    }
-                    else
-                    {
-                        valor = Convert.ToDecimal(Porcentaje.Text);
-                    }
-                    if ( valor <= 1)
-                    {
                     SqlCommand agregarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.AgregarVisibilidad", conn.getConexion);
                     agregarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
                     SqlParameter nombre = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
@@ -109,12 +106,6 @@ namespace MercadoEnvios.ABM_Visibilidad
                     {
                         MessageBox.Show(error.Message);
                     }
-                    }        
-                    else
-                    {
-                        MessageBox.Show("El porcentaje ingresado supera el 100 % permitido, debe ingresar algo menor a 1","Advertencia" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-
                 }
                 else
                 {

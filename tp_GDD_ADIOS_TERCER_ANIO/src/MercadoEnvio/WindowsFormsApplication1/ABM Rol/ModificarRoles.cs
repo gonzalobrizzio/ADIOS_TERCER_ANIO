@@ -269,12 +269,18 @@ namespace MercadoEnvios.ABM_Rol
 
         private void dgvFuncionalidadesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dgvFuncionalidadesDisponibles.CurrentRow.Selected = true;
+            if (dgvFuncionalidadesDisponibles.Rows.Count > 0)
+            {
+                dgvFuncionalidadesDisponibles.CurrentRow.Selected = true;
+            }
         }
 
         private void dgvFuncionalidadesActuales_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (dgvFuncionalidadesActuales.Rows.Count > 0)
+            {
             dgvFuncionalidadesActuales.CurrentRow.Selected = true;
+            }
         }
 
     }

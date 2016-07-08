@@ -142,7 +142,10 @@ namespace MercadoEnvios.ABM_Rol
 
         private void dgvRoles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dgvRoles.CurrentRow.Selected = true;
+            if (dgvRoles.Rows.Count > 0)
+            {
+                dgvRoles.CurrentRow.Selected = true;
+            }
         }
     }
 }

@@ -36,6 +36,16 @@ namespace MercadoEnvios.Entidades
             return true;
         }
 
+        public bool validarPorcentaje(Control control, StringBuilder mensajeValidacion)
+        {
+            if (Convert.ToDecimal(control.Text) >= 1) 
+            {
+                mensajeValidacion.AppendLine(string.Format(" El {0} debe ser menor o igual a 1 (Lo cual representa al 100%)", control.Name));
+                return false;
+            }
+            return true;
+        }
+
         public bool validarDecimal(Control control, StringBuilder mensajeValidacion)
         {
             try

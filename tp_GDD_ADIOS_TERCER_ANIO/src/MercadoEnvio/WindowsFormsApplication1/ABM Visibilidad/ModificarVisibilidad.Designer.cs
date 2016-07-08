@@ -115,7 +115,7 @@
             // 
             this.Precio.Location = new System.Drawing.Point(124, 79);
             this.Precio.Margin = new System.Windows.Forms.Padding(4);
-            this.Precio.MaxLength = 14;
+            this.Precio.MaxLength = 8;
             this.Precio.Name = "Precio";
             this.Precio.Size = new System.Drawing.Size(289, 22);
             this.Precio.TabIndex = 16;

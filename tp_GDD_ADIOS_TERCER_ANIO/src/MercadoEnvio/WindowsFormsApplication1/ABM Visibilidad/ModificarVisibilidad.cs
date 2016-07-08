@@ -69,29 +69,24 @@ namespace MercadoEnvios.ABM_Visibilidad
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-
-            decimal valor;
                 if (Nombre.Text != nombreB)
                 {
                     this.funcionesValidacion.validarVisibilidad(Nombre, mensajeValidacion);
                 }
                  this.funcionesValidacion.validarNoVacio(Nombre, mensajeValidacion);
                  this.funcionesValidacion.validarNoVacio(Duracion, mensajeValidacion);
-                 this.funcionesValidacion.validarNoVacio(Porcentaje, mensajeValidacion);
+                 bool porc = this.funcionesValidacion.validarNoVacio(Porcentaje, mensajeValidacion);
                  this.funcionesValidacion.validarNoVacio(Precio, mensajeValidacion);
+                 this.funcionesValidacion.validarDecimal(Precio, mensajeValidacion);
+                 bool num = this.funcionesValidacion.validarDecimal(Porcentaje, mensajeValidacion);
+
+                 if (porc && num)
+                 {
+                     this.funcionesValidacion.validarPorcentaje(Porcentaje, mensajeValidacion);
+                 }
+
                  if (mensajeValidacion.Length == 0)
                  {
-                     if (String.IsNullOrEmpty(Porcentaje.Text))
-                     {
-                         valor = 1;
-                     }
-                     else
-                     {
-                         valor = Convert.ToDecimal(Porcentaje.Text);
-                     }
-
-                     if (valor <= 1)
-                     {
                          SqlCommand modificarVisibilidad = new SqlCommand("ADIOS_TERCER_ANIO.ModificarVisibilidad", conn.getConexion);
                          modificarVisibilidad.CommandType = System.Data.CommandType.StoredProcedure;
                          SqlParameter id = new SqlParameter("@id", SqlDbType.NVarChar, 255);
@@ -161,14 +156,9 @@ namespace MercadoEnvios.ABM_Visibilidad
                      }
                      else
                      {
-                         MessageBox.Show("El porcentaje ingresado supera el 100 % permitido, debe ingresar algo menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                         MessageBox.Show(mensajeValidacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                         mensajeValidacion = new StringBuilder();
                      }
-                 }
-                 else
-                 {
-                     MessageBox.Show(mensajeValidacion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                     mensajeValidacion = new StringBuilder();
-                 }
         }
 
         private void txtDuracion_KeyPress(object sender, KeyPressEventArgs e)
