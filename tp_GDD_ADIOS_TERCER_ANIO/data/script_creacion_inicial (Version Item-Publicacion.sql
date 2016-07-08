@@ -2398,7 +2398,7 @@ BEGIN
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Estado WHERE nombre = @estado), @precio,
 	     (SELECT id FROM ADIOS_TERCER_ANIO.Visibilidad WHERE nombre = @visibilidad), @idPublicador, 
 		 (SELECT id FROM ADIOS_TERCER_ANIO.Rubro WHERE descripcionCorta = @rubro), 
-		 (SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre = @visibilidad), @stock, 
+		 (SELECT id FROM ADIOS_TERCER_ANIO.FormaDePago WHERE nombre = @forma), @stock, 
 		 @envio, @primerPublicacion)
 END
 GO

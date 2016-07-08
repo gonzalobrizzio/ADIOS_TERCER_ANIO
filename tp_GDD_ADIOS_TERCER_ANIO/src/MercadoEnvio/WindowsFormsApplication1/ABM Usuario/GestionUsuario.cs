@@ -44,7 +44,14 @@ namespace MercadoEnvios.ABM_Usuario
             da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
             SqlParameter documentoK = new SqlParameter("@doc", SqlDbType.NVarChar, 255);
-            documentoK.SqlValue = documentoP;
+            if (dni.Text.Length == 8)
+            {
+                documentoK.SqlValue = documentoP;
+            }
+            else
+            {
+                documentoK.SqlValue = DBNull.Value;
+            }
             documentoK.Direction = ParameterDirection.Input;
 
             SqlParameter nombreK = new SqlParameter("@nombre", SqlDbType.NVarChar, 255);
@@ -129,27 +136,33 @@ namespace MercadoEnvios.ABM_Usuario
         {
             if (clienteOEmpresa == 0)
             {
-                if (dgvClientes.CurrentCell.Selected == false)
+                if (dgvClientes.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe elegir un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-                else
-                {
-                    new frmModificarCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value)).Show();
-                    this.Close();
+                    if (dgvClientes.CurrentCell.Selected == false)
+                    {
+                        MessageBox.Show("Debe elegir un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    else
+                    {
+                        new frmModificarCliente(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value)).Show();
+                        this.Close();
+                    }
                 }
             }
             else
             {
-                if (dgvEmpresas.CurrentCell.Selected == false)
+                if (dgvEmpresas.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe elegir un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-                else
-                {
-                    new frmModificarEmpresa(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value)).Show();
-                    this.Close();
+                    if (dgvEmpresas.CurrentCell.Selected == false)
+                    {
+                        MessageBox.Show("Debe elegir un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    else
+                    {
+                        new frmModificarEmpresa(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value)).Show();
+                        this.Close();
 
+                    }
                 }
             }
         }
@@ -158,39 +171,44 @@ namespace MercadoEnvios.ABM_Usuario
         {
             if (clienteOEmpresa == 0)
             {
-                if (dgvClientes.CurrentRow.Selected == false)
+                if (dgvClientes.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (dgvClientes.CurrentRow.Selected == false)
+                    {
+                        MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                }
-                else
-                {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0, intentos = 0 WHERE @idUsuario = id";
-                    SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                    SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-                    idUsuario.Direction = ParameterDirection.Input;
-                    actualizacion.Parameters.Add(idUsuario);
-                    idUsuario.SqlValue = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
-                    actualizacion.ExecuteNonQuery();
-                    this.getDataClientes();
+                    }
+                    else
+                    {
+                        String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0, intentos = 0 WHERE @idUsuario = id";
+                        SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+                        idUsuario.Direction = ParameterDirection.Input;
+                        actualizacion.Parameters.Add(idUsuario);
+                        idUsuario.SqlValue = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
+                        actualizacion.ExecuteNonQuery();
+                        this.getDataClientes();
+                    }
                 }
             }
             else{
-
-                if (dgvEmpresas.CurrentRow.Selected == false)
+                if (dgvEmpresas.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0, intentos = 0 WHERE @idUsuario = id";
-                    SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                    SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-                    idUsuario.Direction = ParameterDirection.Input;
-                    actualizacion.Parameters.Add(idUsuario);
-                    idUsuario.SqlValue = Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value);
-                    actualizacion.ExecuteNonQuery();
-                    this.getDataEmpresas();
+                    if (dgvEmpresas.CurrentRow.Selected == false)
+                    {
+                        MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 0, intentos = 0 WHERE @idUsuario = id";
+                        SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+                        idUsuario.Direction = ParameterDirection.Input;
+                        actualizacion.Parameters.Add(idUsuario);
+                        idUsuario.SqlValue = Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value);
+                        actualizacion.ExecuteNonQuery();
+                        this.getDataEmpresas();
+                    }
                 }
             }
 
@@ -200,39 +218,45 @@ namespace MercadoEnvios.ABM_Usuario
         {
             if (clienteOEmpresa == 0)
             {
-                if (dgvClientes.CurrentRow.Selected == false)
+                if (dgvClientes.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (dgvClientes.CurrentRow.Selected == false)
+                    {
+                        MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                }
-                else
-                {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE @idUsuario = id";
-                    SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                    SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-                    idUsuario.Direction = ParameterDirection.Input;
-                    actualizacion.Parameters.Add(idUsuario);
-                    idUsuario.SqlValue = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
-                    actualizacion.ExecuteNonQuery();
-                    this.getDataClientes();
+                    }
+                    else
+                    {
+                        String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE @idUsuario = id";
+                        SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+                        idUsuario.Direction = ParameterDirection.Input;
+                        actualizacion.Parameters.Add(idUsuario);
+                        idUsuario.SqlValue = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
+                        actualizacion.ExecuteNonQuery();
+                        this.getDataClientes();
+                    }
                 }
             }
             else
             {
-                if (dgvEmpresas.CurrentRow.Selected == false)
+                if (dgvEmpresas.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE @idUsuario = id";
-                    SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
-                    SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
-                    idUsuario.Direction = ParameterDirection.Input;
-                    actualizacion.Parameters.Add(idUsuario);
-                    idUsuario.SqlValue = Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value);
-                    actualizacion.ExecuteNonQuery();
-                    this.getDataEmpresas();
+                    if (dgvEmpresas.CurrentRow.Selected == false)
+                    {
+                        MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        String query = "UPDATE ADIOS_TERCER_ANIO.Usuario SET deleted = 1 WHERE @idUsuario = id";
+                        SqlCommand actualizacion = new SqlCommand(query, conn.getConexion);
+                        SqlParameter idUsuario = new SqlParameter("@idUsuario", SqlDbType.Int);
+                        idUsuario.Direction = ParameterDirection.Input;
+                        actualizacion.Parameters.Add(idUsuario);
+                        idUsuario.SqlValue = Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value);
+                        actualizacion.ExecuteNonQuery();
+                        this.getDataEmpresas();
+                    }
                 }
             }
         }
@@ -326,25 +350,31 @@ namespace MercadoEnvios.ABM_Usuario
         {
             if (clienteOEmpresa == 0)
             {
-                if (dgvClientes.CurrentRow.Selected == false)
+                if (dgvClientes.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (dgvClientes.CurrentRow.Selected == false)
+                    {
+                        MessageBox.Show("Debe seleccionar un usuario de tipo Cliente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                }
-                else
-                {
-                    this.verCant(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value));
+                    }
+                    else
+                    {
+                        this.verCant(Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value));
+                    }
                 }
             }
             else
             {
-                if (dgvEmpresas.CurrentRow.Selected == false)
+                if (dgvEmpresas.Rows.Count != 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    this.verCant(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value));
+                    if (dgvEmpresas.CurrentRow.Selected == false)
+                    {
+                        MessageBox.Show("Debe seleccionar un usuario de tipo Empresa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        this.verCant(Convert.ToInt32(dgvEmpresas.CurrentRow.Cells[0].Value));
+                    }
                 }
             }
         }
