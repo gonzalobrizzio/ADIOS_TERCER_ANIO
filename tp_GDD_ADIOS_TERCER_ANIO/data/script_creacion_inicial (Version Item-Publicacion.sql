@@ -3118,7 +3118,7 @@ END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosCliente(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @doc DECIMAL(18,0), @mail NVARCHAR(255)) 
 AS BEGIN
-	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
+	SELECT DISTINCT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
 	e.nombre AS Nombre, e.apellido AS Apellido, e.documento AS Documento FROM ADIOS_TERCER_ANIO.Usuario u
 	inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario
 	inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol
@@ -3147,7 +3147,7 @@ END
 GO
 CREATE PROCEDURE ADIOS_TERCER_ANIO.ObtenerUsuariosEmpresa(@cuit NVARCHAR(255), @razonSocial NVARCHAR(255), @mail NVARCHAR(255))
 AS BEGIN
-	SELECT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
+	SELECT DISTINCT u.id, u.usuario AS Usuario, u.mail AS Mail, iif(u.deleted = 0, 'Habilitado', 'Deshabilitado') AS Estado, 
 	e.razonSocial AS Razon_Social, e.cuit AS CUIT FROM ADIOS_TERCER_ANIO.Usuario u 
 	inner join ADIOS_TERCER_ANIO.RolUsuario ru on u.id = ru.idUsuario 
 	inner join ADIOS_TERCER_ANIO.Rol r on r.id = ru.idRol 

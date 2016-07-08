@@ -226,7 +226,7 @@ namespace MercadoEnvios.ComprarOfertar
 
             if (!String.IsNullOrEmpty(txtDescripción.Text))
             {
-                queryPublicaciones += "AND publicacion.descripcion LIKE '%" + txtDescripción.Text + "%' ";
+                queryPublicaciones += "AND publicacion.descripcion COLLATE Latin1_General_CI_AI LIKE '%" + txtDescripción.Text + "%' COLLATE Latin1_General_CI_AI ";
             }
 
             if (dgvFiltros.RowCount != 0)
