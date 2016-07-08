@@ -114,13 +114,13 @@ namespace MercadoEnvios.Entidades
         public void verSiElCuitEsValido(Control cuit, StringBuilder mensajeValidación)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("IF('{0}' NOT LIKE '%-%-%') SELECT * FROM ADIOS_TERCER_ANIO.TipoDocumento", cuit.Text);
+            query.AppendFormat("IF('{0}' NOT LIKE '%-%-%') SELECT * FROM ADIOS_TERCER_ANIO.Usuario", cuit.Text);
             SqlCommand cmd = new SqlCommand();
             cmd.CommandTimeout = 800;
             cmd.CommandText = query.ToString();
             if (darEscalar(cmd))
             {
-                mensajeValidación.AppendLine(string.Format("El cuit tiene un formato invalido"));
+                mensajeValidación.AppendLine(string.Format("El CUIT tiene un formato invalido"));
             }
 
         }
@@ -337,5 +337,39 @@ namespace MercadoEnvios.Entidades
             }
         }
 
+         public bool ValidaCuit(string cuit, StringBuilder mensajeValidacion)
+         {
+                if (cuit == null)
+                {
+                    mensajeValidacion.AppendLine(string.Format("El CUIT tiene un formato invalido"));
+                    return false;
+                }
+                //Quito los guiones, el cuit resultante debe tener 11 caracteres.
+                cuit = cuit.Replace("-", string.Empty);
+                if (cuit.Length != 11)
+                {
+                    mensajeValidacion.AppendLine(string.Format("El CUIT tiene un formato invalido"));
+                    return false;
+                }
+                else
+                {
+                    int calculado = CalcularDigitoCuit(cuit);
+                    int digito = int.Parse(cuit.Substring(10));
+                    return calculado == digito;
+                }
+          }
+
+        public static int CalcularDigitoCuit(string cuit)
+             {
+                int[] mult = new[] { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
+                char[] nums = cuit.ToCharArray();
+                int total = 0;
+                for (int i = 0; i < mult.Length; i++)
+                {
+                    total += int.Parse(nums[i].ToString()) * mult[i];
+                }
+                int resto = total % 11;
+                return resto == 0 ? 0 : resto == 1 ? 9 : 11 - resto;
+            }
     }
 }

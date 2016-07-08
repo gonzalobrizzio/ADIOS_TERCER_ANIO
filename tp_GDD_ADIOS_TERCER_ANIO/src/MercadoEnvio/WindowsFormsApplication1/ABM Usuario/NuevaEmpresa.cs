@@ -87,6 +87,8 @@ namespace MercadoEnvios.ABM_Usuario
             if (cuitB)
             {
                 this.funcionesValidacion.validarCUIT(CUIT, mensajeDeAviso);
+                this.funcionesValidacion.verSiElCuitEsValido(CUIT, mensajeDeAviso);
+                this.funcionesValidacion.ValidaCuit(CUIT.Text, mensajeDeAviso);
             }
 
             if (razonSocialB)

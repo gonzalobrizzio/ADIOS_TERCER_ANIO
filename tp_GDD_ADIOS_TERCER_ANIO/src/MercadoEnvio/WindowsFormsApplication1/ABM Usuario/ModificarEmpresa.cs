@@ -134,7 +134,6 @@ namespace MercadoEnvios.ABM_Usuario
             bool razonSocialB = this.funcionesValidacion.validarNoVacio(Razon_Social, mensajeDeAviso);
             bool cuitB = this.funcionesValidacion.validarNoVacio(CUIT, mensajeDeAviso);
             this.funcionesValidacion.verSiElCuitEsValido(CUIT, mensajeDeAviso);
-            this.funcionesValidacion.validarEmail(Mail, mensajeDeAviso);
             this.funcionesValidacion.validarFormaMail(Mail, mensajeDeAviso);
 
             if (!(string.IsNullOrEmpty(Direccion.Text)))
@@ -152,6 +151,7 @@ namespace MercadoEnvios.ABM_Usuario
             if (cuitB && cuitv != CUIT.Text )
             {
                 this.funcionesValidacion.validarCUIT(CUIT, mensajeDeAviso);
+                this.funcionesValidacion.ValidaCuit(CUIT.Text, mensajeDeAviso);
             }
 
             if (razonSocialB && razonv != Razon_Social.Text)
